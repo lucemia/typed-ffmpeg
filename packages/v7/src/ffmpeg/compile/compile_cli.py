@@ -826,7 +826,7 @@ def compile_as_list(
     vf_commands = []
     filter_nodes = [node for node in context.all_nodes if isinstance(node, FilterNode)]
 
-    for node in sorted(filter_nodes, key=lambda node: len(node.upstream_nodes)):
+    for node in sorted(filter_nodes, key=lambda node: node.max_depth):
         vf_commands += ["".join(get_args(node, context))]
 
     if vf_commands:

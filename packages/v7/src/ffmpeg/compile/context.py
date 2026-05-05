@@ -156,7 +156,7 @@ class DAGContext:
             A sorted list of all nodes in the graph
 
         """
-        return sorted(self.nodes, key=lambda node: len(node.upstream_nodes))
+        return sorted(self.nodes, key=lambda node: node.max_depth)
 
     @cached_property
     def all_streams(self) -> list[Stream]:
@@ -174,7 +174,7 @@ class DAGContext:
         """
         return sorted(
             self.streams,
-            key=lambda stream: (len(stream.node.upstream_nodes), stream.index),
+            key=lambda stream: (stream.node.max_depth, stream.index),
         )
 
     @cached_property

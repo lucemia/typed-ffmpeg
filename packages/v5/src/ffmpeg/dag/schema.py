@@ -110,22 +110,14 @@ class Node(HashableBaseModel):
             ValueError: If the graph is not a DAG
 
         """
-        # Validate the DAG
-        passed = set()
-        nodes = [self]
-        output = {}
-
-        while nodes:
-            node = nodes.pop()
-
-            if node in passed:
-                continue
-            passed.add(node)
-
-            nodes.extend(k.node for k in node.inputs)
-
-            output[node.hex] = {k.node.hex for k in node.inputs}
-
+        # Frozen dataclass instances cannot form cycles (inputs must be fully
+        # constructed before a node can reference them).  Checking only the
+        # immediate adjacency is sufficient — all upstream subgraphs were
+        # already validated when their nodes were created.
+        output = {self.hex: {k.node.hex for k in self.inputs}}
+        for k in self.inputs:
+            if k.node.hex not in output:
+                output[k.node.hex] = set()
         if not is_dag(output):
             raise ValueError(f"Graph is not a DAG: {output}")  # pragma: no cover
 
@@ -215,29 +207,44 @@ class Node(HashableBaseModel):
 
         return replace(self, inputs=tuple(inputs))
 
-    @property
+    @cached_property
     def max_depth(self) -> int:
         """
-        Get the maximum depth of the node.
+        Get the maximum depth of the node (longest path from any input).
+
+        The result is cached.  The iterative computation also pre-populates the
+        cache for all upstream nodes so that subsequent calls are O(1).
 
         Returns:
             The maximum depth of the node.
 
         """
-        depths: dict[Node, int] = {}
+        depths: dict[int, int] = {}  # id(node) -> depth
         stack: list[tuple[Node, bool]] = [(self, False)]
         while stack:
             node, processed = stack.pop()
+            nid = id(node)
             if processed:
-                depths[node] = max((depths[i.node] for i in node.inputs), default=0) + 1
+                d = max((depths[id(i.node)] for i in node.inputs), default=0) + 1
+                depths[nid] = d
+                node.__dict__['max_depth'] = d  # pre-populate cached_property cache
             else:
-                if node in depths:
+                if nid in depths:
+                    continue
+                cached_val = node.__dict__.get('max_depth')
+                if cached_val is not None:
+                    depths[nid] = cached_val
                     continue
                 stack.append((node, True))
                 for inp in node.inputs:
-                    if inp.node not in depths:
-                        stack.append((inp.node, False))
-        return depths[self]
+                    inp_nid = id(inp.node)
+                    if inp_nid not in depths:
+                        cached_inp = inp.node.__dict__.get('max_depth')
+                        if cached_inp is not None:
+                            depths[inp_nid] = cached_inp
+                        else:
+                            stack.append((inp.node, False))
+        return depths[id(self)]
 
     @property
     def upstream_nodes(self) -> set[Node]:

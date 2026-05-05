@@ -81,7 +81,7 @@ def remove_split(
             stack.append((stream, True))
             for _, inp in sorted(
                 enumerate(stream.node.inputs),
-                key=lambda x: -len(x[1].node.upstream_nodes),
+                key=lambda x: -x[1].node.max_depth,
             ):
                 if inp not in mapping:
                     stack.append((inp, False))
@@ -178,7 +178,7 @@ def add_split(
             stack.append((stream, par_node, par_idx, True))
             for idx, inp in sorted(
                 enumerate(stream.node.inputs),
-                key=lambda x: -len(x[1].node.upstream_nodes),
+                key=lambda x: -x[1].node.max_depth,
             ):
                 inp_key = (inp, stream.node, idx)
                 if inp_key not in mapping:
