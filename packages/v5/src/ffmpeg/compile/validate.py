@@ -70,10 +70,9 @@ def remove_split(
 
         if processed:
             # All inputs are in mapping; rebuild the node with remapped inputs
-            inputs = {idx: mapping[inp] for idx, inp in enumerate(stream.node.inputs)}
             new_node = replace(
                 stream.node,
-                inputs=tuple(inputs[i] for i in sorted(inputs)),
+                inputs=tuple(mapping[inp] for inp in stream.node.inputs),
             )
             mapping[stream] = replace(stream, node=new_node)
         else:
@@ -144,14 +143,12 @@ def add_split(
 
         if processed:
             # All inputs have been processed; rebuild node with remapped inputs
-            inputs: dict[int, Stream] = {}
-            for idx, inp in enumerate(stream.node.inputs):
-                inp_key = (inp, stream.node, idx)
-                inputs[idx] = mapping.get(inp_key, inp)
-
             new_node = replace(
                 stream.node,
-                inputs=tuple(inputs[i] for i in sorted(inputs)),
+                inputs=tuple(
+                    mapping.get((inp, stream.node, idx), inp)
+                    for idx, inp in enumerate(stream.node.inputs)
+                ),
             )
             new_stream = replace(stream, node=new_node)
 
@@ -160,7 +157,7 @@ def add_split(
             if num < 2:
                 mapping[key] = new_stream
             elif isinstance(stream.node, InputNode):
-                for _n, (out_node, out_idx) in enumerate(context.get_outgoing_nodes(stream)):
+                for out_node, out_idx in context.get_outgoing_nodes(stream):
                     mapping[(stream, out_node, out_idx)] = new_stream
             elif isinstance(new_stream, VideoStream):
                 split_node = new_stream.split(outputs=num)
