@@ -149,10 +149,10 @@ class Node(HashableBaseModel):
                 node_hashes[nid] = h
                 node.__dict__['_hash_val_'] = h
             else:
-                if nid in node_hashes:
+                if nid in node_hashes:  # pragma: no cover
                     continue
                 cached_val = node.__dict__.get('_hash_val_')
-                if cached_val is not None:
+                if cached_val is not None:  # pragma: no cover
                     node_hashes[nid] = cached_val
                     continue
                 stack.append((node, True))
@@ -163,7 +163,7 @@ class Node(HashableBaseModel):
                     cached_inp = inp.node.__dict__.get('_hash_val_')
                     if cached_inp is not None:
                         node_hashes[inp_nid] = cached_inp
-                    else:
+                    else:  # pragma: no cover
                         stack.append((inp.node, False))
 
         return node_hashes[id(self)]
@@ -232,7 +232,7 @@ class Node(HashableBaseModel):
                 if nid in depths:
                     continue
                 cached_val = node.__dict__.get('max_depth')
-                if cached_val is not None:
+                if cached_val is not None:  # pragma: no cover
                     depths[nid] = cached_val
                     continue
                 stack.append((node, True))

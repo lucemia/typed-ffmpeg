@@ -52,3 +52,13 @@ def test_chain_sizes(n: int):
     stream = build_drawtext_chain(n)
     args = compile_as_list(stream)
     assert "-filter_complex" in args
+
+
+def test_upstream_nodes():
+    """upstream_nodes must return all ancestors iteratively."""
+    f = input("in.mp4")
+    filtered = f.video.drawtext(text="hi", x="0", y="0", fontsize=12, fontcolor="white")
+    out = filtered.output(filename="out.mp4")
+    nodes = out.node.upstream_nodes
+    # InputNode + FilterNode + OutputNode
+    assert len(nodes) == 3
