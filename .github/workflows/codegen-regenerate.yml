@@ -2,6 +2,10 @@ name: CodeGen - Regenerate Bindings
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'src/scripts/code_gen/templates/**'
 
 permissions:
   contents: write
@@ -137,6 +141,13 @@ jobs:
           else
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
+
+      - name: Run pre-commit hooks on generated files
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          pip install uv
+          uvx prek run --all-files || true
+          uvx prek run --all-files
 
       - name: Create branch and PR
         if: steps.changes.outputs.changed == 'true'
