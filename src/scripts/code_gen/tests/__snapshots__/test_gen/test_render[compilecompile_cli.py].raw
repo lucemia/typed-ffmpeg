@@ -366,16 +366,38 @@ def parse_input(
 
 
 _UNESCAPED_EQ = re.compile(r"(?<!\\)=")
-_SEP_PATTERNS: dict[str, re.Pattern[str]] = {}
 
 
 def _split_unescaped(text: str, sep: str) -> list[str]:
-    """Split text on unescaped separator character."""
-    pattern = _SEP_PATTERNS.get(sep)
-    if pattern is None:
-        pattern = re.compile(r"(?<!\\)" + re.escape(sep))
-        _SEP_PATTERNS[sep] = pattern
-    return pattern.split(text)
+    """Split *text* on *sep*, respecting single-quoted sections and backslash escapes.
+
+    Single-quoted strings (FFmpeg filter-option escaping) protect their content
+    from being split, matching the behaviour of the TypeScript implementation.
+    """
+    parts: list[str] = []
+    current: list[str] = []
+    in_single_quote = False
+    i = 0
+    while i < len(text):
+        ch = text[i]
+        if ch == "\\" and not in_single_quote:
+            # Backslash escapes the next character; keep both.
+            current.append(ch)
+            i += 1
+            if i < len(text):
+                current.append(text[i])
+        elif ch == "'":
+            in_single_quote = not in_single_quote
+            current.append(ch)
+        elif not in_single_quote and text[i : i + len(sep)] == sep:
+            parts.append("".join(current))
+            current = []
+            i += len(sep) - 1
+        else:
+            current.append(ch)
+        i += 1
+    parts.append("".join(current))
+    return parts
 
 
 def _parse_filter_params(
