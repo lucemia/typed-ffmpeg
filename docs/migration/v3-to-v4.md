@@ -69,7 +69,9 @@ out = ffmpeg.input("input.mp4").hflip().output("output.mp4")
 out.run()
 ```
 
-## Version-Specific Imports (Advanced)
+## Import Path Changes
+
+### Version-specific submodules (Advanced)
 
 In v3, you could import from version submodules (`ffmpeg.v6.filters`). In v4, install the specific package and import from the top-level `ffmpeg` namespace:
 
@@ -79,6 +81,18 @@ from ffmpeg.v6.filters import concat
 
 # v4 style: install typed-ffmpeg-v6, then import normally
 from ffmpeg.filters import concat
+```
+
+### Stream classes
+
+In v3, stream classes were re-exported from `ffmpeg.streams`. In v4, import them directly from `ffmpeg` instead:
+
+```python
+# v3 style (no longer supported in v4 — causes circular import)
+from ffmpeg.streams import AudioStream, VideoStream, AVStream
+
+# v4 style
+from ffmpeg import AudioStream, VideoStream, AVStream
 ```
 
 ## Alpha Status

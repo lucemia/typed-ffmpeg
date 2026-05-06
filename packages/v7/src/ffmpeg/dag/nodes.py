@@ -1,3 +1,4 @@
+# NOTE: this file is auto-generated, do not modify
 """DAG node definitions for FFmpeg filter graphs."""
 
 from __future__ import annotations

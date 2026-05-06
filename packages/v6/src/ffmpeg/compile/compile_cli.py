@@ -1,3 +1,4 @@
+# NOTE: this file is auto-generated, do not modify
 """
 Compiles FFmpeg filter graphs into command-line arguments.
 
