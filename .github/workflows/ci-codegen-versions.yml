@@ -162,7 +162,9 @@ jobs:
 
   create-pr:
     needs: generate
-    if: github.event_name == 'workflow_dispatch' && github.event.inputs.create_pr == 'true'
+    if: >-
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.create_pr == 'true') ||
+      github.event_name == 'push'
     runs-on: ubuntu-latest
     permissions:
       contents: write
