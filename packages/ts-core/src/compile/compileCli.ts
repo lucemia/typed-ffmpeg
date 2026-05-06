@@ -302,10 +302,37 @@ function shlexSplit(cli: string): string[] {
   return tokens;
 }
 
-/** Split text on an unescaped separator character. */
+/**
+ * Split text on an unescaped separator character.
+ * Respects single-quoted sections (FFmpeg filter-option escaping) and
+ * backslash-escaped characters — neither terminates a token.
+ */
 function splitUnescaped(text: string, sep: string): string[] {
-  const escaped = sep.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  return text.split(new RegExp(`(?<!\\\\)${escaped}`));
+  const parts: string[] = [];
+  let current = "";
+  let inSingleQuote = false;
+
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+
+    if (ch === "\\" && !inSingleQuote) {
+      // Backslash escapes the next character; keep both in the current token.
+      current += ch;
+      if (i + 1 < text.length) current += text[++i];
+    } else if (ch === "'") {
+      inSingleQuote = !inSingleQuote;
+      current += ch;
+    } else if (!inSingleQuote && text.startsWith(sep, i)) {
+      parts.push(current);
+      current = "";
+      i += sep.length - 1;
+    } else {
+      current += ch;
+    }
+  }
+
+  parts.push(current);
+  return parts;
 }
 
 /**
