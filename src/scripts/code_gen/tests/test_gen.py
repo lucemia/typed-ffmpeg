@@ -48,12 +48,14 @@ def test_render(snapshot: SnapshotAssertion) -> None:
     ]
 
     with tempfile.TemporaryDirectory() as outpath:
+        outpath_obj = Path(outpath)
         outputs = render(
-            filters=filters, options=[], codecs=[], muxers=[], outpath=Path(outpath)
+            filters=filters, options=[], codecs=[], muxers=[], outpath=outpath_obj
         )
 
         for outfile in outputs:
+            name = str(outfile.relative_to(outpath_obj))
             assert (
-                snapshot(name=outfile.name, extension_class=SingleFileSnapshotExtension)
+                snapshot(name=name, extension_class=SingleFileSnapshotExtension)
                 == outfile.read_bytes()
             )
