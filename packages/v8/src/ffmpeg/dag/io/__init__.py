@@ -12,9 +12,11 @@ if TYPE_CHECKING:
 def __getattr__(name: str) -> object:
     if name == "input":
         from ._input import input
+
         return input
     if name == "output":
         from ._output import output
+
         return output
     raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 

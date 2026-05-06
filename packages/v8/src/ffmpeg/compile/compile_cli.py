@@ -464,7 +464,7 @@ def parse_filter_complex(
         chain_input_labels = re.findall(
             r"\[([^\[\]]+)\]", leading_match.group("inputs") or ""
         )
-        rest = filter_chain[len(leading_match.group(0)):]
+        rest = filter_chain[len(leading_match.group(0)) :]
 
         # Extract trailing [label] groups (output labels for this chain)
         trailing_match = re.search(r"(?P<outputs>(\[[^\[\]]+\])*)$", rest)
@@ -550,7 +550,9 @@ def parse_filter_complex(
                 }
             default_kwargs.update(filter_params)
 
-            filter_node = filter_node_factory(filter_def, *input_streams, **default_kwargs)
+            filter_node = filter_node_factory(
+                filter_def, *input_streams, **default_kwargs
+            )
 
             for idx, (output_label, output_typing) in enumerate(
                 zip(current_output_labels, filter_node.output_typings)
@@ -565,9 +567,7 @@ def parse_filter_complex(
                             node=filter_node, index=idx
                         )
                     case _:
-                        raise FFMpegValueError(
-                            f"Unknown stream type: {output_typing}"
-                        )
+                        raise FFMpegValueError(f"Unknown stream type: {output_typing}")
 
             current_input_labels = current_output_labels
 
@@ -655,7 +655,9 @@ def parse(cli: str) -> Stream:
     global_params, remaining_tokens = parse_global(tokens, ffmpeg_options)
 
     index = len(remaining_tokens) - 1 - remaining_tokens[::-1].index("-i")
-    input_streams = parse_input(remaining_tokens[: index + 2], ffmpeg_options, av_options)
+    input_streams = parse_input(
+        remaining_tokens[: index + 2], ffmpeg_options, av_options
+    )
     remaining_tokens = remaining_tokens[index + 2 :]
 
     filter_complex_parts: list[str] = []
@@ -688,7 +690,9 @@ def parse(cli: str) -> Stream:
     filterable_streams: dict[str, FilterableStream] = {}
     if filter_complex_parts:
         combined = ";".join(filter_complex_parts)
-        filterable_streams = parse_filter_complex(combined, input_streams, ffmpeg_filters)
+        filterable_streams = parse_filter_complex(
+            combined, input_streams, ffmpeg_filters
+        )
 
     # Inject implicit -map tokens (from -vf/-af) before the first output filename
     if extra_map_tokens:

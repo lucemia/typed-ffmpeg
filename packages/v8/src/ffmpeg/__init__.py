@@ -10,7 +10,17 @@ __version__ = "8.0.0"
 from ffmpeg_core.ffprobe.probe import probe, probe_obj
 
 # Make commonly used modules easily accessible
-from . import codecs, compile, dag, expressions, filters, formats, options, sources, streams
+from . import (
+    codecs,
+    compile,
+    dag,
+    expressions,
+    filters,
+    formats,
+    options,
+    sources,
+    streams,
+)
 from .base import afilter, filter_multi_output, merge_outputs, vfilter
 from .dag import Stream
 from .dag.io import input, output
