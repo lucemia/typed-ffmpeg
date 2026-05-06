@@ -33,10 +33,9 @@ repos:
     # Ruff version - keep in sync with pyproject.toml and uv.lock
     rev: v0.12.2
     hooks:
-      # Run the formatter.
+      # Run the formatter (includes generated bindings).
       - id: ruff-format
         files: ^(src/|packages/)
-        exclude: ^packages/v[5678]/src/ffmpeg/
       # Run the linter.
       - id: ruff
         args: [--fix, --unsafe-fixes]
