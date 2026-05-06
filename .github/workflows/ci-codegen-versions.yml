@@ -5,7 +5,7 @@ permissions:
 
 on:
   push:
-    branches: [main, v4]
+    branches: [main]
     paths:
       - '.github/workflows/ci-codegen-versions.yml'
       - 'src/scripts/code_gen/**'
@@ -15,7 +15,7 @@ on:
       - 'src/scripts/manual/**'
       - 'packages/core/src/ffmpeg_core/common/**'
   pull_request:
-    branches: [main, v4]
+    branches: [main]
     paths:
       - '.github/workflows/ci-codegen-versions.yml'
       - 'src/scripts/code_gen/**'
