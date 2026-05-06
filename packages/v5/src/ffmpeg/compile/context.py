@@ -235,7 +235,7 @@ class DAGContext:
         node_index: dict[type[Node], int] = defaultdict(int)
         node_ids: dict[Node, int] = {}
 
-        for node in self.all_nodes:
+        for node in sorted(self.nodes, key=lambda node: node.max_depth):
             node_ids[node] = node_index[node.__class__]
             node_index[node.__class__] += 1
 
@@ -262,7 +262,7 @@ class DAGContext:
         filter_node_index = 0
         node_labels: dict[Node, str] = {}
 
-        for node in self.all_nodes:
+        for node in sorted(self.nodes, key=lambda node: node.max_depth):
             if isinstance(node, InputNode):
                 node_labels[node] = str(input_node_index)
                 input_node_index += 1

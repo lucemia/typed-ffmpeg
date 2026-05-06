@@ -170,7 +170,6 @@ def add_split(
                     mapping[(stream, out_node, out_idx)] = split_node.audio(n)
             else:
                 raise FFMpegValueError(f"unsupported stream type: {stream}")
-
         else:
             # Push self as post-process marker, then push unprocessed inputs
             stack.append((stream, par_node, par_idx, True))

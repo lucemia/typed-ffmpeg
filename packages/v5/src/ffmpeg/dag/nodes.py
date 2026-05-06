@@ -12,9 +12,9 @@ from ..exceptions import FFMpegTypeError, FFMpegValueError
 from ..schema import StreamType
 from ..utils.frozendict import FrozenDict
 from ..utils.typing import override
-from .base_streams import FilterableStream
 from .global_runnable.runnable import GlobalRunable
 from .schema import Node, Stream
+from .base_streams import FilterableStream
 
 if TYPE_CHECKING:
     from ..streams.audio import AudioStream
