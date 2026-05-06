@@ -25,6 +25,7 @@ from collections import defaultdict
 from collections.abc import Mapping
 from dataclasses import replace
 
+from ..base import input, merge_outputs, output
 from ffmpeg_core.common.cache import load
 from ffmpeg_core.common.schema import (
     FFMpegAVOption,
@@ -33,8 +34,6 @@ from ffmpeg_core.common.schema import (
     FFMpegOption,
     StreamType,
 )
-
-from ..base import input, merge_outputs, output
 from ..dag.factory import filter_node_factory
 from ..dag.nodes import (
     FilterableStream,
