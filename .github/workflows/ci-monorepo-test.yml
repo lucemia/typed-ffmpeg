@@ -33,9 +33,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       
       - name: Install FFmpeg
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y ffmpeg
+        uses: FedericoCarboni/setup-ffmpeg@v3
       
       - name: Install core package
         run: |
@@ -109,9 +107,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install FFmpeg
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y ffmpeg
+        uses: FedericoCarboni/setup-ffmpeg@v3
 
       - name: Install packages and run shared tests
         run: |
@@ -148,9 +144,7 @@ jobs:
           python-version: '3.12'
 
       - name: Install FFmpeg
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y ffmpeg
+        uses: FedericoCarboni/setup-ffmpeg@v3
 
       - name: Test imports and build
         run: |

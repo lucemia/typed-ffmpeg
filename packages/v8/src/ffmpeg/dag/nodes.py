@@ -34,6 +34,8 @@ class FilterNode(Node):
     output streams and defines the parameters for the filter operation.
     """
 
+    __hash__ = Node.__hash__
+
     name: str
     """
     The name of the filter as used in FFmpeg (e.g., 'scale', 'overlay', 'amix')
@@ -180,6 +182,8 @@ class InputNode(Node):
     in the file, which can then be processed by filters.
     """
 
+    __hash__ = Node.__hash__
+
     filename: str
     """
     The path to the input media file
@@ -287,6 +291,8 @@ class OutputNode(Node):
     to an output file and specifies output options like codecs and formats.
     """
 
+    __hash__ = Node.__hash__
+
     filename: str
     """
     The path to the output media file
@@ -380,6 +386,8 @@ class GlobalNode(Node):
     rather than to specific inputs or outputs. These include options like
     overwrite (-y), log level, and other general FFmpeg settings.
     """
+
+    __hash__ = Node.__hash__
 
     inputs: tuple[OutputStream, ...]
     """The output streams this node applies to"""

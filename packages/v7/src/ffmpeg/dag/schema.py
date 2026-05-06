@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, replace
+from dataclasses import dataclass, fields, replace
 from functools import cached_property
 from typing import Literal
 
@@ -110,24 +110,63 @@ class Node(HashableBaseModel):
             ValueError: If the graph is not a DAG
 
         """
-        # Validate the DAG
-        passed = set()
-        nodes = [self]
-        output = {}
-
-        while nodes:
-            node = nodes.pop()
-
-            if node in passed:
-                continue
-            passed.add(node)
-
-            nodes.extend(k.node for k in node.inputs)
-
-            output[node.hex] = {k.node.hex for k in node.inputs}
-
+        # Frozen dataclass instances cannot form cycles (inputs must be fully
+        # constructed before a node can reference them).  Checking only the
+        # immediate adjacency is sufficient — all upstream subgraphs were
+        # already validated when their nodes were created.
+        output = {self.hex: {k.node.hex for k in self.inputs}}
+        for k in self.inputs:
+            if k.node.hex not in output:
+                output[k.node.hex] = set()
         if not is_dag(output):
             raise ValueError(f"Graph is not a DAG: {output}")  # pragma: no cover
+
+    def __hash__(self) -> int:
+        # Return cached hash if already computed (writing to __dict__ bypasses frozen)
+        cached = self.__dict__.get('_hash_val_')
+        if cached is not None:
+            return cached
+
+        # Iterative post-order traversal: compute structural hash bottom-up to avoid
+        # Python recursion limits on deep graphs (1000+ filters).
+        node_hashes: dict[int, int] = {}
+        stack: list[tuple[Node, bool]] = [(self, False)]
+
+        while stack:
+            node, processed = stack.pop()
+            nid = id(node)
+            if processed:
+                own_fields = tuple(
+                    getattr(node, f.name)
+                    for f in fields(node)
+                    if f.name != 'inputs'
+                )
+                stream_hashes = tuple(
+                    (node_hashes[id(inp.node)], inp.index, inp.optional, inp.__class__)
+                    for inp in node.inputs
+                )
+                h = hash((node.__class__,) + own_fields + stream_hashes)
+                node_hashes[nid] = h
+                node.__dict__['_hash_val_'] = h
+            else:
+                if nid in node_hashes:  # pragma: no cover
+                    continue
+                cached_val = node.__dict__.get('_hash_val_')
+                if cached_val is not None:  # pragma: no cover
+                    node_hashes[nid] = cached_val
+                    continue
+                stack.append((node, True))
+                for inp in node.inputs:
+                    inp_nid = id(inp.node)
+                    if inp_nid in node_hashes:
+                        continue
+                    cached_inp = inp.node.__dict__.get('_hash_val_')
+                    if cached_inp is not None:
+                        node_hashes[inp_nid] = cached_inp
+                    else:  # pragma: no cover
+                        stack.append((inp.node, False))
+
+        return node_hashes[id(self)]
 
     def repr(self) -> str:
         """
@@ -168,16 +207,44 @@ class Node(HashableBaseModel):
 
         return replace(self, inputs=tuple(inputs))
 
-    @property
+    @cached_property
     def max_depth(self) -> int:
         """
-        Get the maximum depth of the node.
+        Get the maximum depth of the node (longest path from any input).
+
+        The result is cached.  The iterative computation also pre-populates the
+        cache for all upstream nodes so that subsequent calls are O(1).
 
         Returns:
             The maximum depth of the node.
 
         """
-        return max((i.node.max_depth for i in self.inputs), default=0) + 1
+        depths: dict[int, int] = {}  # id(node) -> depth
+        stack: list[tuple[Node, bool]] = [(self, False)]
+        while stack:
+            node, processed = stack.pop()
+            nid = id(node)
+            if processed:
+                d = max((depths[id(i.node)] for i in node.inputs), default=0) + 1
+                depths[nid] = d
+                node.__dict__['max_depth'] = d  # pre-populate cached_property cache
+            else:
+                if nid in depths:
+                    continue
+                cached_val = node.__dict__.get('max_depth')
+                if cached_val is not None:  # pragma: no cover
+                    depths[nid] = cached_val
+                    continue
+                stack.append((node, True))
+                for inp in node.inputs:
+                    inp_nid = id(inp.node)
+                    if inp_nid not in depths:
+                        cached_inp = inp.node.__dict__.get('max_depth')
+                        if cached_inp is not None:
+                            depths[inp_nid] = cached_inp
+                        else:
+                            stack.append((inp.node, False))
+        return depths[id(self)]
 
     @property
     def upstream_nodes(self) -> set[Node]:
@@ -188,10 +255,14 @@ class Node(HashableBaseModel):
             The upstream nodes of the node.
 
         """
-        output = {self}
-        for input in self.inputs:
-            output |= input.node.upstream_nodes
-
+        output: set[Node] = set()
+        stack: list[Node] = [self]
+        while stack:
+            current = stack.pop()
+            if current not in output:
+                output.add(current)
+                for inp in current.inputs:
+                    stack.append(inp.node)
         return output
 
     def view(self, format: Literal["png", "svg", "dot"] = "png") -> str:

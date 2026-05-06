@@ -50,11 +50,12 @@ def _remove_duplicates(seq: Iterable[T]) -> list[T]:
 
 def _collect(node: Node) -> tuple[list[Node], list[Stream]]:
     """
-    Recursively collect all nodes and streams in the upstream path of a given node.
+    Iteratively collect all nodes and streams in the upstream path of a given node.
 
     This function traverses the graph starting from the given node and collects
     all nodes and streams that are upstream (input sources) to the node. The
-    traversal is performed recursively to ensure all dependencies are captured.
+    traversal is performed iteratively using an explicit stack to avoid hitting
+    Python's recursion limit with large filter graphs (1000+ filters).
 
     Args:
         node: The starting node to collect dependencies from
@@ -65,13 +66,19 @@ def _collect(node: Node) -> tuple[list[Node], list[Stream]]:
         - A list of all streams connecting these nodes
 
     """
-    nodes: list[Node] = [node]
-    streams: list[Stream] = list(node.inputs)
+    nodes: list[Node] = []
+    streams: list[Stream] = []
+    stack: list[Node] = [node]
 
-    for stream in node.inputs:
-        _nodes, _streams = _collect(stream.node)
-        nodes += _nodes
-        streams += _streams
+    while stack:
+        current = stack.pop()
+        nodes.append(current)
+        for stream in current.inputs:
+            streams.append(stream)
+        # Push in reverse so the first input is popped (processed) first,
+        # matching the left-to-right depth-first order of the original recursive version.
+        for stream in reversed(current.inputs):
+            stack.append(stream.node)
 
     return nodes, streams
 
@@ -149,7 +156,7 @@ class DAGContext:
             A sorted list of all nodes in the graph
 
         """
-        return sorted(self.nodes, key=lambda node: len(node.upstream_nodes))
+        return sorted(self.nodes, key=lambda node: node.max_depth)
 
     @cached_property
     def all_streams(self) -> list[Stream]:
@@ -167,7 +174,7 @@ class DAGContext:
         """
         return sorted(
             self.streams,
-            key=lambda stream: (len(stream.node.upstream_nodes), stream.index),
+            key=lambda stream: (stream.node.max_depth, stream.index),
         )
 
     @cached_property
@@ -227,7 +234,7 @@ class DAGContext:
         node_index: dict[type[Node], int] = defaultdict(int)
         node_ids: dict[Node, int] = {}
 
-        for node in sorted(self.nodes, key=lambda node: node.max_depth):
+        for node in self.all_nodes:
             node_ids[node] = node_index[node.__class__]
             node_index[node.__class__] += 1
 
@@ -254,7 +261,7 @@ class DAGContext:
         filter_node_index = 0
         node_labels: dict[Node, str] = {}
 
-        for node in sorted(self.nodes, key=lambda node: node.max_depth):
+        for node in self.all_nodes:
             if isinstance(node, InputNode):
                 node_labels[node] = str(input_node_index)
                 input_node_index += 1

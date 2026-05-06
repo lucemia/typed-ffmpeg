@@ -26,18 +26,15 @@ def remove_split(
     """
     Remove all split nodes from the graph to prepare for reconstruction.
 
-    This function performs the first step of graph repair by recursively traversing
+    This function performs the first step of graph repair by iteratively traversing
     the graph and removing all existing split/asplit nodes. This creates a clean
     graph without any stream splitting, which will then be reconstructed with proper
     split nodes where needed.
 
-    The function works recursively, processing each node's inputs and creating a
-    new graph structure with the split nodes removed.
-
     Args:
         current_stream: The starting stream to process
         mapping: Dictionary mapping original streams to their new versions without splits
-                (used for recursion, pass None for initial call)
+                (used for memoization)
 
     Returns:
         A tuple containing:
@@ -45,48 +42,50 @@ def remove_split(
         - A mapping dictionary relating original streams to their new versions
 
     """
-    # remove all split nodes
-    # add split nodes to the graph
     if mapping is None:
         mapping = {}
 
-    if current_stream in mapping:
-        return mapping[current_stream], mapping
+    # Iterative post-order DFS: process children before parents
+    stack: list[tuple[Stream, bool]] = [(current_stream, False)]
 
-    if not current_stream.node.inputs:
-        mapping[current_stream] = current_stream
-        return current_stream, mapping
+    while stack:
+        stream, processed = stack.pop()
 
-    if isinstance(current_stream.node, FilterNode):
-        # if the current node is a split node, we need to remove it
-        if current_stream.node.name in ("split", "asplit"):
-            new_stream, _mapping = remove_split(
-                current_stream=current_stream.node.inputs[0], mapping=mapping
+        if stream in mapping:
+            continue
+
+        if not stream.node.inputs:
+            mapping[stream] = stream
+            continue
+
+        if isinstance(stream.node, FilterNode) and stream.node.name in ("split", "asplit"):
+            inp = stream.node.inputs[0]
+            if inp in mapping:
+                mapping[stream] = mapping[inp]
+            else:
+                # Re-push self, then process input first
+                stack.append((stream, False))
+                stack.append((inp, False))
+            continue
+
+        if processed:
+            # All inputs are in mapping; rebuild the node with remapped inputs
+            new_node = replace(
+                stream.node,
+                inputs=tuple(mapping[inp] for inp in stream.node.inputs),
             )
-            mapping[current_stream] = mapping[current_stream.node.inputs[0]]
-            return mapping[current_stream.node.inputs[0]], mapping
+            mapping[stream] = replace(stream, node=new_node)
+        else:
+            # Push self as post-process marker, then push unprocessed inputs
+            stack.append((stream, True))
+            for _, inp in sorted(
+                enumerate(stream.node.inputs),
+                key=lambda x: -x[1].node.max_depth,
+            ):
+                if inp not in mapping:
+                    stack.append((inp, False))
 
-    inputs = {}
-    for idx, input_stream in sorted(
-        enumerate(current_stream.node.inputs),
-        key=lambda idx_stream: -len(idx_stream[1].node.upstream_nodes),
-    ):
-        new_stream, _mapping = remove_split(
-            current_stream=input_stream, mapping=mapping
-        )
-        inputs[idx] = new_stream
-        mapping |= _mapping
-
-    new_node = replace(
-        current_stream.node,
-        inputs=tuple(
-            stream for idx, stream in sorted(inputs.items(), key=lambda x: x[0])
-        ),
-    )
-    new_stream = replace(current_stream, node=new_node)
-
-    mapping[current_stream] = new_stream
-    return new_stream, mapping
+    return mapping[current_stream], mapping
 
 
 def add_split(
@@ -110,11 +109,10 @@ def add_split(
 
     Args:
         current_stream: The stream to process for potential splitting
-        down_node: The downstream node that uses current_stream as input (for recursion)
-        down_index: The input index in down_node where current_stream connects (for recursion)
+        down_node: The downstream node that uses current_stream as input
+        down_index: The input index in down_node where current_stream connects
         context: The DAG context containing graph relationship information
-        mapping: Dictionary tracking the transformations (used for recursion,
-                 pass None for initial call)
+        mapping: Dictionary tracking the transformations
 
     Returns:
         Stream: The new stream (possibly from a split node output) for the specified downstream connection
@@ -130,56 +128,59 @@ def add_split(
     if mapping is None:
         mapping = {}
 
-    if (current_stream, down_node, down_index) in mapping:
-        return mapping[(current_stream, down_node, down_index)], mapping
+    # Iterative post-order DFS
+    # Stack entries: (stream, parent_node, parent_idx, processed)
+    stack: list[tuple[Stream, Node | None, int | None, bool]] = [
+        (current_stream, down_node, down_index, False)
+    ]
 
-    inputs = {}
+    while stack:
+        stream, par_node, par_idx, processed = stack.pop()
 
-    for idx, input_stream in sorted(
-        enumerate(current_stream.node.inputs),
-        key=lambda idx_stream: -len(idx_stream[1].node.upstream_nodes),
-    ):
-        new_stream, _mapping = add_split(
-            current_stream=input_stream,
-            down_node=current_stream.node,
-            down_index=idx,
-            mapping=mapping,
-            context=context,
-        )
-        inputs[idx] = new_stream
-        mapping |= _mapping
+        key = (stream, par_node, par_idx)
+        if key in mapping:
+            continue
 
-    new_node = replace(
-        current_stream.node,
-        inputs=tuple(
-            stream for idx, stream in sorted(inputs.items(), key=lambda x: x[0])
-        ),
-    )
-    new_stream = replace(current_stream, node=new_node)
+        if processed:
+            # All inputs have been processed; rebuild node with remapped inputs
+            new_node = replace(
+                stream.node,
+                inputs=tuple(
+                    mapping.get((inp, stream.node, idx), inp)
+                    for idx, inp in enumerate(stream.node.inputs)
+                ),
+            )
+            new_stream = replace(stream, node=new_node)
 
-    num = len(context.get_outgoing_nodes(current_stream))
-    if num < 2:
-        mapping[(current_stream, down_node, down_index)] = new_stream
-        return new_stream, mapping
+            num = len(context.get_outgoing_nodes(stream))
 
-    if isinstance(current_stream.node, InputNode):
-        for idx, (node, index) in enumerate(context.get_outgoing_nodes(current_stream)):
-            # if the current node is InputNode, we don't need to split it
-            mapping[(current_stream, node, index)] = new_stream
-        return new_stream, mapping
+            if num < 2:
+                mapping[key] = new_stream
+            elif isinstance(stream.node, InputNode):
+                for out_node, out_idx in context.get_outgoing_nodes(stream):
+                    mapping[(stream, out_node, out_idx)] = new_stream
+            elif isinstance(new_stream, VideoStream):
+                split_node = new_stream.split(outputs=num)
+                for n, (out_node, out_idx) in enumerate(context.get_outgoing_nodes(stream)):
+                    mapping[(stream, out_node, out_idx)] = split_node.video(n)
+            elif isinstance(new_stream, AudioStream):
+                split_node = new_stream.asplit(outputs=num)
+                for n, (out_node, out_idx) in enumerate(context.get_outgoing_nodes(stream)):
+                    mapping[(stream, out_node, out_idx)] = split_node.audio(n)
+            else:
+                raise FFMpegValueError(f"unsupported stream type: {stream}")
+        else:
+            # Push self as post-process marker, then push unprocessed inputs
+            stack.append((stream, par_node, par_idx, True))
+            for idx, inp in sorted(
+                enumerate(stream.node.inputs),
+                key=lambda x: -x[1].node.max_depth,
+            ):
+                inp_key = (inp, stream.node, idx)
+                if inp_key not in mapping:
+                    stack.append((inp, stream.node, idx, False))
 
-    if isinstance(new_stream, VideoStream):
-        split_node = new_stream.split(outputs=num)
-        for idx, (node, index) in enumerate(context.get_outgoing_nodes(current_stream)):
-            mapping[(current_stream, node, index)] = split_node.video(idx)
-        return mapping[(current_stream, down_node, down_index)], mapping
-    elif isinstance(new_stream, AudioStream):
-        split_node = new_stream.asplit(outputs=num)
-        for idx, (node, index) in enumerate(context.get_outgoing_nodes(current_stream)):
-            mapping[(current_stream, node, index)] = split_node.audio(idx)
-        return mapping[(current_stream, down_node, down_index)], mapping
-    else:
-        raise FFMpegValueError(f"unsupported stream type: {current_stream}")
+    return mapping[(current_stream, down_node, down_index)], mapping
 
 
 def fix_graph(stream: Stream) -> Stream:
