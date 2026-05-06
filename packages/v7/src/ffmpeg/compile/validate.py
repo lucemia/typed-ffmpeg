@@ -1,3 +1,4 @@
+# NOTE: this file is auto-generated, do not modify
 """
 Graph validation and transformation for FFmpeg filter chains.
 

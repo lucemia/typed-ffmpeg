@@ -1491,6 +1491,13 @@
   },
   {
     "__class__": "FFMpegMuxer",
+    "description": "audiotoolbox    AudioToolbox output device",
+    "flags": "E",
+    "name": "d",
+    "options": []
+  },
+  {
+    "__class__": "FFMpegMuxer",
     "description": "AVI (Audio Video Interleaved)",
     "flags": "E",
     "name": "avi",
@@ -2783,13 +2790,6 @@
     "description": "PCM 64-bit floating-point little-endian",
     "flags": "E",
     "name": "f64le",
-    "options": []
-  },
-  {
-    "__class__": "FFMpegMuxer",
-    "description": "fbdev           Linux framebuffer",
-    "flags": "E",
-    "name": "d",
     "options": []
   },
   {
@@ -7479,13 +7479,6 @@
   },
   {
     "__class__": "FFMpegMuxer",
-    "description": "oss             OSS (Open Sound System) playback",
-    "flags": "E",
-    "name": "d",
-    "options": []
-  },
-  {
-    "__class__": "FFMpegMuxer",
     "description": "PSP MP4 (MPEG-4 Part 14)",
     "flags": "E",
     "name": "psp",
@@ -9273,13 +9266,6 @@
   },
   {
     "__class__": "FFMpegMuxer",
-    "description": "video4linux2,v4l2 Video4Linux2 output device",
-    "flags": "E",
-    "name": "d",
-    "options": []
-  },
-  {
-    "__class__": "FFMpegMuxer",
     "description": "MPEG-2 PS (VOB)",
     "flags": "E",
     "name": "vob",
@@ -10628,6 +10614,13 @@
         "type": "video_rate"
       }
     ]
+  },
+  {
+    "__class__": "FFMpegDemuxer",
+    "description": "avfoundation    AVFoundation input device",
+    "flags": "D",
+    "name": "d",
+    "options": []
   },
   {
     "__class__": "FFMpegDemuxer",
@@ -12111,13 +12104,6 @@
         "type": "channel_layout"
       }
     ]
-  },
-  {
-    "__class__": "FFMpegDemuxer",
-    "description": "fbdev           Linux framebuffer",
-    "flags": "D",
-    "name": "d",
-    "options": []
   },
   {
     "__class__": "FFMpegDemuxer",
@@ -13719,13 +13705,6 @@
   },
   {
     "__class__": "FFMpegDemuxer",
-    "description": "kmsgrab         KMS screen capture",
-    "flags": "D",
-    "name": "d",
-    "options": []
-  },
-  {
-    "__class__": "FFMpegDemuxer",
     "description": "KUX (YouKu)",
     "flags": "D",
     "name": "kux",
@@ -14529,13 +14508,6 @@
         "type": "int"
       }
     ]
-  },
-  {
-    "__class__": "FFMpegDemuxer",
-    "description": "oss             OSS (Open Sound System) capture",
-    "flags": "D",
-    "name": "d",
-    "options": []
   },
   {
     "__class__": "FFMpegDemuxer",
@@ -17681,13 +17653,6 @@
   },
   {
     "__class__": "FFMpegDemuxer",
-    "description": "video4linux2,v4l2 Video4Linux2 device grab",
-    "flags": "D",
-    "name": "d",
-    "options": []
-  },
-  {
-    "__class__": "FFMpegDemuxer",
     "description": "Vividas VIV",
     "flags": "D",
     "name": "vividas",
@@ -18062,13 +18027,6 @@
     "description": "Psion 3 audio",
     "flags": "D",
     "name": "wve",
-    "options": []
-  },
-  {
-    "__class__": "FFMpegDemuxer",
-    "description": "x11grab         X11 screen capture, using XCB",
-    "flags": "D",
-    "name": "d",
     "options": []
   },
   {

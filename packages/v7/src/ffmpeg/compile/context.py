@@ -1,3 +1,4 @@
+# NOTE: this file is auto-generated, do not modify
 """
 Context management for FFmpeg filter graph traversal and manipulation.
 
