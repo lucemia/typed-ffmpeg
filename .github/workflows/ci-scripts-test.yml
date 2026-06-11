@@ -39,7 +39,7 @@ jobs:
           pytest src/scripts --cov=./src/scripts --cov-report=xml
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v6
+        uses: codecov/codecov-action@v7
         with:
           file: ./coverage.xml
           flags: scripts,python-3.10

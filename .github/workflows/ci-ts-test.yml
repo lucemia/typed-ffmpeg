@@ -49,7 +49,7 @@ jobs:
         run: sed -i 's|SF:src/|SF:packages/ts-core/src/|g' packages/ts-core/coverage/lcov.info
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v6
+        uses: codecov/codecov-action@v7
         with:
           files: ./packages/ts-core/coverage/lcov.info
           flags: typescript
