@@ -555,7 +555,7 @@ requires-dist = [
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=7.0" },
     { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=4.0" },
     { name = "ruff", marker = "extra == 'dev'", specifier = "==0.12.2" },
-    { name = "syrupy", marker = "extra == 'dev'", specifier = ">=5.3.1" },
+    { name = "syrupy", marker = "extra == 'dev'", specifier = ">=5.3.2" },
 ]
 provides-extras = ["dev", "graph"]
 
@@ -2381,14 +2381,14 @@ wheels = [
 
 [[package]]
 name = "syrupy"
-version = "5.3.1"
+version = "5.3.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pytest" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/3d/34/bf26c59efb44a722c57377aa903f58ef370d068466ea013977b4f2df9f6f/syrupy-5.3.1.tar.gz", hash = "sha256:449fb2997176e4ccae0e852ce23748239e1a224b4797a63173da02d6df682340", size = 83987, upload-time = "2026-05-31T18:07:44.095Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/de/72/c793cd7c56b09f71be80ee2f4cc64c8e2b6a3dc8abf37fbfb09785aa00a7/syrupy-5.3.2.tar.gz", hash = "sha256:d4c9d4badb165a5694dcd869812717d899a8aa0b6f14f842437cb57c4ce09b3a", size = 85948, upload-time = "2026-06-09T14:46:32.721Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d4/f4/753003ddb0d43247febecd5146391a59b80f77e462b2623396192180f4ee/syrupy-5.3.1-py3-none-any.whl", hash = "sha256:d755c2bb9b78692de1db5efa7b452ebff727df3a8290f740bda5c55a4ea5d7d5", size = 51985, upload-time = "2026-05-31T18:07:42.711Z" },
+    { url = "https://files.pythonhosted.org/packages/d8/19/e45765fa26388f42e22af2fc27f06e78e1da56d4211f883f6f8ddaac7646/syrupy-5.3.2-py3-none-any.whl", hash = "sha256:a4cb08f07342655816c16b6b3aef5f6af8859ef5fbad6a57d0e2c20c0f8be54c", size = 52643, upload-time = "2026-06-09T14:46:31.168Z" },
 ]
 
 [[package]]
@@ -2547,7 +2547,7 @@ requires-dist = [
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=7.0" },
     { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=4.0" },
     { name = "ruff", marker = "extra == 'dev'", specifier = "==0.12.2" },
-    { name = "syrupy", marker = "extra == 'dev'", specifier = ">=5.3.1" },
+    { name = "syrupy", marker = "extra == 'dev'", specifier = ">=5.3.2" },
 ]
 provides-extras = ["dev", "parse"]
 
@@ -2577,7 +2577,7 @@ requires-dist = [
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=7.0" },
     { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=4.0" },
     { name = "ruff", marker = "extra == 'dev'", specifier = "==0.12.2" },
-    { name = "syrupy", marker = "extra == 'dev'", specifier = ">=5.3.1" },
+    { name = "syrupy", marker = "extra == 'dev'", specifier = ">=5.3.2" },
 ]
 provides-extras = ["dev", "parse"]
 
@@ -2607,7 +2607,7 @@ requires-dist = [
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=7.0" },
     { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=4.0" },
     { name = "ruff", marker = "extra == 'dev'", specifier = "==0.12.2" },
-    { name = "syrupy", marker = "extra == 'dev'", specifier = ">=5.3.1" },
+    { name = "syrupy", marker = "extra == 'dev'", specifier = ">=5.3.2" },
 ]
 provides-extras = ["dev", "parse"]
 
@@ -2637,7 +2637,7 @@ requires-dist = [
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=7.0" },
     { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=4.0" },
     { name = "ruff", marker = "extra == 'dev'", specifier = "==0.12.2" },
-    { name = "syrupy", marker = "extra == 'dev'", specifier = ">=5.3.1" },
+    { name = "syrupy", marker = "extra == 'dev'", specifier = ">=5.3.2" },
 ]
 provides-extras = ["dev", "parse"]
 
