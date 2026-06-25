@@ -26,7 +26,7 @@ jobs:
     name: Test ts-core
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Set up Node.js 20
         uses: actions/setup-node@v6
@@ -63,7 +63,7 @@ jobs:
       matrix:
         version: [5, 6, 7, 8]
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Set up Node.js 20
         uses: actions/setup-node@v6
