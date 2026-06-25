@@ -29,7 +29,7 @@ jobs:
             ffmpeg-image: 'jrottenberg/ffmpeg:8.0-ubuntu'
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           ref: v4
 
@@ -103,7 +103,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           ref: v4
 
