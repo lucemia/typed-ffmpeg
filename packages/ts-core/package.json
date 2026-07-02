@@ -1,7 +1,7 @@
 {
   "description": "Core runtime for typed-ffmpeg TypeScript bindings",
   "devDependencies": {
-    "@types/node": "^25.5.0",
+    "@types/node": "^26.1.0",
     "@vitest/coverage-v8": "^4.0.0",
     "typescript": "^6.0.2",
     "vitest": "^4.0.0"
