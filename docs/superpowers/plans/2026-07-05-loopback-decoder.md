@@ -23,26 +23,37 @@
 
 ## Regeneration recipe (referenced by several tasks as “REGEN ALL”)
 
-The generator needs an ffmpeg binary only to READ ITS VERSION (`ffmpeg -version` first line); all metadata comes from per-version caches in `packages/core/src/ffmpeg_core/common/cache/list/`. Local real ffmpeg is 8.0.1 (matches the `8_0` cache). For v5/v6/v7, use stub scripts that print the version banner matching each package (`v5`→5.1, `v6`→6.1, `v7`→7.1).
+**Revised after Task 1 (binding):** full in-place regeneration is NOT reproducible on this machine — the committed data-driven files (filters.py, codecs/, formats/, streams/) were generated from a fuller FFmpeg build than the local per-version caches, so in-place regen would silently drop hardware codecs/filters (pre-existing cache mismatch, unrelated to this feature). The three files this feature changes are rendered from STATIC templates whose content does not depend on the filters/codecs caches, so we render to a scratch directory and copy over ONLY those files:
+
+- `dag/nodes.py` (Task 2)
+- `compile/compile_cli.py` (Task 3)
+- `compile/validate.py` (Task 4)
+
+The generator needs an ffmpeg binary only to READ ITS VERSION (`ffmpeg -version` first line). Local real ffmpeg is 8.0.1 (matches the `8_0` cache key). For v5/v6/v7, use the stub scripts that print the matching version banner (`v5`→5.1, `v6`→6.1, `v7`→7.1).
 
 ```bash
 cd /Users/davidchen/repo/typed-ffmpeg
 source .venv/bin/activate
 export PYTHONPATH="$PWD/src:$PYTHONPATH"
-STUBS=/private/tmp/claude-501/-Users-davidchen-repo-typed-ffmpeg/76bdc9bb-594d-4e5e-8707-eca08a25f1a0/scratchpad/ffmpeg-stubs
-for V in 5 6 7; do
+SCRATCH=/private/tmp/claude-501/-Users-davidchen-repo-typed-ffmpeg/76bdc9bb-594d-4e5e-8707-eca08a25f1a0/scratchpad
+STUBS="$SCRATCH/ffmpeg-stubs"
+GEN="$SCRATCH/regen-out"
+rm -rf "$GEN"
+for V in 5 6 7 8; do
+  if [ "$V" = 8 ]; then BIN="$(which ffmpeg)"; else BIN="$STUBS/ffmpeg$V"; fi
   python -m scripts.code_gen.cli generate \
-    --outpath "packages/v${V}/src/ffmpeg" \
-    --ffmpeg-binary "${STUBS}/ffmpeg${V}"
+    --outpath "$GEN/v${V}" \
+    --ffmpeg-binary "$BIN"
+  for F in dag/nodes.py compile/compile_cli.py compile/validate.py; do
+    cp "$GEN/v${V}/$F" "packages/v${V}/src/ffmpeg/$F"
+  done
 done
-python -m scripts.code_gen.cli generate \
-  --outpath "packages/v8/src/ffmpeg" \
-  --ffmpeg-binary "$(which ffmpeg)"
+prek run -a || true   # normalize formatting of the copied files
 ```
 
 Notes:
-- `generate` ends by running `prek run -a` (pre-commit formatting) if available; formatting-only churn in generated files is expected and fine.
-- After REGEN ALL, always run `git status` and check that ONLY intended files changed.
+- NEVER pass `--rebuild`, and NEVER run `generate` with `--outpath` pointing into `packages/` on this machine.
+- After REGEN ALL, always run `git status` and check that ONLY the intended copied files (plus any files you hand-edited) changed.
 
 ---
 
