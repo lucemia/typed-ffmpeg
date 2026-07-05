@@ -20,7 +20,7 @@ from .schema import Stream
 if TYPE_CHECKING:
     from ..streams.audio import AudioStream
     from ..streams.video import VideoStream
-    from .nodes import FilterNode, InputNode, OutputNode
+    from .nodes import FilterNode, InputNode, LoopbackDecoderNode, OutputNode
 
 
 class FilterableStreamBase(Stream, OutputArgs):
@@ -39,7 +39,7 @@ class FilterableStreamBase(Stream, OutputArgs):
     """
 
     if TYPE_CHECKING:
-        node: FilterNode | InputNode
+        node: FilterNode | InputNode | LoopbackDecoderNode
 
     @override
     def _output_node(

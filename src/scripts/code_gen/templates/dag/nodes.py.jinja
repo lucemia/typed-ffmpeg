@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING, Any
 
 from ..exceptions import FFMpegTypeError, FFMpegValueError
 from ..schema import StreamType
-from ..utils.frozendict import FrozenDict
+from ..utils.frozendict import FrozenDict, merge
 from ..utils.typing import override
 from .global_runnable.runnable import GlobalRunable
 from .schema import Node, Stream
@@ -19,6 +19,11 @@ if TYPE_CHECKING:
     from ..streams.audio import AudioStream
     from ..streams.av import AVStream
     from ..streams.video import VideoStream
+{% if ffmpeg_version is defined and ffmpeg_version.split(".")[0] | int >= 7 %}
+    from ..codecs.schema import FFMpegDecoderOption
+    from ..options.codec import FFMpegAVCodecContextDecoderOption
+    from ..types import String
+{% endif %}
 
 
 logger = logging.getLogger(__name__)
@@ -314,6 +319,25 @@ class OutputNode(Node):
         """
         return os.path.basename(self.filename)
 
+    def __post_init__(self) -> None:
+        """
+        Validate the output node after initialization.
+
+        Raises:
+            FFMpegValueError: If an input stream comes from a loopback decoder.
+              `[dec:N]` is a filtergraph input label, not a `-map` selector, so
+              loopback decoder streams can only feed filters.
+
+        """
+        super().__post_init__()
+
+        for stream in self.inputs:
+            if isinstance(stream.node, LoopbackDecoderNode):
+                raise FFMpegValueError(
+                    "A loopback decoder stream cannot be mapped to an output "
+                    "directly; route it through a filter"
+                )
+
     def stream(self) -> OutputStream:
         """
         Get an output stream representing this output file.
@@ -375,7 +399,52 @@ class OutputStream(Stream, GlobalRunable):
 
         """
         return GlobalNode(inputs=(self, *streams), kwargs=FrozenDict(kwargs))
+{% if ffmpeg_version is defined and ffmpeg_version.split(".")[0] | int >= 7 %}
+    def loopback(
+        self,
+        stream_index: int = 0,
+        *,
+        codec: String = None,
+        decoder_options: FFMpegDecoderOption | None = None,
+        codec_options: FFMpegAVCodecContextDecoderOption | None = None,
+        extra_options: dict[str, Any] | None = None,
+    ) -> LoopbackDecoderNode:
+        """
+        Create a loopback decoder tapping a stream of this output (FFmpeg >= 7.0).
 
+        A loopback decoder (``-dec of:ost``) decodes the encoded output of an
+        existing output stream and exposes the decoded frames as a filtergraph
+        input labeled ``[dec:N]``. The referenced output stream must be
+        re-encoded (streamcopy outputs have no encoder to tap).
+
+        Args:
+            stream_index: The output stream index (ost) within this output file
+            codec: Force a specific decoder (``-c``)
+            decoder_options: ffmpeg's decoder options
+            codec_options: ffmpeg's AVCodecContext decoder options
+            extra_options: Additional decoder options as a dict
+
+        Returns:
+            A LoopbackDecoderNode; use its ``.video`` / ``.audio`` property to
+            obtain the decoded stream for use in filters.
+
+        Example:
+            ```python
+            source = ffmpeg.input("INPUT")
+            encoded = source.video.output(
+                filename="-", f="null", vcodec="libx264", extra_options={"crf": 45}
+            )
+            dec = encoded.loopback(stream_index=0)
+            stacked = source.video.hstack(dec.video)
+            stacked.output(filename="OUT.mkv", vcodec="ffv1")
+            ```
+
+        """
+        return LoopbackDecoderNode(
+            inputs=(OutputStream(node=self.node, index=stream_index),),
+            kwargs=merge({"c": codec}, decoder_options, codec_options, extra_options),
+        )
+{% endif %}
 
 @dataclass(frozen=True, kw_only=True)
 class GlobalNode(Node):
@@ -459,3 +528,153 @@ class GlobalStream(Stream, GlobalRunable):
 
         new_node = replace(self.node, inputs=inputs, kwargs=FrozenDict(kwargs))
         return new_node
+
+
+@dataclass(frozen=True, kw_only=True)
+class LoopbackDecoderNode(Node):
+    """
+    A node that represents an FFmpeg loopback decoder (FFmpeg >= 7.0).
+
+    A loopback decoder (``-dec of:ost``) decodes the output of an existing
+    encoder and exposes the decoded frames as a filtergraph input labeled
+    ``[dec:N]``. Its input references an already-defined output stream; its
+    output is a filterable stream usable in filter graphs.
+    """
+
+    __hash__ = Node.__hash__
+
+    inputs: tuple[OutputStream, ...]
+    """
+    The tapped output stream (exactly one): its node is the OutputNode and its
+    index is the output stream index (ost) within that output file
+    """
+
+    @override
+    def repr(self) -> str:
+        """
+        Get a string representation of this loopback decoder node.
+
+        Returns:
+            The string "loopback"
+
+        """
+        return "loopback"
+
+    def _tapped_type(self) -> StreamType | None:
+        """
+        Get the best-effort static type of the tapped output stream.
+
+        Returns:
+            The StreamType of the tapped stream, or None when the ost<->input
+            correspondence is statically unknowable (an AVStream appears at or
+            before the tapped index in the output's inputs).
+
+        """
+        from ..streams.audio import AudioStream
+        from ..streams.av import AVStream
+        from ..streams.video import VideoStream
+
+        tapped = self.inputs[0]
+        index = tapped.index or 0
+        out_inputs = tapped.node.inputs
+
+        if any(isinstance(s, AVStream) for s in out_inputs[: index + 1]):
+            return None
+        if index >= len(out_inputs):
+            return None
+        stream = out_inputs[index]
+        if isinstance(stream, VideoStream):
+            return StreamType.video
+        if isinstance(stream, AudioStream):
+            return StreamType.audio
+        return None
+
+    def __post_init__(self) -> None:
+        """
+        Validate the loopback decoder node after initialization.
+
+        Raises:
+            FFMpegValueError: If the node does not reference exactly one output
+              stream, the stream index is out of range, or the tapped output
+              stream is a streamcopy (no encoder to tap, matching FFmpeg's
+              dec_create() check).
+
+        """
+        from ..streams.av import AVStream
+
+        super().__post_init__()
+
+        if len(self.inputs) != 1:
+            raise FFMpegValueError(
+                f"Expected exactly one tapped output stream, got {len(self.inputs)}"
+            )
+
+        tapped = self.inputs[0]
+        index = tapped.index or 0
+        out_inputs = tapped.node.inputs
+
+        if not any(isinstance(s, AVStream) for s in out_inputs) and index >= len(
+            out_inputs
+        ):
+            raise FFMpegValueError(
+                f"stream_index {index} is out of range for an output with "
+                f"{len(out_inputs)} streams"
+            )
+
+        codec_keys = ["c", "codec"]
+        tapped_type = self._tapped_type()
+        if tapped_type == StreamType.video:
+            codec_keys += ["vcodec", "c:v"]
+        elif tapped_type == StreamType.audio:
+            codec_keys += ["acodec", "c:a"]
+        for key in codec_keys:
+            value = tapped.node.kwargs.get(key)
+            if value is not None and str(value) == "copy":
+                raise FFMpegValueError(
+                    "Cannot create a loopback decoder for a streamcopy output "
+                    f"stream ({key}=copy): there is no encoder to tap"
+                )
+
+    @property
+    def video(self) -> VideoStream:
+        """
+        Get the decoded video stream from this loopback decoder.
+
+        Returns:
+            A VideoStream usable as input to video filters
+
+        Raises:
+            FFMpegTypeError: If the tapped output stream is statically known
+              to not be a video stream
+
+        """
+        from ..streams.video import VideoStream
+
+        tapped_type = self._tapped_type()
+        if tapped_type is not None and tapped_type != StreamType.video:
+            raise FFMpegTypeError(
+                f"Tapped output stream is {tapped_type.value}, not video"
+            )
+        return VideoStream(node=self)
+
+    @property
+    def audio(self) -> AudioStream:
+        """
+        Get the decoded audio stream from this loopback decoder.
+
+        Returns:
+            An AudioStream usable as input to audio filters
+
+        Raises:
+            FFMpegTypeError: If the tapped output stream is statically known
+              to not be an audio stream
+
+        """
+        from ..streams.audio import AudioStream
+
+        tapped_type = self._tapped_type()
+        if tapped_type is not None and tapped_type != StreamType.audio:
+            raise FFMpegTypeError(
+                f"Tapped output stream is {tapped_type.value}, not audio"
+            )
+        return AudioStream(node=self)
