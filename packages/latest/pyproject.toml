@@ -1,6 +1,6 @@
 [project]
 name = "typed-ffmpeg"
-version = "4.1"
+version = "4.3"
 description = "Modern Python & TypeScript FFmpeg wrappers with comprehensive typing (latest version)"
 authors = [
     {name = "lucemia", email = "lucemia@gmail.com"}
@@ -33,7 +33,7 @@ classifiers = [
 # Meta-package: no source code, just depends on typed-ffmpeg-v8
 # which provides `import ffmpeg` directly.
 dependencies = [
-    "typed-ffmpeg-v8>=4.1,<5.0",
+    "typed-ffmpeg-v8>=4.3,<5.0",
 ]
 
 [tool.uv.sources]
