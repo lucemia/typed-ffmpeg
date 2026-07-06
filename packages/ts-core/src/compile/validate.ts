@@ -14,6 +14,7 @@ import {
   GlobalNode,
   GlobalStream,
   InputNode,
+  LoopbackDecoderNode,
   OutputNode,
   OutputStream,
   SubtitleStream,
@@ -59,6 +60,12 @@ function rebuildNodeWithInputs(node: Node, newInputs: readonly Stream[]): Node {
       { ...node.kwargs },
     );
   }
+  if (node instanceof LoopbackDecoderNode) {
+    return new LoopbackDecoderNode(
+      [newInputs[0] as OutputStream],
+      { ...node.kwargs },
+    );
+  }
   throw new FFMpegValueError(`Unknown node type: ${node.constructor.name}`);
 }
 
@@ -77,7 +84,7 @@ function rebuildStream(stream: Stream, newNode: Node): Stream {
     return new SubtitleStream(newNode, stream.index, stream.optional);
   }
   if (stream instanceof OutputStream) {
-    return new OutputStream(newNode as OutputNode);
+    return new OutputStream(newNode as OutputNode, stream.index);
   }
   if (stream instanceof GlobalStream) {
     return new GlobalStream(newNode as GlobalNode);
@@ -174,7 +181,11 @@ export function addSplit(
     return [newStream, mapping];
   }
 
-  if (currentStream.node instanceof InputNode) {
+  // output streams tapped by loopback decoders are shared, never split
+  if (
+    currentStream.node instanceof InputNode ||
+    currentStream.node instanceof OutputNode
+  ) {
     for (const [node, index] of outgoing) {
       mapping.set(splitKey(currentStream, node, index), newStream);
     }

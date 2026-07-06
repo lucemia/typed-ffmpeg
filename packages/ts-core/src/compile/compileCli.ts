@@ -18,6 +18,7 @@ import {
   FilterNode,
   GlobalNode,
   InputNode,
+  LoopbackDecoderNode,
   OutputNode,
   OutputStream,
   SubtitleStream,
@@ -85,14 +86,61 @@ export function compileAsList(
     commands.push("-filter_complex", vfCommands.join(";"));
   }
 
-  // Output nodes
-  for (const n of context.allNodes) {
-    if (n instanceof OutputNode) {
-      commands.push(...getArgsOutputNode(n, context));
+  // Output nodes, each immediately followed by any loopback decoders
+  // tapping it (-dec references an already-defined output stream)
+  const outputNodes = context.allNodes.filter(
+    (n): n is OutputNode => n instanceof OutputNode,
+  );
+  const loopbackNodes = context.allNodes.filter(
+    (n): n is LoopbackDecoderNode => n instanceof LoopbackDecoderNode,
+  );
+  for (const n of outputNodes) {
+    commands.push(...getArgsOutputNode(n, context));
+    for (const decNode of loopbackNodes) {
+      // identity comparison — see getLoopbackIndices for why .hex is unsafe here
+      if (decNode.inputs[0].node === n) {
+        commands.push(...getArgsLoopbackDecoderNode(decNode, context));
+      }
     }
   }
 
   return commands;
+}
+
+/**
+ * Map each LoopbackDecoderNode to its dec:N label index.
+ *
+ * FFmpeg numbers [dec:N] labels by -dec occurrence order on the command
+ * line; compileAsList emits outputs in DAG order with each output's
+ * decoders immediately after it, so indices are assigned in that order.
+ *
+ * Node comparison uses object identity (===), matching the dedup
+ * convention used by DAGContext (see removeDuplicates in context.ts):
+ * a LoopbackDecoderNode's tapped OutputStream always points at the very
+ * OutputNode instance collected into the context (collect() walks
+ * through the decoder's own inputs), so identity comparison is both
+ * sufficient and required here — a looser structural (.hex) comparison
+ * would incorrectly match a decoder against every hex-equal duplicate
+ * output produced when validate() rebuilds a graph where one output is
+ * tapped by more than one loopback decoder.
+ */
+export function getLoopbackIndices(context: DAGContext): Map<Node, number> {
+  const outputNodes = context.allNodes.filter(
+    (n): n is OutputNode => n instanceof OutputNode,
+  );
+  const loopbackNodes = context.allNodes.filter(
+    (n): n is LoopbackDecoderNode => n instanceof LoopbackDecoderNode,
+  );
+
+  const indices = new Map<Node, number>();
+  for (const outputNode of outputNodes) {
+    for (const decNode of loopbackNodes) {
+      if (decNode.inputs[0].node === outputNode) {
+        indices.set(decNode, indices.size);
+      }
+    }
+  }
+  return indices;
 }
 
 /**
@@ -122,6 +170,10 @@ export function getStreamLabel(stream: Stream, context?: DAGContext): string {
       return `${label}#${stream.index}`;
     }
     return label;
+  }
+
+  if (stream.node instanceof LoopbackDecoderNode) {
+    return `dec:${getLoopbackIndices(context).get(stream.node)}`;
   }
 
   if (stream.node instanceof OutputNode) {
@@ -222,6 +274,41 @@ export function getArgsOutputNode(node: OutputNode, context: DAGContext): string
 }
 
 /**
+ * Resolve the output-file index (of) for a node, tolerating structural
+ * duplicates: context.nodeIds is keyed by object identity, but the tapped
+ * node may be a structurally-equal instance that dedup dropped (Python's
+ * dict handles this via value equality; TS needs the hex fallback).
+ */
+function outputNodeId(context: DAGContext, node: Node): number {
+  const direct = context.nodeIds.get(node);
+  if (direct !== undefined) return direct;
+  for (const [n, id] of context.nodeIds) {
+    if (n instanceof OutputNode && n.hex === node.hex) return id;
+  }
+  throw new FFMpegValueError("Tapped output node not found in DAG context");
+}
+
+/** Generate CLI args for a LoopbackDecoderNode: decoder options then -dec of:ost. */
+export function getArgsLoopbackDecoderNode(
+  node: LoopbackDecoderNode,
+  context: DAGContext,
+): string[] {
+  const commands: string[] = [];
+  for (const [key, value] of Object.entries(node.kwargs)) {
+    if (typeof value === "boolean") {
+      commands.push(value ? `-${key}` : `-no${key}`);
+    } else {
+      commands.push(`-${key}`, String(value));
+    }
+  }
+  const tapped = node.inputs[0];
+  const of = outputNodeId(context, tapped.node);
+  const ost = tapped.index ?? 0;
+  commands.push("-dec", `${of}:${ost}`);
+  return commands;
+}
+
+/**
  * Generate CLI args for a GlobalNode.
  */
 export function getArgsGlobalNode(node: GlobalNode, _context: DAGContext): string[] {
@@ -255,6 +342,8 @@ export function getArgs(node: Node, context?: DAGContext): string[] {
   if (node instanceof InputNode) return getArgsInputNode(node, context);
   if (node instanceof OutputNode) return getArgsOutputNode(node, context);
   if (node instanceof GlobalNode) return getArgsGlobalNode(node, context);
+  if (node instanceof LoopbackDecoderNode)
+    return getArgsLoopbackDecoderNode(node, context);
   throw new FFMpegValueError(`Unknown node type: ${node.constructor.name}`);
 }
 
@@ -668,6 +757,12 @@ export function parse(
   // strip "ffmpeg" / "ffmpeg.exe" binary name
   if (tokens[0].toLowerCase().replace(/\.exe$/, "") === "ffmpeg") {
     tokens = tokens.slice(1);
+  }
+
+  if (tokens.includes("-dec")) {
+    throw new FFMpegValueError(
+      "loopback decoders (-dec) are not supported by parse()",
+    );
   }
 
   const [globalParams, remaining] = parseGlobal(tokens, ffmpegOptions);

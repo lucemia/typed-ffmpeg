@@ -6,8 +6,11 @@ import {
   OutputStream,
   VideoStream,
   AudioStream,
+  FilterNode,
 } from "../dag/nodes.js";
 import { FFMpegTypeError, FFMpegValueError } from "../exceptions.js";
+import { StreamType } from "../common/schema.js";
+import { compileAsList, parse } from "../compile/compileCli.js";
 
 describe("LoopbackDecoderNode model", () => {
   it("constructs via OutputStream.loopback()", () => {
@@ -84,5 +87,112 @@ describe("LoopbackDecoderNode model", () => {
           {},
         ),
     ).toThrow(FFMpegValueError);
+  });
+});
+
+describe("loopback compile", () => {
+  function canonicalGraph() {
+    const source = new InputNode("INPUT");
+    const enc = new OutputNode([source.video], "-", {
+      f: "null",
+      vcodec: "libx264",
+      crf: 45,
+    });
+    const dec = enc.stream().loopback(0);
+    const stacked = new FilterNode(
+      "hstack",
+      [source.video, dec.video],
+      {},
+      [StreamType.Video, StreamType.Video],
+      [StreamType.Video],
+    );
+    return new OutputNode([stacked.video(0)], "OUT.mkv", { vcodec: "ffv1" });
+  }
+
+  it("compiles the canonical hstack example", () => {
+    const args = compileAsList(canonicalGraph().stream());
+    expect(args).toEqual([
+      "-i", "INPUT",
+      "-filter_complex", "[0:v][dec:0]hstack[s0]",
+      "-map", "0:v", "-f", "null", "-vcodec", "libx264", "-crf", "45", "-",
+      "-dec", "0:0",
+      "-map", "[s0]", "-vcodec", "ffv1", "OUT.mkv",
+    ]);
+  });
+
+  it("emits decoder options before -dec", () => {
+    const source = new InputNode("INPUT");
+    const enc = new OutputNode([source.video], "-", { f: "null", vcodec: "libx264" });
+    const dec = enc.stream().loopback(0, { c: "h264", threads: 2 });
+    const stacked = new FilterNode(
+      "hstack",
+      [source.video, dec.video],
+      {},
+      [StreamType.Video, StreamType.Video],
+      [StreamType.Video],
+    );
+    const out = new OutputNode([stacked.video(0)], "OUT.mkv");
+
+    const args = compileAsList(out.stream());
+    const decPos = args.indexOf("-dec");
+    expect(args.slice(decPos, decPos + 2)).toEqual(["-dec", "0:0"]);
+    expect(args.slice(decPos - 4, decPos)).toEqual(["-c", "h264", "-threads", "2"]);
+  });
+
+  it("numbers dec:N labels in -dec occurrence order", () => {
+    const source = new InputNode("INPUT");
+    const encA = new OutputNode([source.video], "-", { f: "null", vcodec: "libx264" });
+    const encB = new OutputNode([source.video], "-", { f: "null", vcodec: "libx265" });
+    const decA = encA.stream().loopback(0);
+    const decB = encB.stream().loopback(0);
+    const stacked = new FilterNode(
+      "hstack",
+      [decA.video, decB.video],
+      {},
+      [StreamType.Video, StreamType.Video],
+      [StreamType.Video],
+    );
+    const out = new OutputNode([stacked.video(0)], "OUT.mkv");
+
+    const args = compileAsList(out.stream());
+    const fc = args[args.indexOf("-filter_complex") + 1];
+    expect(fc).toContain("[dec:0][dec:1]hstack");
+
+    const decPositions = args
+      .map((a, i) => (a === "-dec" ? i : -1))
+      .filter((i) => i >= 0);
+    expect(decPositions).toHaveLength(2);
+    expect(args[decPositions[0] + 1]).toBe("0:0");
+    expect(args[decPositions[1] + 1]).toBe("1:0");
+  });
+
+  it("splits reused decoder streams but never the tapped output stream", () => {
+    const source = new InputNode("INPUT");
+    const enc = new OutputNode([source.video], "-", { f: "null", vcodec: "libx264" });
+    const decA = enc.stream().loopback(0);
+    const decB = enc.stream().loopback(0, { threads: 2 });
+    const stacked = new FilterNode(
+      "hstack",
+      [decA.video, decB.video],
+      {},
+      [StreamType.Video, StreamType.Video],
+      [StreamType.Video],
+    );
+    const out = new OutputNode([stacked.video(0)], "OUT.mkv");
+
+    const args = compileAsList(out.stream());
+    expect(args.filter((a) => a === "-dec")).toHaveLength(2);
+  });
+});
+
+describe("parse -dec rejection", () => {
+  it("throws a clear error on -dec", () => {
+    expect(() =>
+      parse(
+        "ffmpeg -i INPUT -map 0:v -c:v libx264 -f null - -dec 0:0 -filter_complex [0:v][dec:0]hstack[s] -map [s] out.mkv",
+        new Map(),
+        new Map(),
+      ),
+    ).toThrow(/-dec/);
   });
 });
