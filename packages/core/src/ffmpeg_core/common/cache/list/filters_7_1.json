@@ -17925,6 +17925,94 @@
   },
   {
     "__class__": "FFMpegFilter",
+    "description": "CUDA accelerated bilateral filter, an edge preserving filter.\nThis filter is mathematically accurate thanks to the use of GPU acceleration.\nFor best output quality, use one to one chroma subsampling, i.e. yuv444p format.\n\nThe filter accepts the following options:",
+    "formula_typings_input": null,
+    "formula_typings_output": null,
+    "id": null,
+    "is_dynamic_input": false,
+    "is_dynamic_output": false,
+    "is_filter_sink": false,
+    "is_filter_source": false,
+    "is_support_command": false,
+    "is_support_framesync": false,
+    "is_support_slice_threading": false,
+    "is_support_timeline": false,
+    "name": "bilateral_cuda",
+    "options": [
+      {
+        "__class__": "FFMpegFilterOption",
+        "alias": [],
+        "choices": [],
+        "default": "0.1",
+        "description": "Set sigma of gaussian function to calculate spatial weight, also called sigma space.\nAllowed range is 0.1 to 512. Default is 0.1.",
+        "flags": null,
+        "max": null,
+        "min": null,
+        "name": "sigmaS",
+        "required": false,
+        "type": {
+          "__class__": "FFMpegFilterOptionType",
+          "value": "float"
+        }
+      },
+      {
+        "__class__": "FFMpegFilterOption",
+        "alias": [],
+        "choices": [],
+        "default": "0.1",
+        "description": "Set sigma of gaussian function to calculate color range weight, also called sigma color.\nAllowed range is 0.1 to 512. Default is 0.1.",
+        "flags": null,
+        "max": null,
+        "min": null,
+        "name": "sigmaR",
+        "required": false,
+        "type": {
+          "__class__": "FFMpegFilterOptionType",
+          "value": "float"
+        }
+      },
+      {
+        "__class__": "FFMpegFilterOption",
+        "alias": [],
+        "choices": [],
+        "default": "1",
+        "description": "Set window size of the bilateral function to determine the number of neighbours to loop on.\nIf the number entered is even, one will be added automatically.\nAllowed range is 1 to 255. Default is 1.",
+        "flags": null,
+        "max": null,
+        "min": null,
+        "name": "window_size",
+        "required": false,
+        "type": {
+          "__class__": "FFMpegFilterOptionType",
+          "value": "int"
+        }
+      }
+    ],
+    "pre": [],
+    "ref": "https://ffmpeg.org/ffmpeg-filters.html#bilateral_cuda",
+    "stream_typings_input": [
+      {
+        "__class__": "FFMpegIOType",
+        "name": "default",
+        "type": {
+          "__class__": "StreamType",
+          "value": "video"
+        }
+      }
+    ],
+    "stream_typings_output": [
+      {
+        "__class__": "FFMpegIOType",
+        "name": "default",
+        "type": {
+          "__class__": "StreamType",
+          "value": "video"
+        }
+      }
+    ]
+  },
+  {
+    "__class__": "FFMpegFilter",
     "description": "Apply a biquad IIR filter with the given coefficients.\nWhere b0, b1, b2 and a0, a1, a2\nare the numerator and denominator coefficients respectively.\nand channels, c specify which channels to filter, by default all\navailable are filtered.",
     "formula_typings_input": null,
     "formula_typings_output": null,
@@ -21840,6 +21928,160 @@
   },
   {
     "__class__": "FFMpegFilter",
+    "description": "Deinterlace the input video using the bwdif algorithm, but implemented\nin CUDA so that it can work as part of a GPU accelerated pipeline with nvdec\nand/or nvenc.\n\nIt accepts the following parameters:",
+    "formula_typings_input": null,
+    "formula_typings_output": null,
+    "id": null,
+    "is_dynamic_input": false,
+    "is_dynamic_output": false,
+    "is_filter_sink": false,
+    "is_filter_source": false,
+    "is_support_command": false,
+    "is_support_framesync": false,
+    "is_support_slice_threading": false,
+    "is_support_timeline": true,
+    "name": "bwdif_cuda",
+    "options": [
+      {
+        "__class__": "FFMpegFilterOption",
+        "alias": [],
+        "choices": [
+          {
+            "__class__": "FFMpegFilterOptionChoice",
+            "flags": "..FV.......",
+            "help": "send one frame for each frame",
+            "name": "send_frame",
+            "value": "0"
+          },
+          {
+            "__class__": "FFMpegFilterOptionChoice",
+            "flags": "..FV.......",
+            "help": "send one frame for each field",
+            "name": "send_field",
+            "value": "1"
+          },
+          {
+            "__class__": "FFMpegFilterOptionChoice",
+            "flags": "..FV.......",
+            "help": "send one frame for each frame, but skip spatial interlacing check",
+            "name": "send_frame_nospatial",
+            "value": "2"
+          },
+          {
+            "__class__": "FFMpegFilterOptionChoice",
+            "flags": "..FV.......",
+            "help": "send one frame for each field, but skip spatial interlacing check",
+            "name": "send_field_nospatial",
+            "value": "3"
+          }
+        ],
+        "default": "send_frame",
+        "description": "The interlacing mode to adopt. It accepts one of the following values:\n\n@end table\n\nThe default value is send_field.",
+        "flags": null,
+        "max": null,
+        "min": null,
+        "name": "mode",
+        "required": false,
+        "type": {
+          "__class__": "FFMpegFilterOptionType",
+          "value": "int"
+        }
+      },
+      {
+        "__class__": "FFMpegFilterOption",
+        "alias": [],
+        "choices": [
+          {
+            "__class__": "FFMpegFilterOptionChoice",
+            "flags": "..FV.......",
+            "help": "assume top field first",
+            "name": "tff",
+            "value": "0"
+          },
+          {
+            "__class__": "FFMpegFilterOptionChoice",
+            "flags": "..FV.......",
+            "help": "assume bottom field first",
+            "name": "bff",
+            "value": "1"
+          },
+          {
+            "__class__": "FFMpegFilterOptionChoice",
+            "flags": "..FV.......",
+            "help": "auto detect parity",
+            "name": "auto",
+            "value": "-1"
+          }
+        ],
+        "default": "auto",
+        "description": "The picture field parity assumed for the input interlaced video. It accepts one\nof the following values:\n\n@end table\n\nThe default value is auto.\nIf the interlacing is unknown or the decoder does not export this information,\ntop field first will be assumed.",
+        "flags": null,
+        "max": null,
+        "min": null,
+        "name": "parity",
+        "required": false,
+        "type": {
+          "__class__": "FFMpegFilterOptionType",
+          "value": "int"
+        }
+      },
+      {
+        "__class__": "FFMpegFilterOption",
+        "alias": [],
+        "choices": [
+          {
+            "__class__": "FFMpegFilterOptionChoice",
+            "flags": "..FV.......",
+            "help": "deinterlace all frames",
+            "name": "all",
+            "value": "0"
+          },
+          {
+            "__class__": "FFMpegFilterOptionChoice",
+            "flags": "..FV.......",
+            "help": "only deinterlace frames marked as interlaced",
+            "name": "interlaced",
+            "value": "1"
+          }
+        ],
+        "default": "all",
+        "description": "Specify which frames to deinterlace. Accepts one of the following\nvalues:\n\n@end table\n\nThe default value is all.",
+        "flags": null,
+        "max": null,
+        "min": null,
+        "name": "deint",
+        "required": false,
+        "type": {
+          "__class__": "FFMpegFilterOptionType",
+          "value": "int"
+        }
+      }
+    ],
+    "pre": [],
+    "ref": "https://ffmpeg.org/ffmpeg-filters.html#bwdif_cuda",
+    "stream_typings_input": [
+      {
+        "__class__": "FFMpegIOType",
+        "name": "default",
+        "type": {
+          "__class__": "StreamType",
+          "value": "video"
+        }
+      }
+    ],
+    "stream_typings_output": [
+      {
+        "__class__": "FFMpegIOType",
+        "name": "default",
+        "type": {
+          "__class__": "StreamType",
+          "value": "video"
+        }
+      }
+    ]
+  },
+  {
+    "__class__": "FFMpegFilter",
     "description": "Deinterlacer using bwdif, the \"Bob Weaver Deinterlacing Filter\" algorithm, implemented\non the GPU using Vulkan.\n\nIt accepts the following parameters:",
     "formula_typings_input": null,
     "formula_typings_output": null,
@@ -22840,6 +23082,110 @@
     ],
     "pre": [],
     "ref": "https://ffmpeg.org/ffmpeg-filters.html#chromakey",
+    "stream_typings_input": [
+      {
+        "__class__": "FFMpegIOType",
+        "name": "default",
+        "type": {
+          "__class__": "StreamType",
+          "value": "video"
+        }
+      }
+    ],
+    "stream_typings_output": [
+      {
+        "__class__": "FFMpegIOType",
+        "name": "default",
+        "type": {
+          "__class__": "StreamType",
+          "value": "video"
+        }
+      }
+    ]
+  },
+  {
+    "__class__": "FFMpegFilter",
+    "description": "CUDA accelerated YUV colorspace color/chroma keying.\n\nThis filter works like normal chromakey filter but operates on CUDA frames.\nfor more details and parameters see chromakey.",
+    "formula_typings_input": null,
+    "formula_typings_output": null,
+    "id": null,
+    "is_dynamic_input": false,
+    "is_dynamic_output": false,
+    "is_filter_sink": false,
+    "is_filter_source": false,
+    "is_support_command": false,
+    "is_support_framesync": false,
+    "is_support_slice_threading": false,
+    "is_support_timeline": false,
+    "name": "chromakey_cuda",
+    "options": [
+      {
+        "__class__": "FFMpegFilterOption",
+        "alias": [],
+        "choices": [],
+        "default": "black",
+        "description": "set the chromakey key color (default \"black\")",
+        "flags": null,
+        "max": null,
+        "min": null,
+        "name": "color",
+        "required": false,
+        "type": {
+          "__class__": "FFMpegFilterOptionType",
+          "value": "color"
+        }
+      },
+      {
+        "__class__": "FFMpegFilterOption",
+        "alias": [],
+        "choices": [],
+        "default": "0.01",
+        "description": "set the chromakey similarity value (from 0.01 to 1) (default 0.01)",
+        "flags": null,
+        "max": null,
+        "min": null,
+        "name": "similarity",
+        "required": false,
+        "type": {
+          "__class__": "FFMpegFilterOptionType",
+          "value": "float"
+        }
+      },
+      {
+        "__class__": "FFMpegFilterOption",
+        "alias": [],
+        "choices": [],
+        "default": "0",
+        "description": "set the chromakey key blend value (from 0 to 1) (default 0)",
+        "flags": null,
+        "max": null,
+        "min": null,
+        "name": "blend",
+        "required": false,
+        "type": {
+          "__class__": "FFMpegFilterOptionType",
+          "value": "float"
+        }
+      },
+      {
+        "__class__": "FFMpegFilterOption",
+        "alias": [],
+        "choices": [],
+        "default": "false",
+        "description": "color parameter is in yuv instead of rgb (default false)",
+        "flags": null,
+        "max": null,
+        "min": null,
+        "name": "yuv",
+        "required": false,
+        "type": {
+          "__class__": "FFMpegFilterOptionType",
+          "value": "boolean"
+        }
+      }
+    ],
+    "pre": [],
+    "ref": "https://ffmpeg.org/ffmpeg-filters.html#chromakey_cuda",
     "stream_typings_input": [
       {
         "__class__": "FFMpegIOType",
@@ -27190,6 +27536,91 @@
     ],
     "pre": [],
     "ref": "https://ffmpeg.org/ffmpeg-filters.html#colorspace",
+    "stream_typings_input": [
+      {
+        "__class__": "FFMpegIOType",
+        "name": "default",
+        "type": {
+          "__class__": "StreamType",
+          "value": "video"
+        }
+      }
+    ],
+    "stream_typings_output": [
+      {
+        "__class__": "FFMpegIOType",
+        "name": "default",
+        "type": {
+          "__class__": "StreamType",
+          "value": "video"
+        }
+      }
+    ]
+  },
+  {
+    "__class__": "FFMpegFilter",
+    "description": "CUDA accelerated implementation of the colorspace filter.\n\nIt is by no means feature complete compared to the software colorspace filter,\nand at the current time only supports color range conversion between jpeg/full\nand mpeg/limited range.\n\nThe filter accepts the following options:",
+    "formula_typings_input": null,
+    "formula_typings_output": null,
+    "id": null,
+    "is_dynamic_input": false,
+    "is_dynamic_output": false,
+    "is_filter_sink": false,
+    "is_filter_source": false,
+    "is_support_command": false,
+    "is_support_framesync": false,
+    "is_support_slice_threading": false,
+    "is_support_timeline": false,
+    "name": "colorspace_cuda",
+    "options": [
+      {
+        "__class__": "FFMpegFilterOption",
+        "alias": [],
+        "choices": [
+          {
+            "__class__": "FFMpegFilterOptionChoice",
+            "flags": "..FV.......",
+            "help": "Limited range",
+            "name": "tv",
+            "value": "1"
+          },
+          {
+            "__class__": "FFMpegFilterOptionChoice",
+            "flags": "..FV.......",
+            "help": "Limited range",
+            "name": "mpeg",
+            "value": "1"
+          },
+          {
+            "__class__": "FFMpegFilterOptionChoice",
+            "flags": "..FV.......",
+            "help": "Full range",
+            "name": "pc",
+            "value": "2"
+          },
+          {
+            "__class__": "FFMpegFilterOptionChoice",
+            "flags": "..FV.......",
+            "help": "Full range",
+            "name": "jpeg",
+            "value": "2"
+          }
+        ],
+        "default": "0",
+        "description": "Specify output color range.\n\nThe accepted values are:\n@end table",
+        "flags": null,
+        "max": null,
+        "min": null,
+        "name": "range",
+        "required": false,
+        "type": {
+          "__class__": "FFMpegFilterOptionType",
+          "value": "int"
+        }
+      }
+    ],
+    "pre": [],
+    "ref": "https://ffmpeg.org/ffmpeg-filters.html#colorspace_cuda",
     "stream_typings_input": [
       {
         "__class__": "FFMpegIOType",
@@ -55016,6 +55447,187 @@
   },
   {
     "__class__": "FFMpegFilter",
+    "description": "Overlay one video on top of another.\n\nThis is the CUDA variant of the overlay filter.\nIt only accepts CUDA frames. The underlying input pixel formats have to match.\n\nIt takes two inputs and has one output. The first input is the \"main\"\nvideo on which the second input is overlaid.\n\nIt accepts the following parameters:",
+    "formula_typings_input": null,
+    "formula_typings_output": null,
+    "id": null,
+    "is_dynamic_input": false,
+    "is_dynamic_output": false,
+    "is_filter_sink": false,
+    "is_filter_source": false,
+    "is_support_command": false,
+    "is_support_framesync": true,
+    "is_support_slice_threading": false,
+    "is_support_timeline": false,
+    "name": "overlay_cuda",
+    "options": [
+      {
+        "__class__": "FFMpegFilterOption",
+        "alias": [],
+        "choices": [],
+        "default": "0",
+        "description": "set the x expression of overlay (default \"0\")",
+        "flags": null,
+        "max": null,
+        "min": null,
+        "name": "x",
+        "required": false,
+        "type": {
+          "__class__": "FFMpegFilterOptionType",
+          "value": "string"
+        }
+      },
+      {
+        "__class__": "FFMpegFilterOption",
+        "alias": [],
+        "choices": [],
+        "default": "0",
+        "description": "Set expressions for the x and y coordinates of the overlaid video\non the main video.\n\nThey can contain the following parameters:\n\n@end table\n\nDefault value is \"0\" for both expressions.",
+        "flags": null,
+        "max": null,
+        "min": null,
+        "name": "y",
+        "required": false,
+        "type": {
+          "__class__": "FFMpegFilterOptionType",
+          "value": "string"
+        }
+      },
+      {
+        "__class__": "FFMpegFilterOption",
+        "alias": [],
+        "choices": [
+          {
+            "__class__": "FFMpegFilterOptionChoice",
+            "flags": "..FV.......",
+            "help": "Repeat the previous frame.",
+            "name": "repeat",
+            "value": "0"
+          },
+          {
+            "__class__": "FFMpegFilterOptionChoice",
+            "flags": "..FV.......",
+            "help": "End both streams.",
+            "name": "endall",
+            "value": "1"
+          },
+          {
+            "__class__": "FFMpegFilterOptionChoice",
+            "flags": "..FV.......",
+            "help": "Pass through the main input.",
+            "name": "pass",
+            "value": "2"
+          }
+        ],
+        "default": "repeat",
+        "description": "See framesync.",
+        "flags": null,
+        "max": null,
+        "min": null,
+        "name": "eof_action",
+        "required": false,
+        "type": {
+          "__class__": "FFMpegFilterOptionType",
+          "value": "int"
+        }
+      },
+      {
+        "__class__": "FFMpegFilterOption",
+        "alias": [],
+        "choices": [
+          {
+            "__class__": "FFMpegFilterOptionChoice",
+            "flags": "..FV.......",
+            "help": "eval expressions once during initialization",
+            "name": "init",
+            "value": "0"
+          },
+          {
+            "__class__": "FFMpegFilterOptionChoice",
+            "flags": "..FV.......",
+            "help": "eval expressions per-frame",
+            "name": "frame",
+            "value": "1"
+          }
+        ],
+        "default": "frame",
+        "description": "Set when the expressions for x and y are evaluated.\n\nIt accepts the following values:\n@end table\n\nDefault value is frame.",
+        "flags": null,
+        "max": null,
+        "min": null,
+        "name": "eval",
+        "required": false,
+        "type": {
+          "__class__": "FFMpegFilterOptionType",
+          "value": "int"
+        }
+      },
+      {
+        "__class__": "FFMpegFilterOption",
+        "alias": [],
+        "choices": [],
+        "default": "false",
+        "description": "See framesync.",
+        "flags": null,
+        "max": null,
+        "min": null,
+        "name": "shortest",
+        "required": false,
+        "type": {
+          "__class__": "FFMpegFilterOptionType",
+          "value": "boolean"
+        }
+      },
+      {
+        "__class__": "FFMpegFilterOption",
+        "alias": [],
+        "choices": [],
+        "default": "true",
+        "description": "See framesync.",
+        "flags": null,
+        "max": null,
+        "min": null,
+        "name": "repeatlast",
+        "required": false,
+        "type": {
+          "__class__": "FFMpegFilterOptionType",
+          "value": "boolean"
+        }
+      }
+    ],
+    "pre": [],
+    "ref": "https://ffmpeg.org/ffmpeg-filters.html#overlay_cuda",
+    "stream_typings_input": [
+      {
+        "__class__": "FFMpegIOType",
+        "name": "main",
+        "type": {
+          "__class__": "StreamType",
+          "value": "video"
+        }
+      },
+      {
+        "__class__": "FFMpegIOType",
+        "name": "overlay",
+        "type": {
+          "__class__": "StreamType",
+          "value": "video"
+        }
+      }
+    ],
+    "stream_typings_output": [
+      {
+        "__class__": "FFMpegIOType",
+        "name": "default",
+        "type": {
+          "__class__": "StreamType",
+          "value": "video"
+        }
+      }
+    ]
+  },
+  {
+    "__class__": "FFMpegFilter",
     "description": "Overlay one video on top of another.\n\nIt takes two inputs and has one output. The first input is the \"main\" video on which the second input is overlaid.\nThis filter requires same memory layout for all the inputs. So, format conversion may be needed.\n\nThe filter accepts the following options:",
     "formula_typings_input": null,
     "formula_typings_output": null,
@@ -62228,6 +62840,225 @@
       {
         "__class__": "FFMpegIOType",
         "name": "ref",
+        "type": {
+          "__class__": "StreamType",
+          "value": "video"
+        }
+      }
+    ]
+  },
+  {
+    "__class__": "FFMpegFilter",
+    "description": "Scale (resize) and convert (pixel format) the input video, using accelerated CUDA kernels.\nSetting the output width and height works in the same way as for the scale filter.\n\nThe filter accepts the following options:",
+    "formula_typings_input": null,
+    "formula_typings_output": null,
+    "id": null,
+    "is_dynamic_input": false,
+    "is_dynamic_output": false,
+    "is_filter_sink": false,
+    "is_filter_source": false,
+    "is_support_command": false,
+    "is_support_framesync": false,
+    "is_support_slice_threading": false,
+    "is_support_timeline": false,
+    "name": "scale_cuda",
+    "options": [
+      {
+        "__class__": "FFMpegFilterOption",
+        "alias": [],
+        "choices": [],
+        "default": "iw",
+        "description": "Output video width (default \"iw\")",
+        "flags": null,
+        "max": null,
+        "min": null,
+        "name": "w",
+        "required": false,
+        "type": {
+          "__class__": "FFMpegFilterOptionType",
+          "value": "string"
+        }
+      },
+      {
+        "__class__": "FFMpegFilterOption",
+        "alias": [],
+        "choices": [],
+        "default": "ih",
+        "description": "Set the output video dimension expression. Default value is the input dimension.\n\nAllows for the same expressions as the scale filter.",
+        "flags": null,
+        "max": null,
+        "min": null,
+        "name": "h",
+        "required": false,
+        "type": {
+          "__class__": "FFMpegFilterOptionType",
+          "value": "string"
+        }
+      },
+      {
+        "__class__": "FFMpegFilterOption",
+        "alias": [],
+        "choices": [
+          {
+            "__class__": "FFMpegFilterOptionChoice",
+            "flags": "..FV.......",
+            "help": "nearest neighbour",
+            "name": "nearest",
+            "value": "1"
+          },
+          {
+            "__class__": "FFMpegFilterOptionChoice",
+            "flags": "..FV.......",
+            "help": "bilinear",
+            "name": "bilinear",
+            "value": "2"
+          },
+          {
+            "__class__": "FFMpegFilterOptionChoice",
+            "flags": "..FV.......",
+            "help": "bicubic",
+            "name": "bicubic",
+            "value": "3"
+          },
+          {
+            "__class__": "FFMpegFilterOptionChoice",
+            "flags": "..FV.......",
+            "help": "lanczos",
+            "name": "lanczos",
+            "value": "4"
+          }
+        ],
+        "default": "0",
+        "description": "Sets the algorithm used for scaling:\n\n@end table",
+        "flags": null,
+        "max": null,
+        "min": null,
+        "name": "interp_algo",
+        "required": false,
+        "type": {
+          "__class__": "FFMpegFilterOptionType",
+          "value": "int"
+        }
+      },
+      {
+        "__class__": "FFMpegFilterOption",
+        "alias": [],
+        "choices": [],
+        "default": "none",
+        "description": "Controls the output pixel format. By default, or if none is specified, the input\npixel format is used.\n\nThe filter does not support converting between YUV and RGB pixel formats.",
+        "flags": null,
+        "max": null,
+        "min": null,
+        "name": "format",
+        "required": false,
+        "type": {
+          "__class__": "FFMpegFilterOptionType",
+          "value": "pix_fmt"
+        }
+      },
+      {
+        "__class__": "FFMpegFilterOption",
+        "alias": [],
+        "choices": [],
+        "default": "true",
+        "description": "If set to 0, every frame is processed, even if no conversion is necessary.\nThis mode can be useful to use the filter as a buffer for a downstream\nframe-consumer that exhausts the limited decoder frame pool.\n\nIf set to 1, frames are passed through as-is if they match the desired output\nparameters. This is the default behaviour.",
+        "flags": null,
+        "max": null,
+        "min": null,
+        "name": "passthrough",
+        "required": false,
+        "type": {
+          "__class__": "FFMpegFilterOptionType",
+          "value": "boolean"
+        }
+      },
+      {
+        "__class__": "FFMpegFilterOption",
+        "alias": [],
+        "choices": [],
+        "default": "999999",
+        "description": "Algorithm-Specific parameter.\n\nAffects the curves of the bicubic algorithm.",
+        "flags": null,
+        "max": null,
+        "min": null,
+        "name": "param",
+        "required": false,
+        "type": {
+          "__class__": "FFMpegFilterOptionType",
+          "value": "float"
+        }
+      },
+      {
+        "__class__": "FFMpegFilterOption",
+        "alias": [],
+        "choices": [
+          {
+            "__class__": "FFMpegFilterOptionChoice",
+            "flags": "..FV.......",
+            "help": "",
+            "name": "disable",
+            "value": "0"
+          },
+          {
+            "__class__": "FFMpegFilterOptionChoice",
+            "flags": "..FV.......",
+            "help": "",
+            "name": "decrease",
+            "value": "1"
+          },
+          {
+            "__class__": "FFMpegFilterOptionChoice",
+            "flags": "..FV.......",
+            "help": "",
+            "name": "increase",
+            "value": "2"
+          }
+        ],
+        "default": "disable",
+        "description": "decrease or increase w/h if necessary to keep the original AR (from 0 to 2) (default disable)",
+        "flags": null,
+        "max": null,
+        "min": null,
+        "name": "force_original_aspect_ratio",
+        "required": false,
+        "type": {
+          "__class__": "FFMpegFilterOptionType",
+          "value": "int"
+        }
+      },
+      {
+        "__class__": "FFMpegFilterOption",
+        "alias": [],
+        "choices": [],
+        "default": "1",
+        "description": "Work the same as the identical scale filter options.",
+        "flags": null,
+        "max": null,
+        "min": null,
+        "name": "force_divisible_by",
+        "required": false,
+        "type": {
+          "__class__": "FFMpegFilterOptionType",
+          "value": "int"
+        }
+      }
+    ],
+    "pre": [],
+    "ref": "https://ffmpeg.org/ffmpeg-filters.html#scale_cuda",
+    "stream_typings_input": [
+      {
+        "__class__": "FFMpegIOType",
+        "name": "default",
+        "type": {
+          "__class__": "StreamType",
+          "value": "video"
+        }
+      }
+    ],
+    "stream_typings_output": [
+      {
+        "__class__": "FFMpegIOType",
+        "name": "default",
         "type": {
           "__class__": "StreamType",
           "value": "video"
@@ -78582,6 +79413,62 @@
   },
   {
     "__class__": "FFMpegFilter",
+    "description": "Select the most representative frame in a given sequence of consecutive frames.",
+    "formula_typings_input": null,
+    "formula_typings_output": null,
+    "id": null,
+    "is_dynamic_input": false,
+    "is_dynamic_output": false,
+    "is_filter_sink": false,
+    "is_filter_source": false,
+    "is_support_command": false,
+    "is_support_framesync": false,
+    "is_support_slice_threading": false,
+    "is_support_timeline": false,
+    "name": "thumbnail_cuda",
+    "options": [
+      {
+        "__class__": "FFMpegFilterOption",
+        "alias": [],
+        "choices": [],
+        "default": "100",
+        "description": "set the frames batch size (from 2 to INT_MAX) (default 100)",
+        "flags": null,
+        "max": null,
+        "min": null,
+        "name": "n",
+        "required": false,
+        "type": {
+          "__class__": "FFMpegFilterOptionType",
+          "value": "int"
+        }
+      }
+    ],
+    "pre": [],
+    "ref": null,
+    "stream_typings_input": [
+      {
+        "__class__": "FFMpegIOType",
+        "name": "default",
+        "type": {
+          "__class__": "StreamType",
+          "value": "video"
+        }
+      }
+    ],
+    "stream_typings_output": [
+      {
+        "__class__": "FFMpegIOType",
+        "name": "default",
+        "type": {
+          "__class__": "StreamType",
+          "value": "video"
+        }
+      }
+    ]
+  },
+  {
+    "__class__": "FFMpegFilter",
     "description": "Tile several successive frames together.\n\nThe untile filter can do the reverse.\n\nThe filter accepts the following options:",
     "formula_typings_input": null,
     "formula_typings_output": null,
@@ -87966,6 +88853,160 @@
     ],
     "pre": [],
     "ref": "https://ffmpeg.org/ffmpeg-filters.html#yadif",
+    "stream_typings_input": [
+      {
+        "__class__": "FFMpegIOType",
+        "name": "default",
+        "type": {
+          "__class__": "StreamType",
+          "value": "video"
+        }
+      }
+    ],
+    "stream_typings_output": [
+      {
+        "__class__": "FFMpegIOType",
+        "name": "default",
+        "type": {
+          "__class__": "StreamType",
+          "value": "video"
+        }
+      }
+    ]
+  },
+  {
+    "__class__": "FFMpegFilter",
+    "description": "Deinterlace the input video using the yadif algorithm, but implemented\nin CUDA so that it can work as part of a GPU accelerated pipeline with nvdec\nand/or nvenc.\n\nIt accepts the following parameters:",
+    "formula_typings_input": null,
+    "formula_typings_output": null,
+    "id": null,
+    "is_dynamic_input": false,
+    "is_dynamic_output": false,
+    "is_filter_sink": false,
+    "is_filter_source": false,
+    "is_support_command": false,
+    "is_support_framesync": false,
+    "is_support_slice_threading": false,
+    "is_support_timeline": true,
+    "name": "yadif_cuda",
+    "options": [
+      {
+        "__class__": "FFMpegFilterOption",
+        "alias": [],
+        "choices": [
+          {
+            "__class__": "FFMpegFilterOptionChoice",
+            "flags": "..FV.......",
+            "help": "send one frame for each frame",
+            "name": "send_frame",
+            "value": "0"
+          },
+          {
+            "__class__": "FFMpegFilterOptionChoice",
+            "flags": "..FV.......",
+            "help": "send one frame for each field",
+            "name": "send_field",
+            "value": "1"
+          },
+          {
+            "__class__": "FFMpegFilterOptionChoice",
+            "flags": "..FV.......",
+            "help": "send one frame for each frame, but skip spatial interlacing check",
+            "name": "send_frame_nospatial",
+            "value": "2"
+          },
+          {
+            "__class__": "FFMpegFilterOptionChoice",
+            "flags": "..FV.......",
+            "help": "send one frame for each field, but skip spatial interlacing check",
+            "name": "send_field_nospatial",
+            "value": "3"
+          }
+        ],
+        "default": "send_frame",
+        "description": "The interlacing mode to adopt. It accepts one of the following values:\n\n@end table\n\nThe default value is send_frame.",
+        "flags": null,
+        "max": null,
+        "min": null,
+        "name": "mode",
+        "required": false,
+        "type": {
+          "__class__": "FFMpegFilterOptionType",
+          "value": "int"
+        }
+      },
+      {
+        "__class__": "FFMpegFilterOption",
+        "alias": [],
+        "choices": [
+          {
+            "__class__": "FFMpegFilterOptionChoice",
+            "flags": "..FV.......",
+            "help": "assume top field first",
+            "name": "tff",
+            "value": "0"
+          },
+          {
+            "__class__": "FFMpegFilterOptionChoice",
+            "flags": "..FV.......",
+            "help": "assume bottom field first",
+            "name": "bff",
+            "value": "1"
+          },
+          {
+            "__class__": "FFMpegFilterOptionChoice",
+            "flags": "..FV.......",
+            "help": "auto detect parity",
+            "name": "auto",
+            "value": "-1"
+          }
+        ],
+        "default": "auto",
+        "description": "The picture field parity assumed for the input interlaced video. It accepts one\nof the following values:\n\n@end table\n\nThe default value is auto.\nIf the interlacing is unknown or the decoder does not export this information,\ntop field first will be assumed.",
+        "flags": null,
+        "max": null,
+        "min": null,
+        "name": "parity",
+        "required": false,
+        "type": {
+          "__class__": "FFMpegFilterOptionType",
+          "value": "int"
+        }
+      },
+      {
+        "__class__": "FFMpegFilterOption",
+        "alias": [],
+        "choices": [
+          {
+            "__class__": "FFMpegFilterOptionChoice",
+            "flags": "..FV.......",
+            "help": "deinterlace all frames",
+            "name": "all",
+            "value": "0"
+          },
+          {
+            "__class__": "FFMpegFilterOptionChoice",
+            "flags": "..FV.......",
+            "help": "only deinterlace frames marked as interlaced",
+            "name": "interlaced",
+            "value": "1"
+          }
+        ],
+        "default": "all",
+        "description": "Specify which frames to deinterlace. Accepts one of the following\nvalues:\n\n@end table\n\nThe default value is all.",
+        "flags": null,
+        "max": null,
+        "min": null,
+        "name": "deint",
+        "required": false,
+        "type": {
+          "__class__": "FFMpegFilterOptionType",
+          "value": "int"
+        }
+      }
+    ],
+    "pre": [],
+    "ref": "https://ffmpeg.org/ffmpeg-filters.html#yadif_cuda",
     "stream_typings_input": [
       {
         "__class__": "FFMpegIOType",

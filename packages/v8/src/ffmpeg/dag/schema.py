@@ -124,7 +124,7 @@ class Node(HashableBaseModel):
 
     def __hash__(self) -> int:
         # Return cached hash if already computed (writing to __dict__ bypasses frozen)
-        cached = self.__dict__.get("_hash_val_")
+        cached = self.__dict__.get('_hash_val_')
         if cached is not None:
             return cached
 
@@ -138,7 +138,9 @@ class Node(HashableBaseModel):
             nid = id(node)
             if processed:
                 own_fields = tuple(
-                    getattr(node, f.name) for f in fields(node) if f.name != "inputs"
+                    getattr(node, f.name)
+                    for f in fields(node)
+                    if f.name != 'inputs'
                 )
                 stream_hashes = tuple(
                     (node_hashes[id(inp.node)], inp.index, inp.optional, inp.__class__)
@@ -146,11 +148,11 @@ class Node(HashableBaseModel):
                 )
                 h = hash((node.__class__,) + own_fields + stream_hashes)
                 node_hashes[nid] = h
-                node.__dict__["_hash_val_"] = h
+                node.__dict__['_hash_val_'] = h
             else:
                 if nid in node_hashes:  # pragma: no cover
                     continue
-                cached_val = node.__dict__.get("_hash_val_")
+                cached_val = node.__dict__.get('_hash_val_')
                 if cached_val is not None:  # pragma: no cover
                     node_hashes[nid] = cached_val
                     continue
@@ -159,7 +161,7 @@ class Node(HashableBaseModel):
                     inp_nid = id(inp.node)
                     if inp_nid in node_hashes:
                         continue
-                    cached_inp = inp.node.__dict__.get("_hash_val_")
+                    cached_inp = inp.node.__dict__.get('_hash_val_')
                     if cached_inp is not None:
                         node_hashes[inp_nid] = cached_inp
                     else:  # pragma: no cover
@@ -226,11 +228,11 @@ class Node(HashableBaseModel):
             if processed:
                 d = max((depths[id(i.node)] for i in node.inputs), default=0) + 1
                 depths[nid] = d
-                node.__dict__["max_depth"] = d  # pre-populate cached_property cache
+                node.__dict__['max_depth'] = d  # pre-populate cached_property cache
             else:
                 if nid in depths:
                     continue
-                cached_val = node.__dict__.get("max_depth")
+                cached_val = node.__dict__.get('max_depth')
                 if cached_val is not None:  # pragma: no cover
                     depths[nid] = cached_val
                     continue
@@ -238,7 +240,7 @@ class Node(HashableBaseModel):
                 for inp in node.inputs:
                     inp_nid = id(inp.node)
                     if inp_nid not in depths:
-                        cached_inp = inp.node.__dict__.get("max_depth")
+                        cached_inp = inp.node.__dict__.get('max_depth')
                         if cached_inp is not None:
                             depths[inp_nid] = cached_inp
                         else:
