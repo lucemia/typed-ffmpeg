@@ -435,7 +435,7 @@ class OutputStream(Stream, GlobalRunable):
                 filename="-", f="null", vcodec="libx264", extra_options={"crf": 45}
             )
             dec = encoded.loopback(stream_index=0)
-            stacked = source.video.hstack(dec.video)
+            stacked = ffmpeg.filters.hstack(source.video, dec.video)
             stacked.output(filename="OUT.mkv", vcodec="ffv1")
             ```
 
