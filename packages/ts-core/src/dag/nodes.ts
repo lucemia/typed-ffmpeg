@@ -297,6 +297,7 @@ export class OutputNode extends Node {
 export class OutputStream extends Stream {
   declare readonly node: OutputNode;
 
+  /** @param index - Output stream index (ost) tapped by a loopback decoder, or null */
   constructor(node: OutputNode, index: number | null = null) {
     super(node, index);
   }
@@ -442,6 +443,12 @@ export class LoopbackDecoderNode extends Node {
   ) {
     super(kwargs, inputs);
 
+    if (inputs.length !== 1) {
+      throw new FFMpegValueError(
+        `Expected exactly one tapped output stream, got ${inputs.length}`,
+      );
+    }
+
     const tapped = inputs[0];
     const index = tapped.index ?? 0;
     const outInputs = tapped.node.inputs;
@@ -482,7 +489,6 @@ export class LoopbackDecoderNode extends Node {
     }
     if (index >= outInputs.length) return null;
     const stream = outInputs[index];
-    if (stream instanceof AVStream) return null;
     if (stream instanceof VideoStream) return StreamType.Video;
     if (stream instanceof AudioStream) return StreamType.Audio;
     return null;

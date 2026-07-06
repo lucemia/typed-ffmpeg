@@ -3,6 +3,7 @@ import {
   InputNode,
   LoopbackDecoderNode,
   OutputNode,
+  OutputStream,
   VideoStream,
   AudioStream,
 } from "../dag/nodes.js";
@@ -68,5 +69,20 @@ describe("LoopbackDecoderNode model", () => {
     const enc = new OutputNode([source.video], "-", { f: "null", vcodec: "libx264" });
     const dec = enc.stream().loopback(0);
     expect(() => new OutputNode([dec.video], "direct.mkv")).toThrow(FFMpegValueError);
+  });
+
+  it("rejects a wrong number of tapped inputs at runtime", () => {
+    const source = new InputNode("INPUT");
+    const enc = new OutputNode([source.video], "-", { f: "null", vcodec: "libx264" });
+    const os = enc.stream();
+    // bypass the compile-time tuple type to simulate a plain-JS caller
+    expect(() => new LoopbackDecoderNode([] as any, {})).toThrow(FFMpegValueError);
+    expect(
+      () =>
+        new LoopbackDecoderNode(
+          [new OutputStream(os.node, 0), new OutputStream(os.node, 1)] as any,
+          {},
+        ),
+    ).toThrow(FFMpegValueError);
   });
 });
