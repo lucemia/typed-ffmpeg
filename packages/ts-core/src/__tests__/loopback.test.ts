@@ -182,6 +182,10 @@ describe("loopback compile", () => {
 
     const args = compileAsList(out.stream());
     expect(args.filter((a) => a === "-dec")).toHaveLength(2);
+    // The tapped output ("enc", filename "-") must be emitted only once,
+    // even though two loopback decoders tap it.
+    expect(args.filter((a) => a === "-").length).toBe(1); // encoder output emitted once
+    expect(args.filter((a) => a === "-dec").length).toBe(2);
   });
 });
 
