@@ -271,6 +271,15 @@ export class OutputNode extends Node {
   ) {
     super(kwargs, inputs);
     this.filename = filename;
+
+    for (const stream of inputs) {
+      if (stream.node instanceof LoopbackDecoderNode) {
+        throw new FFMpegValueError(
+          "A loopback decoder stream cannot be mapped to an output directly; " +
+            "route it through a filter",
+        );
+      }
+    }
   }
 
   override repr(): string {
@@ -288,8 +297,8 @@ export class OutputNode extends Node {
 export class OutputStream extends Stream {
   declare readonly node: OutputNode;
 
-  constructor(node: OutputNode) {
-    super(node);
+  constructor(node: OutputNode, index: number | null = null) {
+    super(node, index);
   }
 
   _globalNode(
@@ -305,6 +314,24 @@ export class OutputStream extends Stream {
 
   overwriteOutput(): GlobalStream {
     return this.globalArgs({ y: true });
+  }
+
+  /**
+   * Create a loopback decoder tapping a stream of this output.
+   *
+   * Requires FFmpeg >= 7.0. A loopback decoder (`-dec of:ost`) decodes the
+   * encoded output of an existing output stream and exposes the decoded
+   * frames as a filtergraph input labeled `[dec:N]`. The referenced output
+   * stream must be re-encoded (streamcopy outputs have no encoder to tap).
+   */
+  loopback(
+    streamIndex: number = 0,
+    kwargs: Record<string, KwargsValue> = {},
+  ): LoopbackDecoderNode {
+    return new LoopbackDecoderNode(
+      [new OutputStream(this.node, streamIndex)],
+      kwargs,
+    );
   }
 
   compile(autoFix: boolean = true): string[] {
@@ -395,6 +422,87 @@ export class GlobalStream extends Stream {
 export function mergeOutputs(...streams: OutputStream[]): OutputStream | GlobalStream {
   if (streams.length === 1) return streams[0];
   return streams[0]._globalNode(streams.slice(1)).stream();
+}
+
+// ─── Loopback Decoder ────────────────────────────────────────────────────────
+
+/**
+ * A node representing an FFmpeg loopback decoder (`-dec of:ost`).
+ *
+ * Requires FFmpeg >= 7.0. Its input references an already-defined output
+ * stream (node = the OutputNode, index = the output stream index); its
+ * output is a filterable stream labeled `[dec:N]` in filter graphs.
+ */
+export class LoopbackDecoderNode extends Node {
+  declare readonly inputs: readonly OutputStream[];
+
+  constructor(
+    inputs: readonly [OutputStream],
+    kwargs: Record<string, KwargsValue> = {},
+  ) {
+    super(kwargs, inputs);
+
+    const tapped = inputs[0];
+    const index = tapped.index ?? 0;
+    const outInputs = tapped.node.inputs;
+
+    const hasAVStream = outInputs.some((s) => s instanceof AVStream);
+    if (!hasAVStream && index >= outInputs.length) {
+      throw new FFMpegValueError(
+        `stream_index ${index} is out of range for an output with ${outInputs.length} streams`,
+      );
+    }
+
+    const codecKeys = ["c", "codec"];
+    const tappedType = this.tappedType();
+    if (tappedType === StreamType.Video) codecKeys.push("vcodec", "c:v");
+    if (tappedType === StreamType.Audio) codecKeys.push("acodec", "c:a");
+    for (const key of codecKeys) {
+      const value = tapped.node.kwargs[key];
+      if (value != null && String(value) === "copy") {
+        throw new FFMpegValueError(
+          `Cannot create a loopback decoder for a streamcopy output stream (${key}=copy): there is no encoder to tap`,
+        );
+      }
+    }
+  }
+
+  override repr(): string {
+    return "loopback";
+  }
+
+  /** Best-effort static type of the tapped output stream (null if unknowable). */
+  private tappedType(): StreamType | null {
+    const tapped = this.inputs[0];
+    const index = tapped.index ?? 0;
+    const outInputs = tapped.node.inputs;
+
+    if (outInputs.slice(0, index + 1).some((s) => s instanceof AVStream)) {
+      return null;
+    }
+    if (index >= outInputs.length) return null;
+    const stream = outInputs[index];
+    if (stream instanceof AVStream) return null;
+    if (stream instanceof VideoStream) return StreamType.Video;
+    if (stream instanceof AudioStream) return StreamType.Audio;
+    return null;
+  }
+
+  get video(): VideoStream {
+    const t = this.tappedType();
+    if (t !== null && t !== StreamType.Video) {
+      throw new FFMpegTypeError(`Tapped output stream is ${t}, not video`);
+    }
+    return new VideoStream(this);
+  }
+
+  get audio(): AudioStream {
+    const t = this.tappedType();
+    if (t !== null && t !== StreamType.Audio) {
+      throw new FFMpegTypeError(`Tapped output stream is ${t}, not audio`);
+    }
+    return new AudioStream(this);
+  }
 }
 
 // ─── Initialize late-bound factories ────────────────────────────────────────
