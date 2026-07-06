@@ -6,7 +6,7 @@
 export {
   StreamType,
   Default, Auto,
-  InputNode, OutputNode, FilterNode,
+  InputNode, OutputNode, LoopbackDecoderNode, FilterNode,
   OutputStream, GlobalNode, GlobalStream, AVStream, SubtitleStream,
   mergeOutputs,
   filterNodeFactory,

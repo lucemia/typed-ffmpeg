@@ -18,6 +18,7 @@ import {
   FilterNode,
   GlobalNode,
   InputNode,
+  LoopbackDecoderNode,
   OutputNode,
   OutputStream,
   SubtitleStream,
@@ -85,14 +86,97 @@ export function compileAsList(
     commands.push("-filter_complex", vfCommands.join(";"));
   }
 
-  // Output nodes
-  for (const n of context.allNodes) {
-    if (n instanceof OutputNode) {
-      commands.push(...getArgsOutputNode(n, context));
+  // Output nodes, each immediately followed by any loopback decoders
+  // tapping it (-dec references an already-defined output stream).
+  // Outputs are deduped by outputKey (hex + filename, see below): validate()
+  // rebuilds nodes per-edge, so an output tapped by more than one loopback
+  // decoder ends up as several distinct-but-structurally-equal instances in
+  // context.allNodes (identity-based dedup keeps all of them). Without
+  // deduping here, the same logical output would be emitted once per
+  // instance.
+  const outputNodes = uniqueOutputsByHex(context);
+  const loopbackNodes = context.allNodes.filter(
+    (n): n is LoopbackDecoderNode => n instanceof LoopbackDecoderNode,
+  );
+  for (const n of outputNodes) {
+    commands.push(...getArgsOutputNode(n, context));
+    for (const decNode of loopbackNodes) {
+      if (outputKey(decNode.inputs[0].node) === outputKey(n)) {
+        commands.push(...getArgsLoopbackDecoderNode(decNode, context));
+      }
     }
   }
 
   return commands;
+}
+
+/**
+ * Structural dedup key for an OutputNode.
+ *
+ * `Node.hex` (schema.ts) hashes the constructor name, kwargs, and the
+ * *identity* (`_id`) of each input's node — it does not include
+ * OutputNode-specific fields like `filename`. Two genuinely different
+ * outputs that share the same input stream and kwargs but write to
+ * different files (e.g. `-map 0 out1.mp4 -map 0 out2.mp4`) are therefore
+ * `.hex`-equal despite being distinct logical outputs. Folding `filename`
+ * into the key disambiguates that case while still collapsing the actual
+ * duplicates produced by validate(): when one output is tapped by several
+ * loopback decoders, validate() rebuilds the encoder OutputNode once per
+ * tap, but every rebuild shares the same filename, kwargs, and (identity
+ * of) inputs, so they share the same key.
+ */
+function outputKey(node: OutputNode): string {
+  return `${node.hex}::${node.filename}`;
+}
+
+/**
+ * Collect OutputNodes deduped by outputKey, preserving first-occurrence
+ * order from context.allNodes. Mirrors the Python port's structural dedup:
+ * validate() rebuilds nodes per-edge, so an output tapped by several
+ * loopback decoders can appear as multiple distinct-but-structurally-equal
+ * instances under DAGContext's identity-based Set/Map dedup.
+ */
+function uniqueOutputsByHex(context: DAGContext): OutputNode[] {
+  const seen = new Set<string>();
+  const result: OutputNode[] = [];
+  for (const n of context.allNodes) {
+    if (n instanceof OutputNode && !seen.has(outputKey(n))) {
+      seen.add(outputKey(n));
+      result.push(n);
+    }
+  }
+  return result;
+}
+
+/**
+ * Map each LoopbackDecoderNode to its dec:N label index.
+ *
+ * FFmpeg numbers [dec:N] labels by -dec occurrence order on the command
+ * line; compileAsList emits outputs in DAG order with each output's
+ * decoders immediately after it, so indices are assigned in that order.
+ *
+ * Outputs are deduped by outputKey (see uniqueOutputsByHex): validate()
+ * rebuilds nodes per-edge, so an output tapped by several loopback decoders
+ * can appear as multiple distinct-but-structurally-equal OutputNode
+ * instances under DAGContext's identity-based dedup. Matching decoders
+ * against the deduped list by outputKey means each decoder matches exactly
+ * the one logical output it taps, with no double-assignment.
+ */
+export function getLoopbackIndices(context: DAGContext): Map<Node, number> {
+  const outputNodes = uniqueOutputsByHex(context);
+  const loopbackNodes = context.allNodes.filter(
+    (n): n is LoopbackDecoderNode => n instanceof LoopbackDecoderNode,
+  );
+
+  const indices = new Map<Node, number>();
+  for (const outputNode of outputNodes) {
+    for (const decNode of loopbackNodes) {
+      if (outputKey(decNode.inputs[0].node) === outputKey(outputNode)) {
+        indices.set(decNode, indices.size);
+      }
+    }
+  }
+  return indices;
 }
 
 /**
@@ -122,6 +206,10 @@ export function getStreamLabel(stream: Stream, context?: DAGContext): string {
       return `${label}#${stream.index}`;
     }
     return label;
+  }
+
+  if (stream.node instanceof LoopbackDecoderNode) {
+    return `dec:${getLoopbackIndices(context).get(stream.node)}`;
   }
 
   if (stream.node instanceof OutputNode) {
@@ -221,6 +309,33 @@ export function getArgsOutputNode(node: OutputNode, context: DAGContext): string
   return commands;
 }
 
+/** Generate CLI args for a LoopbackDecoderNode: decoder options then -dec of:ost. */
+export function getArgsLoopbackDecoderNode(
+  node: LoopbackDecoderNode,
+  context: DAGContext,
+): string[] {
+  const commands: string[] = [];
+  for (const [key, value] of Object.entries(node.kwargs)) {
+    if (typeof value === "boolean") {
+      commands.push(value ? `-${key}` : `-no${key}`);
+    } else {
+      commands.push(`-${key}`, String(value));
+    }
+  }
+  const tapped = node.inputs[0];
+  // `of` is the tapped output's ordinal among deduped (by outputKey) outputs
+  // — that ordinal is exactly the file index ffmpeg assigns, since
+  // compileAsList emits outputs in the same deduped order (see
+  // uniqueOutputsByHex). context.nodeIds is identity-keyed and would give
+  // distinct ids to structurally-equal duplicate instances validate()
+  // produces when one output is tapped by several loopback decoders.
+  const uniq = uniqueOutputsByHex(context);
+  const of = uniq.findIndex((o) => outputKey(o) === outputKey(tapped.node));
+  const ost = tapped.index ?? 0;
+  commands.push("-dec", `${of}:${ost}`);
+  return commands;
+}
+
 /**
  * Generate CLI args for a GlobalNode.
  */
@@ -255,6 +370,8 @@ export function getArgs(node: Node, context?: DAGContext): string[] {
   if (node instanceof InputNode) return getArgsInputNode(node, context);
   if (node instanceof OutputNode) return getArgsOutputNode(node, context);
   if (node instanceof GlobalNode) return getArgsGlobalNode(node, context);
+  if (node instanceof LoopbackDecoderNode)
+    return getArgsLoopbackDecoderNode(node, context);
   throw new FFMpegValueError(`Unknown node type: ${node.constructor.name}`);
 }
 
@@ -668,6 +785,12 @@ export function parse(
   // strip "ffmpeg" / "ffmpeg.exe" binary name
   if (tokens[0].toLowerCase().replace(/\.exe$/, "") === "ffmpeg") {
     tokens = tokens.slice(1);
+  }
+
+  if (tokens.includes("-dec")) {
+    throw new FFMpegValueError(
+      "loopback decoders (-dec) are not supported by parse()",
+    );
   }
 
   const [globalParams, remaining] = parseGlobal(tokens, ffmpegOptions);

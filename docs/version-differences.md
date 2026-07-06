@@ -62,6 +62,27 @@ Nothing was removed between FFmpeg 5 and 6.
 
 `fbdev`, `fifo_test`, `lavfi`, `oss`, `x11grab`
 
+### API: loopback decoders (new in FFmpeg 7.0)
+
+FFmpeg 7.0 added loopback decoders (`-dec of:ost` / `[dec:N]`), which decode an
+already-encoded output stream and expose the decoded frames back to the
+filtergraph. typed-ffmpeg surfaces this as `OutputStream.loopback(...)`:
+
+```python
+source = ffmpeg.input("INPUT")
+encoded = source.video.output(filename="-", f="null", vcodec="libx264")
+dec = encoded.loopback(stream_index=0)  # decodes the encode back into the graph
+ffmpeg.filters.hstack(source.video, dec.video).output(filename="OUT.mkv")
+```
+
+This feature requires FFmpeg **>= 7.0** and is only available in the `v7` and
+`v8` packages — the `loopback()` method is not generated for `v5`/`v6`. In the
+TypeScript packages the method lives in the shared `@typed-ffmpeg/core`, so it
+is present at the type level for all versions but still requires an FFmpeg 7.0+
+binary at runtime (only `@typed-ffmpeg/v7` and `@typed-ffmpeg/v8` re-export
+`LoopbackDecoderNode`). Compiling to a command line is supported; parsing a
+command line that contains `-dec` is not, and raises a clear error.
+
 ---
 
 ## FFmpeg 7 → 8

@@ -47,6 +47,7 @@ export {
   FilterNode,
   InputNode,
   OutputNode,
+  LoopbackDecoderNode,
   GlobalNode,
   VideoStream,
   AudioStream,

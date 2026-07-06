@@ -13,7 +13,7 @@ from __future__ import annotations
 
 from dataclasses import replace
 
-from ..dag.nodes import FilterNode, InputNode
+from ..dag.nodes import FilterNode, InputNode, OutputNode
 from ..dag.schema import Node, Stream
 from ..exceptions import FFMpegValueError
 from ..streams.audio import AudioStream
@@ -157,7 +157,9 @@ def add_split(
 
             if num < 2:
                 mapping[key] = new_stream
-            elif isinstance(stream.node, InputNode):
+            elif isinstance(stream.node, (InputNode, OutputNode)):
+                # Input streams are shared without splitting; output streams
+                # (tapped by loopback decoders) likewise cannot be split.
                 for out_node, out_idx in context.get_outgoing_nodes(stream):
                     mapping[(stream, out_node, out_idx)] = new_stream
             elif isinstance(new_stream, VideoStream):
@@ -170,7 +172,6 @@ def add_split(
                     mapping[(stream, out_node, out_idx)] = split_node.audio(n)
             else:
                 raise FFMpegValueError(f"unsupported stream type: {stream}")
-
         else:
             # Push self as post-process marker, then push unprocessed inputs
             stack.append((stream, par_node, par_idx, True))
