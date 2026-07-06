@@ -188,11 +188,19 @@ const args: string[] = cmd.compile();
 | `OutputNode` | Represents an FFmpeg output |
 | `FilterNode` | Represents a filter in the graph |
 | `VideoStream` / `AudioStream` | Typed stream references |
+| `LoopbackDecoderNode` | Loopback decoder (`-dec` / `[dec:N]`) — **requires FFmpeg >= 7.0** |
 | `mergeOutputs()` | Combine multiple outputs into one command |
 | `compile()` / `compileAsList()` | Compile a DAG to FFmpeg arguments |
 | `validate()` / `fixGraph()` | Validate and auto-correct filter graphs |
 | `run()` / `runAsync()` | Execute FFmpeg commands |
 | `StreamType` | Enum: `Video`, `Audio` |
+
+!!! note "Loopback decoders require FFmpeg >= 7.0"
+    `OutputStream.loopback()` and `LoopbackDecoderNode` map to FFmpeg 7.0's
+    loopback decoder (`-dec of:ost`). Because `@typed-ffmpeg/core` is shared
+    across all versions, `loopback()` is present at the type level for every
+    package, but it only works with an FFmpeg 7.0+ binary. Only
+    `@typed-ffmpeg/v7` and `@typed-ffmpeg/v8` re-export `LoopbackDecoderNode`.
 
 ### Version Exports (`@typed-ffmpeg/v5` – `v8`)
 
