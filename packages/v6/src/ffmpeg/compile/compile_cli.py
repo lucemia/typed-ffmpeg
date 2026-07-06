@@ -40,6 +40,7 @@ from ..dag.nodes import (
     FilterNode,
     GlobalNode,
     InputNode,
+    LoopbackDecoderNode,
     OutputNode,
     OutputStream,
 )
@@ -651,6 +652,11 @@ def parse(cli: str) -> Stream:
     assert tokens[0].lower().split(".")[0] == "ffmpeg"
     tokens = tokens[1:]
 
+    if "-dec" in tokens:
+        raise FFMpegValueError(
+            "loopback decoders (-dec) are not supported by parse()"
+        )
+
     # Parse global options first
     global_params, remaining_tokens = parse_global(tokens, ffmpeg_options)
 
@@ -844,12 +850,48 @@ def compile_as_list(
         else:
             commands += ["-filter_complex", filter_complex_content]
 
-    # compile the output nodes
+    # compile the output nodes, each immediately followed by any loopback
+    # decoders tapping it (-dec references an already-defined output stream)
     output_nodes = [node for node in context.all_nodes if isinstance(node, OutputNode)]
+    loopback_nodes = [
+        node for node in context.all_nodes if isinstance(node, LoopbackDecoderNode)
+    ]
     for node in output_nodes:
         commands += get_args(node, context)
+        for dec_node in loopback_nodes:
+            if dec_node.inputs[0].node == node:
+                commands += get_args(dec_node, context)
 
     return commands
+
+
+def get_loopback_indices(context: DAGContext) -> dict[Node, int]:
+    """
+    Map each LoopbackDecoderNode to its dec:N label index.
+
+    FFmpeg numbers [dec:N] labels by the order of -dec occurrences on the
+    command line. compile_as_list emits outputs in DAG order and each output's
+    loopback decoders immediately after it, so label indices are assigned by
+    walking outputs (and their decoders) in that same order.
+
+    Args:
+        context: The DAG context containing all nodes
+
+    Returns:
+        A dictionary mapping each LoopbackDecoderNode to its dec:N index
+
+    """
+    output_nodes = [node for node in context.all_nodes if isinstance(node, OutputNode)]
+    loopback_nodes = [
+        node for node in context.all_nodes if isinstance(node, LoopbackDecoderNode)
+    ]
+
+    indices: dict[Node, int] = {}
+    for output_node in output_nodes:
+        for dec_node in loopback_nodes:
+            if dec_node.inputs[0].node == output_node:
+                indices[dec_node] = len(indices)
+    return indices
 
 
 def get_stream_label(stream: Stream, context: DAGContext | None = None) -> str:
@@ -920,6 +962,8 @@ def get_stream_label(stream: Stream, context: DAGContext | None = None) -> str:
             if len(stream.node.output_typings) > 1:
                 return f"{get_node_label(stream.node, context)}#{stream.index}"
             return f"{get_node_label(stream.node, context)}"
+        case LoopbackDecoderNode():
+            return f"dec:{get_loopback_indices(context)[stream.node]}"
         case OutputNode():
             return f"{get_node_label(stream.node, context)}"
         case _:
@@ -1081,6 +1125,46 @@ def get_args_output_node(node: OutputNode, context: DAGContext) -> list[str]:
     return commands
 
 
+def get_args_loopback_decoder_node(
+    node: LoopbackDecoderNode, context: DAGContext
+) -> list[str]:
+    """
+    Generate the FFmpeg command-line arguments for this loopback decoder.
+
+    Emits the decoder's options followed by ``-dec of:ost``, where ``of`` is
+    the index of the tapped output file and ``ost`` the output stream index
+    within it. The caller (compile_as_list) places this group immediately
+    after the tapped output's arguments so the option group is well-formed.
+
+    Args:
+        node: The LoopbackDecoderNode to generate arguments for
+        context: DAG context for resolving the output file index
+
+    Returns:
+        A list of strings representing FFmpeg command-line arguments
+
+    Example:
+        For a decoder forcing h264 on the first output's first stream:
+        ['-c', 'h264', '-dec', '0:0']
+
+    """
+    commands = []
+    for key, value in node.kwargs.items():
+        if isinstance(value, bool):
+            if value is True:
+                commands += [f"-{key}"]
+            elif value is False:
+                commands += [f"-no{key}"]
+        else:
+            commands += [f"-{key}", str(value)]
+
+    tapped = node.inputs[0]
+    of = context.node_ids[tapped.node]
+    ost = tapped.index or 0
+    commands += ["-dec", f"{of}:{ost}"]
+    return commands
+
+
 def get_args_global_node(node: GlobalNode, context: DAGContext) -> list[str]:
     """
     Generate the FFmpeg command-line arguments for these global options.
@@ -1145,6 +1229,8 @@ def get_args(node: Node, context: DAGContext | None = None) -> list[str]:
             return get_args_output_node(node, context)
         case GlobalNode():
             return get_args_global_node(node, context)
+        case LoopbackDecoderNode():
+            return get_args_loopback_decoder_node(node, context)
         case _:
             raise FFMpegValueError(f"Unknown node type: {node.__class__.__name__}")
 

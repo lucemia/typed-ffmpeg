@@ -103,3 +103,107 @@ def test_loopback_exported_from_dag() -> None:
 def test_loopback_absent_on_older_versions() -> None:
     out = ffmpeg.input("INPUT").video.output(filename="o.mkv")
     assert not hasattr(out, "loopback")
+
+
+@requires_loopback
+def test_loopback_canonical_hstack() -> None:
+    """The canonical example from issue #966: compare an encode with its source."""
+    from ffmpeg.compile.compile_cli import compile_as_list
+
+    source = ffmpeg.input("INPUT")
+    encoded = source.video.output(
+        filename="-", f="null", vcodec="libx264", extra_options={"crf": 45}
+    )
+    dec = encoded.loopback(stream_index=0)
+    stacked = ffmpeg.filters.hstack(source.video, dec.video)
+    out = stacked.output(filename="OUT.mkv", vcodec="ffv1")
+
+    assert compile_as_list(out) == [
+        "-i",
+        "INPUT",
+        "-filter_complex",
+        # NOTE: hstack always serializes its Auto-computed `inputs` option;
+        # `hstack=inputs=2` is the pre-existing form for any two-input
+        # hstack (unrelated to loopback)
+        "[0:v][dec:0]hstack=inputs=2[s0]",
+        "-map",
+        "0:v",
+        "-f",
+        "null",
+        "-vcodec",
+        "libx264",
+        "-crf",
+        "45",
+        "-",
+        "-dec",
+        "0:0",
+        "-map",
+        "[s0]",
+        "-vcodec",
+        "ffv1",
+        "OUT.mkv",
+    ]
+
+
+@requires_loopback
+def test_loopback_decoder_options_emitted_before_dec() -> None:
+    from ffmpeg.compile.compile_cli import compile_as_list
+
+    source = ffmpeg.input("INPUT")
+    encoded = source.video.output(filename="-", f="null", vcodec="libx264")
+    dec = encoded.loopback(0, codec="h264", extra_options={"threads": 2})
+    out = ffmpeg.filters.hstack(source.video, dec.video).output(filename="OUT.mkv")
+
+    args = compile_as_list(out)
+    dec_pos = args.index("-dec")
+    assert args[dec_pos : dec_pos + 2] == ["-dec", "0:0"]
+    # decoder options belong to the -dec option group: contiguous, before -dec
+    assert args[dec_pos - 4 : dec_pos] == ["-c", "h264", "-threads", "2"]
+
+
+@requires_loopback
+def test_loopback_multiple_decoders_label_order() -> None:
+    from ffmpeg.compile.compile_cli import compile_as_list
+
+    source = ffmpeg.input("INPUT")
+    enc_a = source.video.output(filename="-", f="null", vcodec="libx264")
+    enc_b = source.video.output(filename="-", f="null", vcodec="libx265")
+    dec_a = enc_a.loopback(0)
+    dec_b = enc_b.loopback(0)
+    out = ffmpeg.filters.hstack(dec_a.video, dec_b.video).output(filename="OUT.mkv")
+
+    args = compile_as_list(out)
+    fc = args[args.index("-filter_complex") + 1]
+    assert "[dec:0][dec:1]hstack" in fc
+
+    dec_positions = [i for i, a in enumerate(args) if a == "-dec"]
+    assert len(dec_positions) == 2
+    # [dec:N] numbering must match -dec occurrence order
+    assert args[dec_positions[0] + 1] == "0:0"
+    assert args[dec_positions[1] + 1] == "1:0"
+
+
+@requires_loopback
+def test_loopback_audio_compile() -> None:
+    from ffmpeg.compile.compile_cli import compile_as_list
+
+    source = ffmpeg.input("INPUT")
+    encoded = source.audio.output(filename="-", f="null", acodec="aac")
+    dec = encoded.loopback(0)
+    out = ffmpeg.filters.amix(dec.audio, source.audio).output(filename="OUT.mka")
+
+    args = compile_as_list(out)
+    fc = args[args.index("-filter_complex") + 1]
+    assert "[dec:0]" in fc
+    assert "-dec" in args
+    assert args[args.index("-dec") + 1] == "0:0"
+
+
+def test_parse_rejects_dec() -> None:
+    from ffmpeg.compile.compile_cli import parse
+
+    with pytest.raises(FFMpegValueError, match="-dec"):
+        parse(
+            "ffmpeg -i INPUT -map 0:v -c:v libx264 -f null - -dec 0:0 "
+            "-filter_complex '[0:v][dec:0]hstack[s]' -map '[s]' out.mkv"
+        )
