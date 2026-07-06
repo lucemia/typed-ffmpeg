@@ -1,5 +1,9 @@
 """Tests for FFmpeg 7.0 loopback decoder support (-dec / [dec:N])."""
 
+import subprocess
+import sys
+import textwrap
+
 import pytest
 
 import ffmpeg
@@ -246,3 +250,44 @@ def test_two_distinct_loopbacks_on_same_output_stream() -> None:
     # two distinct decoders tapping the same output stream: both emitted,
     # and the tapped OutputStream must NOT go through split machinery
     assert args.count("-dec") == 2
+
+
+# Minimal reproduction proving the loopback API is statically visible and
+# correctly typed. Streams are combined via the free `ffmpeg.filters.hstack`
+# function (VideoStream has no `.hstack()` method) since it's a known-good,
+# exported multi-input video filter that type-checks cleanly.
+_PYRIGHT_SAMPLE = textwrap.dedent("""
+    import ffmpeg
+    from ffmpeg.dag.nodes import LoopbackDecoderNode
+    from ffmpeg.streams.video import VideoStream
+
+    out = ffmpeg.input("in.mp4").video.output(
+        filename="-", f="null", vcodec="libx264"
+    )
+    dec: LoopbackDecoderNode = out.loopback(0)
+    v: VideoStream = dec.video
+    stacked = ffmpeg.filters.hstack(ffmpeg.input("in.mp4").video, v)
+""")
+
+
+@requires_loopback
+def test_pyright_loopback_typing(tmp_path) -> None:
+    probe = subprocess.run(
+        [sys.executable, "-m", "pyright", "--version"],
+        capture_output=True,
+        text=True,
+    )
+    if probe.returncode != 0:
+        pytest.skip("pyright not installed")
+
+    sample = tmp_path / "loopback_typing.py"
+    sample.write_text(_PYRIGHT_SAMPLE)
+    result = subprocess.run(
+        [sys.executable, "-m", "pyright", str(sample)],
+        capture_output=True,
+        text=True,
+    )
+    assert "0 errors" in result.stdout, (
+        f"Pyright reported errors for the loopback API.\n"
+        f"stdout:\n{result.stdout}\nstderr:\n{result.stderr}"
+    )
