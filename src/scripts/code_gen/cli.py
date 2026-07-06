@@ -1,7 +1,7 @@
 """Code generation CLI for typed-ffmpeg."""
 
 import logging
-import os
+import subprocess
 from dataclasses import asdict, replace
 from pathlib import Path
 from typing import Annotated
@@ -535,7 +535,7 @@ def generate(
         version_metadata=version_metadata,
     )
     if Path(".pre-commit-config.yaml").exists():
-        os.system("prek run -a")
+        subprocess.run(["prek", "run", "-a"], check=False)
 
 
 @app.command()

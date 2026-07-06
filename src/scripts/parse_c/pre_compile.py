@@ -100,6 +100,7 @@ def precompile(ffmpeg_binary: str = "ffmpeg") -> pathlib.Path:
             continue
 
         target_path.parent.mkdir(parents=True, exist_ok=True)
-        os.system(f"gcc -E -I. {file} > {target_path}") == 0
+        with open(target_path, "w") as out:
+            subprocess.run(["gcc", "-E", "-I.", str(file)], stdout=out, check=False)
 
     return compiled_target_folder
