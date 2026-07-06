@@ -207,3 +207,42 @@ def test_parse_rejects_dec() -> None:
             "ffmpeg -i INPUT -map 0:v -c:v libx264 -f null - -dec 0:0 "
             "-filter_complex '[0:v][dec:0]hstack[s]' -map '[s]' out.mkv"
         )
+
+
+@requires_loopback
+def test_loopback_stream_reuse_gets_split() -> None:
+    from ffmpeg.compile.compile_cli import compile_as_list
+
+    source = ffmpeg.input("INPUT")
+    encoded = source.video.output(filename="-", f="null", vcodec="libx264")
+    dec = encoded.loopback(0)
+    # NOTE: VideoStream has no `.hstack`/`.scale` methods usable here (scale's
+    # generated typings_input is a pre-existing, unrelated bug making it
+    # unusable as a single-video-input filter); use boxblur + the free
+    # ffmpeg.filters.hstack function instead, which exercise the same
+    # reused-decoder-stream split path.
+    blurred = dec.video.boxblur()
+    out = ffmpeg.filters.hstack(dec.video, blurred).output(filename="OUT.mkv")
+
+    args = compile_as_list(out)
+    fc = args[args.index("-filter_complex") + 1]
+    # dec stream used twice -> auto split; [dec:0] itself binds exactly once
+    assert "split" in fc
+    assert fc.count("[dec:0]") == 1
+
+
+@requires_loopback
+def test_two_distinct_loopbacks_on_same_output_stream() -> None:
+    from ffmpeg.compile.compile_cli import compile_as_list
+
+    encoded = ffmpeg.input("INPUT").video.output(
+        filename="-", f="null", vcodec="libx264"
+    )
+    dec_a = encoded.loopback(0)
+    dec_b = encoded.loopback(0, extra_options={"threads": 2})
+    out = ffmpeg.filters.hstack(dec_a.video, dec_b.video).output(filename="OUT.mkv")
+
+    args = compile_as_list(out)
+    # two distinct decoders tapping the same output stream: both emitted,
+    # and the tapped OutputStream must NOT go through split machinery
+    assert args.count("-dec") == 2
