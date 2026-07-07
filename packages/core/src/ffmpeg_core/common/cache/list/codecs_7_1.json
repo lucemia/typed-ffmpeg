@@ -571,6 +571,86 @@
   },
   {
     "__class__": "FFMpegEncoder",
+    "description": "librav1e AV1 (codec av1)",
+    "flags": "V....D",
+    "name": "librav1e",
+    "options": [
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "-1",
+        "flags": "E..V.......",
+        "help": "use constant quantizer mode (from -1 to 255) (default -1)",
+        "max": "255",
+        "min": "-1",
+        "name": "qp",
+        "section": "librav1e AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "-1",
+        "flags": "E..V.......",
+        "help": "what speed preset to use (from -1 to 10) (default -1)",
+        "max": "10",
+        "min": "-1",
+        "name": "speed",
+        "section": "librav1e AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "0",
+        "flags": "E..V.......",
+        "help": "number of tiles encode with (from -1 to I64_MAX) (default 0)",
+        "max": "I64_MAX",
+        "min": "-1",
+        "name": "tiles",
+        "section": "librav1e AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "0",
+        "flags": "E..V.......",
+        "help": "number of tiles rows to encode with (from -1 to I64_MAX) (default 0)",
+        "max": "I64_MAX",
+        "min": "-1",
+        "name": "tile-rows",
+        "section": "librav1e AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "0",
+        "flags": "E..V.......",
+        "help": "number of tiles columns to encode with (from -1 to I64_MAX) (default 0)",
+        "max": "I64_MAX",
+        "min": "-1",
+        "name": "tile-columns",
+        "section": "librav1e AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": null,
+        "flags": "E..V.......",
+        "help": "set the rav1e configuration using a :-separated list of key=value parameters",
+        "max": null,
+        "min": null,
+        "name": "rav1e-params",
+        "section": "librav1e AVOptions:",
+        "type": "dictionary"
+      }
+    ]
+  },
+  {
+    "__class__": "FFMpegEncoder",
     "description": "NVIDIA NVENC av1 encoder (codec av1)",
     "flags": "V....D",
     "name": "av1_nvenc",
@@ -8431,6 +8511,87 @@
   },
   {
     "__class__": "FFMpegEncoder",
+    "description": "Vidvox Hap",
+    "flags": "V.S..D",
+    "name": "hap",
+    "options": [
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [
+          {
+            "__class__": "FFMpegOptionChoice",
+            "flags": "E..V.......",
+            "help": "Hap 1 (DXT1 textures)",
+            "name": "hap",
+            "value": "11"
+          },
+          {
+            "__class__": "FFMpegOptionChoice",
+            "flags": "E..V.......",
+            "help": "Hap Alpha (DXT5 textures)",
+            "name": "hap_alpha",
+            "value": "14"
+          },
+          {
+            "__class__": "FFMpegOptionChoice",
+            "flags": "E..V.......",
+            "help": "Hap Q (DXT5-YCoCg textures)",
+            "name": "hap_q",
+            "value": "15"
+          }
+        ],
+        "default": "hap",
+        "flags": "E..V.......",
+        "help": "(from 11 to 15) (default hap)",
+        "max": "15",
+        "min": "11",
+        "name": "format",
+        "section": "Hap encoder AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "1",
+        "flags": "E..V.......",
+        "help": "chunk count (from 1 to 64) (default 1)",
+        "max": "64",
+        "min": "1",
+        "name": "chunks",
+        "section": "Hap encoder AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [
+          {
+            "__class__": "FFMpegOptionChoice",
+            "flags": "E..V.......",
+            "help": "None",
+            "name": "none",
+            "value": "160"
+          },
+          {
+            "__class__": "FFMpegOptionChoice",
+            "flags": "E..V.......",
+            "help": "Snappy",
+            "name": "snappy",
+            "value": "176"
+          }
+        ],
+        "default": "snappy",
+        "flags": "E..V.......",
+        "help": "second-stage compressor (from 160 to 176) (default snappy)",
+        "max": "176",
+        "min": "160",
+        "name": "compressor",
+        "section": "Hap encoder AVOptions:",
+        "type": "int"
+      }
+    ]
+  },
+  {
+    "__class__": "FFMpegEncoder",
     "description": "HDR (Radiance RGBE format) image",
     "flags": "VF...D",
     "name": "hdr",
@@ -11058,6 +11219,62 @@
         "min": "0",
         "name": "pred",
         "section": "jpegls AVOptions:",
+        "type": "int"
+      }
+    ]
+  },
+  {
+    "__class__": "FFMpegEncoder",
+    "description": "libjxl JPEG XL (codec jpegxl)",
+    "flags": "V....D",
+    "name": "libjxl",
+    "options": [
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "7",
+        "flags": "E..V.......",
+        "help": "Encoding effort (from 1 to 9) (default 7)",
+        "max": "9",
+        "min": "1",
+        "name": "effort",
+        "section": "libjxl AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "-1",
+        "flags": "E..V.......",
+        "help": "Maximum Butteraugli distance (quality setting, lower = better, zero = lossless, default 1.0) (from -1 to 15) (default -1)",
+        "max": "15",
+        "min": "-1",
+        "name": "distance",
+        "section": "libjxl AVOptions:",
+        "type": "float"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "0",
+        "flags": "E..V.......",
+        "help": "Force modular mode (from 0 to 1) (default 0)",
+        "max": "1",
+        "min": "0",
+        "name": "modular",
+        "section": "libjxl AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "1",
+        "flags": "E..V.......",
+        "help": "Use XYB-encoding for lossy images (from 0 to 1) (default 1)",
+        "max": "1",
+        "min": "0",
+        "name": "xyb",
+        "section": "libjxl AVOptions:",
         "type": "int"
       }
     ]
@@ -19327,6 +19544,199 @@
   },
   {
     "__class__": "FFMpegEncoder",
+    "description": "Fraunhofer FDK AAC (codec aac)",
+    "flags": "A....D",
+    "name": "libfdk_aac",
+    "options": [
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "1",
+        "flags": "E...A......",
+        "help": "Afterburner (improved quality) (from 0 to 1) (default 1)",
+        "max": "1",
+        "min": "0",
+        "name": "afterburner",
+        "section": "libfdk_aac AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "0",
+        "flags": "E...A......",
+        "help": "Enable SBR for ELD (for SBR in other configurations, use the -profile parameter) (from 0 to 1) (default 0)",
+        "max": "1",
+        "min": "0",
+        "name": "eld_sbr",
+        "section": "libfdk_aac AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "0",
+        "flags": "E...A......",
+        "help": "Enable ELDv2 (LD-MPS extension for ELD stereo signals) (from 0 to 1) (default 0)",
+        "max": "1",
+        "min": "0",
+        "name": "eld_v2",
+        "section": "libfdk_aac AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [
+          {
+            "__class__": "FFMpegOptionChoice",
+            "flags": "E...A......",
+            "help": "Choose signaling implicitly (explicit hierarchical by default, implicit if global header is disabled)",
+            "name": "default",
+            "value": "-1"
+          },
+          {
+            "__class__": "FFMpegOptionChoice",
+            "flags": "E...A......",
+            "help": "Implicit backwards compatible signaling",
+            "name": "implicit",
+            "value": "0"
+          },
+          {
+            "__class__": "FFMpegOptionChoice",
+            "flags": "E...A......",
+            "help": "Explicit SBR, implicit PS signaling",
+            "name": "explicit_sbr",
+            "value": "1"
+          },
+          {
+            "__class__": "FFMpegOptionChoice",
+            "flags": "E...A......",
+            "help": "Explicit hierarchical signaling",
+            "name": "explicit_hierarchical",
+            "value": "2"
+          }
+        ],
+        "default": "default",
+        "flags": "E...A......",
+        "help": "SBR/PS signaling style (from -1 to 2) (default default)",
+        "max": "2",
+        "min": "-1",
+        "name": "signaling",
+        "section": "libfdk_aac AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "0",
+        "flags": "E...A......",
+        "help": "Output LATM/LOAS encapsulated data (from 0 to 1) (default 0)",
+        "max": "1",
+        "min": "0",
+        "name": "latm",
+        "section": "libfdk_aac AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "0",
+        "flags": "E...A......",
+        "help": "StreamMuxConfig and PCE repetition period (in frames) (from 0 to 65535) (default 0)",
+        "max": "65535",
+        "min": "0",
+        "name": "header_period",
+        "section": "libfdk_aac AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "0",
+        "flags": "E...A......",
+        "help": "VBR mode (1-5) (from 0 to 5) (default 0)",
+        "max": "5",
+        "min": "0",
+        "name": "vbr",
+        "section": "libfdk_aac AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "0",
+        "flags": "E...A......",
+        "help": "The desired compression profile for AAC DRC (from 0 to 256) (default 0)",
+        "max": "256",
+        "min": "0",
+        "name": "drc_profile",
+        "section": "libfdk_aac AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "0",
+        "flags": "E...A......",
+        "help": "Expected target reference level at decoder side in dB (for clipping prevention/limiter) (from -31.75 to 0) (default 0)",
+        "max": "0",
+        "min": "-31.75",
+        "name": "drc_target_ref",
+        "section": "libfdk_aac AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "0",
+        "flags": "E...A......",
+        "help": "The desired compression profile for AAC DRC (from 0 to 256) (default 0)",
+        "max": "256",
+        "min": "0",
+        "name": "comp_profile",
+        "section": "libfdk_aac AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "0",
+        "flags": "E...A......",
+        "help": "Expected target reference level at decoder side in dB (for clipping prevention/limiter) (from -31.75 to 0) (default 0)",
+        "max": "0",
+        "min": "-31.75",
+        "name": "comp_target_ref",
+        "section": "libfdk_aac AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "0",
+        "flags": "E...A......",
+        "help": "The program reference level or dialog level in dB (from -31.75 to 0) (default 0)",
+        "max": "0",
+        "min": "-31.75",
+        "name": "prog_ref",
+        "section": "libfdk_aac AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "-1",
+        "flags": "E...A......",
+        "help": "The desired frame length (from -1 to 1024) (default -1)",
+        "max": "1024",
+        "min": "-1",
+        "name": "frame_length",
+        "section": "libfdk_aac AVOptions:",
+        "type": "int"
+      }
+    ]
+  },
+  {
+    "__class__": "FFMpegEncoder",
     "description": "ATSC A/52A (AC-3)",
     "flags": "A....D",
     "name": "ac3",
@@ -20480,6 +20890,90 @@
   },
   {
     "__class__": "FFMpegEncoder",
+    "description": "codec2 encoder using libcodec2 (codec codec2)",
+    "flags": "A....D",
+    "name": "libcodec2",
+    "options": [
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [
+          {
+            "__class__": "FFMpegOptionChoice",
+            "flags": "E...A......",
+            "help": "3200",
+            "name": "3200",
+            "value": "0"
+          },
+          {
+            "__class__": "FFMpegOptionChoice",
+            "flags": "E...A......",
+            "help": "2400",
+            "name": "2400",
+            "value": "1"
+          },
+          {
+            "__class__": "FFMpegOptionChoice",
+            "flags": "E...A......",
+            "help": "1600",
+            "name": "1600",
+            "value": "2"
+          },
+          {
+            "__class__": "FFMpegOptionChoice",
+            "flags": "E...A......",
+            "help": "1400",
+            "name": "1400",
+            "value": "3"
+          },
+          {
+            "__class__": "FFMpegOptionChoice",
+            "flags": "E...A......",
+            "help": "1300",
+            "name": "1300",
+            "value": "4"
+          },
+          {
+            "__class__": "FFMpegOptionChoice",
+            "flags": "E...A......",
+            "help": "1200",
+            "name": "1200",
+            "value": "5"
+          },
+          {
+            "__class__": "FFMpegOptionChoice",
+            "flags": "E...A......",
+            "help": "700",
+            "name": "700",
+            "value": "6"
+          },
+          {
+            "__class__": "FFMpegOptionChoice",
+            "flags": "E...A......",
+            "help": "700B",
+            "name": "700B",
+            "value": "7"
+          },
+          {
+            "__class__": "FFMpegOptionChoice",
+            "flags": "E...A......",
+            "help": "700C",
+            "name": "700C",
+            "value": "8"
+          }
+        ],
+        "default": "1300",
+        "flags": "E...A......",
+        "help": "codec2 mode (from 0 to 8) (default 1300)",
+        "max": "8",
+        "min": "0",
+        "name": "mode",
+        "section": "libcodec2 encoder AVOptions:",
+        "type": "int"
+      }
+    ]
+  },
+  {
+    "__class__": "FFMpegEncoder",
     "description": "RFC 3389 comfort noise generator",
     "flags": "A....D",
     "name": "comfortnoise",
@@ -21124,6 +21618,20 @@
   },
   {
     "__class__": "FFMpegEncoder",
+    "description": "libgsm GSM (codec gsm)",
+    "flags": "A....D",
+    "name": "libgsm",
+    "options": []
+  },
+  {
+    "__class__": "FFMpegEncoder",
+    "description": "libgsm GSM Microsoft variant (codec gsm_ms)",
+    "flags": "A....D",
+    "name": "libgsm_ms",
+    "options": []
+  },
+  {
+    "__class__": "FFMpegEncoder",
     "description": "MLP (Meridian Lossless Packing)",
     "flags": "A..X.D",
     "name": "mlp",
@@ -21260,6 +21768,134 @@
   },
   {
     "__class__": "FFMpegEncoder",
+    "description": "libtwolame MP2 (MPEG audio layer 2) (codec mp2)",
+    "flags": "A....D",
+    "name": "libtwolame",
+    "options": [
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [
+          {
+            "__class__": "FFMpegOptionChoice",
+            "flags": "E...A......",
+            "help": "",
+            "name": "auto",
+            "value": "-1"
+          },
+          {
+            "__class__": "FFMpegOptionChoice",
+            "flags": "E...A......",
+            "help": "",
+            "name": "stereo",
+            "value": "0"
+          },
+          {
+            "__class__": "FFMpegOptionChoice",
+            "flags": "E...A......",
+            "help": "",
+            "name": "joint_stereo",
+            "value": "1"
+          },
+          {
+            "__class__": "FFMpegOptionChoice",
+            "flags": "E...A......",
+            "help": "",
+            "name": "dual_channel",
+            "value": "2"
+          },
+          {
+            "__class__": "FFMpegOptionChoice",
+            "flags": "E...A......",
+            "help": "",
+            "name": "mono",
+            "value": "3"
+          }
+        ],
+        "default": "auto",
+        "flags": "E...A......",
+        "help": "Mpeg Mode (from -1 to 3) (default auto)",
+        "max": "3",
+        "min": "-1",
+        "name": "mode",
+        "section": "libtwolame encoder AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "3",
+        "flags": "E...A......",
+        "help": "Psychoacoustic Model (from -1 to 4) (default 3)",
+        "max": "4",
+        "min": "-1",
+        "name": "psymodel",
+        "section": "libtwolame encoder AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "0",
+        "flags": "E...A......",
+        "help": "enable energy levels (from 0 to 1) (default 0)",
+        "max": "1",
+        "min": "0",
+        "name": "energy_levels",
+        "section": "libtwolame encoder AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "0",
+        "flags": "E...A......",
+        "help": "enable CRC error protection (from 0 to 1) (default 0)",
+        "max": "1",
+        "min": "0",
+        "name": "error_protection",
+        "section": "libtwolame encoder AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "0",
+        "flags": "E...A......",
+        "help": "set MPEG Audio Copyright flag (from 0 to 1) (default 0)",
+        "max": "1",
+        "min": "0",
+        "name": "copyright",
+        "section": "libtwolame encoder AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "0",
+        "flags": "E...A......",
+        "help": "set MPEG Audio Original flag (from 0 to 1) (default 0)",
+        "max": "1",
+        "min": "0",
+        "name": "original",
+        "section": "libtwolame encoder AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "0",
+        "flags": "E...A......",
+        "help": "set library optput level (0-10) (from 0 to 10) (default 0)",
+        "max": "10",
+        "min": "0",
+        "name": "verbosity",
+        "section": "libtwolame encoder AVOptions:",
+        "type": "int"
+      }
+    ]
+  },
+  {
+    "__class__": "FFMpegEncoder",
     "description": "libmp3lame MP3 (MPEG audio layer 3) (codec mp3)",
     "flags": "A....D",
     "name": "libmp3lame",
@@ -21325,6 +21961,13 @@
         "type": "boolean"
       }
     ]
+  },
+  {
+    "__class__": "FFMpegEncoder",
+    "description": "libshine MP3 (MPEG audio layer 3) (codec mp3)",
+    "flags": "A....D",
+    "name": "libshine",
+    "options": []
   },
   {
     "__class__": "FFMpegEncoder",
@@ -21784,6 +22427,74 @@
     "flags": "A..X.D",
     "name": "sonicls",
     "options": []
+  },
+  {
+    "__class__": "FFMpegEncoder",
+    "description": "libspeex Speex (codec speex)",
+    "flags": "A....D",
+    "name": "libspeex",
+    "options": [
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "0",
+        "flags": "E...A......",
+        "help": "Use average bit rate (from 0 to 1) (default 0)",
+        "max": "1",
+        "min": "0",
+        "name": "abr",
+        "section": "libspeex AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "8",
+        "flags": "E...A......",
+        "help": "Set quality value (0 to 10) for CBR (from 0 to 10) (default 8)",
+        "max": "10",
+        "min": "0",
+        "name": "cbr_quality",
+        "section": "libspeex AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "1",
+        "flags": "E...A......",
+        "help": "Number of frames to encode in each packet (from 1 to 8) (default 1)",
+        "max": "8",
+        "min": "1",
+        "name": "frames_per_packet",
+        "section": "libspeex AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "0",
+        "flags": "E...A......",
+        "help": "Voice Activity Detection (from 0 to 1) (default 0)",
+        "max": "1",
+        "min": "0",
+        "name": "vad",
+        "section": "libspeex AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "0",
+        "flags": "E...A......",
+        "help": "Discontinuous Transmission (from 0 to 1) (default 0)",
+        "max": "1",
+        "min": "0",
+        "name": "dtx",
+        "section": "libspeex AVOptions:",
+        "type": "int"
+      }
+    ]
   },
   {
     "__class__": "FFMpegEncoder",
@@ -23653,6 +24364,13 @@
   },
   {
     "__class__": "FFMpegDecoder",
+    "description": "libjxl JPEG XL (codec jpegxl)",
+    "flags": "V....D",
+    "name": "libjxl",
+    "options": []
+  },
+  {
+    "__class__": "FFMpegDecoder",
     "description": "Bitmap Brothers JV video",
     "flags": "V....D",
     "name": "jv",
@@ -24916,6 +25634,50 @@
   },
   {
     "__class__": "FFMpegDecoder",
+    "description": "Librsvg rasterizer (codec svg)",
+    "flags": "V....D",
+    "name": "librsvg",
+    "options": [
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "0",
+        "flags": ".D.V.......",
+        "help": "Width to render to (0 for default) (from 0 to INT_MAX) (default 0)",
+        "max": "INT_MAX",
+        "min": "0",
+        "name": "width",
+        "section": "Librsvg AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "0",
+        "flags": ".D.V.......",
+        "help": "Height to render to (0 for default) (from 0 to INT_MAX) (default 0)",
+        "max": "INT_MAX",
+        "min": "0",
+        "name": "height",
+        "section": "Librsvg AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "true",
+        "flags": ".D.V.......",
+        "help": "Keep aspect ratio with custom width/height (default true)",
+        "max": null,
+        "min": null,
+        "name": "keep_ar",
+        "section": "Librsvg AVOptions:",
+        "type": "boolean"
+      }
+    ]
+  },
+  {
+    "__class__": "FFMpegDecoder",
     "description": "Sorenson Vector Quantizer 1 / Sorenson Video 1 / SVQ1",
     "flags": "V....D",
     "name": "svq1",
@@ -26045,6 +26807,144 @@
   },
   {
     "__class__": "FFMpegDecoder",
+    "description": "Fraunhofer FDK AAC (codec aac)",
+    "flags": "A....D",
+    "name": "libfdk_aac",
+    "options": [
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [
+          {
+            "__class__": "FFMpegOptionChoice",
+            "flags": ".D..A......",
+            "help": "Spectral muting",
+            "name": "spectral",
+            "value": "0"
+          },
+          {
+            "__class__": "FFMpegOptionChoice",
+            "flags": ".D..A......",
+            "help": "Noise Substitution",
+            "name": "noise",
+            "value": "1"
+          },
+          {
+            "__class__": "FFMpegOptionChoice",
+            "flags": ".D..A......",
+            "help": "Energy Interpolation",
+            "name": "energy",
+            "value": "2"
+          }
+        ],
+        "default": "noise",
+        "flags": ".D..A......",
+        "help": "Error concealment method (from 0 to 2) (default noise)",
+        "max": "2",
+        "min": "0",
+        "name": "conceal",
+        "section": "libfdk-aac decoder AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "-1",
+        "flags": ".D..A......",
+        "help": "Dynamic Range Control: boost, where [0] is none and [127] is max boost (from -1 to 127) (default -1)",
+        "max": "127",
+        "min": "-1",
+        "name": "drc_boost",
+        "section": "libfdk-aac decoder AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "-1",
+        "flags": ".D..A......",
+        "help": "Dynamic Range Control: attenuation factor, where [0] is none and [127] is max compression (from -1 to 127) (default -1)",
+        "max": "127",
+        "min": "-1",
+        "name": "drc_cut",
+        "section": "libfdk-aac decoder AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "-1",
+        "flags": ".D..A......",
+        "help": "Dynamic Range Control: reference level, quantized to 0.25dB steps where [0] is 0dB and [127] is -31.75dB, -1 for auto, and -2 for disabled (from -2 to 127) (default -1)",
+        "max": "127",
+        "min": "-2",
+        "name": "drc_level",
+        "section": "libfdk-aac decoder AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "-1",
+        "flags": ".D..A......",
+        "help": "Dynamic Range Control: heavy compression, where [1] is on (RF mode) and [0] is off (from -1 to 1) (default -1)",
+        "max": "1",
+        "min": "-1",
+        "name": "drc_heavy",
+        "section": "libfdk-aac decoder AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "auto",
+        "flags": ".D..A......",
+        "help": "Signal level limiting (default auto)",
+        "max": null,
+        "min": null,
+        "name": "level_limit",
+        "section": "libfdk-aac decoder AVOptions:",
+        "type": "boolean"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "-1",
+        "flags": ".D..A......",
+        "help": "Dynamic Range Control: effect type, where e.g. [0] is none and [6] is general (from -1 to 8) (default -1)",
+        "max": "8",
+        "min": "-1",
+        "name": "drc_effect",
+        "section": "libfdk-aac decoder AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": "-1",
+        "flags": ".D..A......",
+        "help": "Dynamic Range Control: album mode, where [0] is off and [1] is on (from -1 to 1) (default -1)",
+        "max": "1",
+        "min": "-1",
+        "name": "album_mode",
+        "section": "libfdk-aac decoder AVOptions:",
+        "type": "int"
+      },
+      {
+        "__class__": "FFMpegAVOption",
+        "choices": [],
+        "default": null,
+        "flags": ".D..A......",
+        "help": "Request a specific channel layout from the decoder",
+        "max": null,
+        "min": null,
+        "name": "downmix",
+        "section": "libfdk-aac decoder AVOptions:",
+        "type": "channel_layout"
+      }
+    ]
+  },
+  {
+    "__class__": "FFMpegDecoder",
     "description": "AAC LATM (Advanced Audio Coding LATM syntax)",
     "flags": "A....D",
     "name": "aac_latm",
@@ -26741,6 +27641,13 @@
   },
   {
     "__class__": "FFMpegDecoder",
+    "description": "codec2 decoder using libcodec2 (codec codec2)",
+    "flags": "A.....",
+    "name": "libcodec2",
+    "options": []
+  },
+  {
+    "__class__": "FFMpegDecoder",
     "description": "RFC 3389 comfort noise generator",
     "flags": "A....D",
     "name": "comfortnoise",
@@ -27082,9 +27989,23 @@
   },
   {
     "__class__": "FFMpegDecoder",
+    "description": "libgsm GSM (codec gsm)",
+    "flags": "A....D",
+    "name": "libgsm",
+    "options": []
+  },
+  {
+    "__class__": "FFMpegDecoder",
     "description": "GSM Microsoft variant",
     "flags": "A....D",
     "name": "gsm_ms",
+    "options": []
+  },
+  {
+    "__class__": "FFMpegDecoder",
+    "description": "libgsm GSM Microsoft variant (codec gsm_ms)",
+    "flags": "A....D",
+    "name": "libgsm_ms",
     "options": []
   },
   {
@@ -27761,6 +28682,13 @@
     "description": "Speex",
     "flags": "A....D",
     "name": "speex",
+    "options": []
+  },
+  {
+    "__class__": "FFMpegDecoder",
+    "description": "libspeex Speex (codec speex)",
+    "flags": "A....D",
+    "name": "libspeex",
     "options": []
   },
   {

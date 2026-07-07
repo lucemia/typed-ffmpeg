@@ -2269,6 +2269,18 @@
   },
   {
     "__class__": "FFMpegOption",
+    "argname": "device",
+    "canon": null,
+    "flags": 5,
+    "help": "set VAAPI hardware device (DirectX adapter index, DRM path or X11 display name)",
+    "name": "vaapi_device",
+    "type": {
+      "__class__": "FFMpegOptionType",
+      "value": "OPT_TYPE_FUNC"
+    }
+  },
+  {
+    "__class__": "FFMpegOption",
     "argname": "args",
     "canon": null,
     "flags": 5,
