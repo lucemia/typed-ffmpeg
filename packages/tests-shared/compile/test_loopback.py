@@ -285,6 +285,17 @@ def test_parse_dec_streamcopy_rejected() -> None:
 
 
 @requires_loopback
+def test_parse_dec_mapped_to_output_rejected() -> None:
+    from ffmpeg.compile.compile_cli import parse
+
+    with pytest.raises(FFMpegValueError):
+        parse(
+            'ffmpeg -i INPUT -filter_complex "[0:v][dec:0]hstack=inputs=2[s0]" '
+            "-map 0:v -f null -vcodec libx264 - -dec 0:0 -map [dec:0] OUT.mkv"
+        )
+
+
+@requires_loopback
 def test_parse_dangling_dec_label() -> None:
     from ffmpeg.compile.compile_cli import parse
 

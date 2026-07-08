@@ -834,7 +834,10 @@ def parse(cli: str) -> Stream:
     output_streams_by_ordinal: dict[int, OutputStream] = {}
 
     def _label_ready(selector: str) -> bool:
-        label_key = selector.strip("[]").split(":")[0]
+        stripped = selector.strip("[]")
+        label_key = (
+            stripped if re.fullmatch(r"dec:\d+", stripped) else stripped.split(":")[0]
+        )
         return label_key in stream_mapping
 
     pending_outputs = list(output_segments)
