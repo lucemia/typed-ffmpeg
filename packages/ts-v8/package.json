@@ -5,7 +5,7 @@
   "description": "Type-safe FFmpeg v8 bindings for TypeScript",
   "devDependencies": {
     "@types/node": "^26.1.0",
-    "typescript": "^6.0.2",
+    "typescript": "^7.0.2",
     "vitest": "^4.1.2"
   },
   "engines": {
