@@ -3,7 +3,7 @@
   "devDependencies": {
     "@types/node": "^26.1.0",
     "@vitest/coverage-v8": "^4.0.0",
-    "typescript": "^6.0.2",
+    "typescript": "^7.0.2",
     "vitest": "^4.0.0"
   },
   "engines": {
