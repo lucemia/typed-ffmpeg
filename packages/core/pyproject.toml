@@ -32,7 +32,7 @@ dependencies = []  # Pure Python, no dependencies
 dev = [
     "pytest>=7.0",
     "pytest-cov>=4.0",
-    "syrupy>=5.4.0",
+    "syrupy>=5.5.2",
     "ruff==0.12.2",
     "mypy>=2.2.0",
 ]
