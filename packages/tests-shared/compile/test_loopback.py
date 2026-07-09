@@ -203,13 +203,106 @@ def test_loopback_audio_compile() -> None:
     assert args[args.index("-dec") + 1] == "0:0"
 
 
-def test_parse_rejects_dec() -> None:
+@requires_loopback
+def test_parse_dec_roundtrip_hstack() -> None:
+    from ffmpeg.compile.compile_cli import compile, parse
+
+    source = ffmpeg.input("INPUT")
+    encoded = source.video.output(
+        filename="-", f="null", vcodec="libx264", extra_options={"crf": 45}
+    )
+    dec = encoded.loopback(0)
+    out = ffmpeg.filters.hstack(source.video, dec.video).output(
+        filename="OUT.mkv", vcodec="ffv1"
+    )
+    compiled = compile(out)
+    recompiled = compile(parse(compiled))
+    assert recompiled == compiled
+
+
+@requires_loopback
+def test_parse_dec_multi_decoder_roundtrip() -> None:
+    from ffmpeg.compile.compile_cli import compile, parse
+
+    source = ffmpeg.input("INPUT")
+    enc_a = source.video.output(filename="-", f="null", vcodec="libx264")
+    enc_b = source.video.output(filename="-", f="null", vcodec="libx265")
+    out = ffmpeg.filters.hstack(
+        enc_a.loopback(0).video, enc_b.loopback(0).video
+    ).output(filename="OUT.mkv")
+    compiled = compile(out)
+    assert compile(parse(compiled)) == compiled
+
+
+@requires_loopback
+def test_parse_dec_audio_roundtrip() -> None:
+    from ffmpeg.compile.compile_cli import compile, parse
+
+    source = ffmpeg.input("INPUT")
+    encoded = source.audio.output(filename="-", f="null", acodec="aac")
+    out = ffmpeg.filters.amix(source.audio, encoded.loopback(0).audio).output(
+        filename="OUT.mka"
+    )
+    compiled = compile(out)
+    assert compile(parse(compiled)) == compiled
+
+
+@requires_loopback
+def test_parse_dec_builds_loopback_node() -> None:
+    from ffmpeg.compile.compile_cli import parse
+    from ffmpeg.dag.nodes import LoopbackDecoderNode
+
+    stream = parse(
+        'ffmpeg -i INPUT -filter_complex "[0:v][dec:0]hstack=inputs=2[s0]" '
+        "-map 0:v -f null -vcodec libx264 - -dec 0:0 -map [s0] -vcodec ffv1 OUT.mkv"
+    )
+    nodes = stream.node.upstream_nodes
+    dec_nodes = [n for n in nodes if isinstance(n, LoopbackDecoderNode)]
+    assert len(dec_nodes) == 1
+    assert dec_nodes[0].inputs[0].index == 0
+
+
+@requires_loopback
+def test_parse_dec_out_of_range_output() -> None:
     from ffmpeg.compile.compile_cli import parse
 
-    with pytest.raises(FFMpegValueError, match="-dec"):
+    with pytest.raises(FFMpegValueError):
         parse(
-            "ffmpeg -i INPUT -map 0:v -c:v libx264 -f null - -dec 0:0 "
-            "-filter_complex '[0:v][dec:0]hstack[s]' -map '[s]' out.mkv"
+            'ffmpeg -i INPUT -filter_complex "[0:v][dec:0]hstack=inputs=2[s0]" '
+            "-map 0:v -f null -vcodec libx264 - -dec 5:0 -map [s0] OUT.mkv"
+        )
+
+
+@requires_loopback
+def test_parse_dec_streamcopy_rejected() -> None:
+    from ffmpeg.compile.compile_cli import parse
+
+    with pytest.raises(FFMpegValueError):
+        parse(
+            'ffmpeg -i INPUT -filter_complex "[0:v][dec:0]hstack=inputs=2[s0]" '
+            "-map 0:v -c:v copy out0.mkv -dec 0:0 -map [s0] OUT.mkv"
+        )
+
+
+@requires_loopback
+def test_parse_dec_mapped_to_output_rejected() -> None:
+    from ffmpeg.compile.compile_cli import parse
+
+    with pytest.raises(FFMpegValueError):
+        parse(
+            'ffmpeg -i INPUT -filter_complex "[0:v][dec:0]hstack=inputs=2[s0]" '
+            "-map 0:v -f null -vcodec libx264 - -dec 0:0 -map [dec:0] OUT.mkv"
+        )
+
+
+@requires_loopback
+def test_parse_dangling_dec_label() -> None:
+    from ffmpeg.compile.compile_cli import parse
+
+    with pytest.raises(FFMpegValueError):
+        parse(
+            'ffmpeg -i INPUT -filter_complex "[0:v][dec:2]hstack=inputs=2[s0]" '
+            "-map 0:v -f null -vcodec libx264 - -dec 0:0 -map [s0] OUT.mkv"
         )
 
 
@@ -287,7 +380,11 @@ def test_pyright_loopback_typing(tmp_path) -> None:
         capture_output=True,
         text=True,
     )
-    assert "0 errors" in result.stdout, (
+    import re as _re
+
+    assert (
+        _re.search(r"\b0 errors\b", result.stdout) and "error:" not in result.stdout
+    ), (
         f"Pyright reported errors for the loopback API.\n"
         f"stdout:\n{result.stdout}\nstderr:\n{result.stderr}"
     )

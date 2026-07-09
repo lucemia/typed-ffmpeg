@@ -52,6 +52,7 @@ from ..streams.av import AVStream
 from ..streams.subtitle import SubtitleStream
 from ..streams.video import VideoStream
 from ..utils.escaping import escape
+from ..utils.frozendict import FrozenDict
 from ..utils.lazy_eval.schema import LazyValue
 from ..utils.run import command_line
 from .context import DAGContext
@@ -168,6 +169,13 @@ def parse_stream_selector(
     """
     selector = selector.strip("[]")
 
+    # Loopback decoder labels ("dec:N") are whole labels, not type-suffixed
+    # stream selectors — look them up verbatim.
+    if re.fullmatch(r"dec:\d+", selector):
+        if selector not in mapping:
+            raise FFMpegValueError(f"Unknown stream label: {selector}")
+        return mapping[selector]
+
     if ":" in selector:
         stream_label, _ = selector.split(":", 1)
     else:
@@ -216,6 +224,10 @@ def _is_filename(token: str) -> bool:
         True if the token looks like a file path, URL, or special device
 
     """
+    # "-" (stdout shorthand) is the one special filename that itself starts
+    # with "-"; check it before the generic option-flag rejection below.
+    if token == "-":
+        return True
     if token.startswith("-"):
         return False
     # Protocol URLs (rtmp://, http://, pipe:, etc.)
@@ -616,6 +628,114 @@ def parse_global(
     return parameters, remaining_tokens
 
 
+def _build_output_stream(
+    option_tokens: list[str],
+    filename: str,
+    in_streams: Mapping[str, FilterableStream],
+    ffmpeg_options: dict[str, FFMpegOption],
+    av_options: dict[str, FFMpegAVOption] | None,
+) -> OutputStream:
+    """
+    Build a single OutputStream from one output group's option tokens.
+
+    This is the per-group core shared by parse_output and the loopback-aware
+    worklist in parse(). Mirrors parse_output's handling of -map, the
+    single-AVStream default, and output-option filtering.
+
+    Args:
+        option_tokens: Tokens preceding the output filename (options + -map)
+        filename: The output filename/URL
+        in_streams: Available streams for -map resolution
+        ffmpeg_options: Valid FFmpeg options
+        av_options: Valid FFmpeg AV options
+
+    Returns:
+        The OutputStream for this output file
+
+    """
+    options = parse_options(option_tokens)
+
+    map_options = options.pop("map", [])
+    inputs: list[FilterableStream] = []
+    for map_option in map_options:
+        assert isinstance(map_option, str), f"Expected map option, got {map_option}"
+        inputs.append(parse_stream_selector(map_option, in_streams))
+
+    if not inputs:
+        if len([k for k in in_streams if isinstance(in_streams[k], AVStream)]) == 1:
+            inputs = [
+                in_streams[k]
+                for k in in_streams
+                if isinstance(in_streams[k], AVStream)
+            ]
+
+    parameters: dict[str, str | bool] = {}
+    for key, value in options.items():
+        key_base = key.split(":")[0]
+        if key_base in ffmpeg_options:
+            if ffmpeg_options[key_base].is_output_option:
+                parameters[key] = True if value[-1] is None else value[-1]
+        elif av_options and key_base in av_options:
+            if av_options[key_base].is_output_option:
+                parameters[key] = True if value[-1] is None else value[-1]
+
+    return output(*inputs, filename=filename, extra_options=parameters)
+
+
+def _split_output_section(
+    tokens: list[str],
+) -> tuple[list[tuple[int, list[str], str]], list[tuple[int, int, int, list[str]]]]:
+    """
+    Split output-section tokens into output segments and loopback-decoder segments.
+
+    `-dec of:ost` is a second option-group terminator alongside filenames.
+
+    Args:
+        tokens: The output-section tokens (after globals/inputs/filter_complex)
+
+    Returns:
+        (output_segments, dec_segments) where
+        output_segments = [(ordinal, option_tokens, filename), ...] and
+        dec_segments = [(occurrence, of, ost, decoder_option_tokens), ...]
+
+    Raises:
+        FFMpegValueError: If a -dec argument is malformed
+
+    """
+    output_segments: list[tuple[int, list[str], str]] = []
+    dec_segments: list[tuple[int, int, int, list[str]]] = []
+    buffer: list[str] = []
+    out_ordinal = 0
+    dec_occurrence = 0
+
+    i = 0
+    while i < len(tokens):
+        token = tokens[i]
+        if token == "-dec":
+            spec = tokens[i + 1] if i + 1 < len(tokens) else ""
+            of_str, sep, ost_str = spec.partition(":")
+            try:
+                of = int(of_str)
+                ost = int(ost_str) if sep and ost_str else 0
+            except ValueError:
+                raise FFMpegValueError(f"Invalid -dec argument: {spec!r}")
+            dec_segments.append((dec_occurrence, of, ost, buffer))
+            dec_occurrence += 1
+            buffer = []
+            i += 2
+            continue
+        if _is_filename(token):
+            output_segments.append((out_ordinal, buffer, token))
+            out_ordinal += 1
+            buffer = []
+            i += 1
+            continue
+        buffer.append(token)
+        i += 1
+
+    return output_segments, dec_segments
+
+
 def parse(cli: str) -> Stream:
     """
     Parse a complete FFmpeg command line into a Stream object.
@@ -652,11 +772,6 @@ def parse(cli: str) -> Stream:
     assert tokens[0].lower().split(".")[0] == "ffmpeg"
     tokens = tokens[1:]
 
-    if "-dec" in tokens:
-        raise FFMpegValueError(
-            "loopback decoders (-dec) are not supported by parse()"
-        )
-
     # Parse global options first
     global_params, remaining_tokens = parse_global(tokens, ffmpeg_options)
 
@@ -691,11 +806,6 @@ def parse(cli: str) -> Stream:
         filter_complex_parts.append(remaining_tokens[index + 1])
         remaining_tokens = remaining_tokens[index + 2 :]
 
-    filterable_streams: dict[str, FilterableStream] = {}
-    if filter_complex_parts:
-        combined = ";".join(filter_complex_parts)
-        filterable_streams = parse_filter_complex(combined, input_streams, ffmpeg_filters)
-
     # Inject implicit -map tokens (from -vf/-af) before the first output filename
     if extra_map_tokens:
         new_remaining: list[str] = []
@@ -706,12 +816,93 @@ def parse(cli: str) -> Stream:
             new_remaining.append(token)
         remaining_tokens = new_remaining
 
-    output_streams = parse_output(
-        remaining_tokens,
-        input_streams | filterable_streams,
-        ffmpeg_options,
-        av_options,
-    )
+    output_segments, dec_segments = _split_output_section(remaining_tokens)
+
+    max_of = len(output_segments) - 1
+    for _occ, of, _ost, _opts in dec_segments:
+        if of > max_of:
+            raise FFMpegValueError(
+                f"-dec references output file {of}, but only "
+                f"{len(output_segments)} output file(s) were found"
+            )
+
+    combined_fc = ";".join(filter_complex_parts) if filter_complex_parts else ""
+    fc_dec_labels = set(re.findall(r"\[(dec:\d+)\]", combined_fc))
+
+    stream_mapping: dict[str, FilterableStream] = dict(input_streams)
+    output_nodes: dict[int, OutputNode] = {}
+    output_streams_by_ordinal: dict[int, OutputStream] = {}
+
+    def _label_ready(selector: str) -> bool:
+        stripped = selector.strip("[]")
+        label_key = stripped if re.fullmatch(r"dec:\d+", stripped) else stripped.split(":")[0]
+        return label_key in stream_mapping
+
+    pending_outputs = list(output_segments)
+    pending_decs = list(dec_segments)
+    fc_pending = bool(combined_fc)
+
+    progress = True
+    while progress and (pending_outputs or pending_decs or fc_pending):
+        progress = False
+
+        still_outputs: list[tuple[int, list[str], str]] = []
+        for ordinal, opt_tokens, filename in pending_outputs:
+            map_opts = [
+                m for m in parse_options(opt_tokens).get("map", []) if isinstance(m, str)
+            ]
+            if all(_label_ready(sel) for sel in map_opts):
+                out_stream = _build_output_stream(
+                    opt_tokens, filename, stream_mapping, ffmpeg_options, av_options
+                )
+                assert isinstance(out_stream.node, OutputNode)
+                output_nodes[ordinal] = out_stream.node
+                output_streams_by_ordinal[ordinal] = out_stream
+                progress = True
+            else:
+                still_outputs.append((ordinal, opt_tokens, filename))
+        pending_outputs = still_outputs
+
+        still_decs: list[tuple[int, int, int, list[str]]] = []
+        for occurrence, of, ost, dec_opts in pending_decs:
+            if of in output_nodes:
+                decoder_kwargs: dict[str, str | bool] = {}
+                for key, value in parse_options(dec_opts).items():
+                    decoder_kwargs[key] = True if value[-1] is None else value[-1]
+                dec_node = LoopbackDecoderNode(
+                    inputs=(OutputStream(node=output_nodes[of], index=ost),),
+                    kwargs=FrozenDict(decoder_kwargs),
+                )
+                if dec_node._tapped_type() == StreamType.audio:
+                    stream_mapping[f"dec:{occurrence}"] = dec_node.audio
+                else:
+                    stream_mapping[f"dec:{occurrence}"] = dec_node.video
+                progress = True
+            else:
+                still_decs.append((occurrence, of, ost, dec_opts))
+        pending_decs = still_decs
+
+        if fc_pending and fc_dec_labels <= set(stream_mapping):
+            stream_mapping = parse_filter_complex(
+                combined_fc, stream_mapping, ffmpeg_filters
+            )
+            fc_pending = False
+            progress = True
+
+    if fc_pending:
+        missing = fc_dec_labels - set(stream_mapping)
+        if missing:
+            raise FFMpegValueError(
+                f"filter_complex references undefined loopback label(s): "
+                f"{', '.join(sorted(missing))}"
+            )
+        raise FFMpegValueError("cyclic or unresolvable -dec / filter references")
+    if pending_outputs or pending_decs:
+        raise FFMpegValueError("cyclic or unresolvable -dec / filter references")
+
+    output_streams = [
+        output_streams_by_ordinal[i] for i in sorted(output_streams_by_ordinal)
+    ]
 
     # Create a stream with global options
     result = merge_outputs(*output_streams)

@@ -478,8 +478,13 @@ export class LoopbackDecoderNode extends Node {
     return "loopback";
   }
 
-  /** Best-effort static type of the tapped output stream (null if unknowable). */
-  private tappedType(): StreamType | null {
+  /**
+   * Best-effort static type of the tapped output stream (null if unknowable).
+   *
+   * Non-private so `parse()` (compileCli.ts) can pick `.video` vs `.audio`
+   * when reconstructing a loopback decoder from a `-dec` command.
+   */
+  tappedType(): StreamType | null {
     const tapped = this.inputs[0];
     const index = tapped.index ?? 0;
     const outInputs = tapped.node.inputs;

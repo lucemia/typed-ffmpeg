@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, beforeAll } from "vitest";
 import {
   InputNode,
   LoopbackDecoderNode,
@@ -9,8 +9,59 @@ import {
   FilterNode,
 } from "../dag/nodes.js";
 import { FFMpegTypeError, FFMpegValueError } from "../exceptions.js";
-import { StreamType } from "../common/schema.js";
+import {
+  type FFMpegFilter,
+  type FFMpegOption,
+  FFMpegOptionFlag,
+  FFMpegOptionType,
+  StreamType,
+} from "../common/schema.js";
 import { compileAsList, parse } from "../compile/compileCli.js";
+
+// ─── Minimal parse() fixtures (mirrors __tests__/parse.test.ts) ─────────────
+
+function makeOption(name: string, flags: number): FFMpegOption {
+  return { name, type: FFMpegOptionType.String, flags, help: "", argname: null, canon: null };
+}
+
+function makeFilter(
+  name: string,
+  inputTypes: ("video" | "audio")[],
+  outputTypes: ("video" | "audio")[],
+): FFMpegFilter {
+  return {
+    name,
+    description: "",
+    isDynamicInput: false,
+    isDynamicOutput: false,
+    streamTypingsInput: inputTypes.map((t) => ({
+      type: t === "audio" ? StreamType.Audio : StreamType.Video,
+    })),
+    streamTypingsOutput: outputTypes.map((t) => ({
+      type: t === "audio" ? StreamType.Audio : StreamType.Video,
+    })),
+    formulaTypingsInput: null,
+    formulaTypingsOutput: null,
+    pre: [],
+    options: [
+      { name: "inputs", alias: [], description: "", type: "string" as any, required: false, choices: [], default: 2 },
+    ],
+  };
+}
+
+const OUTPUT_FLAG = FFMpegOptionFlag.OPT_OUTPUT;
+
+let filtersMap: Map<string, FFMpegFilter>;
+let optionsMap: Map<string, FFMpegOption>;
+
+beforeAll(() => {
+  filtersMap = new Map([["hstack", makeFilter("hstack", ["video", "video"], ["video"])]]);
+  optionsMap = new Map(
+    [makeOption("f", OUTPUT_FLAG), makeOption("vcodec", OUTPUT_FLAG), makeOption("crf", OUTPUT_FLAG)].map(
+      (o) => [o.name, o],
+    ),
+  );
+});
 
 describe("LoopbackDecoderNode model", () => {
   it("constructs via OutputStream.loopback()", () => {
@@ -189,14 +240,56 @@ describe("loopback compile", () => {
   });
 });
 
-describe("parse -dec rejection", () => {
-  it("throws a clear error on -dec", () => {
+describe("parse loopback -dec", () => {
+  it("round-trips the canonical hstack graph", () => {
+    const source = new InputNode("INPUT");
+    const enc = new OutputNode([source.video], "-", { f: "null", vcodec: "libx264", crf: 45 });
+    const dec = enc.stream().loopback(0);
+    const stacked = new FilterNode(
+      "hstack",
+      [source.video, dec.video],
+      { inputs: 2 },
+      [StreamType.Video, StreamType.Video],
+      [StreamType.Video],
+    );
+    const out = new OutputNode([stacked.video(0)], "OUT.mkv", { vcodec: "ffv1" });
+
+    const compiled = compileAsList(out.stream()).join(" ");
+    const reparsed = parse("ffmpeg " + compiled, filtersMap, optionsMap);
+    expect(compileAsList(reparsed).join(" ")).toBe(compiled);
+  });
+
+  it("builds a LoopbackDecoderNode from a -dec command", () => {
+    const stream = parse(
+      'ffmpeg -i INPUT -filter_complex "[0:v][dec:0]hstack=inputs=2[s0]" ' +
+        "-map 0:v -f null -vcodec libx264 - -dec 0:0 -map [s0] -vcodec ffv1 OUT.mkv",
+      filtersMap,
+      optionsMap,
+    );
+    const args = compileAsList(stream);
+    expect(args.filter((a) => a === "-dec").length).toBe(1);
+    expect(args[args.indexOf("-dec") + 1]).toBe("0:0");
+  });
+
+  it("rejects an out-of-range -dec output", () => {
     expect(() =>
       parse(
-        "ffmpeg -i INPUT -map 0:v -c:v libx264 -f null - -dec 0:0 -filter_complex [0:v][dec:0]hstack[s] -map [s] out.mkv",
-        new Map(),
-        new Map(),
+        'ffmpeg -i INPUT -filter_complex "[0:v][dec:0]hstack=inputs=2[s0]" ' +
+          "-map 0:v -f null -vcodec libx264 - -dec 5:0 -map [s0] OUT.mkv",
+        filtersMap,
+        optionsMap,
       ),
-    ).toThrow(/-dec/);
+    ).toThrow(FFMpegValueError);
+  });
+
+  it("rejects a dangling dec label", () => {
+    expect(() =>
+      parse(
+        'ffmpeg -i INPUT -filter_complex "[0:v][dec:2]hstack=inputs=2[s0]" ' +
+          "-map 0:v -f null -vcodec libx264 - -dec 0:0 -map [s0] OUT.mkv",
+        filtersMap,
+        optionsMap,
+      ),
+    ).toThrow(FFMpegValueError);
   });
 });

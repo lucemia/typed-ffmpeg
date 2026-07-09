@@ -331,6 +331,9 @@ export function getArgsLoopbackDecoderNode(
   // produces when one output is tapped by several loopback decoders.
   const uniq = uniqueOutputsByHex(context);
   const of = uniq.findIndex((o) => outputKey(o) === outputKey(tapped.node));
+  if (of < 0) {
+    throw new FFMpegValueError("Tapped output node not found in DAG context");
+  }
   const ost = tapped.index ?? 0;
   commands.push("-dec", `${of}:${ost}`);
   return commands;
@@ -455,6 +458,9 @@ function parseFilterParams(
 
 /** Check if a token is a filename / output URL (not an option flag). */
 function isFilename(token: string): boolean {
+  // "-" (stdout shorthand) is the one special filename that itself starts
+  // with "-"; check it before the generic option-flag rejection below.
+  if (token === "-") return true;
   if (token.startsWith("-")) return false;
   if (/^\w+:\/\//.test(token)) return true; // protocol URL
   if (/^pipe:\d*$/.test(token)) return true; // pipe:
@@ -469,6 +475,17 @@ function parseStreamSelector(
   mapping: Map<string, FilterableStream>,
 ): FilterableStream {
   const s = selector.replace(/^\[/, "").replace(/\]$/, "");
+
+  // Loopback decoder labels ("dec:N") are whole labels, not type-suffixed
+  // stream selectors — resolve them verbatim before the `:`-splitting logic
+  // below (which would otherwise treat "dec" as the label and "0" as a
+  // bogus stream type).
+  if (/^dec:\d+$/.test(s)) {
+    const decStream = mapping.get(s);
+    if (!decStream) throw new FFMpegValueError(`Unknown stream label: ${s}`);
+    return decStream;
+  }
+
   const optionalSuffix = s.endsWith("?");
   const clean = optionalSuffix ? s.slice(0, -1) : s;
 
@@ -700,6 +717,49 @@ function parseFilterComplex(
   return streamMapping;
 }
 
+/**
+ * Build a single OutputStream from one output group's option tokens.
+ *
+ * This is the per-group core shared by `parseOutputTokens` and the
+ * loopback-aware worklist in `parse()`. Handles `-map` resolution, the
+ * single-AVStream default when no `-map` is given, and output-option
+ * filtering.
+ */
+function buildOutputStream(
+  optionTokens: string[],
+  filename: string,
+  inStreams: Map<string, FilterableStream>,
+  ffmpegOptions: Map<string, FFMpegOption>,
+): OutputStream {
+  const opts = parseOptions(optionTokens);
+
+  const mapOptions = opts["map"] ?? [];
+  const inputs: FilterableStream[] = [];
+  for (const m of mapOptions) {
+    if (typeof m === "string") {
+      inputs.push(parseStreamSelector(m, inStreams));
+    }
+  }
+
+  if (inputs.length === 0) {
+    const avStreams = [...inStreams.values()].filter(s => s instanceof AVStream);
+    if (avStreams.length === 1) inputs.push(avStreams[0]);
+  }
+
+  delete opts["map"];
+  const kwargs: Record<string, string | boolean> = {};
+  for (const [key, values] of Object.entries(opts)) {
+    const baseKey = key.split(":")[0];
+    const opt = ffmpegOptions.get(baseKey);
+    if (opt && isOutputOption(opt)) {
+      const v = values[values.length - 1];
+      kwargs[key] = v === null ? true : v === false ? false : (v as string);
+    }
+  }
+
+  return new OutputStream(new OutputNode(inputs, filename, kwargs));
+}
+
 /** Parse output file specifications. */
 function parseOutputTokens(
   source: string[],
@@ -717,38 +777,68 @@ function parseOutputTokens(
       continue;
     }
 
-    const filename = token;
-    const opts = parseOptions(buffer);
+    exports.push(buildOutputStream(buffer, token, inStreams, ffmpegOptions));
     buffer = [];
-
-    const mapOptions = opts["map"] ?? [];
-    const inputs: FilterableStream[] = [];
-    for (const m of mapOptions) {
-      if (typeof m === "string") {
-        inputs.push(parseStreamSelector(m, inStreams));
-      }
-    }
-
-    if (inputs.length === 0) {
-      const avStreams = [...inStreams.values()].filter(s => s instanceof AVStream);
-      if (avStreams.length === 1) inputs.push(avStreams[0]);
-    }
-
-    delete opts["map"];
-    const kwargs: Record<string, string | boolean> = {};
-    for (const [key, values] of Object.entries(opts)) {
-      const baseKey = key.split(":")[0];
-      const opt = ffmpegOptions.get(baseKey);
-      if (opt && isOutputOption(opt)) {
-        const v = values[values.length - 1];
-        kwargs[key] = v === null ? true : v === false ? false : (v as string);
-      }
-    }
-
-    exports.push(new OutputStream(new OutputNode(inputs, filename, kwargs)));
   }
 
   return exports;
+}
+
+/** One output file's token group: ordinal position, option tokens, filename. */
+interface OutputSeg {
+  ordinal: number;
+  opts: string[];
+  filename: string;
+}
+
+/** One `-dec of:ost` occurrence: its label index, target output/stream, and decoder options. */
+interface DecSeg {
+  occurrence: number;
+  of: number;
+  ost: number;
+  opts: string[];
+}
+
+/**
+ * Split output-section tokens into output segments and loopback-decoder
+ * segments.
+ *
+ * `-dec of:ost` is a second option-group terminator alongside output
+ * filenames: everything buffered since the previous terminator becomes that
+ * segment's option tokens.
+ */
+function splitOutputSection(tokens: string[]): { outputs: OutputSeg[]; decs: DecSeg[] } {
+  const outputs: OutputSeg[] = [];
+  const decs: DecSeg[] = [];
+  let buffer: string[] = [];
+  let ord = 0;
+  let occ = 0;
+  let i = 0;
+  while (i < tokens.length) {
+    const token = tokens[i];
+    if (token === "-dec") {
+      const spec = tokens[i + 1] ?? "";
+      const [ofStr, ostStr] = spec.split(":");
+      const of = Number(ofStr);
+      const ost = ostStr ? Number(ostStr) : 0;
+      if (!Number.isInteger(of) || !Number.isInteger(ost)) {
+        throw new FFMpegValueError(`Invalid -dec argument: ${spec}`);
+      }
+      decs.push({ occurrence: occ++, of, ost, opts: buffer });
+      buffer = [];
+      i += 2;
+      continue;
+    }
+    if (isFilename(token)) {
+      outputs.push({ ordinal: ord++, opts: buffer, filename: token });
+      buffer = [];
+      i += 1;
+      continue;
+    }
+    buffer.push(token);
+    i += 1;
+  }
+  return { outputs, decs };
 }
 
 /**
@@ -787,12 +877,6 @@ export function parse(
     tokens = tokens.slice(1);
   }
 
-  if (tokens.includes("-dec")) {
-    throw new FFMpegValueError(
-      "loopback decoders (-dec) are not supported by parse()",
-    );
-  }
-
   const [globalParams, remaining] = parseGlobal(tokens, ffmpegOptions);
 
   const lastIIdx = remaining.lastIndexOf("-i");
@@ -824,11 +908,6 @@ export function parse(
     outputTokens = [...outputTokens.slice(0, fcIdx), ...outputTokens.slice(fcIdx + 2)];
   }
 
-  const filterableStreams = new Map<string, FilterableStream>(inputStreams);
-  if (filterComplexParts.length > 0) {
-    parseFilterComplex(filterComplexParts.join(";"), filterableStreams, ffmpegFilters);
-  }
-
   // Inject implicit -map tokens for -vf/-af before the first output filename
   if (extraMapTokens.length > 0) {
     const newOutput: string[] = [];
@@ -843,7 +922,104 @@ export function parse(
     outputTokens = newOutput;
   }
 
-  const outputStreams = parseOutputTokens(outputTokens, filterableStreams, ffmpegOptions);
+  // Split the output section into output-file segments and loopback-decoder
+  // (-dec of:ost) segments, then resolve the output <-> dec <-> filtergraph
+  // reference cycle with an iterative worklist: a -map may reference a
+  // [dec:N] filtergraph output, the filtergraph may reference [dec:N], and a
+  // -dec targets an already-defined output file — none of these can be
+  // parsed in a strict single pass.
+  const { outputs: outputSegs, decs: decSegs } = splitOutputSection(outputTokens);
+
+  const maxOf = outputSegs.length - 1;
+  for (const d of decSegs) {
+    if (d.of > maxOf) {
+      throw new FFMpegValueError(
+        `-dec references output file ${d.of}, but only ${outputSegs.length} output file(s) were found`,
+      );
+    }
+  }
+
+  const combinedFc = filterComplexParts.join(";");
+  const fcDecLabels = new Set([...combinedFc.matchAll(/\[(dec:\d+)\]/g)].map((m) => m[1]));
+
+  let streamMapping = new Map(inputStreams);
+  const outputNodes = new Map<number, OutputNode>();
+  const outputStreamsByOrdinal = new Map<number, OutputStream>();
+
+  // A -map selector is "ready" once its referenced label exists in
+  // streamMapping. dec:N is a whole label (not type-suffixed like "0:v"),
+  // so it must be resolved before splitting on ':' — splitting would look
+  // up the bare "dec" key, which never exists, and stall the worklist.
+  const labelReady = (sel: string): boolean => {
+    const stripped = sel.replace(/^\[|\]$/g, "");
+    const labelKey = /^dec:\d+$/.test(stripped) ? stripped : stripped.split(":")[0];
+    return streamMapping.has(labelKey);
+  };
+
+  let pendingOutputs = [...outputSegs];
+  let pendingDecs = [...decSegs];
+  let fcPending = combinedFc.length > 0;
+  let progress = true;
+
+  while (progress && (pendingOutputs.length || pendingDecs.length || fcPending)) {
+    progress = false;
+
+    const stillOut: OutputSeg[] = [];
+    for (const seg of pendingOutputs) {
+      const mapOpts = (parseOptions(seg.opts)["map"] ?? []).filter(
+        (m): m is string => typeof m === "string",
+      );
+      if (mapOpts.every(labelReady)) {
+        const os = buildOutputStream(seg.opts, seg.filename, streamMapping, ffmpegOptions);
+        outputNodes.set(seg.ordinal, os.node as OutputNode);
+        outputStreamsByOrdinal.set(seg.ordinal, os);
+        progress = true;
+      } else {
+        stillOut.push(seg);
+      }
+    }
+    pendingOutputs = stillOut;
+
+    const stillDec: DecSeg[] = [];
+    for (const seg of pendingDecs) {
+      const outNode = outputNodes.get(seg.of);
+      if (outNode) {
+        const kwargs: Record<string, string | boolean> = {};
+        for (const [k, vs] of Object.entries(parseOptions(seg.opts))) {
+          const v = vs[vs.length - 1];
+          kwargs[k] = v === null ? true : (v as string);
+        }
+        const decNode = new LoopbackDecoderNode([new OutputStream(outNode, seg.ost)], kwargs);
+        streamMapping.set(
+          `dec:${seg.occurrence}`,
+          decNode.tappedType() === StreamType.Audio ? decNode.audio : decNode.video,
+        );
+        progress = true;
+      } else {
+        stillDec.push(seg);
+      }
+    }
+    pendingDecs = stillDec;
+
+    if (fcPending && [...fcDecLabels].every((l) => streamMapping.has(l))) {
+      streamMapping = parseFilterComplex(combinedFc, streamMapping, ffmpegFilters);
+      fcPending = false;
+      progress = true;
+    }
+  }
+
+  if (fcPending || pendingOutputs.length || pendingDecs.length) {
+    const missing = [...fcDecLabels].filter((l) => !streamMapping.has(l));
+    throw new FFMpegValueError(
+      missing.length
+        ? `filter_complex references undefined loopback label(s): ${missing.join(", ")}`
+        : "cyclic or unresolvable -dec / filter references",
+    );
+  }
+
+  const outputStreams = [...outputStreamsByOrdinal.keys()]
+    .sort((a, b) => a - b)
+    .map((k) => outputStreamsByOrdinal.get(k)!);
 
   const allOutputStreams = outputStreams.map(s => s.node as OutputNode);
   let result: Stream;
