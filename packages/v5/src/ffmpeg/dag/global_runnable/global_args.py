@@ -33,7 +33,7 @@ class GlobalArgs(ABC):
 
     def global_args(
         self,
-        *,loglevel: Func = None,v: Func = None,report: Func = None,max_alloc: Func = None,cpuflags: Func = None,cpucount: Func = None,hide_banner: Func = None,y: Func = None,n: Func = None,ignore_unknown: Func = None,copy_unknown: Func = None,recast_media: Func = None,benchmark: Func = None,benchmark_all: Func = None,progress: Func = None,stdin: Func = None,timelimit: Func = None,dump: Func = None,hex: Func = None,vsync: Func = None,frame_drop_threshold: Func = None,_async: Func = None,adrift_threshold: Func = None,copyts: Func = None,start_at_zero: Func = None,copytb: Func = None,dts_delta_threshold: Func = None,dts_error_threshold: Func = None,xerror: Func = None,abort_on: Func = None,filter_threads: Func = None,filter_complex: Func = None,filter_complex_threads: Func = None,lavfi: Func = None,filter_complex_script: Func = None,auto_conversion_filters: Func = None,stats: Func = None,stats_period: Func = None,debug_ts: Func = None,max_error_rate: Func = None,psnr: Func = None,vstats: Func = None,vstats_file: Func = None,vstats_version: Func = None,qphist: Func = None,vol: Func = None,init_hw_device: Func = None,filter_hw_device: Func = None,extra_options: dict[str, Any] | None = None,
+        *,loglevel: Func = None,v: Func = None,report: Func = None,max_alloc: Func = None,cpuflags: Func = None,cpucount: Func = None,hide_banner: Func = None,y: Func = None,n: Func = None,ignore_unknown: Func = None,copy_unknown: Func = None,recast_media: Func = None,benchmark: Func = None,benchmark_all: Func = None,progress: Func = None,stdin: Func = None,timelimit: Func = None,dump: Func = None,hex: Func = None,vsync: Func = None,frame_drop_threshold: Func = None,_async: Func = None,adrift_threshold: Func = None,copyts: Func = None,start_at_zero: Func = None,copytb: Func = None,dts_delta_threshold: Func = None,dts_error_threshold: Func = None,xerror: Func = None,abort_on: Func = None,filter_threads: Func = None,filter_complex: Func = None,filter_complex_threads: Func = None,lavfi: Func = None,filter_complex_script: Func = None,auto_conversion_filters: Func = None,stats: Func = None,stats_period: Func = None,debug_ts: Func = None,max_error_rate: Func = None,psnr: Func = None,vstats: Func = None,vstats_file: Func = None,vstats_version: Func = None,qphist: Func = None,vol: Func = None,vaapi_device: Func = None,init_hw_device: Func = None,filter_hw_device: Func = None,extra_options: dict[str, Any] | None = None,
     ) -> GlobalStream:
         """
         Set global options.
@@ -85,6 +85,7 @@ class GlobalArgs(ABC):
             vstats_version: Version of the vstats format to use.
             qphist: show QP histogram
             vol: change audio volume (256=normal)
+            vaapi_device: set VAAPI hardware device (DRM path or X11 display name)
             init_hw_device: initialise hardware device
             filter_hw_device: set hardware device used when filtering
             extra_options: Additional options
@@ -319,6 +320,8 @@ class GlobalArgs(ABC):
 
 
 
+
+                "vaapi_device": vaapi_device,
 
                 "init_hw_device": init_hw_device,
 
