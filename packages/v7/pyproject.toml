@@ -28,7 +28,7 @@ dev = ["pytest>=7.0", "pytest-cov>=4.0", "syrupy>=5.5.2", "ruff==0.12.2"]
 parse = ["ffmpeg-data-v7"]
 
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=83.0.0"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
