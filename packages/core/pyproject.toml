@@ -34,7 +34,7 @@ dev = [
     "pytest-cov>=4.0",
     "syrupy>=5.5.2",
     "ruff==0.12.2",
-    "mypy>=2.2.0",
+    "mypy>=2.3.0",
 ]
 
 graph = ["graphviz"]  # For visualization
