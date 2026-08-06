@@ -1,6 +1,6 @@
 # Code Generation
 
-Typed-ffmpeg generates its filter/codec/format bindings by introspecting real FFmpeg binaries. Each version package (`v5`, `v6`, `v7`, `v8`) is generated from the corresponding FFmpeg major version.
+Typed-ffmpeg generates its filter/codec/format bindings by introspecting real FFmpeg binaries. Each version package (`v5`, `v6`, `v7`, `v8`, `v9`) is generated from the corresponding FFmpeg major version.
 
 ## How It Works
 
@@ -31,7 +31,7 @@ This triggers the `CI CodeGen - Multi-Version FFmpeg` workflow which:
 ### Regenerate a single version (for testing)
 
 ```bash
-gh workflow run ci-codegen-versions.yml --ref v4 -f ffmpeg-version=7 -f create_pr=false
+gh workflow run ci-codegen-versions.yml --ref v4 -f ffmpeg-version=9 -f create_pr=false
 ```
 
 ### Automatic CI triggers
@@ -52,7 +52,7 @@ For local code generation you need multiple FFmpeg versions installed side by si
 ### macOS (Homebrew)
 
 ```bash
-brew install ffmpeg@5 ffmpeg@6 ffmpeg@7 ffmpeg      # ffmpeg (no suffix) = latest (v8+)
+brew install ffmpeg@5 ffmpeg@6 ffmpeg@7 ffmpeg@8 ffmpeg   # ffmpeg (no suffix) = latest (v9+)
 ```
 
 Then invoke the generator by pointing `PATH` at the desired version:
@@ -124,3 +124,12 @@ Use `--rebuild` to bypass the cache and regenerate from scratch.
 | `packages/v6` | 6.1 | `ghcr.io/lucemia/typed-ffmpeg/ffmpeg:6.1` |
 | `packages/v7` | 7.1 | `ghcr.io/lucemia/typed-ffmpeg/ffmpeg:7.1` |
 | `packages/v8` | 8.0 | `ghcr.io/lucemia/typed-ffmpeg/ffmpeg:8.0` |
+| `packages/v9` | 9.0 | `ghcr.io/lucemia/typed-ffmpeg/ffmpeg:9.0` |
+
+!!! warning "FFmpeg 9.0 needs a SPIR-V compiler at build time"
+    FFmpeg 9.0 removed `--enable-libshaderc` and instead compiles Vulkan shaders
+    during the build using an external `glslc`/`glslang` binary. If that binary is
+    missing, `configure` silently disables `spirv_compiler` and **all 18 Vulkan
+    filters disappear** from the generated bindings. `Dockerfile.9.0` installs
+    `glslang-tools` and asserts `CONFIG_SCALE_VULKAN_FILTER=yes` after configure
+    so this fails loudly instead of producing quietly incomplete bindings.

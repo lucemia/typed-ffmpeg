@@ -1,6 +1,7 @@
 """Cache utilities for FFmpeg operations."""
 
 import sys
+from collections.abc import Iterator
 from pathlib import Path
 from typing import TypeVar
 
@@ -35,24 +36,41 @@ def get_cache_path() -> Path:
 cache_path = get_cache_path()
 
 
+def _iter_data_cache_paths() -> Iterator[Path]:
+    """
+    Yield cache directories of installed ffmpeg-data-vN packages, newest first.
+
+    Only directories that actually exist are yielded: a data package may be
+    installed from a source checkout before its cache files have been
+    generated, and such a package must not shadow an older, populated one.
+
+    Yields:
+        Path to each usable data cache directory.
+
+    """
+    for version in ("v9", "v8", "v7", "v6", "v5"):
+        try:
+            mod = __import__(f"ffmpeg_data_{version}")
+        except ImportError:
+            continue
+        path = mod.get_cache_path()
+        if path.is_dir():
+            yield path
+
+
 def _get_data_cache_path() -> Path | None:
     """
     Get the cache path from an installed ffmpeg-data-vN package.
 
-    Tries ffmpeg_data_v8 through ffmpeg_data_v5 (newest first) and returns
-    the first one found. Returns None if no data package is installed.
+    Tries ffmpeg_data_v9 through ffmpeg_data_v5 (newest first) and returns
+    the first one with an existing cache directory. Returns None if no data
+    package is installed.
 
     Returns:
         Path to the data cache directory, or None if not installed.
 
     """
-    for version in ("v8", "v7", "v6", "v5"):
-        try:
-            mod = __import__(f"ffmpeg_data_{version}")
-            return mod.get_cache_path()
-        except ImportError:
-            continue
-    return None
+    return next(_iter_data_cache_paths(), None)
 
 
 def load(cls: type[T], id: str) -> T:
@@ -77,11 +95,13 @@ def load(cls: type[T], id: str) -> T:
     path = cache_path / f"{cls.__name__}/{id}.json"
 
     if not path.exists():
-        data_cache = _get_data_cache_path()
-        if data_cache is not None:
+        # Try every installed data package, newest first — the newest one may
+        # not carry this particular entry yet.
+        for data_cache in _iter_data_cache_paths():
             data_path = data_cache / f"{cls.__name__}/{id}.json"
             if data_path.exists():
                 path = data_path
+                break
 
     try:
         with path.open() as ifile:

@@ -356,13 +356,13 @@ uv lock --upgrade-package <package-name>
 
 ### Releasing a New Version
 
-Maintainers only. The monorepo publishes **11 packages** to PyPI in dependency order:
+Maintainers only. The monorepo publishes **13 packages** to PyPI in dependency order:
 
 | Layer | Packages |
 |-------|----------|
 | Core | `ffmpeg-core` |
-| Data | `ffmpeg-data-v5`, `ffmpeg-data-v6`, `ffmpeg-data-v7`, `ffmpeg-data-v8` |
-| Bindings | `typed-ffmpeg-v5`, `typed-ffmpeg-v6`, `typed-ffmpeg-v7`, `typed-ffmpeg-v8` |
+| Data | `ffmpeg-data-v5`, `ffmpeg-data-v6`, `ffmpeg-data-v7`, `ffmpeg-data-v8`, `ffmpeg-data-v9` |
+| Bindings | `typed-ffmpeg-v5`, `typed-ffmpeg-v6`, `typed-ffmpeg-v7`, `typed-ffmpeg-v8`, `typed-ffmpeg-v9` |
 | Meta | `typed-ffmpeg` (latest), `typed-ffmpeg-compatible` |
 
 #### Automated Release
@@ -376,7 +376,7 @@ python scripts/release.py --dry-run # preview without changes
 ```
 
 The script will:
-1. Bump version across all 11 packages (via `scripts/bump-version.py`)
+1. Bump version across all 13 packages (via `scripts/bump-version.py`)
 2. Insert a new CHANGELOG.md section and open your `$EDITOR`
 3. Commit and create a git tag
 4. Push to origin (with confirmation)

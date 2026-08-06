@@ -5,11 +5,27 @@ import re
 import sys
 from pathlib import Path
 
-PACKAGES = ["core", "data-v5", "data-v6", "data-v7", "data-v8", "v5", "v6", "v7", "v8", "latest", "compatible"]
+PACKAGES = [
+    "core",
+    "data-v5",
+    "data-v6",
+    "data-v7",
+    "data-v8",
+    "data-v9",
+    "v5",
+    "v6",
+    "v7",
+    "v8",
+    "v9",
+    "latest",
+    "compatible",
+]
 REPO_ROOT = Path(__file__).parent.parent
 
-# Internal packages whose dependency constraints should be updated
-INTERNAL_DEPS = ["ffmpeg-core", "typed-ffmpeg-v8"]
+# Internal packages whose dependency constraints should be updated.
+# Both typed-ffmpeg-v8 and -v9 are listed so the meta-packages keep working
+# across the v8 -> v9 retarget.
+INTERNAL_DEPS = ["ffmpeg-core", "typed-ffmpeg-v8", "typed-ffmpeg-v9"]
 
 
 def _version_constraint(version: str) -> str:

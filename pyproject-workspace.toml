@@ -8,10 +8,12 @@ members = [
     "packages/data-v6",
     "packages/data-v7",
     "packages/data-v8",
+    "packages/data-v9",
     "packages/v5",
     "packages/v6",
     "packages/v7",
     "packages/v8",
+    "packages/v9",
     "packages/latest",
     "packages/compatible",
 ]
@@ -43,6 +45,7 @@ all = [
     "typed-ffmpeg-v6",
     "typed-ffmpeg-v7",
     "typed-ffmpeg-v8",
+    "typed-ffmpeg-v9",
 ]
 
 [tool.uv]

@@ -78,7 +78,7 @@ def main():
     packages_dir = repo_root / "packages"
 
     # Process each version package
-    for version_dir in ["v5", "v6", "v7", "v8"]:
+    for version_dir in ["v5", "v6", "v7", "v8", "v9"]:
         version_path = packages_dir / version_dir / "src" / "ffmpeg"
 
         if not version_path.exists():

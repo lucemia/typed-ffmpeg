@@ -17,11 +17,13 @@ members = [
     "ffmpeg-data-v6",
     "ffmpeg-data-v7",
     "ffmpeg-data-v8",
+    "ffmpeg-data-v9",
     "typed-ffmpeg",
     "typed-ffmpeg-v5",
     "typed-ffmpeg-v6",
     "typed-ffmpeg-v7",
     "typed-ffmpeg-v8",
+    "typed-ffmpeg-v9",
     "typed-ffmpeg-workspace",
 ]
 
@@ -581,6 +583,11 @@ source = { editable = "packages/data-v7" }
 name = "ffmpeg-data-v8"
 version = "4.3"
 source = { editable = "packages/data-v8" }
+
+[[package]]
+name = "ffmpeg-data-v9"
+version = "4.3"
+source = { editable = "packages/data-v9" }
 
 [[package]]
 name = "ghp-import"
@@ -2456,6 +2463,36 @@ requires-dist = [
 provides-extras = ["dev", "parse"]
 
 [[package]]
+name = "typed-ffmpeg-v9"
+version = "4.3"
+source = { editable = "packages/v9" }
+dependencies = [
+    { name = "ffmpeg-core" },
+]
+
+[package.optional-dependencies]
+dev = [
+    { name = "pytest" },
+    { name = "pytest-cov" },
+    { name = "ruff" },
+    { name = "syrupy" },
+]
+parse = [
+    { name = "ffmpeg-data-v9" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "ffmpeg-core", editable = "packages/core" },
+    { name = "ffmpeg-data-v9", marker = "extra == 'parse'", editable = "packages/data-v9" },
+    { name = "pytest", marker = "extra == 'dev'", specifier = ">=7.0" },
+    { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=4.0" },
+    { name = "ruff", marker = "extra == 'dev'", specifier = "==0.12.2" },
+    { name = "syrupy", marker = "extra == 'dev'", specifier = ">=5.5.3" },
+]
+provides-extras = ["dev", "parse"]
+
+[[package]]
 name = "typed-ffmpeg-workspace"
 version = "0.0.0"
 source = { editable = "." }
@@ -2465,6 +2502,7 @@ dependencies = [
     { name = "ffmpeg-data-v6" },
     { name = "ffmpeg-data-v7" },
     { name = "ffmpeg-data-v8" },
+    { name = "ffmpeg-data-v9" },
 ]
 
 [package.optional-dependencies]
@@ -2511,6 +2549,7 @@ requires-dist = [
     { name = "ffmpeg-data-v6", editable = "packages/data-v6" },
     { name = "ffmpeg-data-v7", editable = "packages/data-v7" },
     { name = "ffmpeg-data-v8", editable = "packages/data-v8" },
+    { name = "ffmpeg-data-v9", editable = "packages/data-v9" },
     { name = "graphviz", marker = "extra == 'graph'" },
 ]
 provides-extras = ["graph"]

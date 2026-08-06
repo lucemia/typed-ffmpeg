@@ -5,10 +5,12 @@ members = [
     "packages/data-v6",
     "packages/data-v7",
     "packages/data-v8",
+    "packages/data-v9",
     "packages/v5",
     "packages/v6",
     "packages/v7",
     "packages/v8",
+    "packages/v9",
     "packages/latest",
 ]
 
@@ -22,6 +24,7 @@ dependencies = [
     "ffmpeg-data-v6",
     "ffmpeg-data-v7",
     "ffmpeg-data-v8",
+    "ffmpeg-data-v9",
 ]
 authors = [
     {name = "lucemia", email = "lucemia@gmail.com"}
@@ -64,7 +67,7 @@ Repository = "https://github.com/lucemia/typed-ffmpeg"
 graph = ["graphviz"]
 
 [tool.uv]
-sources = { ffmpeg-core = { workspace = true }, ffmpeg-data-v5 = { workspace = true }, ffmpeg-data-v6 = { workspace = true }, ffmpeg-data-v7 = { workspace = true }, ffmpeg-data-v8 = { workspace = true } }
+sources = { ffmpeg-core = { workspace = true }, ffmpeg-data-v5 = { workspace = true }, ffmpeg-data-v6 = { workspace = true }, ffmpeg-data-v7 = { workspace = true }, ffmpeg-data-v8 = { workspace = true }, ffmpeg-data-v9 = { workspace = true } }
 dev-dependencies = [
     # Development tools
     "ty",

@@ -208,6 +208,11 @@ out/
 .vite/
 output.mp4
 ffmpeg/
+# ...but the generated per-version bindings are tracked. Without this negation a
+# newly added packages/vN/src/ffmpeg/ is silently skipped by `git add` in the
+# codegen workflows (existing versions only survive because they are already
+# tracked, or force-added with `git add -f`).
+!packages/*/src/ffmpeg/
 .claude/settings.local.json
 .claude/memory/
 docs/_stubs/

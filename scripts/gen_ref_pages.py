@@ -10,7 +10,7 @@ nav = mkdocs_gen_files.Nav()
 
 root = Path(__file__).parent.parent
 
-VERSIONS = ["v5", "v6", "v7", "v8"]
+VERSIONS = ["v5", "v6", "v7", "v8", "v9"]
 core_src = root / "packages" / "core" / "src"
 stubs_dir = root / "docs" / "_stubs"
 

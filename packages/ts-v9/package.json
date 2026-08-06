@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "@typed-ffmpeg/core": "*"
+  },
+  "description": "Type-safe FFmpeg v9 bindings for TypeScript",
+  "devDependencies": {
+    "@types/node": "^26.1.0",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.2"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "main": "dist/index.js",
+  "name": "@typed-ffmpeg/v9",
+  "scripts": {
+    "build": "tsc",
+    "lint": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "types": "dist/index.d.ts",
+  "version": "0.1.0"
+}

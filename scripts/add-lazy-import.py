@@ -93,7 +93,7 @@ def main():
     """Add lazy imports to all streams files."""
     repo_root = Path(__file__).parent.parent
 
-    for version in ["v5", "v6", "v7", "v8"]:
+    for version in ["v5", "v6", "v7", "v8", "v9"]:
         print(f"\n📦 Processing {version}...")
 
         streams_dir = repo_root / "packages" / version / "src" / "ffmpeg" / "streams"

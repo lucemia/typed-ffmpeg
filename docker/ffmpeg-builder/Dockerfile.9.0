@@ -1,0 +1,234 @@
+# FFmpeg 9.0 — Ubuntu 24.04 build with full codec/plugin support.
+#
+# Version-specific notes:
+#   - SPIR-V: FFmpeg 9.0 removed --enable-libshaderc. Vulkan shaders are now
+#     compiled at *build time* by an external glslc/glslang binary, so we
+#     install glslang-tools instead of libshaderc-dev. If no such binary is
+#     found, configure silently disables `spirv_compiler` and every Vulkan
+#     filter disappears from the build — the validation stage below asserts
+#     they are present.
+#   - Vulkan: the base requirement is still headers >= 1.3.277, but 9.0 adds a
+#     `vulkan_1_4` feature gate (headers >= 1.4.317) that enables the AV1
+#     Vulkan encoder and VP9 Vulkan hwaccel. Ubuntu 24.04 ships 1.3.275, so we
+#     upgrade to v1.4.358 from the Khronos GitHub repository to pick those up.
+#   - spirv-headers is installed for swscale's SPIR-V backend.
+#   - libplacebo is NOT enabled: FFmpeg 9.0 requires libplacebo >= 7.351.0 and
+#     Ubuntu 24.04 ships 6.x.
+#   - AMF is NOT enabled (vpp_amf/frc_amf): keeps parity with the 8.0 image,
+#     and frc_amf is Windows-only anyway.
+#
+# Usage:
+#   docker build -f Dockerfile.9.0 \
+#     --build-arg FFMPEG_SOURCE_VERSION=9.0 \
+#     -t ffmpeg:9.0 .
+
+ARG FFMPEG_SOURCE_VERSION=9.0
+ARG UBUNTU_VERSION=24.04
+
+FROM ubuntu:${UBUNTU_VERSION} AS build
+
+ARG FFMPEG_SOURCE_VERSION
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
+    build-essential nasm yasm pkg-config wget ca-certificates git \
+    libx264-dev libx265-dev libnuma-dev libvpx-dev libmp3lame-dev \
+    libopus-dev libvorbis-dev libtheora-dev libwebp-dev libxvidcore-dev \
+    libopenjp2-7-dev libopencore-amrnb-dev libopencore-amrwb-dev \
+    libass-dev libfreetype6-dev libfontconfig1-dev libfribidi-dev \
+    libzimg-dev libvidstab-dev libaom-dev \
+    libssl-dev libsrt-openssl-dev libzmq3-dev \
+    libva-dev libdrm-dev ocl-icd-opencl-dev opencl-headers \
+    # Vulkan (headers upgraded below to meet FFmpeg 9.0's vulkan_1_4 gate).
+    # glslang-tools provides the glslang/glslangValidator binary that FFmpeg 9.0
+    # uses to compile Vulkan shaders — libshaderc-dev is no longer used.
+    libvulkan-dev glslang-tools spirv-headers spirv-tools \
+    # Frei0r plugin framework
+    frei0r-plugins-dev \
+    # Audio: LADSPA, LV2, BS2B, Rubberband, SOFA (sofalizer)
+    ladspa-sdk \
+    lv2-dev liblilv-dev \
+    libbs2b-dev \
+    librubberband-dev \
+    libmysofa-dev \
+    # Flite (text-to-speech)
+    flite1-dev \
+    # Additional codecs
+    libgsm1-dev libspeex-dev libtwolame-dev libshine-dev \
+    libcodec2-dev libsnappy-dev libbluray-dev libfdk-aac-dev \
+    libjxl-dev librsvg2-dev libzvbi-dev \
+    # CUDA toolkit (nvcc) for compiling CUDA filter kernels (scale_cuda, transpose_cuda, etc.)
+    nvidia-cuda-toolkit \
+    && rm -rf /var/lib/apt/lists/*
+
+# Optional packages that may not exist on all Ubuntu versions
+# Note: libplacebo-dev intentionally omitted — FFmpeg 9.0 needs >= 7.351.0, Ubuntu 24.04 has 6.x
+RUN apt-get update \
+    && apt-get install -y libdav1d-dev libsvtav1-dev libharfbuzz-dev librav1e-dev 2>/dev/null || true \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install nv-codec-headers (CUDA/NVENC support without a physical GPU)
+RUN git clone --depth 1 https://github.com/FFmpeg/nv-codec-headers.git /tmp/nv-codec-headers \
+    && cd /tmp/nv-codec-headers \
+    && make install PREFIX=/usr/local \
+    && rm -rf /tmp/nv-codec-headers
+
+# Upgrade Vulkan headers to >= 1.4.317 so FFmpeg 9.0's `vulkan_1_4` feature gate
+# activates (AV1 Vulkan encoder, VP9 Vulkan hwaccel). Ubuntu 24.04 ships 1.3.275.
+RUN if ! pkg-config --atleast-version=1.4.317 vulkan 2>/dev/null; then \
+      git clone --depth 1 --branch v1.4.358 https://github.com/KhronosGroup/Vulkan-Headers.git /tmp/vulkan-headers; \
+      cp -r /tmp/vulkan-headers/include/vulkan /usr/include/; \
+      cp -r /tmp/vulkan-headers/include/vk_video /usr/include/; \
+      find /usr /lib -name 'vulkan.pc' 2>/dev/null -exec sed -i 's/^Version:.*/Version: 1.4.358/' {} +; \
+      rm -rf /tmp/vulkan-headers; \
+    fi
+
+# Fail early if no SPIR-V compiler binary is available — without it configure
+# silently drops every Vulkan filter.
+RUN command -v glslang >/dev/null 2>&1 || command -v glslangValidator >/dev/null 2>&1 \
+    || { echo "ERROR: no glslang/glslangValidator binary found (glslang-tools)"; exit 1; }
+
+RUN wget -q "https://ffmpeg.org/releases/ffmpeg-${FFMPEG_SOURCE_VERSION}.tar.bz2" \
+    && tar xf "ffmpeg-${FFMPEG_SOURCE_VERSION}.tar.bz2" \
+    && mv "ffmpeg-${FFMPEG_SOURCE_VERSION}" /ffmpeg-src
+
+WORKDIR /ffmpeg-src
+
+RUN EXTRA_FLAGS=""; \
+    pkg-config --exists dav1d      && EXTRA_FLAGS="$EXTRA_FLAGS --enable-libdav1d"; \
+    pkg-config --exists SvtAv1Enc  && EXTRA_FLAGS="$EXTRA_FLAGS --enable-libsvtav1"; \
+    pkg-config --exists harfbuzz   && EXTRA_FLAGS="$EXTRA_FLAGS --enable-libharfbuzz"; \
+    # libplacebo intentionally skipped: FFmpeg 9.0 requires >= 7.351.0,
+    # Ubuntu 24.04 ships libplacebo 6.x.
+    # Vulkan: verify the upgraded headers meet the vulkan_1_4 gate (>= 1.4.317)
+    pkg-config --atleast-version=1.4.317 vulkan 2>/dev/null \
+        && EXTRA_FLAGS="$EXTRA_FLAGS --enable-vulkan"; \
+    # NOTE: --enable-libshaderc was removed in FFmpeg 9.0; the SPIR-V compiler is
+    # detected automatically from the glslang binary installed above.
+    pkg-config --exists ffnvcodec  && EXTRA_FLAGS="$EXTRA_FLAGS --enable-cuvid --enable-nvenc --enable-nvdec"; \
+    # CUDA filters (scale_cuda, transpose_cuda, overlay_cuda, etc.) — requires nvcc
+    command -v nvcc >/dev/null 2>&1 && EXTRA_FLAGS="$EXTRA_FLAGS --enable-cuda-nvcc"; \
+    EXTRA_FLAGS="$EXTRA_FLAGS --enable-frei0r --enable-ladspa"; \
+    pkg-config --exists lilv-0     && EXTRA_FLAGS="$EXTRA_FLAGS --enable-lv2"; \
+    pkg-config --exists libbs2b    && EXTRA_FLAGS="$EXTRA_FLAGS --enable-libbs2b"; \
+    pkg-config --exists rubberband && EXTRA_FLAGS="$EXTRA_FLAGS --enable-librubberband"; \
+    pkg-config --exists libmysofa  && EXTRA_FLAGS="$EXTRA_FLAGS --enable-libmysofa"; \
+    test -f /usr/include/flite/flite.h && EXTRA_FLAGS="$EXTRA_FLAGS --enable-libflite"; \
+    # Additional codecs
+    test -f /usr/include/gsm/gsm.h && EXTRA_FLAGS="$EXTRA_FLAGS --enable-libgsm"; \
+    pkg-config --exists speex      && EXTRA_FLAGS="$EXTRA_FLAGS --enable-libspeex"; \
+    pkg-config --exists twolame    && EXTRA_FLAGS="$EXTRA_FLAGS --enable-libtwolame"; \
+    pkg-config --exists shine      && EXTRA_FLAGS="$EXTRA_FLAGS --enable-libshine"; \
+    pkg-config --exists codec2     && EXTRA_FLAGS="$EXTRA_FLAGS --enable-libcodec2"; \
+    test -f /usr/include/snappy-c.h && EXTRA_FLAGS="$EXTRA_FLAGS --enable-libsnappy"; \
+    pkg-config --exists libbluray  && EXTRA_FLAGS="$EXTRA_FLAGS --enable-libbluray"; \
+    pkg-config --exists fdk-aac    && EXTRA_FLAGS="$EXTRA_FLAGS --enable-libfdk-aac"; \
+    pkg-config --exists rav1e      && EXTRA_FLAGS="$EXTRA_FLAGS --enable-librav1e"; \
+    pkg-config --exists libjxl     && EXTRA_FLAGS="$EXTRA_FLAGS --enable-libjxl"; \
+    pkg-config --exists librsvg-2.0 && EXTRA_FLAGS="$EXTRA_FLAGS --enable-librsvg"; \
+    pkg-config --exists zvbi       && EXTRA_FLAGS="$EXTRA_FLAGS --enable-libzvbi"; \
+    \
+    echo "Extra configure flags: $EXTRA_FLAGS"; \
+    ./configure \
+        --prefix=/usr/local \
+        --disable-debug \
+        --disable-doc \
+        --disable-ffplay \
+        --enable-gpl \
+        --enable-nonfree \
+        --enable-version3 \
+        --enable-shared \
+        --enable-libx264 \
+        --enable-libx265 \
+        --enable-libvpx \
+        --enable-libmp3lame \
+        --enable-libopus \
+        --enable-libvorbis \
+        --enable-libtheora \
+        --enable-libwebp \
+        --enable-libxvid \
+        --enable-libopenjpeg \
+        --enable-libopencore-amrnb \
+        --enable-libopencore-amrwb \
+        --enable-libass \
+        --enable-libfreetype \
+        --enable-fontconfig \
+        --enable-libfribidi \
+        --enable-libzimg \
+        --enable-libvidstab \
+        --enable-libaom \
+        --enable-openssl \
+        --enable-libsrt \
+        --enable-libzmq \
+        --enable-vaapi \
+        --enable-opencl \
+        $EXTRA_FLAGS \
+    || { echo "=== configure failed — ffbuild/config.log ==="; \
+         cat ffbuild/config.log 2>/dev/null || cat config.log 2>/dev/null; \
+         exit 1; }; \
+    \
+    # spirv_compiler is an internal configure token and never reaches config.h,
+    # so assert on a filter that depends on it instead. Without a working
+    # glslang binary, configure quietly drops all 18 Vulkan filters.
+    grep -q '^CONFIG_SCALE_VULKAN_FILTER=yes' ffbuild/config.mak \
+    || { echo "ERROR: Vulkan filters disabled — no working SPIR-V compiler."; \
+         grep -i 'glslc\|glslang\|spirv' ffbuild/config.log | tail -40; \
+         exit 1; }; \
+    \
+    make -j$(nproc) \
+    && make install
+
+# Runtime stage — install only runtime libs (not -dev), set LD_LIBRARY_PATH
+FROM ubuntu:${UBUNTU_VERSION}
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64
+
+# Required runtime libraries
+# Note: libshaderc1 is no longer needed — FFmpeg 9.0 precompiles Vulkan shaders.
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
+    libx264-164 libx265-199 libnuma1 libvpx9 libmp3lame0 \
+    libopus0 libvorbis0a libvorbisenc2 libtheora0 \
+    libwebp7 libwebpmux3 libwebpdemux2 libsharpyuv0 libxvidcore4 \
+    libopenjp2-7 libopencore-amrnb0 libopencore-amrwb0 \
+    libass9 libfreetype6 libfontconfig1 libfribidi0 fonts-dejavu-core \
+    libzimg2 libvidstab1.1 libaom3 \
+    libssl3t64 libsrt1.5-openssl libzmq5 \
+    libxml2 libbluray2 libfdk-aac2 \
+    libva2 libva-drm2 libdrm2 ocl-icd-libopencl1 libvdpau1 \
+    libvulkan1 libxcb1 libxcb-shm0 libxcb-xfixes0 \
+    libbs2b0 librubberband2 libmysofa1 liblilv-0-0 \
+    frei0r-plugins \
+    libgsm1 libspeex1 libtwolame0 libshine3 \
+    libsnappy1v5 \
+    libzvbi0 librsvg2-2 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Optional runtime libs — install each separately so one failure doesn't block others
+RUN apt-get update \
+    && for pkg in libdav1d7 libsvtav1enc1d1 libharfbuzz0b \
+                  libflite1 librav1e0 \
+                  libjxl0.10 libjxl0.7 \
+                  libcodec2-1.2 libcodec2-1.0; do \
+         apt-get install -y --no-install-recommends "$pkg" 2>/dev/null || true; \
+       done \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=build /usr/local/bin/ffmpeg  /usr/local/bin/ffmpeg
+COPY --from=build /usr/local/bin/ffprobe /usr/local/bin/ffprobe
+COPY --from=build /usr/local/lib         /usr/local/lib
+RUN ldconfig
+
+# Validate: ffmpeg must start, muxer descriptions must not be empty, and the
+# Vulkan/CUDA filter families must be present (they are the ones most likely to
+# be silently dropped by a misconfigured build).
+RUN ffmpeg -version 2>&1 | head -3 \
+    && ffmpeg -muxers 2>&1 | grep "3g2" \
+    && ffmpeg -filters 2>/dev/null | grep -q "scale_vulkan" \
+    && ffmpeg -filters 2>/dev/null | grep -q "v360_vulkan" \
+    && ffmpeg -filters 2>/dev/null | grep -q "transpose_cuda" \
+    || { echo "ERROR: ffmpeg validation failed"; ffmpeg -version 2>&1; exit 1; }
+
+ENTRYPOINT ["/usr/local/bin/ffmpeg"]
