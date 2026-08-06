@@ -75,12 +75,12 @@ dec = encoded.loopback(stream_index=0)  # decodes the encode back into the graph
 ffmpeg.filters.hstack(source.video, dec.video).output(filename="OUT.mkv")
 ```
 
-This feature requires FFmpeg **>= 7.0** and is only available in the `v7` and
-`v8` packages — the `loopback()` method is not generated for `v5`/`v6`. In the
+This feature requires FFmpeg **>= 7.0** and is available in the `v7`, `v8` and
+`v9` packages — the `loopback()` method is not generated for `v5`/`v6`. In the
 TypeScript packages the method lives in the shared `@typed-ffmpeg/core`, so it
 is present at the type level for all versions but still requires an FFmpeg 7.0+
-binary at runtime (only `@typed-ffmpeg/v7` and `@typed-ffmpeg/v8` re-export
-`LoopbackDecoderNode`). Compiling to a command line is supported; parsing a
+binary at runtime (only `@typed-ffmpeg/v7`, `@typed-ffmpeg/v8` and
+`@typed-ffmpeg/v9` re-export `LoopbackDecoderNode`). Compiling to a command line is supported; parsing a
 command line that contains `-dec` is not, and raises a clear error.
 
 ---
@@ -150,6 +150,43 @@ third-party-library filters were removed from the default build:
 
 ---
 
+## FFmpeg 8 → 9
+
+FFmpeg 9.0 "Lei" was released on 2026-08-04.
+
+!!! warning "This comparison is not a pure like-for-like diff"
+    The v9 metadata was captured from a Linux build, while the v8 metadata was
+    captured on macOS. A naive diff of the two therefore reports macOS-only
+    components (`*_at` AudioToolbox encoders, `*_videotoolbox`, `coreimage`,
+    `scale_vt`, `transpose_vt`) as "removed in 9" and Linux-only components
+    (`*_vaapi`, `*_cuvid`, `*_v4l2m2m`) as "added in 9". None of those are real
+    changes in FFmpeg. The lists below are taken from the FFmpeg 9.0 changelog
+    and verified against the 9.0 source tree instead.
+
+### Notable additions
+
+- `v360_vulkan` — 360° projection conversion on Vulkan
+- `transpose_cuda` — CUDA transpose
+- `vpp_amf` / `frc_amf` — AMF colour conversion (HDR) and frame-rate conversion
+- Animated WebP decoder and demuxer
+- APV and ProRes RAW hardware acceleration
+- HE-AAC 960 decoding (DAB+)
+- LCEVC track muxing in the MP4 muxer
+- ONNX Runtime DNN backend with GPU execution provider support
+
+### Genuinely removed in 9.0
+
+Verified absent from the 9.0 source tree (no entry in `libavcodec/allcodecs.c`,
+no source file, no `configure` reference):
+
+`sonic`, `v308`, `v408`, `v410`
+
+CELT decoding support and ogg/celt parsing were also removed (this does not
+affect Opus CELT), along with deprecated NVENC options and support for NVENC
+SDKs older than 11.1.
+
+---
+
 ## Choosing a Package Version
 
 If your code uses filters or codecs that were removed in a later version, pin
@@ -157,7 +194,8 @@ to the matching package:
 
 ```bash
 pip install typed-ffmpeg-v7   # keeps access to scale_vaapi, drawtext, etc.
-pip install typed-ffmpeg-v8   # latest, macOS VideoToolbox codecs included
+pip install typed-ffmpeg-v8   # FFmpeg 8.x bindings
+pip install typed-ffmpeg-v9   # latest
 ```
 
 See [Package Architecture](v4-packages.md) for full installation instructions.

@@ -43,11 +43,12 @@ typed-ffmpeg v4 ships separate PyPI packages for each FFmpeg major version. Inst
 
 | Package | FFmpeg version | Description |
 |---------|----------------|-------------|
-| `typed-ffmpeg` | Latest (v8) | Recommended for most users |
+| `typed-ffmpeg` | Latest (v9) | Recommended for most users |
 | `typed-ffmpeg-v5` | FFmpeg 5.x | Bindings for FFmpeg 5 |
 | `typed-ffmpeg-v6` | FFmpeg 6.x | Bindings for FFmpeg 6 |
 | `typed-ffmpeg-v7` | FFmpeg 7.x | Bindings for FFmpeg 7 |
 | `typed-ffmpeg-v8` | FFmpeg 8.x | Bindings for FFmpeg 8 |
+| `typed-ffmpeg-v9` | FFmpeg 9.x | Bindings for FFmpeg 9 |
 | `ffmpeg-core` | — | Shared runtime (auto-installed) |
 
 All packages expose the same `ffmpeg` namespace, so your code works identically regardless of which package you install.
@@ -66,7 +67,7 @@ pip install typed-ffmpeg-v6      # install the matching package
 | `[graph]` | `pip install 'typed-ffmpeg[graph]'` | Graph visualization via Graphviz |
 | `[parse]` | `pip install 'typed-ffmpeg[parse]'` | CLI parsing and `compile_as_python()` support |
 
-The `[parse]` extra installs version-specific cache data (`ffmpeg-data-v5` through `ffmpeg-data-v8`) needed by `ffmpeg.compile.compile_cli.parse()` to reconstruct filter graphs from FFmpeg command lines. Most users do not need this.
+The `[parse]` extra installs version-specific cache data (`ffmpeg-data-v5` through `ffmpeg-data-v9`) needed by `ffmpeg.compile.compile_cli.parse()` to reconstruct filter graphs from FFmpeg command lines. Most users do not need this.
 
 See the [v4 Package Architecture](https://github.com/lucemia/typed-ffmpeg/blob/main/docs/v4-packages.md) docs for details and the [Migration Guide](https://github.com/lucemia/typed-ffmpeg/blob/main/docs/migration/v3-to-v4.md) if you are upgrading from typed-ffmpeg 3.x.
 
@@ -74,7 +75,7 @@ See the [v4 Package Architecture](https://github.com/lucemia/typed-ffmpeg/blob/m
 
 ## Installation
 
-Install the latest version (bindings for FFmpeg 8.x):
+Install the latest version (bindings for FFmpeg 9.x):
 
 ```bash
 pip install typed-ffmpeg

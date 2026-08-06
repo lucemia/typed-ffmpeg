@@ -2319,7 +2319,7 @@ name = "typed-ffmpeg"
 version = "4.3"
 source = { editable = "packages/latest" }
 dependencies = [
-    { name = "typed-ffmpeg-v8" },
+    { name = "typed-ffmpeg-v9" },
 ]
 
 [package.optional-dependencies]
@@ -2329,16 +2329,16 @@ dev = [
     { name = "ruff" },
 ]
 parse = [
-    { name = "ffmpeg-data-v8" },
+    { name = "ffmpeg-data-v9" },
 ]
 
 [package.metadata]
 requires-dist = [
-    { name = "ffmpeg-data-v8", marker = "extra == 'parse'", editable = "packages/data-v8" },
+    { name = "ffmpeg-data-v9", marker = "extra == 'parse'", editable = "packages/data-v9" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=7.0" },
     { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=4.0" },
     { name = "ruff", marker = "extra == 'dev'", specifier = "==0.12.2" },
-    { name = "typed-ffmpeg-v8", editable = "packages/v8" },
+    { name = "typed-ffmpeg-v9", editable = "packages/v9" },
 ]
 provides-extras = ["dev", "parse"]
 
