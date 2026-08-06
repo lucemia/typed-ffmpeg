@@ -1,0 +1,54 @@
+{
+  "index": null,
+  "node": {
+    "inputs": [
+      {
+        "index": null,
+        "node": {
+          "filename": "out.mp4",
+          "inputs": [
+            {
+              "index": 0,
+              "node": {
+                "input_typings": [
+                  "video",
+                  "video"
+                ],
+                "inputs": [
+                  {
+                    "index": null,
+                    "node": {
+                      "filename": "a.mp4",
+                      "inputs": [],
+                      "kwargs": "FrozenDict({})"
+                    },
+                    "optional": false
+                  },
+                  {
+                    "index": null,
+                    "node": {
+                      "filename": "b.mp4",
+                      "inputs": [],
+                      "kwargs": "FrozenDict({})"
+                    },
+                    "optional": false
+                  }
+                ],
+                "kwargs": "FrozenDict({'x': '10', 'y': '20'})",
+                "name": "overlay",
+                "output_typings": [
+                  "video"
+                ]
+              },
+              "optional": false
+            }
+          ],
+          "kwargs": "FrozenDict({})"
+        },
+        "optional": false
+      }
+    ],
+    "kwargs": "FrozenDict({})"
+  },
+  "optional": false
+}

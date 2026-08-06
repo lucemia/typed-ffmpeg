@@ -1,0 +1,43 @@
+# serializer version: 1
+# name: test_parse_ffmpeg_commands[af_audio_filter][build-ffmpeg-commands]
+  "ffmpeg -i input.mp4 -filter_complex '[0:a]aresample=sample_rate=44100[s0]' -map '[s0]' output.mp3"
+# ---
+# name: test_parse_ffmpeg_commands[complex_command][build-ffmpeg-commands]
+  'ffmpeg -nostdin -i input_video.mkv -map 0:a:0 -map 0:v:0 -sn -c:a aac -b:a 192k -ac 2 -c:v libx264 -crf 18 -preset slow -tune film -aq-strength 1.8 -map 0 -mbtree 0 -pix_fmt yuv420p -map_metadata -map_chapters output_video.mp4'
+# ---
+# name: test_parse_ffmpeg_commands[escaping][build-ffmpeg-commands]
+  'ffmpeg -i input.mov -filter_complex \'[0:v]drawtext=fontfile=resources/fonts/arial.ttf:text=\\\\\\\'"\'"\'\\\\=\\\\\\\\\\;\\\\\\\\\\\\:\\\\\\\'"\'"\':fontcolor=white:fontsize=30:x=(W-tw)/2:y=text_h:borderw=2:timecode=00\\\\\\\\\\\\:00\\\\\\\\\\\\:00\\\\\\\\\\\\:00:r=25/1[s0]\' -map \'[s0]\' output.mp4'
+# ---
+# name: test_parse_ffmpeg_commands[ffmpeg_exe][build-ffmpeg-commands]
+  'ffmpeg -i input_video.mkv output_video.mp4'
+# ---
+# name: test_parse_ffmpeg_commands[filter_complex_positional_params][build-ffmpeg-commands]
+  "ffmpeg -i a.mp4 -i b.mp4 -filter_complex '[0:v][1:v]overlay=x=10:y=20[s0]' -map '[s0]' out.mp4"
+# ---
+# name: test_parse_ffmpeg_commands[global_binary_option][build-ffmpeg-commands]
+  'ffmpeg -y -nostdin -i input_video.mkv output_video.mp4'
+# ---
+# name: test_parse_ffmpeg_commands[ignore_not_exist_option][build-ffmpeg-commands]
+  'ffmpeg -y -nostdin -b:v 1000k -b:a 128k output_video.mp4'
+# ---
+# name: test_parse_ffmpeg_commands[input_options_ss_t][build-ffmpeg-commands]
+  'ffmpeg -i input.mp4 output.mp4'
+# ---
+# name: test_parse_ffmpeg_commands[output_option_with_boolean_option][build-ffmpeg-commands]
+  'ffmpeg -y -nostdin -i input_video.mkv -shortest -b:v 1000k -b:a 128k output_video.mp4'
+# ---
+# name: test_parse_ffmpeg_commands[output_option_with_stream_selector][build-ffmpeg-commands]
+  'ffmpeg -y -nostdin -i input_video.mkv -b:v 1000k output_video.mp4'
+# ---
+# name: test_parse_ffmpeg_commands[stream_selector_with_subtitle][build-ffmpeg-commands]
+  'ffmpeg -i input.mov -map 0:s output.mp4'
+# ---
+# name: test_parse_ffmpeg_commands[vf_comma_chain][build-ffmpeg-commands]
+  "ffmpeg -i input.mp4 -filter_complex '[0:v]scale=w=1280:h=720[s0];[s0]fps=fps=30[s1]' -map '[s1]' output.mp4"
+# ---
+# name: test_parse_ffmpeg_commands[vf_named_params][build-ffmpeg-commands]
+  "ffmpeg -i input.mp4 -filter_complex '[0:v]scale=w=1280:h=720[s0]' -map '[s0]' output.mp4"
+# ---
+# name: test_parse_ffmpeg_commands[vf_positional_params][build-ffmpeg-commands]
+  "ffmpeg -i input.mp4 -filter_complex '[0:v]scale=w=1280:h=720[s0]' -map '[s0]' output.mp4"
+# ---
