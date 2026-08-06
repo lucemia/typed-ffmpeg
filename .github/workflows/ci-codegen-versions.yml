@@ -50,21 +50,30 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        # Do NOT reintroduce an `include:` keyed on ffmpeg-version — when the
+        # dispatch input narrows this to one version, the other include entries
+        # get re-added as extra combinations and every version regenerates.
+        # The image is resolved in a step instead.
         ffmpeg-version: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.ffmpeg-version != 'all') && fromJSON(format('["{0}"]', github.event.inputs.ffmpeg-version)) || fromJSON('["5", "6", "7", "8", "9"]') }}
-        include:
-          - ffmpeg-version: '5'
-            ffmpeg-image: 'jrottenberg/ffmpeg:5.1-ubuntu'
-          - ffmpeg-version: '6'
-            ffmpeg-image: 'jrottenberg/ffmpeg:6.1-ubuntu'
-          - ffmpeg-version: '7'
-            ffmpeg-image: 'ghcr.io/lucemia/typed-ffmpeg/ffmpeg:7.1'
-          - ffmpeg-version: '8'
-            ffmpeg-image: 'ghcr.io/lucemia/typed-ffmpeg/ffmpeg:8.0'
-          - ffmpeg-version: '9'
-            ffmpeg-image: 'ghcr.io/lucemia/typed-ffmpeg/ffmpeg:9.0'
 
     steps:
       - uses: actions/checkout@v7
+
+      - name: Resolve FFmpeg image
+        id: img
+        run: |
+          # v5/v6 use upstream jrottenberg builds; v7+ use our own full builds
+          # (no --enable-small, so filter/codec descriptions survive).
+          case "${{ matrix.ffmpeg-version }}" in
+            5) IMAGE='jrottenberg/ffmpeg:5.1-ubuntu' ;;
+            6) IMAGE='jrottenberg/ffmpeg:6.1-ubuntu' ;;
+            7) IMAGE='ghcr.io/${{ github.repository }}/ffmpeg:7.1' ;;
+            8) IMAGE='ghcr.io/${{ github.repository }}/ffmpeg:8.0' ;;
+            9) IMAGE='ghcr.io/${{ github.repository }}/ffmpeg:9.0' ;;
+            *) echo "Unknown FFmpeg version '${{ matrix.ffmpeg-version }}'"; exit 1 ;;
+          esac
+          echo "image=$IMAGE" >> "$GITHUB_OUTPUT"
+          echo "Using image $IMAGE"
 
       - name: Set up Python 3.10
         uses: actions/setup-python@v7
@@ -87,8 +96,8 @@ jobs:
 
       - name: Extract FFmpeg ${{ matrix.ffmpeg-version }} from Docker image
         run: |
-          docker pull ${{ matrix.ffmpeg-image }}
-          CONTAINER_ID=$(docker create ${{ matrix.ffmpeg-image }})
+          docker pull ${{ steps.img.outputs.image }}
+          CONTAINER_ID=$(docker create ${{ steps.img.outputs.image }})
           sudo docker cp "$CONTAINER_ID:/usr/local/bin/ffmpeg" /usr/local/bin/ffmpeg || \
             sudo docker cp "$CONTAINER_ID:/usr/bin/ffmpeg" /usr/local/bin/ffmpeg
           sudo docker cp "$CONTAINER_ID:/usr/local/bin/ffprobe" /usr/local/bin/ffprobe || \
