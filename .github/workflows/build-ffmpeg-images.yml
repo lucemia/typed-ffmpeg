@@ -29,17 +29,27 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        # Do NOT reintroduce an `include:` keyed on ffmpeg-version. When the
+        # dispatch input narrows this list to a single version, include entries
+        # for the other versions cannot merge into it and GitHub re-adds them as
+        # extra combinations — so "build only 9.0" silently built all of them.
+        # The source version is resolved in a step instead.
         ffmpeg-version: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.ffmpeg-version != 'all') && fromJSON(format('["{0}"]', github.event.inputs.ffmpeg-version)) || fromJSON('["7.1", "8.0", "9.0"]') }}
-        include:
-          - ffmpeg-version: '7.1'
-            ffmpeg-source-version: '7.1.1'
-          - ffmpeg-version: '8.0'
-            ffmpeg-source-version: '8.0'
-          - ffmpeg-version: '9.0'
-            ffmpeg-source-version: '9.0'
 
     steps:
       - uses: actions/checkout@v7
+
+      - name: Resolve FFmpeg source version
+        id: src
+        run: |
+          # Tag -> release tarball version (they differ only where a point
+          # release is the newest on that branch).
+          case "${{ matrix.ffmpeg-version }}" in
+            7.1) SRC=7.1.1 ;;
+            *)   SRC="${{ matrix.ffmpeg-version }}" ;;
+          esac
+          echo "version=$SRC" >> "$GITHUB_OUTPUT"
+          echo "Building image tag ${{ matrix.ffmpeg-version }} from ffmpeg-$SRC"
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v4
@@ -59,7 +69,7 @@ jobs:
           push: true
           platforms: linux/amd64
           build-args: |
-            FFMPEG_SOURCE_VERSION=${{ matrix.ffmpeg-source-version }}
+            FFMPEG_SOURCE_VERSION=${{ steps.src.outputs.version }}
           tags: |
             ghcr.io/${{ github.repository }}/ffmpeg:${{ matrix.ffmpeg-version }}
           cache-from: type=registry,ref=ghcr.io/${{ github.repository }}/ffmpeg:${{ matrix.ffmpeg-version }}-cache
