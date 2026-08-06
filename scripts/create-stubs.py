@@ -8,13 +8,22 @@ automatically redirect to ffmpeg_core.*.
 
 from pathlib import Path
 
-# Modules that should be re-exported from ffmpeg_core
+# Modules that should be re-exported from ffmpeg_core.
+#
+# Only list modules that actually exist in ffmpeg_core AND are importable from
+# there. This script overwrites files unconditionally in every version package,
+# so a wrong entry silently replaces a real implementation with a broken stub.
+#
+# Deliberately NOT stubbed (they must stay version-local):
+#   base.py          - no ffmpeg_core.base exists; it depends on the DAG
+#   utils/snapshot.py - ffmpeg_core.utils.snapshot is a tombstone that raises
+#                       ImportError ("depends on DAG and has been moved")
+#   utils/view.py     - same tombstone treatment as snapshot
 STUB_MODULES = {
     "exceptions.py": "exceptions",
     "expressions.py": "expressions",
     "types.py": "types",
     "schema.py": "schema",
-    "base.py": "base",
     "info.py": "info",
     "common/__init__.py": "common",
     "common/schema.py": "common.schema",
@@ -23,8 +32,6 @@ STUB_MODULES = {
     "utils/frozendict.py": "utils.frozendict",
     "utils/typing.py": "utils.typing",
     "utils/escaping.py": "utils.escaping",
-    "utils/snapshot.py": "utils.snapshot",
-    "utils/view.py": "utils.view",
     "utils/lazy_eval/__init__.py": "utils.lazy_eval",
 }
 

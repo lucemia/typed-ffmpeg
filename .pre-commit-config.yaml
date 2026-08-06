@@ -40,7 +40,7 @@ repos:
       - id: ruff
         args: [--fix, --unsafe-fixes]
         files: ^(src/|packages/)
-        exclude: ^packages/v[5678]/src/ffmpeg/
+        exclude: ^packages/v[56789]/src/ffmpeg/
 
   - repo: local
     hooks:
