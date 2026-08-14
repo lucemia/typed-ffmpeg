@@ -59,10 +59,7 @@ def remove_split(
             mapping[stream] = stream
             continue
 
-        if isinstance(stream.node, FilterNode) and stream.node.name in (
-            "split",
-            "asplit",
-        ):
+        if isinstance(stream.node, FilterNode) and stream.node.name in ("split", "asplit"):
             inp = stream.node.inputs[0]
             if inp in mapping:
                 mapping[stream] = mapping[inp]
@@ -167,15 +164,11 @@ def add_split(
                     mapping[(stream, out_node, out_idx)] = new_stream
             elif isinstance(new_stream, VideoStream):
                 split_node = new_stream.split(outputs=num)
-                for n, (out_node, out_idx) in enumerate(
-                    context.get_outgoing_nodes(stream)
-                ):
+                for n, (out_node, out_idx) in enumerate(context.get_outgoing_nodes(stream)):
                     mapping[(stream, out_node, out_idx)] = split_node.video(n)
             elif isinstance(new_stream, AudioStream):
                 split_node = new_stream.asplit(outputs=num)
-                for n, (out_node, out_idx) in enumerate(
-                    context.get_outgoing_nodes(stream)
-                ):
+                for n, (out_node, out_idx) in enumerate(context.get_outgoing_nodes(stream)):
                     mapping[(stream, out_node, out_idx)] = split_node.audio(n)
             else:
                 raise FFMpegValueError(f"unsupported stream type: {stream}")
