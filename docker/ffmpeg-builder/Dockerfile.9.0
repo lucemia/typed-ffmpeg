@@ -36,6 +36,11 @@ RUN apt-get update && apt-get install -y \
     libva-dev libdrm-dev ocl-icd-opencl-dev opencl-headers \
     # Vulkan (headers will be upgraded below to meet FFmpeg 9.0's >= 1.3.277 requirement)
     libvulkan-dev glslang-dev libshaderc-dev spirv-tools \
+    # FFmpeg 9.0 dropped --enable-libshaderc/--enable-libglslang and instead
+    # probes for a shader compiler *binary* (glslc / glslang / glslangValidator),
+    # so the tools package is required, not just the libs. spirv-headers backs
+    # the swscale SPIR-V path, which configure only warns about if missing.
+    glslang-tools spirv-headers \
     # Frei0r plugin framework
     frei0r-plugins-dev \
     # Audio: LADSPA, LV2, BS2B, Rubberband, SOFA (sofalizer)
@@ -88,10 +93,11 @@ RUN EXTRA_FLAGS=""; \
     pkg-config --exists harfbuzz   && EXTRA_FLAGS="$EXTRA_FLAGS --enable-libharfbuzz"; \
     # libplacebo intentionally skipped: FFmpeg 9.0 requires >= 7.351.0 and
     # Ubuntu 24.04 ships 6.x.
-    # Vulkan: verify the upgraded headers meet FFmpeg 9.0's >= 1.3.277 requirement
+    # Vulkan: verify the upgraded headers meet FFmpeg 9.0's >= 1.3.277 requirement.
+    # No --enable-libshaderc here: 9.0 removed that option and finds a shader
+    # compiler binary itself once vulkan is enabled.
     pkg-config --atleast-version=1.3.277 vulkan 2>/dev/null \
         && EXTRA_FLAGS="$EXTRA_FLAGS --enable-vulkan"; \
-    pkg-config --exists shaderc    && EXTRA_FLAGS="$EXTRA_FLAGS --enable-libshaderc"; \
     pkg-config --exists ffnvcodec  && EXTRA_FLAGS="$EXTRA_FLAGS --enable-cuvid --enable-nvenc --enable-nvdec"; \
     # CUDA filters (scale_cuda, overlay_cuda, etc.) — requires nvcc from nvidia-cuda-toolkit
     command -v nvcc >/dev/null 2>&1 && EXTRA_FLAGS="$EXTRA_FLAGS --enable-cuda-nvcc"; \
