@@ -25,6 +25,7 @@ flags:
       - packages/v6/src/ffmpeg
       - packages/v7/src/ffmpeg
       - packages/v8/src/ffmpeg
+      - packages/v9/src/ffmpeg
   typescript:
     paths:
       - packages/ts-core/src

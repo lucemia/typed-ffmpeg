@@ -51,6 +51,12 @@ updates:
     ignore:
       - dependency-name: "@typed-ffmpeg/*"
   - package-ecosystem: "npm"
+    directory: "/packages/ts-v9"
+    schedule:
+      interval: "weekly"
+    ignore:
+      - dependency-name: "@typed-ffmpeg/*"
+  - package-ecosystem: "npm"
     directory: "/examples/typescript-demo"
     schedule:
       interval: "weekly"

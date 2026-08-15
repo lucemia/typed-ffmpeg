@@ -798,10 +798,6 @@ return filterNode;
 
 
 
-
-
-
-
 /**
  * Calculate normalized windowed cross-correlation between two input audio streams. Resulted samples are always between -1 and 1 inclusive. If result is 1 it means two input samples are highly correlated in that selected segment. Result 0 means they are not correlated at all. If result is -1 it means two input samples are out of phase, which means they cancel each other. The filter accepts the following options:
 
@@ -961,75 +957,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 
-/**
- * Blend two Vulkan frames into each other. The blend filter takes two input streams and outputs one stream, the first input is the "top" layer and second input is "bottom" layer. By default, the output terminates when the longest input terminates. A description of the accepted options follows.
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.c0_mode - set component #0 blend mode (from 0 to 39) (default normal)
- * @param options.c1_mode - set component #1 blend mode (from 0 to 39) (default normal)
- * @param options.c2_mode - set component #2 blend mode (from 0 to 39) (default normal)
- * @param options.c3_mode - set component #3 blend mode (from 0 to 39) (default normal)
- * @param options.all_mode - Set blend mode for specific pixel component or all pixel components in case of all_mode. Default value is normal. Available values for component modes are: @end table
- * @param options.c0_opacity - set color component #0 opacity (from 0 to 1) (default 1)
- * @param options.c1_opacity - set color component #1 opacity (from 0 to 1) (default 1)
- * @param options.c2_opacity - set color component #2 opacity (from 0 to 1) (default 1)
- * @param options.c3_opacity - set color component #3 opacity (from 0 to 1) (default 1)
- * @param options.all_opacity - set opacity for all color components (from 0 to 1) (default 1)
- * @see https://ffmpeg.org/ffmpeg-filters.html#blend_vulkan
- */
-export function blend_vulkan(
-
-
-  _top: VideoStream,
-
-  _bottom: VideoStream,
-
-
-  options?: {
-    c0_mode?: FFInt | "normal" | "multiply";
-    c1_mode?: FFInt | "normal" | "multiply";
-    c2_mode?: FFInt | "normal" | "multiply";
-    c3_mode?: FFInt | "normal" | "multiply";
-    all_mode?: FFInt | "normal" | "multiply";
-    c0_opacity?: FFDouble;
-    c1_opacity?: FFDouble;
-    c2_opacity?: FFDouble;
-    c3_opacity?: FFDouble;
-    all_opacity?: FFDouble;
-extraOptions?: Record<string, unknown>;
-  },
-): VideoStream {
-
-  const inputStreams: FilterableStream[] = [_top, _bottom];
-
-  const filterNode = filterNodeFactory(
-    { name: "blend_vulkan", typingsInput: ["video", "video"], typingsOutput: ["video"] },
-    inputStreams,
-    merge(
-    {
-      "c0_mode": options?.c0_mode,
-      "c1_mode": options?.c1_mode,
-      "c2_mode": options?.c2_mode,
-      "c3_mode": options?.c3_mode,
-      "all_mode": options?.all_mode,
-      "c0_opacity": options?.c0_opacity,
-      "c1_opacity": options?.c1_opacity,
-      "c2_opacity": options?.c2_opacity,
-      "c3_opacity": options?.c3_opacity,
-      "all_opacity": options?.all_opacity,
-},
-    options?.extraOptions,
-  ),
-  );
-return filterNode.video(0) as unknown as VideoStream;
-}
-
-
-
-
-
-
 
 
 
@@ -1097,18 +1024,6 @@ extraOptions?: Record<string, unknown>;
   );
 return filterNode.video(0) as unknown as VideoStream;
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1273,8 +1188,6 @@ extraOptions?: Record<string, unknown>;
   );
 return filterNode;
 }
-
-
 
 
 
@@ -1554,10 +1467,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 
-
-
-
-
 /**
  * Displace pixels as indicated by second and third input stream. It takes three input streams and outputs one stream, the first input is the source, and second and third input are displacement maps. The second input specifies how much to displace pixels along the x-axis, while the third input specifies how much to displace pixels along the y-axis. If one of displacement map streams terminates, last frame from that displacement map will be used. Note that once generated, displacements maps can be reused over and over again. A description of the accepted options follows.
 
@@ -1597,8 +1506,6 @@ extraOptions?: Record<string, unknown>;
   );
 return filterNode.video(0) as unknown as VideoStream;
 }
-
-
 
 
 
@@ -1799,10 +1706,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 
-
-
-
-
 /**
  * Pack two different video streams into a stereoscopic video, setting proper metadata on supported codecs. The two views should have the same size and framerate and processing will stop when the shorter video ends. Please note that you may conveniently adjust view properties with the scale and fps filters. It accepts the following parameters:
 
@@ -1891,12 +1794,6 @@ extraOptions?: Record<string, unknown>;
   );
 return filterNode.video(0) as unknown as VideoStream;
 }
-
-
-
-
-
-
 
 
 
@@ -2099,8 +1996,6 @@ return filterNode.audio(0) as unknown as AudioStream;
 
 
 
-
-
 /**
  * Stack input videos horizontally. All streams must be of same pixel format and of same height. Note that this filter is faster than using overlay and pad filter to create same output. The filter accepts the following option:
 
@@ -2179,8 +2074,6 @@ extraOptions?: Record<string, unknown>;
   );
 return filterNode.video(0) as unknown as VideoStream;
 }
-
-
 
 
 
@@ -2394,62 +2287,72 @@ return filterNode.audio(0) as unknown as AudioStream;
 
 
 
-/**
- * Load a LADSPA (Linux Audio Developer's Simple Plugin API) plugin. To enable compilation of this filter you need to configure FFmpeg with --enable-ladspa.
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.file - Specifies the name of LADSPA plugin library to load. If the environment variable LADSPA_PATH is defined, the LADSPA plugin is searched in each one of the directories specified by the colon separated list in LADSPA_PATH, otherwise in the standard LADSPA paths, which are in this order: HOME/.ladspa/lib/, /usr/local/lib/ladspa/, /usr/lib/ladspa/.
- * @param options.plugin - Specifies the plugin within the library. Some libraries contain only one plugin, but others contain many of them. If this is not set filter will list all available plugins within the specified library.
- * @param options.controls - Set the '|' separated list of controls which are zero or more floating point values that determine the behavior of the loaded plugin (for example delay, threshold or gain). Controls need to be defined using the following syntax: c0=value0|c1=value1|c2=value2|..., where valuei is the value set on the i-th control. Alternatively they can be also defined using the following syntax: value0|value1|value2|..., where valuei is the value set on the i-th control. If controls is set to help, all available controls and their valid ranges are printed.
- * @param options.sample_rate - Specify the sample rate, default to 44100. Only used if plugin have zero inputs.
- * @param options.nb_samples - Set the number of samples per channel per each output frame, default is 1024. Only used if plugin have zero inputs.
- * @param options.duration - Set the minimum duration of the sourced audio. See the Time duration section in the ffmpeg-utils(1) manual for the accepted syntax. Note that the resulting duration may be greater than the specified duration, as the generated audio is always cut at the end of a complete frame. If not specified, or the expressed duration is negative, the audio is supposed to be generated forever. Only used if plugin have zero inputs.
- * @param options.latency - Enable latency compensation, by default is disabled. Only used if plugin have inputs.
- * @see https://ffmpeg.org/ffmpeg-filters.html#ladspa
- */
-export function ladspa(
 
-  streams: FilterableStream[],
+
+
+
+
+
+/**
+ * Calulate the VMAF (Video Multi-Method Assessment Fusion) score for a reference/distorted pair of input videos. The first input is the distorted video, and the second input is the reference video. The obtained VMAF score is printed through the logging system. It requires Netflix's vmaf library (libvmaf) as a pre-requisite. After installing the library it can be enabled using: ./configure --enable-libvmaf. The filter has following options:
+ *
+ * Note: Removed in FFmpeg 7.0.
+ *
+ * @param options.log_path - Set the file path to be used to store log files.
+ * @param options.log_fmt - Set the format of the log file (xml, json, csv, or sub).
+ * @param options.pool - Set the pool method to be used for computing vmaf.
+ * @param options.n_threads - Set number of threads to be used when initializing libvmaf. Default value: 0, no threads.
+ * @param options.n_subsample - Set frame subsampling interval to be used.
+ * @param options.model - A `|` delimited list of vmaf models. Each model can be configured with a number of parameters. Default value: "version=vmaf_v0.6.1"
+ * @param options.feature - A `|` delimited list of features. Each feature can be configured with a number of parameters.
+ * @see https://ffmpeg.org/ffmpeg-filters.html#libvmaf
+ */
+export function libvmaf(
+
+
+  _main: VideoStream,
+
+  _reference: VideoStream,
+
 
   options?: {
-    file?: FFString;
-    plugin?: FFString;
-    controls?: FFString;
-    sample_rate?: FFInt;
-    nb_samples?: FFInt;
-    duration?: FFDuration;
-    latency?: FFBoolean;
+    log_path?: FFString;
+    log_fmt?: FFString;
+    pool?: FFString;
+    n_threads?: FFInt;
+    n_subsample?: FFInt;
+    model?: FFString;
+    feature?: FFString;
+    eofAction?: FFString;
+    shortest?: FFBoolean;
+    repeatlast?: FFBoolean;
 extraOptions?: Record<string, unknown>;
   },
-): AudioStream {
+): VideoStream {
 
-  const inputStreams = streams;
+  const inputStreams: FilterableStream[] = [_main, _reference];
 
   const filterNode = filterNodeFactory(
-    { name: "ladspa", typingsInput: [], typingsOutput: ["audio"] },
+    { name: "libvmaf", typingsInput: ["video", "video"], typingsOutput: ["video"] },
     inputStreams,
     merge(
     {
-      "file": options?.file,
-      "plugin": options?.plugin,
-      "controls": options?.controls,
-      "sample_rate": options?.sample_rate,
-      "nb_samples": options?.nb_samples,
-      "duration": options?.duration,
-      "latency": options?.latency,
+      "log_path": options?.log_path,
+      "log_fmt": options?.log_fmt,
+      "pool": options?.pool,
+      "n_threads": options?.n_threads,
+      "n_subsample": options?.n_subsample,
+      "model": options?.model,
+      "feature": options?.feature,
+      "eof_action": options?.eofAction,
+      "shortest": options?.shortest,
+      "repeatlast": options?.repeatlast,
 },
     options?.extraOptions,
   ),
   );
-return filterNode.audio(0) as unknown as AudioStream;
+return filterNode.video(0) as unknown as VideoStream;
 }
-
-
-
-
-
-
 
 
 
@@ -2583,56 +2486,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 
-
-
-
-
-
-
-/**
- * Load a LV2 (LADSPA Version 2) plugin. To enable compilation of this filter you need to configure FFmpeg with --enable-lv2.
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.plugin - Specifies the plugin URI. You may need to escape ':'.
- * @param options.controls - Set the '|' separated list of controls which are zero or more floating point values that determine the behavior of the loaded plugin (for example delay, threshold or gain). If controls is set to help, all available controls and their valid ranges are printed.
- * @param options.sample_rate - Specify the sample rate, default to 44100. Only used if plugin have zero inputs.
- * @param options.nb_samples - Set the number of samples per channel per each output frame, default is 1024. Only used if plugin have zero inputs.
- * @param options.duration - Set the minimum duration of the sourced audio. See the Time duration section in the ffmpeg-utils(1) manual for the accepted syntax. Note that the resulting duration may be greater than the specified duration, as the generated audio is always cut at the end of a complete frame. If not specified, or the expressed duration is negative, the audio is supposed to be generated forever. Only used if plugin have zero inputs.
- * @see https://ffmpeg.org/ffmpeg-filters.html#lv2
- */
-export function lv2(
-
-  streams: FilterableStream[],
-
-  options?: {
-    plugin?: FFString;
-    controls?: FFString;
-    sample_rate?: FFInt;
-    nb_samples?: FFInt;
-    duration?: FFDuration;
-extraOptions?: Record<string, unknown>;
-  },
-): AudioStream {
-
-  const inputStreams = streams;
-
-  const filterNode = filterNodeFactory(
-    { name: "lv2", typingsInput: [], typingsOutput: ["audio"] },
-    inputStreams,
-    merge(
-    {
-      "plugin": options?.plugin,
-      "controls": options?.controls,
-      "sample_rate": options?.sample_rate,
-      "nb_samples": options?.nb_samples,
-      "duration": options?.duration,
-},
-    options?.extraOptions,
-  ),
-  );
-return filterNode.audio(0) as unknown as AudioStream;
-}
 
 
 
@@ -3226,12 +3079,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 
-
-
-
-
-
-
 /**
  * Overlay one video on top of another. It takes two inputs and has one output. The first input is the "main" video on which the second input is overlaid. It accepts the following parameters: A description of the accepted options follows.
 
@@ -3297,54 +3144,9 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 /**
- * Overlay one video on top of another. It takes two inputs and has one output. The first input is the "main" video on which the second input is overlaid. This filter requires same memory layout for all the inputs. So, format conversion may be needed. The filter accepts the following options:
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.x - Set the x coordinate of the overlaid video on the main video. Default value is 0.
- * @param options.y - Set the y coordinate of the overlaid video on the main video. Default value is 0.
- * @see https://ffmpeg.org/ffmpeg-filters.html#overlay_opencl
- */
-export function overlay_opencl(
-
-
-  _main: VideoStream,
-
-  _overlay: VideoStream,
-
-
-  options?: {
-    x?: FFInt;
-    y?: FFInt;
-extraOptions?: Record<string, unknown>;
-  },
-): VideoStream {
-
-  const inputStreams: FilterableStream[] = [_main, _overlay];
-
-  const filterNode = filterNodeFactory(
-    { name: "overlay_opencl", typingsInput: ["video", "video"], typingsOutput: ["video"] },
-    inputStreams,
-    merge(
-    {
-      "x": options?.x,
-      "y": options?.y,
-},
-    options?.extraOptions,
-  ),
-  );
-return filterNode.video(0) as unknown as VideoStream;
-}
-
-
-
-
-
-
-/**
  * Overlay one video on the top of another. It takes two inputs and has one output. The first input is the "main" video on which the second input is overlaid. The filter accepts the following options:
  *
- * Note: Removed in FFmpeg 8.0.
+ * Note: New in FFmpeg 6.0.
  *
  * @param options.x - Overlay x position (default "0")
  * @param options.y - Set expressions for the x and y coordinates of the overlaid video on the main video. Default value is "0" for both expressions.
@@ -3398,53 +3200,6 @@ extraOptions?: Record<string, unknown>;
   );
 return filterNode.video(0) as unknown as VideoStream;
 }
-
-
-
-
-
-
-/**
- * Overlay one video on top of another. It takes two inputs and has one output. The first input is the "main" video on which the second input is overlaid. This filter requires all inputs to use the same pixel format. So, format conversion may be needed. The filter accepts the following options:
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.x - Set the x coordinate of the overlaid video on the main video. Default value is 0.
- * @param options.y - Set the y coordinate of the overlaid video on the main video. Default value is 0.
- * @see https://ffmpeg.org/ffmpeg-filters.html#overlay_vulkan
- */
-export function overlay_vulkan(
-
-
-  _main: VideoStream,
-
-  _overlay: VideoStream,
-
-
-  options?: {
-    x?: FFInt;
-    y?: FFInt;
-extraOptions?: Record<string, unknown>;
-  },
-): VideoStream {
-
-  const inputStreams: FilterableStream[] = [_main, _overlay];
-
-  const filterNode = filterNodeFactory(
-    { name: "overlay_vulkan", typingsInput: ["video", "video"], typingsOutput: ["video"] },
-    inputStreams,
-    merge(
-    {
-      "x": options?.x,
-      "y": options?.y,
-},
-    options?.extraOptions,
-  ),
-  );
-return filterNode.video(0) as unknown as VideoStream;
-}
-
-
 
 
 
@@ -3586,61 +3341,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 /**
- * Filter video using an OpenCL program.
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.source - OpenCL program source file.
- * @param options.kernel - Kernel name in program.
- * @param options.inputs - Number of inputs to the filter. Defaults to 1.
- * @param options.size - Size of output frames. Defaults to the same as the first input.
- * @see https://ffmpeg.org/ffmpeg-filters.html#program_opencl
- */
-export function program_opencl(
-
-  streams: FilterableStream[],
-
-  options?: {
-    source?: FFString;
-    kernel?: FFString;
-    inputs?: FFInt;
-    size?: FFImageSize;
-    eofAction?: FFString;
-    shortest?: FFBoolean;
-    repeatlast?: FFBoolean;
-extraOptions?: Record<string, unknown>;
-  },
-): VideoStream {
-
-  const inputStreams = streams;
-
-  const filterNode = filterNodeFactory(
-    { name: "program_opencl", typingsInput: [], typingsOutput: ["video"] },
-    inputStreams,
-    merge(
-    {
-      "source": options?.source,
-      "kernel": options?.kernel,
-      "inputs": options?.inputs,
-      "size": options?.size,
-      "eof_action": options?.eofAction,
-      "shortest": options?.shortest,
-      "repeatlast": options?.repeatlast,
-},
-    options?.extraOptions,
-  ),
-  );
-return filterNode.video(0) as unknown as VideoStream;
-}
-
-
-
-
-
-
-
-
-/**
  * Obtain the average, maximum and minimum PSNR (Peak Signal to Noise Ratio) between two input videos. This filter takes in input two input videos, the first input is considered the "main" source and is passed unchanged to the output. The second input is used as a "reference" video for computing the PSNR. Both video inputs must have the same resolution and pixel format for this filter to work correctly. Also it assumes that both inputs have the same number of frames, which are compared one by one. The obtained average PSNR is printed through the logging system. The filter stores the accumulated MSE (mean squared error) of each frame, and at the end of the processing it is averaged across all frames equally, and the following formula is applied to obtain the PSNR: @example PSNR = 10*log10(MAX^2/MSE) @end example Where MAX is the average of the maximum values of each component of the image. The description of the accepted parameters follows.
 
  *
@@ -3753,57 +3453,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 
-/**
- * Remap pixels using 2nd: Xmap and 3rd: Ymap input video stream. Destination pixel at position (X, Y) will be picked from source (x, y) position where x = Xmap(X, Y) and y = Ymap(X, Y). If mapping values are out of range, zero value for pixel will be used for destination pixel. Xmap and Ymap input video streams must be of same dimensions. Output video stream will have Xmap/Ymap video stream dimensions. Xmap and Ymap input video streams are 32bit float pixel format, single channel.
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.interp - Specify interpolation used for remapping of pixels. Allowed values are near and linear. Default value is linear.
- * @param options.fill - Specify the color of the unmapped pixels. For the syntax of this option, check the "Color" section in the ffmpeg-utils manual. Default color is black.
- * @see https://ffmpeg.org/ffmpeg-filters.html#remap_opencl
- */
-export function remap_opencl(
-
-
-  _source: VideoStream,
-
-  _xmap: VideoStream,
-
-  _ymap: VideoStream,
-
-
-  options?: {
-    interp?: FFInt | "near" | "linear";
-    fill?: FFColor;
-extraOptions?: Record<string, unknown>;
-  },
-): VideoStream {
-
-  const inputStreams: FilterableStream[] = [_source, _xmap, _ymap];
-
-  const filterNode = filterNodeFactory(
-    { name: "remap_opencl", typingsInput: ["video", "video", "video"], typingsOutput: ["video"] },
-    inputStreams,
-    merge(
-    {
-      "interp": options?.interp,
-      "fill": options?.fill,
-},
-    options?.extraOptions,
-  ),
-  );
-return filterNode.video(0) as unknown as VideoStream;
-}
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -3828,8 +3477,7 @@ return filterNode.video(0) as unknown as VideoStream;
 
 /**
  * Scale (resize) the input video, based on a reference video. See the scale filter for available options, scale2ref supports the same but uses the reference video instead of the main input as basis. scale2ref also supports the following additional constants for the w and h options:
- *
- * Note: Removed in FFmpeg 8.0.
+
  *
  * @param options.w - Output video width
  * @param options.h - Set the output video dimension expression. The command accepts the same syntax of the corresponding option. If the specified expression is not valid, it is kept at its current value.
@@ -3910,8 +3558,6 @@ extraOptions?: Record<string, unknown>;
   );
 return filterNode;
 }
-
-
 
 
 
@@ -4217,10 +3863,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 
-
-
-
-
 /**
  * Synthesize audio from 2 input video spectrums, first input stream represents magnitude across time and second represents phase across time. The filter will transform from frequency domain as displayed in videos back to time domain as presented in audio output. This filter is primarily created for reversing processed showspectrum filter outputs, but can synthesize sound from other spectrograms too. But in such case results are going to be poor if the phase data is not available, because in such cases phase data need to be recreated, usually it's just recreated from random noise. For best results use gray only output (channel color mode in showspectrum filter) and log scale for magnitude video and lin scale for phase video. To produce phase, for 2nd video, use data option. Inputs videos should generally use fullframe slide mode as that saves resources needed for decoding video. The filter accepts the following options:
 
@@ -4338,7 +3980,7 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 /**
- * Calculate the SSIM between two 360 video streams.
+ * Inputs:
  *
  * Note: New in FFmpeg 6.0.
  *
@@ -4567,12 +4209,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 
-
-
-
-
-
-
 /**
  * Apply alpha unpremultiply effect to input video stream using first plane of second stream as alpha. Both streams must have same dimensions and same pixel format. The filter accepts the following option:
 
@@ -4609,8 +4245,6 @@ extraOptions?: Record<string, unknown>;
   );
 return filterNode.video(0) as unknown as VideoStream;
 }
-
-
 
 
 
@@ -4676,8 +4310,6 @@ extraOptions?: Record<string, unknown>;
   );
 return filterNode.video(0) as unknown as VideoStream;
 }
-
-
 
 
 
@@ -4936,107 +4568,6 @@ extraOptions?: Record<string, unknown>;
       "duration": options?.duration,
       "offset": options?.offset,
       "expr": options?.expr,
-},
-    options?.extraOptions,
-  ),
-  );
-return filterNode.video(0) as unknown as VideoStream;
-}
-
-
-
-
-
-
-/**
- * Cross fade two videos with custom transition effect by using OpenCL. It accepts the following options:
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.transition - Set one of possible transition effects. @end table
- * @param options.source - OpenCL program source file for custom transition.
- * @param options.kernel - Set name of kernel to use for custom transition from program source file.
- * @param options.duration - Set duration of video transition.
- * @param options.offset - Set time of start of transition relative to first video.
- * @see https://ffmpeg.org/ffmpeg-filters.html#xfade_opencl
- */
-export function xfade_opencl(
-
-
-  _main: VideoStream,
-
-  _xfade: VideoStream,
-
-
-  options?: {
-    transition?: FFInt | "custom" | "fade" | "wipeleft" | "wiperight" | "wipeup" | "wipedown" | "slideleft" | "slideright" | "slideup" | "slidedown";
-    source?: FFString;
-    kernel?: FFString;
-    duration?: FFDuration;
-    offset?: FFDuration;
-extraOptions?: Record<string, unknown>;
-  },
-): VideoStream {
-
-  const inputStreams: FilterableStream[] = [_main, _xfade];
-
-  const filterNode = filterNodeFactory(
-    { name: "xfade_opencl", typingsInput: ["video", "video"], typingsOutput: ["video"] },
-    inputStreams,
-    merge(
-    {
-      "transition": options?.transition,
-      "source": options?.source,
-      "kernel": options?.kernel,
-      "duration": options?.duration,
-      "offset": options?.offset,
-},
-    options?.extraOptions,
-  ),
-  );
-return filterNode.video(0) as unknown as VideoStream;
-}
-
-
-
-
-
-
-/**
- * Cross fade one video with another video.
- *
- * Note: New in FFmpeg 6.0.
- *
- * @param options.transition - set cross fade transition (from 0 to 16) (default fade)
- * @param options.duration - set cross fade duration (default 1)
- * @param options.offset - set cross fade start relative to first input stream (default 0)
- */
-export function xfade_vulkan(
-
-
-  _main: VideoStream,
-
-  _xfade: VideoStream,
-
-
-  options?: {
-    transition?: FFInt | "fade" | "wipeleft" | "wiperight" | "wipeup" | "wipedown" | "slidedown" | "slideup" | "slideleft" | "slideright" | "circleopen" | "circleclose" | "dissolve" | "pixelize" | "wipetl" | "wipetr" | "wipebl" | "wipebr";
-    duration?: FFDuration;
-    offset?: FFDuration;
-extraOptions?: Record<string, unknown>;
-  },
-): VideoStream {
-
-  const inputStreams: FilterableStream[] = [_main, _xfade];
-
-  const filterNode = filterNodeFactory(
-    { name: "xfade_vulkan", typingsInput: ["video", "video"], typingsOutput: ["video"] },
-    inputStreams,
-    merge(
-    {
-      "transition": options?.transition,
-      "duration": options?.duration,
-      "offset": options?.offset,
 },
     options?.extraOptions,
   ),

@@ -99,6 +99,8 @@ export interface GlobalArgsOptions {
   vstats_file?: FFFunc;
   /** Version of the vstats format to use. */
   vstats_version?: FFInt;
+  /** set VAAPI hardware device (DirectX adapter index, DRM path or X11 display name) */
+  vaapi_device?: FFFunc;
   /** initialise hardware device */
   init_hw_device?: FFFunc;
   /** set hardware device used when filtering */
@@ -162,6 +164,7 @@ export function buildGlobalArgsKwargs(options?: GlobalArgsOptions): Record<strin
       "vstats": options?.vstats,
       "vstats_file": options?.vstats_file,
       "vstats_version": options?.vstats_version,
+      "vaapi_device": options?.vaapi_device,
       "init_hw_device": options?.init_hw_device,
       "filter_hw_device": options?.filter_hw_device,
       "adrift_threshold": options?.adrift_threshold,

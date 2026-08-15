@@ -52,7 +52,7 @@ export type FFMpegAVCodecContextDecoderOption = Readonly<Record<string, unknown>
  * @param options.mbd - macroblock decision algorithm (high quality mode) (from 0 to 2) (default simple)
  * @param options.rc_init_occupancy - number of bits which should be loaded into the rc buffer before decoding starts (from INT_MIN to INT_MAX) (default 0)
  * @param options.threads - set the number of threads (from 0 to INT_MAX) (default 1)
- * @param options.dc - deprecated; use intra_dc_precision for MPEG-2 instead (from -8 to 16) (default 0)
+ * @param options.dc - intra_dc_precision (from -8 to 16) (default 0)
  * @param options.nssew - nsse weight (from INT_MIN to INT_MAX) (default 8)
  * @param options.profile - (from INT_MIN to INT_MAX) (default unknown)
  * @param options.level - encoding level, usually corresponding to the profile level, codec-specific (from INT_MIN to INT_MAX) (default unknown)
@@ -77,7 +77,6 @@ export type FFMpegAVCodecContextDecoderOption = Readonly<Record<string, unknown>
  * @param options.colorspace - color space (from 0 to INT_MAX) (default unknown)
  * @param options.color_range - color range (from 0 to INT_MAX) (default unknown)
  * @param options.chroma_sample_location - chroma sample location (from 0 to INT_MAX) (default unknown)
- * @param options.alpha_mode - alpha mode (from 0 to INT_MAX) (default unknown)
  * @param options.slices - set the number of slices, used in parallelized encoding (from 0 to INT_MAX) (default 0)
  * @param options.thread_type - select multithreading type (default slice+frame)
  * @param options.audio_service_type - audio service type (from 0 to 8) (default ma)
@@ -154,7 +153,6 @@ export function encoderCodecContext(options?: {
   colorspace?: number | null | "rgb" | "bt709" | "unknown" | "fcc" | "bt470bg" | "smpte170m" | "smpte240m" | "ycgco" | "bt2020nc" | "bt2020c" | "smpte2085" | "chroma-derived-nc" | "chroma-derived-c" | "ictcp" | "ipt-c2" | "unspecified" | "ycocg" | "ycgco-re" | "ycgco-ro" | "bt2020_ncl" | "bt2020_cl";
   color_range?: number | null | "unknown" | "tv" | "pc" | "unspecified" | "mpeg" | "jpeg" | "limited" | "full";
   chroma_sample_location?: number | null | "unknown" | "left" | "center" | "topleft" | "top" | "bottomleft" | "bottom" | "unspecified";
-  alpha_mode?: number | null | "unknown" | "unspecified" | "premultiplied" | "straight";
   slices?: number | null;
   thread_type?: string | null;
   audio_service_type?: number | null | "ma" | "ef" | "vi" | "hi" | "di" | "co" | "em" | "vo" | "ka";
@@ -231,7 +229,6 @@ export function encoderCodecContext(options?: {
     "colorspace": options?.colorspace,
     "color_range": options?.color_range,
     "chroma_sample_location": options?.chroma_sample_location,
-    "alpha_mode": options?.alpha_mode,
     "slices": options?.slices,
     "thread_type": options?.thread_type,
     "audio_service_type": options?.audio_service_type,
@@ -266,7 +263,6 @@ export function encoderCodecContext(options?: {
  * @param options.colorspace - color space (from 0 to INT_MAX) (default unknown)
  * @param options.color_range - color range (from 0 to INT_MAX) (default unknown)
  * @param options.chroma_sample_location - chroma sample location (from 0 to INT_MAX) (default unknown)
- * @param options.alpha_mode - alpha mode (from 0 to INT_MAX) (default unknown)
  * @param options.thread_type - select multithreading type (default slice+frame)
  * @param options.request_sample_fmt - sample format audio decoders should prefer (default none)
  * @param options.sub_charenc - set input text subtitles character encoding
@@ -306,7 +302,6 @@ export function decoderCodecContext(options?: {
   colorspace?: number | null | "rgb" | "bt709" | "unknown" | "fcc" | "bt470bg" | "smpte170m" | "smpte240m" | "ycgco" | "bt2020nc" | "bt2020c" | "smpte2085" | "chroma-derived-nc" | "chroma-derived-c" | "ictcp" | "ipt-c2" | "unspecified" | "ycocg" | "ycgco-re" | "ycgco-ro" | "bt2020_ncl" | "bt2020_cl";
   color_range?: number | null | "unknown" | "tv" | "pc" | "unspecified" | "mpeg" | "jpeg" | "limited" | "full";
   chroma_sample_location?: number | null | "unknown" | "left" | "center" | "topleft" | "top" | "bottomleft" | "bottom" | "unspecified";
-  alpha_mode?: number | null | "unknown" | "unspecified" | "premultiplied" | "straight";
   thread_type?: string | null;
   request_sample_fmt?: string | null;
   sub_charenc?: string | null;
@@ -321,7 +316,7 @@ export function decoderCodecContext(options?: {
   hwaccel_flags?: string | null;
   extra_hw_frames?: number | null;
   discard_damaged_percentage?: number | null;
-  side_data_prefer_packet?: number | null | "replaygain" | "displaymatrix" | "spherical" | "stereo3d" | "audio_service_type" | "mastering_display_metadata" | "content_light_level" | "icc_profile" | "exif";
+  side_data_prefer_packet?: number | null | "replaygain" | "displaymatrix" | "spherical" | "stereo3d" | "audio_service_type" | "mastering_display_metadata" | "content_light_level" | "icc_profile";
 }): FFMpegAVCodecContextDecoderOption {
   return merge({
     "flags": options?.flags,
@@ -346,7 +341,6 @@ export function decoderCodecContext(options?: {
     "colorspace": options?.colorspace,
     "color_range": options?.color_range,
     "chroma_sample_location": options?.chroma_sample_location,
-    "alpha_mode": options?.alpha_mode,
     "thread_type": options?.thread_type,
     "request_sample_fmt": options?.request_sample_fmt,
     "sub_charenc": options?.sub_charenc,

@@ -429,6 +429,26 @@ export type FFMpegDecoderOption = Readonly<Record<string, unknown>>;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
  * Uncompressed 4:2:2 10-bit
  */
@@ -2385,6 +2405,23 @@ export function jpegls(options?: {
 
 
 /**
+ * libjxl JPEG XL (codec jpegxl)
+ */
+export function libjxl(options?: {
+
+}): FFMpegDecoderOption {
+  return merge({
+
+  });
+}
+
+
+
+
+
+
+
+/**
  * Bitmap Brothers JV video
  */
 export function jv(options?: {
@@ -4224,6 +4261,32 @@ export function sunrast(options?: {
 
 
 /**
+ * Librsvg rasterizer (codec svg)
+ * @param options.width - Width to render to (0 for default) (from 0 to INT_MAX) (default 0)
+ * @param options.height - Height to render to (0 for default) (from 0 to INT_MAX) (default 0)
+ * @param options.keep_ar - Keep aspect ratio with custom width/height (default true)
+ */
+export function librsvg(options?: {
+  width?: number | null;
+  height?: number | null;
+  keep_ar?: boolean | null;
+
+}): FFMpegDecoderOption {
+  return merge({
+    "width": options?.width,
+    "height": options?.height,
+    "keep_ar": options?.keep_ar,
+
+  });
+}
+
+
+
+
+
+
+
+/**
  * Sorenson Vector Quantizer 1 / Sorenson Video 1 / SVQ1
  */
 export function svq1(options?: {
@@ -5731,6 +5794,50 @@ export function aac_fixed(options?: {
 
 
 /**
+ * Fraunhofer FDK AAC (codec aac)
+ * @param options.conceal - Error concealment method (from 0 to 2) (default noise)
+ * @param options.drc_boost - Dynamic Range Control: boost, where [0] is none and [127] is max boost (from -1 to 127) (default -1)
+ * @param options.drc_cut - Dynamic Range Control: attenuation factor, where [0] is none and [127] is max compression (from -1 to 127) (default -1)
+ * @param options.drc_level - Dynamic Range Control: reference level, quantized to 0.25dB steps where [0] is 0dB and [127] is -31.75dB, -1 for auto, and -2 for disabled (from -2 to 127) (default -1)
+ * @param options.drc_heavy - Dynamic Range Control: heavy compression, where [1] is on (RF mode) and [0] is off (from -1 to 1) (default -1)
+ * @param options.level_limit - Signal level limiting (default auto)
+ * @param options.drc_effect - Dynamic Range Control: effect type, where e.g. [0] is none and [6] is general (from -1 to 8) (default -1)
+ * @param options.album_mode - Dynamic Range Control: album mode, where [0] is off and [1] is on (from -1 to 1) (default -1)
+ * @param options.downmix - Request a specific channel layout from the decoder
+ */
+export function libfdk_aac(options?: {
+  conceal?: number | null | "spectral" | "noise" | "energy";
+  drc_boost?: number | null;
+  drc_cut?: number | null;
+  drc_level?: number | null;
+  drc_heavy?: number | null;
+  level_limit?: boolean | null;
+  drc_effect?: number | null;
+  album_mode?: number | null;
+  downmix?: string | null;
+
+}): FFMpegDecoderOption {
+  return merge({
+    "conceal": options?.conceal,
+    "drc_boost": options?.drc_boost,
+    "drc_cut": options?.drc_cut,
+    "drc_level": options?.drc_level,
+    "drc_heavy": options?.drc_heavy,
+    "level_limit": options?.level_limit,
+    "drc_effect": options?.drc_effect,
+    "album_mode": options?.album_mode,
+    "downmix": options?.downmix,
+
+  });
+}
+
+
+
+
+
+
+
+/**
  * AAC LATM (Advanced Audio Coding LATM syntax)
  */
 export function aac_latm(options?: {
@@ -7076,6 +7183,23 @@ export function cbd2_dpcm(options?: {
 
 
 /**
+ * codec2 decoder using libcodec2 (codec codec2)
+ */
+export function libcodec2(options?: {
+
+}): FFMpegDecoderOption {
+  return merge({
+
+  });
+}
+
+
+
+
+
+
+
+/**
  * RFC 3389 comfort noise generator
  */
 export function comfortnoise(options?: {
@@ -7503,9 +7627,43 @@ export function gsm(options?: {
 
 
 /**
+ * libgsm GSM (codec gsm)
+ */
+export function libgsm(options?: {
+
+}): FFMpegDecoderOption {
+  return merge({
+
+  });
+}
+
+
+
+
+
+
+
+/**
  * GSM Microsoft variant
  */
 export function gsm_ms(options?: {
+
+}): FFMpegDecoderOption {
+  return merge({
+
+  });
+}
+
+
+
+
+
+
+
+/**
+ * libgsm GSM Microsoft variant (codec gsm_ms)
+ */
+export function libgsm_ms(options?: {
 
 }): FFMpegDecoderOption {
   return merge({
@@ -8963,6 +9121,23 @@ export function sonic(options?: {
  * Speex
  */
 export function speex(options?: {
+
+}): FFMpegDecoderOption {
+  return merge({
+
+  });
+}
+
+
+
+
+
+
+
+/**
+ * libspeex Speex (codec speex)
+ */
+export function libspeex(options?: {
 
 }): FFMpegDecoderOption {
   return merge({

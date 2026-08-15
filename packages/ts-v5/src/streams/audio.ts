@@ -3470,10 +3470,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 
-
-
-
-
 /**
  * Calculate normalized windowed cross-correlation between two input audio streams. Resulted samples are always between -1 and 1 inclusive. If result is 1 it means two input samples are highly correlated in that selected segment. Result 0 means they are not correlated at all. If result is -1 it means two input samples are out of phase, which means they cancel each other. The filter accepts the following options:
 
@@ -3512,8 +3508,7 @@ return filterNode.audio(0) as unknown as AudioStream;
 
 /**
  * Receive commands sent through a libzmq client, and forward them to filters in the filtergraph. zmq and azmq work as a pass-through filters. zmq must be inserted between two video filters, azmq between two audio filters. Both are capable to send messages to any filter type. To enable these filters you need to install the libzmq library and headers and configure FFmpeg with --enable-libzmq. For more information about libzmq see: http://www.zeromq.org/ The zmq and azmq filters work as a libzmq server, which receives messages sent through a network interface defined by the bind_address (or the abbreviation "b") option. Default value of this option is tcp://localhost:5555. You may want to alter this value to your needs, but do not forget to escape any ':' signs (see filtergraph escaping). The received message must be in the form: @example TARGET COMMAND [ARG] @end example TARGET specifies the target of the command, usually the name of the filter class or a specific filter instance name. The default filter instance name uses the pattern Parsed__, but you can override this by using the filter_name@id syntax (see Filtergraph syntax). COMMAND specifies the name of the command for the target filter. ARG is optional and specifies the optional argument list for the given COMMAND. Upon reception, the message is processed and the corresponding command is injected into the filtergraph. Depending on the result, the filter will send a reply to the client, adopting the format: @example ERROR_CODE ERROR_REASON MESSAGE @end example MESSAGE is optional.
- *
- * Note: Removed in FFmpeg 8.0.
+
  *
  * @param options.bind_address - set bind address (default "tcp://*:5555")
  * @see https://ffmpeg.org/ffmpeg-filters.html#zmq
@@ -3802,48 +3797,6 @@ return filterNode.audio(0) as unknown as AudioStream;
 
 
 
-/**
- * Bauer stereo to binaural transformation, which improves headphone listening of stereo audio records. To enable compilation of this filter you need to configure FFmpeg with --enable-libbs2b. It accepts the following parameters:
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.profile - Pre-defined crossfeed level. @end table
- * @param options.fcut - Cut frequency (in Hz).
- * @param options.feed - Feed level (in Hz).
- * @see https://ffmpeg.org/ffmpeg-filters.html#bs2b
- */
-  bs2b(
-    options?: {
-    profile?: FFInt | "default" | "cmoy" | "jmeier";
-    fcut?: FFInt;
-    feed?: FFInt;
-extraOptions?: Record<string, unknown>;
-    },
-  ): AudioStream {
-    const filterNode = filterNodeFactory(
-      { name: "bs2b", typingsInput: ["audio"], typingsOutput: ["audio"] },
-      [this],
-      merge(
-    {
-      "profile": options?.profile,
-      "fcut": options?.fcut,
-      "feed": options?.feed,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.audio(0) as unknown as AudioStream;
-  }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -4006,10 +3959,6 @@ return filterNode.audio(0) as unknown as AudioStream;
 
 
 
-
-
-
-
 /**
  * Compress or expand the audio's dynamic range. It accepts the following parameters:
 
@@ -4101,8 +4050,6 @@ extraOptions?: Record<string, unknown>;
     );
 return filterNode.audio(0) as unknown as AudioStream;
   }
-
-
 
 
 
@@ -4321,12 +4268,6 @@ return filterNode.audio(0) as unknown as AudioStream;
 
 
 
-
-
-
-
-
-
 /**
  * Enhance dialogue in stereo audio. This filter accepts stereo input and produce surround (3.0) channels output. The newly produced front center channel have enhanced speech dialogue originally available in both stereo channels. This filter outputs front left and front right channels same as available in stereo input. The filter accepts the following options:
 
@@ -4360,8 +4301,6 @@ extraOptions?: Record<string, unknown>;
     );
 return filterNode.audio(0) as unknown as AudioStream;
   }
-
-
 
 
 
@@ -4652,8 +4591,6 @@ return filterNode.audio(0) as unknown as AudioStream;
 
 
 
-
-
 /**
  * Linearly increases the difference between left and right channels which adds some sort of "live" effect to playback. The filter accepts the following options:
 
@@ -4865,16 +4802,6 @@ return filterNode.audio(0) as unknown as AudioStream;
 
 
 
-
-
-
-
-
-
-
-
-
-
 /**
  * Apply Haas effect to audio. Note that this makes most sense to apply on mono signals. With this filter applied to mono signals it give some directionality and stretches its stereo image. The filter accepts the following options:
 
@@ -4986,8 +4913,6 @@ extraOptions?: Record<string, unknown>;
     );
 return filterNode.audio(0) as unknown as AudioStream;
   }
-
-
 
 
 
@@ -5115,8 +5040,6 @@ extraOptions?: Record<string, unknown>;
     );
 return filterNode.audio(0) as unknown as AudioStream;
   }
-
-
 
 
 
@@ -5397,8 +5320,6 @@ return filterNode.audio(0) as unknown as AudioStream;
 
 
 
-
-
 /**
  * Multiband Compress or expand the audio's dynamic range. The input audio is divided into bands using 4th order Linkwitz-Riley IIRs. This is akin to the crossover of a loudspeaker, and results in flat frequency response when absent compander action. It accepts the following parameters:
 
@@ -5424,18 +5345,6 @@ extraOptions?: Record<string, unknown>;
     );
 return filterNode.audio(0) as unknown as AudioStream;
   }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -5581,14 +5490,6 @@ return filterNode.audio(0) as unknown as AudioStream;
 
 
 
-
-
-
-
-
-
-
-
 /**
  * ReplayGain scanner filter. This filter takes an audio stream as an input and outputs it unchanged. At end of filtering it displays track_gain and track_peak.
 
@@ -5615,73 +5516,6 @@ return filterNode.audio(0) as unknown as AudioStream;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/**
- * Apply time-stretching and pitch-shifting with librubberband. To enable compilation of this filter, you need to configure FFmpeg with --enable-librubberband. The filter accepts the following options:
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.tempo - Change filter tempo scale factor. Syntax for the command is : "tempo"
- * @param options.pitch - Change filter pitch scale factor. Syntax for the command is : "pitch"
- * @param options.transients - Set transients detector. Possible values are: @end table
- * @param options.detector - Set detector. Possible values are: @end table
- * @param options.phase - Set phase. Possible values are: @end table
- * @param options.window - Set processing window size. Possible values are: @end table
- * @param options.smoothing - Set smoothing. Possible values are: @end table
- * @param options.formant - Enable formant preservation when shift pitching. Possible values are: @end table
- * @param options.pitchq - Set pitch quality. Possible values are: @end table
- * @param options.channels - Set channels. Possible values are: @end table
- * @see https://ffmpeg.org/ffmpeg-filters.html#rubberband
- */
-  rubberband(
-    options?: {
-    tempo?: FFDouble;
-    pitch?: FFDouble;
-    transients?: FFInt | "crisp" | "mixed" | "smooth";
-    detector?: FFInt | "compound" | "percussive" | "soft";
-    phase?: FFInt | "laminar" | "independent";
-    window?: FFInt | "standard" | "short" | "long";
-    smoothing?: FFInt | "off" | "on";
-    formant?: FFInt | "shifted" | "preserved";
-    pitchq?: FFInt | "quality" | "speed" | "consistency";
-    channels?: FFInt | "apart" | "together";
-extraOptions?: Record<string, unknown>;
-    },
-  ): AudioStream {
-    const filterNode = filterNodeFactory(
-      { name: "rubberband", typingsInput: ["audio"], typingsOutput: ["audio"] },
-      [this],
-      merge(
-    {
-      "tempo": options?.tempo,
-      "pitch": options?.pitch,
-      "transients": options?.transients,
-      "detector": options?.detector,
-      "phase": options?.phase,
-      "window": options?.window,
-      "smoothing": options?.smoothing,
-      "formant": options?.formant,
-      "pitchq": options?.pitchq,
-      "channels": options?.channels,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.audio(0) as unknown as AudioStream;
-  }
 
 
 
@@ -6553,79 +6387,6 @@ return filterNode.audio(0) as unknown as AudioStream;
 
 
 /**
- * SOFAlizer uses head-related transfer functions (HRTFs) to create virtual loudspeakers around the user for binaural listening via headphones (audio formats up to 9 channels supported). The HRTFs are stored in SOFA files (see http://www.sofacoustics.org/ for a database). SOFAlizer is developed at the Acoustics Research Institute (ARI) of the Austrian Academy of Sciences. To enable compilation of this filter you need to configure FFmpeg with --enable-libmysofa. The filter accepts the following options:
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.sofa - Set the SOFA file used for rendering.
- * @param options.gain - Set gain applied to audio. Value is in dB. Default is 0.
- * @param options.rotation - Set rotation of virtual loudspeakers in deg. Default is 0.
- * @param options.elevation - Set elevation of virtual speakers in deg. Default is 0.
- * @param options.radius - Set distance in meters between loudspeakers and the listener with near-field HRTFs. Default is 1.
- * @param options._type - Set processing type. Can be time or freq. time is processing audio in time domain which is slow. freq is processing audio in frequency domain which is fast. Default is freq.
- * @param options.speakers - Set custom positions of virtual loudspeakers. Syntax for this option is: [| |...]. Each virtual loudspeaker is described with short channel name following with azimuth and elevation in degrees. Each virtual loudspeaker description is separated by '|'. For example to override front left and front right channel positions use: 'speakers=FL 45 15|FR 345 15'. Descriptions with unrecognised channel names are ignored.
- * @param options.lfegain - Set custom gain for LFE channels. Value is in dB. Default is 0.
- * @param options.framesize - Set custom frame size in number of samples. Default is 1024. Allowed range is from 1024 to 96000. Only used if option type is set to freq.
- * @param options.normalize - Should all IRs be normalized upon importing SOFA file. By default is enabled.
- * @param options.interpolate - Should nearest IRs be interpolated with neighbor IRs if exact position does not match. By default is disabled.
- * @param options.minphase - Minphase all IRs upon loading of SOFA file. By default is disabled.
- * @param options.anglestep - Set neighbor search angle step. Only used if option interpolate is enabled.
- * @param options.radstep - Set neighbor search radius step. Only used if option interpolate is enabled.
- * @see https://ffmpeg.org/ffmpeg-filters.html#sofalizer
- */
-  sofalizer(
-    options?: {
-    sofa?: FFString;
-    gain?: FFFloat;
-    rotation?: FFFloat;
-    elevation?: FFFloat;
-    radius?: FFFloat;
-    _type?: FFInt | "time" | "freq";
-    speakers?: FFString;
-    lfegain?: FFFloat;
-    framesize?: FFInt;
-    normalize?: FFBoolean;
-    interpolate?: FFBoolean;
-    minphase?: FFBoolean;
-    anglestep?: FFFloat;
-    radstep?: FFFloat;
-extraOptions?: Record<string, unknown>;
-    },
-  ): AudioStream {
-    const filterNode = filterNodeFactory(
-      { name: "sofalizer", typingsInput: ["audio"], typingsOutput: ["audio"] },
-      [this],
-      merge(
-    {
-      "sofa": options?.sofa,
-      "gain": options?.gain,
-      "rotation": options?.rotation,
-      "elevation": options?.elevation,
-      "radius": options?.radius,
-      "type": options?._type,
-      "speakers": options?.speakers,
-      "lfegain": options?.lfegain,
-      "framesize": options?.framesize,
-      "normalize": options?.normalize,
-      "interpolate": options?.interpolate,
-      "minphase": options?.minphase,
-      "anglestep": options?.anglestep,
-      "radstep": options?.radstep,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.audio(0) as unknown as AudioStream;
-  }
-
-
-
-
-
-
-
-
-/**
  * Speech Normalizer. This filter expands or compresses each half-cycle of audio samples (local set of samples all above or all below zero and between two nearest zero crossings) depending on threshold value, so audio reaches target peak value under conditions controlled by below options. The filter accepts the following options:
 
  *
@@ -7183,16 +6944,6 @@ return filterNode.audio(0) as unknown as AudioStream;
 
 
 
-
-
-
-
-
-
-
-
-
-
 /**
  * Boost or cut treble (upper) frequencies of the audio using a two-pole shelving filter with a response similar to that of a standard hi-fi's tone-controls. This is also known as shelving equalisation (EQ). The filter accepts the following options:
 
@@ -7286,10 +7037,6 @@ extraOptions?: Record<string, unknown>;
     );
 return filterNode.audio(0) as unknown as AudioStream;
   }
-
-
-
-
 
 
 
@@ -7470,8 +7217,6 @@ extraOptions?: Record<string, unknown>;
     );
 return filterNode.audio(0) as unknown as AudioStream;
   }
-
-
 
 
 

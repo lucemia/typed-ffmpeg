@@ -649,23 +649,6 @@ export function au(options?: {
 
 
 /**
- * audiotoolbox    AudioToolbox output device
- */
-export function d(options?: {
-
-}): FFMpegMuxerOption {
-  return merge({
-
-  });
-}
-
-
-
-
-
-
-
-/**
  * AVI (Audio Video Interleaved)
  * @param options.reserve_index_space - reserve space (in bytes) at the beginning of the file for each stream index (from 0 to INT_MAX) (default 0)
  * @param options.write_channel_mask - write channel mask into wave format header (default true)
@@ -1315,6 +1298,23 @@ export function f64be(options?: {
  * PCM 64-bit floating-point little-endian
  */
 export function f64le(options?: {
+
+}): FFMpegMuxerOption {
+  return merge({
+
+  });
+}
+
+
+
+
+
+
+
+/**
+ * fbdev           Linux framebuffer
+ */
+export function d(options?: {
 
 }): FFMpegMuxerOption {
   return merge({
@@ -3054,7 +3054,7 @@ export function obu(options?: {
  * Ogg Audio
  * @param options.serial_offset - serial number offset (from 0 to INT_MAX) (default 0)
  * @param options.oggpagesize - Set preferred Ogg page size. (from 0 to 65025) (default 0)
- * @param options.pagesize - preferred page size in bytes (from 0 to 65025) (default 0)
+ * @param options.pagesize - preferred page size in bytes (deprecated) (from 0 to 65025) (default 0)
  * @param options.page_duration - preferred page duration, in microseconds (from 0 to I64_MAX) (default 1000000)
  */
 export function oga(options?: {
@@ -3083,7 +3083,7 @@ export function oga(options?: {
  * Ogg
  * @param options.serial_offset - serial number offset (from 0 to INT_MAX) (default 0)
  * @param options.oggpagesize - Set preferred Ogg page size. (from 0 to 65025) (default 0)
- * @param options.pagesize - preferred page size in bytes (from 0 to 65025) (default 0)
+ * @param options.pagesize - preferred page size in bytes (deprecated) (from 0 to 65025) (default 0)
  * @param options.page_duration - preferred page duration, in microseconds (from 0 to I64_MAX) (default 1000000)
  */
 export function ogg(options?: {
@@ -3112,7 +3112,7 @@ export function ogg(options?: {
  * Ogg Video
  * @param options.serial_offset - serial number offset (from 0 to INT_MAX) (default 0)
  * @param options.oggpagesize - Set preferred Ogg page size. (from 0 to 65025) (default 0)
- * @param options.pagesize - preferred page size in bytes (from 0 to 65025) (default 0)
+ * @param options.pagesize - preferred page size in bytes (deprecated) (from 0 to 65025) (default 0)
  * @param options.page_duration - preferred page duration, in microseconds (from 0 to I64_MAX) (default 1000000)
  */
 export function ogv(options?: {
@@ -3158,7 +3158,7 @@ export function oma(options?: {
  * Ogg Opus
  * @param options.serial_offset - serial number offset (from 0 to INT_MAX) (default 0)
  * @param options.oggpagesize - Set preferred Ogg page size. (from 0 to 65025) (default 0)
- * @param options.pagesize - preferred page size in bytes (from 0 to 65025) (default 0)
+ * @param options.pagesize - preferred page size in bytes (deprecated) (from 0 to 65025) (default 0)
  * @param options.page_duration - preferred page duration, in microseconds (from 0 to I64_MAX) (default 1000000)
  */
 export function opus(options?: {
@@ -3176,6 +3176,11 @@ export function opus(options?: {
 
   });
 }
+
+
+
+
+
 
 
 
@@ -3364,7 +3369,7 @@ export function rso(options?: {
  * RTP output
  * @param options.rtpflags - RTP muxer flags (default 0)
  * @param options.payload_type - Specify RTP payload type (from -1 to 127) (default -1)
- * @param options.ssrc - Stream identifier (from 0 to UINT32_MAX) (default 0)
+ * @param options.ssrc - Stream identifier (from INT_MIN to INT_MAX) (default 0)
  * @param options.cname - CNAME to include in RTCP SR packets
  * @param options.seq - Starting sequence number (from -1 to 65535) (default -1)
  */
@@ -3424,7 +3429,7 @@ export function rtp_mpegts(options?: {
  * @param options.buffer_size - Underlying protocol send/receive buffer size (from -1 to INT_MAX) (default -1)
  * @param options.pkt_size - Underlying protocol send packet size (from -1 to INT_MAX) (default 1472)
  * @param options.ca_file - Certificate Authority database file
- * @param options.tls_verify - Verify the peer certificate (default false)
+ * @param options.tls_verify - Verify the peer certificate (from 0 to 1) (default 0)
  * @param options.cert_file - Certificate file
  * @param options.key_file - Private key file
  * @param options.verifyhost - Verify against a specific hostname
@@ -3437,7 +3442,7 @@ export function rtsp(options?: {
   buffer_size?: number | null;
   pkt_size?: number | null;
   ca_file?: string | null;
-  tls_verify?: boolean | null;
+  tls_verify?: number | null;
   cert_file?: string | null;
   key_file?: string | null;
   verifyhost?: string | null;
@@ -3832,7 +3837,7 @@ export function spdif(options?: {
  * Ogg Speex
  * @param options.serial_offset - serial number offset (from 0 to INT_MAX) (default 0)
  * @param options.oggpagesize - Set preferred Ogg page size. (from 0 to 65025) (default 0)
- * @param options.pagesize - preferred page size in bytes (from 0 to 65025) (default 0)
+ * @param options.pagesize - preferred page size in bytes (deprecated) (from 0 to 65025) (default 0)
  * @param options.page_duration - preferred page duration, in microseconds (from 0 to I64_MAX) (default 1000000)
  */
 export function spx(options?: {
@@ -4235,6 +4240,11 @@ export function vidc(options?: {
 
 
 
+
+
+
+
+
 /**
  * MPEG-2 PS (VOB)
  * @param options.muxrate - mux rate as bits/s (from 0 to 1.67772e+09) (default 0)
@@ -4502,9 +4512,6 @@ export function webvtt(options?: {
  * WHIP(WebRTC-HTTP ingestion protocol) muxer
  * @param options.handshake_timeout - Timeout in milliseconds for ICE and DTLS handshake. (from -1 to INT_MAX) (default 5000)
  * @param options.pkt_size - The maximum size, in bytes, of RTP packets that send out (from -1 to INT_MAX) (default 1200)
- * @param options.ts_buffer_size - The buffer size, in bytes, of underlying protocol (from -1 to INT_MAX) (default -1)
- * @param options.whip_flags - Set flags affecting WHIP connection behavior (default 0)
- * @param options.rtp_history - The number of RTP history items to store (from 64 to 2048) (default 512)
  * @param options.authorization - The optional Bearer token for WHIP Authorization
  * @param options.cert_file - The optional certificate file path for DTLS
  * @param options.key_file - The optional private key file path for DTLS
@@ -4512,9 +4519,6 @@ export function webvtt(options?: {
 export function whip(options?: {
   handshake_timeout?: number | null;
   pkt_size?: number | null;
-  ts_buffer_size?: number | null;
-  whip_flags?: string | null;
-  rtp_history?: number | null;
   authorization?: string | null;
   cert_file?: string | null;
   key_file?: string | null;
@@ -4523,9 +4527,6 @@ export function whip(options?: {
   return merge({
     "handshake_timeout": options?.handshake_timeout,
     "pkt_size": options?.pkt_size,
-    "ts_buffer_size": options?.ts_buffer_size,
-    "whip_flags": options?.whip_flags,
-    "rtp_history": options?.rtp_history,
     "authorization": options?.authorization,
     "cert_file": options?.cert_file,
     "key_file": options?.key_file,

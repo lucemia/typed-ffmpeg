@@ -1,0 +1,44 @@
+{
+  "index": null,
+  "node": {
+    "inputs": [
+      {
+        "index": null,
+        "node": {
+          "filename": "output.mp3",
+          "inputs": [
+            {
+              "index": 0,
+              "node": {
+                "input_typings": [
+                  "audio"
+                ],
+                "inputs": [
+                  {
+                    "index": null,
+                    "node": {
+                      "filename": "input.mp4",
+                      "inputs": [],
+                      "kwargs": "FrozenDict({})"
+                    },
+                    "optional": false
+                  }
+                ],
+                "kwargs": "FrozenDict({'sample_rate': '44100'})",
+                "name": "aresample",
+                "output_typings": [
+                  "audio"
+                ]
+              },
+              "optional": false
+            }
+          ],
+          "kwargs": "FrozenDict({})"
+        },
+        "optional": false
+      }
+    ],
+    "kwargs": "FrozenDict({})"
+  },
+  "optional": false
+}

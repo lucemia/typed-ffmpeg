@@ -38,6 +38,7 @@ watch:
   - 'packages/v6/src'
   - 'packages/v7/src'
   - 'packages/v8/src'
+  - 'packages/v9/src'
   - 'docs'
   - 'README.md'
 

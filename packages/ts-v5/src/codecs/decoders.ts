@@ -397,22 +397,8 @@ export type FFMpegDecoderOption = Readonly<Record<string, unknown>>;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /**
- * Uncompressed 4:2:2 10-bit
+ *
  */
 export function _012v(options?: {
 
@@ -429,7 +415,7 @@ export function _012v(options?: {
 
 
 /**
- * 4X Movie
+ *
  */
 export function _4xm(options?: {
 
@@ -446,7 +432,7 @@ export function _4xm(options?: {
 
 
 /**
- * QuickTime 8BPS video
+ *
  */
 export function _8bps(options?: {
 
@@ -463,7 +449,7 @@ export function _8bps(options?: {
 
 
 /**
- * Autodesk RLE
+ *
  */
 export function aasc(options?: {
 
@@ -480,7 +466,7 @@ export function aasc(options?: {
 
 
 /**
- * Amuse Graphics Movie
+ *
  */
 export function agm(options?: {
 
@@ -497,7 +483,7 @@ export function agm(options?: {
 
 
 /**
- * Apple Intermediate Codec
+ *
  */
 export function aic(options?: {
 
@@ -514,7 +500,7 @@ export function aic(options?: {
 
 
 /**
- * Alias/Wavefront PIX image
+ *
  */
 export function alias_pix(options?: {
 
@@ -531,7 +517,7 @@ export function alias_pix(options?: {
 
 
 /**
- * AMV Video
+ *
  */
 export function amv(options?: {
 
@@ -548,7 +534,7 @@ export function amv(options?: {
 
 
 /**
- * Deluxe Paint Animation
+ *
  */
 export function anm(options?: {
 
@@ -565,7 +551,7 @@ export function anm(options?: {
 
 
 /**
- * ASCII/ANSI art
+ *
  */
 export function ansi(options?: {
 
@@ -582,7 +568,7 @@ export function ansi(options?: {
 
 
 /**
- * APNG (Animated Portable Network Graphics) image
+ *
  */
 export function apng(options?: {
 
@@ -599,7 +585,7 @@ export function apng(options?: {
 
 
 /**
- * Gryphon's Anim Compressor
+ *
  */
 export function arbc(options?: {
 
@@ -616,7 +602,7 @@ export function arbc(options?: {
 
 
 /**
- * Argonaut Games Video
+ *
  */
 export function argo(options?: {
 
@@ -633,7 +619,7 @@ export function argo(options?: {
 
 
 /**
- * ASUS V1
+ *
  */
 export function asv1(options?: {
 
@@ -650,7 +636,7 @@ export function asv1(options?: {
 
 
 /**
- * ASUS V2
+ *
  */
 export function asv2(options?: {
 
@@ -667,7 +653,7 @@ export function asv2(options?: {
 
 
 /**
- * Auravision AURA
+ *
  */
 export function aura(options?: {
 
@@ -684,7 +670,7 @@ export function aura(options?: {
 
 
 /**
- * Auravision Aura 2
+ *
  */
 export function aura2(options?: {
 
@@ -701,39 +687,7 @@ export function aura2(options?: {
 
 
 /**
- * dav1d AV1 decoder by VideoLAN (codec av1)
- * @param options.tilethreads - Tile threads (from 0 to 256) (default 0)
- * @param options.framethreads - Frame threads (from 0 to 256) (default 0)
- * @param options.filmgrain - Apply Film Grain (default auto)
- * @param options.oppoint - Select an operating point of the scalable bitstream (from -1 to 31) (default -1)
- * @param options.alllayers - Output all spatial layers (default false)
- */
-export function libdav1d(options?: {
-  tilethreads?: number | null;
-  framethreads?: number | null;
-  filmgrain?: boolean | null;
-  oppoint?: number | null;
-  alllayers?: boolean | null;
-
-}): FFMpegDecoderOption {
-  return merge({
-    "tilethreads": options?.tilethreads,
-    "framethreads": options?.framethreads,
-    "filmgrain": options?.filmgrain,
-    "oppoint": options?.oppoint,
-    "alllayers": options?.alllayers,
-
-  });
-}
-
-
-
-
-
-
-
-/**
- * Alliance for Open Media AV1
+ *
  * @param options.operating_point - Select an operating point of the scalable bitstream (from 0 to 31) (default 0)
  */
 export function av1(options?: {
@@ -753,42 +707,7 @@ export function av1(options?: {
 
 
 /**
- * Nvidia CUVID AV1 decoder (codec av1)
- * @param options.deint - Set deinterlacing mode (from 0 to 2) (default weave)
- * @param options.gpu - GPU to be used for decoding
- * @param options.surfaces - Maximum surfaces to be used for decoding (from 0 to INT_MAX) (default 25)
- * @param options.drop_second_field - Drop second field when deinterlacing (default false)
- * @param options.crop - Crop (top)x(bottom)x(left)x(right)
- * @param options.resize - Resize (width)x(height)
- */
-export function av1_cuvid(options?: {
-  deint?: number | null | "weave" | "bob" | "adaptive";
-  gpu?: string | null;
-  surfaces?: number | null;
-  drop_second_field?: boolean | null;
-  crop?: string | null;
-  resize?: string | null;
-
-}): FFMpegDecoderOption {
-  return merge({
-    "deint": options?.deint,
-    "gpu": options?.gpu,
-    "surfaces": options?.surfaces,
-    "drop_second_field": options?.drop_second_field,
-    "crop": options?.crop,
-    "resize": options?.resize,
-
-  });
-}
-
-
-
-
-
-
-
-/**
- * Avid AVI Codec
+ *
  */
 export function avrn(options?: {
 
@@ -805,7 +724,7 @@ export function avrn(options?: {
 
 
 /**
- * Avid 1:1 10-bit RGB Packer
+ *
  */
 export function avrp(options?: {
 
@@ -822,7 +741,7 @@ export function avrp(options?: {
 
 
 /**
- * AVS (Audio Video Standard) video
+ *
  */
 export function avs(options?: {
 
@@ -839,7 +758,7 @@ export function avs(options?: {
 
 
 /**
- * Avid Meridien Uncompressed
+ *
  */
 export function avui(options?: {
 
@@ -856,7 +775,7 @@ export function avui(options?: {
 
 
 /**
- * Uncompressed packed MS 4:4:4:4
+ *
  */
 export function ayuv(options?: {
 
@@ -873,7 +792,7 @@ export function ayuv(options?: {
 
 
 /**
- * Bethesda VID video
+ *
  */
 export function bethsoftvid(options?: {
 
@@ -890,7 +809,7 @@ export function bethsoftvid(options?: {
 
 
 /**
- * Brute Force & Ignorance
+ *
  */
 export function bfi(options?: {
 
@@ -907,7 +826,7 @@ export function bfi(options?: {
 
 
 /**
- * Bink video
+ *
  */
 export function binkvideo(options?: {
 
@@ -924,7 +843,7 @@ export function binkvideo(options?: {
 
 
 /**
- * Binary text
+ *
  */
 export function bintext(options?: {
 
@@ -941,7 +860,7 @@ export function bintext(options?: {
 
 
 /**
- * Bitpacked
+ *
  */
 export function bitpacked(options?: {
 
@@ -958,7 +877,7 @@ export function bitpacked(options?: {
 
 
 /**
- * BMP (Windows and OS/2 bitmap)
+ *
  */
 export function bmp(options?: {
 
@@ -975,7 +894,7 @@ export function bmp(options?: {
 
 
 /**
- * Discworld II BMV video
+ *
  */
 export function bmv_video(options?: {
 
@@ -992,7 +911,7 @@ export function bmv_video(options?: {
 
 
 /**
- * BRender PIX image
+ *
  */
 export function brender_pix(options?: {
 
@@ -1009,7 +928,7 @@ export function brender_pix(options?: {
 
 
 /**
- * Interplay C93
+ *
  */
 export function c93(options?: {
 
@@ -1026,7 +945,7 @@ export function c93(options?: {
 
 
 /**
- * Chinese AVS (Audio Video Standard) (AVS1-P2, JiZhun profile)
+ *
  */
 export function cavs(options?: {
 
@@ -1043,7 +962,7 @@ export function cavs(options?: {
 
 
 /**
- * CD Graphics video
+ *
  */
 export function cdgraphics(options?: {
 
@@ -1060,7 +979,7 @@ export function cdgraphics(options?: {
 
 
 /**
- * CDToons video
+ *
  */
 export function cdtoons(options?: {
 
@@ -1077,7 +996,7 @@ export function cdtoons(options?: {
 
 
 /**
- * Commodore CDXL video
+ *
  */
 export function cdxl(options?: {
 
@@ -1094,7 +1013,7 @@ export function cdxl(options?: {
 
 
 /**
- * GoPro CineForm HD
+ *
  */
 export function cfhd(options?: {
 
@@ -1111,7 +1030,7 @@ export function cfhd(options?: {
 
 
 /**
- * Cinepak
+ *
  */
 export function cinepak(options?: {
 
@@ -1128,7 +1047,7 @@ export function cinepak(options?: {
 
 
 /**
- * Iterated Systems ClearVideo
+ *
  */
 export function clearvideo(options?: {
 
@@ -1145,7 +1064,7 @@ export function clearvideo(options?: {
 
 
 /**
- * Cirrus Logic AccuPak
+ *
  */
 export function cljr(options?: {
 
@@ -1162,7 +1081,7 @@ export function cljr(options?: {
 
 
 /**
- * Canopus Lossless Codec
+ *
  */
 export function cllc(options?: {
 
@@ -1179,7 +1098,7 @@ export function cllc(options?: {
 
 
 /**
- * Electronic Arts CMV video (codec cmv)
+ * (codec cmv)
  */
 export function eacmv(options?: {
 
@@ -1196,7 +1115,7 @@ export function eacmv(options?: {
 
 
 /**
- * CPiA video format
+ *
  */
 export function cpia(options?: {
 
@@ -1213,7 +1132,7 @@ export function cpia(options?: {
 
 
 /**
- * Cintel RAW
+ *
  */
 export function cri(options?: {
 
@@ -1230,7 +1149,7 @@ export function cri(options?: {
 
 
 /**
- * CamStudio (codec cscd)
+ * (codec cscd)
  */
 export function camstudio(options?: {
 
@@ -1247,7 +1166,7 @@ export function camstudio(options?: {
 
 
 /**
- * Creative YUV (CYUV)
+ *
  */
 export function cyuv(options?: {
 
@@ -1264,7 +1183,7 @@ export function cyuv(options?: {
 
 
 /**
- * DirectDraw Surface image decoder
+ *
  */
 export function dds(options?: {
 
@@ -1281,7 +1200,7 @@ export function dds(options?: {
 
 
 /**
- * Chronomaster DFA
+ *
  */
 export function dfa(options?: {
 
@@ -1298,7 +1217,7 @@ export function dfa(options?: {
 
 
 /**
- * BBC Dirac VC-2
+ *
  */
 export function dirac(options?: {
 
@@ -1315,7 +1234,7 @@ export function dirac(options?: {
 
 
 /**
- * VC3/DNxHD
+ *
  */
 export function dnxhd(options?: {
 
@@ -1332,7 +1251,7 @@ export function dnxhd(options?: {
 
 
 /**
- * DPX (Digital Picture Exchange) image
+ *
  */
 export function dpx(options?: {
 
@@ -1349,7 +1268,7 @@ export function dpx(options?: {
 
 
 /**
- * Delphine Software International CIN video
+ *
  */
 export function dsicinvideo(options?: {
 
@@ -1366,7 +1285,7 @@ export function dsicinvideo(options?: {
 
 
 /**
- * DV (Digital Video)
+ *
  */
 export function dvvideo(options?: {
 
@@ -1383,7 +1302,7 @@ export function dvvideo(options?: {
 
 
 /**
- * Feeble Files/ScummVM DXA
+ *
  */
 export function dxa(options?: {
 
@@ -1400,7 +1319,7 @@ export function dxa(options?: {
 
 
 /**
- * Dxtory
+ *
  */
 export function dxtory(options?: {
 
@@ -1417,7 +1336,7 @@ export function dxtory(options?: {
 
 
 /**
- * Resolume DXV
+ *
  */
 export function dxv(options?: {
 
@@ -1434,7 +1353,7 @@ export function dxv(options?: {
 
 
 /**
- * Escape 124
+ *
  */
 export function escape124(options?: {
 
@@ -1451,7 +1370,7 @@ export function escape124(options?: {
 
 
 /**
- * Escape 130
+ *
  */
 export function escape130(options?: {
 
@@ -1468,7 +1387,7 @@ export function escape130(options?: {
 
 
 /**
- * OpenEXR image
+ *
  * @param options.layer - Set the decoding layer (default "")
  * @param options.part - Set the decoding part (from 0 to INT_MAX) (default 0)
  * @param options.gamma - Set the float gamma value when decoding (from 0.001 to FLT_MAX) (default 1)
@@ -1497,7 +1416,7 @@ export function exr(options?: {
 
 
 /**
- * FFmpeg video codec #1
+ *
  */
 export function ffv1(options?: {
 
@@ -1514,7 +1433,7 @@ export function ffv1(options?: {
 
 
 /**
- * Huffyuv FFmpeg variant
+ *
  */
 export function ffvhuff(options?: {
 
@@ -1531,7 +1450,7 @@ export function ffvhuff(options?: {
 
 
 /**
- * Mirillis FIC
+ *
  * @param options.skip_cursor - skip the cursor (default false)
  */
 export function fic(options?: {
@@ -1551,7 +1470,7 @@ export function fic(options?: {
 
 
 /**
- * Flexible Image Transport System
+ *
  * @param options.blank_value - value that is used to replace BLANK pixels in data array (from 0 to 65535) (default 0)
  */
 export function fits(options?: {
@@ -1571,7 +1490,7 @@ export function fits(options?: {
 
 
 /**
- * Flash Screen Video v1
+ *
  */
 export function flashsv(options?: {
 
@@ -1588,7 +1507,7 @@ export function flashsv(options?: {
 
 
 /**
- * Flash Screen Video v2
+ *
  */
 export function flashsv2(options?: {
 
@@ -1605,7 +1524,7 @@ export function flashsv2(options?: {
 
 
 /**
- * Autodesk Animator Flic video
+ *
  */
 export function flic(options?: {
 
@@ -1622,7 +1541,7 @@ export function flic(options?: {
 
 
 /**
- * FLV / Sorenson Spark / Sorenson H.263 (Flash Video) (codec flv1)
+ * (codec flv1)
  */
 export function flv(options?: {
 
@@ -1639,7 +1558,7 @@ export function flv(options?: {
 
 
 /**
- * FM Screen Capture Codec
+ *
  */
 export function fmvc(options?: {
 
@@ -1656,7 +1575,7 @@ export function fmvc(options?: {
 
 
 /**
- * Fraps
+ *
  */
 export function fraps(options?: {
 
@@ -1673,7 +1592,7 @@ export function fraps(options?: {
 
 
 /**
- * Forward Uncompressed
+ *
  * @param options.change_field_order - Change field order (default false)
  */
 export function frwu(options?: {
@@ -1693,7 +1612,7 @@ export function frwu(options?: {
 
 
 /**
- * Go2Meeting
+ *
  */
 export function g2m(options?: {
 
@@ -1710,7 +1629,7 @@ export function g2m(options?: {
 
 
 /**
- * Gremlin Digital Video
+ *
  */
 export function gdv(options?: {
 
@@ -1727,7 +1646,7 @@ export function gdv(options?: {
 
 
 /**
- * GEM Raster image
+ *
  */
 export function gem(options?: {
 
@@ -1744,7 +1663,7 @@ export function gem(options?: {
 
 
 /**
- * GIF (Graphics Interchange Format)
+ *
  * @param options.trans_color - color value (ARGB) that is used instead of transparent color (from 0 to UINT32_MAX) (default 16777215)
  */
 export function gif(options?: {
@@ -1764,7 +1683,7 @@ export function gif(options?: {
 
 
 /**
- * H.261
+ *
  */
 export function h261(options?: {
 
@@ -1781,7 +1700,7 @@ export function h261(options?: {
 
 
 /**
- * H.263 / H.263-1996, H.263+ / H.263-1998 / H.263 version 2
+ *
  */
 export function h263(options?: {
 
@@ -1798,7 +1717,7 @@ export function h263(options?: {
 
 
 /**
- * V4L2 mem2mem H.263 decoder wrapper (codec h263)
+ * (codec h263)
  * @param options.num_output_buffers - Number of buffers in the output context (from 6 to INT_MAX) (default 16)
  * @param options.num_capture_buffers - Number of buffers in the capture context (from 20 to INT_MAX) (default 20)
  */
@@ -1821,7 +1740,7 @@ export function h263_v4l2m2m(options?: {
 
 
 /**
- * Intel H.263
+ *
  */
 export function h263i(options?: {
 
@@ -1838,7 +1757,7 @@ export function h263i(options?: {
 
 
 /**
- * H.263 / H.263-1996, H.263+ / H.263-1998 / H.263 version 2
+ *
  */
 export function h263p(options?: {
 
@@ -1855,7 +1774,7 @@ export function h263p(options?: {
 
 
 /**
- * H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10
+ *
  * @param options.is_avc - is avc (default false)
  * @param options.nal_length_size - nal_length_size (from 0 to 4) (default 0)
  * @param options.enable_er - Enable error resilience on damaged frames (unsafe) (default auto)
@@ -1884,7 +1803,7 @@ export function h264(options?: {
 
 
 /**
- * V4L2 mem2mem H.264 decoder wrapper (codec h264)
+ * (codec h264)
  * @param options.num_output_buffers - Number of buffers in the output context (from 6 to INT_MAX) (default 16)
  * @param options.num_capture_buffers - Number of buffers in the capture context (from 20 to INT_MAX) (default 20)
  */
@@ -1907,42 +1826,7 @@ export function h264_v4l2m2m(options?: {
 
 
 /**
- * Nvidia CUVID H264 decoder (codec h264)
- * @param options.deint - Set deinterlacing mode (from 0 to 2) (default weave)
- * @param options.gpu - GPU to be used for decoding
- * @param options.surfaces - Maximum surfaces to be used for decoding (from 0 to INT_MAX) (default 25)
- * @param options.drop_second_field - Drop second field when deinterlacing (default false)
- * @param options.crop - Crop (top)x(bottom)x(left)x(right)
- * @param options.resize - Resize (width)x(height)
- */
-export function h264_cuvid(options?: {
-  deint?: number | null | "weave" | "bob" | "adaptive";
-  gpu?: string | null;
-  surfaces?: number | null;
-  drop_second_field?: boolean | null;
-  crop?: string | null;
-  resize?: string | null;
-
-}): FFMpegDecoderOption {
-  return merge({
-    "deint": options?.deint,
-    "gpu": options?.gpu,
-    "surfaces": options?.surfaces,
-    "drop_second_field": options?.drop_second_field,
-    "crop": options?.crop,
-    "resize": options?.resize,
-
-  });
-}
-
-
-
-
-
-
-
-/**
- * Vidvox Hap
+ *
  */
 export function hap(options?: {
 
@@ -1959,7 +1843,7 @@ export function hap(options?: {
 
 
 /**
- * HEVC (High Efficiency Video Coding)
+ *
  * @param options.apply_defdispwin - Apply default display window from VUI (default false)
  * @param options.strict_displaywin - stricly apply default display window size (default false)
  */
@@ -1982,7 +1866,7 @@ export function hevc(options?: {
 
 
 /**
- * V4L2 mem2mem HEVC decoder wrapper (codec hevc)
+ * (codec hevc)
  * @param options.num_output_buffers - Number of buffers in the output context (from 6 to INT_MAX) (default 16)
  * @param options.num_capture_buffers - Number of buffers in the capture context (from 20 to INT_MAX) (default 20)
  */
@@ -2005,42 +1889,7 @@ export function hevc_v4l2m2m(options?: {
 
 
 /**
- * Nvidia CUVID HEVC decoder (codec hevc)
- * @param options.deint - Set deinterlacing mode (from 0 to 2) (default weave)
- * @param options.gpu - GPU to be used for decoding
- * @param options.surfaces - Maximum surfaces to be used for decoding (from 0 to INT_MAX) (default 25)
- * @param options.drop_second_field - Drop second field when deinterlacing (default false)
- * @param options.crop - Crop (top)x(bottom)x(left)x(right)
- * @param options.resize - Resize (width)x(height)
- */
-export function hevc_cuvid(options?: {
-  deint?: number | null | "weave" | "bob" | "adaptive";
-  gpu?: string | null;
-  surfaces?: number | null;
-  drop_second_field?: boolean | null;
-  crop?: string | null;
-  resize?: string | null;
-
-}): FFMpegDecoderOption {
-  return merge({
-    "deint": options?.deint,
-    "gpu": options?.gpu,
-    "surfaces": options?.surfaces,
-    "drop_second_field": options?.drop_second_field,
-    "crop": options?.crop,
-    "resize": options?.resize,
-
-  });
-}
-
-
-
-
-
-
-
-/**
- * HNM 4 video
+ *
  */
 export function hnm4video(options?: {
 
@@ -2057,7 +1906,7 @@ export function hnm4video(options?: {
 
 
 /**
- * Canopus HQ/HQA
+ *
  */
 export function hq_hqa(options?: {
 
@@ -2074,7 +1923,7 @@ export function hq_hqa(options?: {
 
 
 /**
- * Canopus HQX
+ *
  */
 export function hqx(options?: {
 
@@ -2091,7 +1940,7 @@ export function hqx(options?: {
 
 
 /**
- * Huffyuv / HuffYUV
+ *
  */
 export function huffyuv(options?: {
 
@@ -2108,7 +1957,7 @@ export function huffyuv(options?: {
 
 
 /**
- * HuffYUV MT
+ *
  */
 export function hymt(options?: {
 
@@ -2125,7 +1974,7 @@ export function hymt(options?: {
 
 
 /**
- * id Quake II CIN video (codec idcin)
+ * (codec idcin)
  */
 export function idcinvideo(options?: {
 
@@ -2142,7 +1991,7 @@ export function idcinvideo(options?: {
 
 
 /**
- * iCEDraw text
+ *
  */
 export function idf(options?: {
 
@@ -2159,7 +2008,7 @@ export function idf(options?: {
 
 
 /**
- * IFF ACBM/ANIM/DEEP/ILBM/PBM/RGB8/RGBN (codec iff_ilbm)
+ * (codec iff_ilbm)
  */
 export function iff(options?: {
 
@@ -2176,7 +2025,7 @@ export function iff(options?: {
 
 
 /**
- * Infinity IMM4
+ *
  */
 export function imm4(options?: {
 
@@ -2193,7 +2042,7 @@ export function imm4(options?: {
 
 
 /**
- * Infinity IMM5
+ *
  */
 export function imm5(options?: {
 
@@ -2210,7 +2059,7 @@ export function imm5(options?: {
 
 
 /**
- * Intel Indeo 2
+ *
  */
 export function indeo2(options?: {
 
@@ -2227,7 +2076,7 @@ export function indeo2(options?: {
 
 
 /**
- * Intel Indeo 3
+ *
  */
 export function indeo3(options?: {
 
@@ -2244,7 +2093,7 @@ export function indeo3(options?: {
 
 
 /**
- * Intel Indeo Video Interactive 4
+ *
  */
 export function indeo4(options?: {
 
@@ -2261,7 +2110,7 @@ export function indeo4(options?: {
 
 
 /**
- * Intel Indeo Video Interactive 5
+ *
  */
 export function indeo5(options?: {
 
@@ -2278,7 +2127,7 @@ export function indeo5(options?: {
 
 
 /**
- * Interplay MVE video
+ *
  */
 export function interplayvideo(options?: {
 
@@ -2295,7 +2144,7 @@ export function interplayvideo(options?: {
 
 
 /**
- * IPU Video
+ *
  */
 export function ipu(options?: {
 
@@ -2312,7 +2161,7 @@ export function ipu(options?: {
 
 
 /**
- * JPEG 2000
+ *
  * @param options.lowres - Lower the decoding resolution by a power of two (from 0 to 33) (default 0)
  */
 export function jpeg2000(options?: {
@@ -2332,7 +2181,7 @@ export function jpeg2000(options?: {
 
 
 /**
- * OpenJPEG JPEG 2000 (codec jpeg2000)
+ * (codec jpeg2000)
  * @param options.lowqual - Limit the number of layers used for decoding (from 0 to INT_MAX) (default 0)
  */
 export function libopenjpeg(options?: {
@@ -2352,7 +2201,7 @@ export function libopenjpeg(options?: {
 
 
 /**
- * JPEG-LS
+ *
  */
 export function jpegls(options?: {
 
@@ -2369,7 +2218,7 @@ export function jpegls(options?: {
 
 
 /**
- * Bitmap Brothers JV video
+ *
  */
 export function jv(options?: {
 
@@ -2386,7 +2235,7 @@ export function jv(options?: {
 
 
 /**
- * Kega Game Video
+ *
  */
 export function kgv1(options?: {
 
@@ -2403,7 +2252,7 @@ export function kgv1(options?: {
 
 
 /**
- * Karl Morton's video codec
+ *
  */
 export function kmvc(options?: {
 
@@ -2420,7 +2269,7 @@ export function kmvc(options?: {
 
 
 /**
- * Lagarith lossless
+ *
  */
 export function lagarith(options?: {
 
@@ -2437,7 +2286,7 @@ export function lagarith(options?: {
 
 
 /**
- * LOCO
+ *
  */
 export function loco(options?: {
 
@@ -2454,7 +2303,7 @@ export function loco(options?: {
 
 
 /**
- * LEAD Screen Capture
+ *
  */
 export function lscr(options?: {
 
@@ -2471,7 +2320,7 @@ export function lscr(options?: {
 
 
 /**
- * Matrox Uncompressed SD
+ *
  */
 export function m101(options?: {
 
@@ -2488,7 +2337,7 @@ export function m101(options?: {
 
 
 /**
- * Electronic Arts Madcow Video (codec mad)
+ * (codec mad)
  */
 export function eamad(options?: {
 
@@ -2505,7 +2354,7 @@ export function eamad(options?: {
 
 
 /**
- * MagicYUV video
+ *
  */
 export function magicyuv(options?: {
 
@@ -2522,7 +2371,7 @@ export function magicyuv(options?: {
 
 
 /**
- * Sony PlayStation MDEC (Motion DECoder)
+ *
  */
 export function mdec(options?: {
 
@@ -2539,7 +2388,7 @@ export function mdec(options?: {
 
 
 /**
- * Mimic
+ *
  */
 export function mimic(options?: {
 
@@ -2556,7 +2405,7 @@ export function mimic(options?: {
 
 
 /**
- * MJPEG (Motion JPEG)
+ *
  * @param options.extern_huff - Use external huffman table. (default false)
  */
 export function mjpeg(options?: {
@@ -2576,42 +2425,7 @@ export function mjpeg(options?: {
 
 
 /**
- * Nvidia CUVID MJPEG decoder (codec mjpeg)
- * @param options.deint - Set deinterlacing mode (from 0 to 2) (default weave)
- * @param options.gpu - GPU to be used for decoding
- * @param options.surfaces - Maximum surfaces to be used for decoding (from 0 to INT_MAX) (default 25)
- * @param options.drop_second_field - Drop second field when deinterlacing (default false)
- * @param options.crop - Crop (top)x(bottom)x(left)x(right)
- * @param options.resize - Resize (width)x(height)
- */
-export function mjpeg_cuvid(options?: {
-  deint?: number | null | "weave" | "bob" | "adaptive";
-  gpu?: string | null;
-  surfaces?: number | null;
-  drop_second_field?: boolean | null;
-  crop?: string | null;
-  resize?: string | null;
-
-}): FFMpegDecoderOption {
-  return merge({
-    "deint": options?.deint,
-    "gpu": options?.gpu,
-    "surfaces": options?.surfaces,
-    "drop_second_field": options?.drop_second_field,
-    "crop": options?.crop,
-    "resize": options?.resize,
-
-  });
-}
-
-
-
-
-
-
-
-/**
- * Apple MJPEG-B
+ *
  */
 export function mjpegb(options?: {
 
@@ -2628,7 +2442,7 @@ export function mjpegb(options?: {
 
 
 /**
- * American Laser Games MM Video
+ *
  */
 export function mmvideo(options?: {
 
@@ -2645,7 +2459,7 @@ export function mmvideo(options?: {
 
 
 /**
- * MobiClip Video
+ *
  */
 export function mobiclip(options?: {
 
@@ -2662,7 +2476,7 @@ export function mobiclip(options?: {
 
 
 /**
- * Motion Pixels video
+ *
  */
 export function motionpixels(options?: {
 
@@ -2679,7 +2493,7 @@ export function motionpixels(options?: {
 
 
 /**
- * MPEG-1 video
+ *
  */
 export function mpeg1video(options?: {
 
@@ -2696,7 +2510,7 @@ export function mpeg1video(options?: {
 
 
 /**
- * V4L2 mem2mem MPEG1 decoder wrapper (codec mpeg1video)
+ * (codec mpeg1video)
  * @param options.num_output_buffers - Number of buffers in the output context (from 6 to INT_MAX) (default 16)
  * @param options.num_capture_buffers - Number of buffers in the capture context (from 20 to INT_MAX) (default 20)
  */
@@ -2719,42 +2533,7 @@ export function mpeg1_v4l2m2m(options?: {
 
 
 /**
- * Nvidia CUVID MPEG1VIDEO decoder (codec mpeg1video)
- * @param options.deint - Set deinterlacing mode (from 0 to 2) (default weave)
- * @param options.gpu - GPU to be used for decoding
- * @param options.surfaces - Maximum surfaces to be used for decoding (from 0 to INT_MAX) (default 25)
- * @param options.drop_second_field - Drop second field when deinterlacing (default false)
- * @param options.crop - Crop (top)x(bottom)x(left)x(right)
- * @param options.resize - Resize (width)x(height)
- */
-export function mpeg1_cuvid(options?: {
-  deint?: number | null | "weave" | "bob" | "adaptive";
-  gpu?: string | null;
-  surfaces?: number | null;
-  drop_second_field?: boolean | null;
-  crop?: string | null;
-  resize?: string | null;
-
-}): FFMpegDecoderOption {
-  return merge({
-    "deint": options?.deint,
-    "gpu": options?.gpu,
-    "surfaces": options?.surfaces,
-    "drop_second_field": options?.drop_second_field,
-    "crop": options?.crop,
-    "resize": options?.resize,
-
-  });
-}
-
-
-
-
-
-
-
-/**
- * MPEG-2 video
+ *
  */
 export function mpeg2video(options?: {
 
@@ -2771,7 +2550,7 @@ export function mpeg2video(options?: {
 
 
 /**
- * MPEG-1 video (codec mpeg2video)
+ * (codec mpeg2video)
  */
 export function mpegvideo(options?: {
 
@@ -2788,7 +2567,7 @@ export function mpegvideo(options?: {
 
 
 /**
- * V4L2 mem2mem MPEG2 decoder wrapper (codec mpeg2video)
+ * (codec mpeg2video)
  * @param options.num_output_buffers - Number of buffers in the output context (from 6 to INT_MAX) (default 16)
  * @param options.num_capture_buffers - Number of buffers in the capture context (from 20 to INT_MAX) (default 20)
  */
@@ -2811,42 +2590,7 @@ export function mpeg2_v4l2m2m(options?: {
 
 
 /**
- * Nvidia CUVID MPEG2VIDEO decoder (codec mpeg2video)
- * @param options.deint - Set deinterlacing mode (from 0 to 2) (default weave)
- * @param options.gpu - GPU to be used for decoding
- * @param options.surfaces - Maximum surfaces to be used for decoding (from 0 to INT_MAX) (default 25)
- * @param options.drop_second_field - Drop second field when deinterlacing (default false)
- * @param options.crop - Crop (top)x(bottom)x(left)x(right)
- * @param options.resize - Resize (width)x(height)
- */
-export function mpeg2_cuvid(options?: {
-  deint?: number | null | "weave" | "bob" | "adaptive";
-  gpu?: string | null;
-  surfaces?: number | null;
-  drop_second_field?: boolean | null;
-  crop?: string | null;
-  resize?: string | null;
-
-}): FFMpegDecoderOption {
-  return merge({
-    "deint": options?.deint,
-    "gpu": options?.gpu,
-    "surfaces": options?.surfaces,
-    "drop_second_field": options?.drop_second_field,
-    "crop": options?.crop,
-    "resize": options?.resize,
-
-  });
-}
-
-
-
-
-
-
-
-/**
- * MPEG-4 part 2
+ *
  */
 export function mpeg4(options?: {
 
@@ -2863,7 +2607,7 @@ export function mpeg4(options?: {
 
 
 /**
- * V4L2 mem2mem MPEG4 decoder wrapper (codec mpeg4)
+ * (codec mpeg4)
  * @param options.num_output_buffers - Number of buffers in the output context (from 6 to INT_MAX) (default 16)
  * @param options.num_capture_buffers - Number of buffers in the capture context (from 20 to INT_MAX) (default 20)
  */
@@ -2886,42 +2630,7 @@ export function mpeg4_v4l2m2m(options?: {
 
 
 /**
- * Nvidia CUVID MPEG4 decoder (codec mpeg4)
- * @param options.deint - Set deinterlacing mode (from 0 to 2) (default weave)
- * @param options.gpu - GPU to be used for decoding
- * @param options.surfaces - Maximum surfaces to be used for decoding (from 0 to INT_MAX) (default 25)
- * @param options.drop_second_field - Drop second field when deinterlacing (default false)
- * @param options.crop - Crop (top)x(bottom)x(left)x(right)
- * @param options.resize - Resize (width)x(height)
- */
-export function mpeg4_cuvid(options?: {
-  deint?: number | null | "weave" | "bob" | "adaptive";
-  gpu?: string | null;
-  surfaces?: number | null;
-  drop_second_field?: boolean | null;
-  crop?: string | null;
-  resize?: string | null;
-
-}): FFMpegDecoderOption {
-  return merge({
-    "deint": options?.deint,
-    "gpu": options?.gpu,
-    "surfaces": options?.surfaces,
-    "drop_second_field": options?.drop_second_field,
-    "crop": options?.crop,
-    "resize": options?.resize,
-
-  });
-}
-
-
-
-
-
-
-
-/**
- * MS ATC Screen
+ *
  */
 export function msa1(options?: {
 
@@ -2938,7 +2647,7 @@ export function msa1(options?: {
 
 
 /**
- * Mandsoft Screen Capture Codec
+ *
  */
 export function mscc(options?: {
 
@@ -2955,7 +2664,7 @@ export function mscc(options?: {
 
 
 /**
- * MPEG-4 part 2 Microsoft variant version 1
+ *
  */
 export function msmpeg4v1(options?: {
 
@@ -2972,7 +2681,7 @@ export function msmpeg4v1(options?: {
 
 
 /**
- * MPEG-4 part 2 Microsoft variant version 2
+ *
  */
 export function msmpeg4v2(options?: {
 
@@ -2989,7 +2698,7 @@ export function msmpeg4v2(options?: {
 
 
 /**
- * MPEG-4 part 2 Microsoft variant version 3 (codec msmpeg4v3)
+ * (codec msmpeg4v3)
  */
 export function msmpeg4(options?: {
 
@@ -3006,7 +2715,7 @@ export function msmpeg4(options?: {
 
 
 /**
- * Microsoft Paint (MSP) version 2
+ *
  */
 export function msp2(options?: {
 
@@ -3023,7 +2732,7 @@ export function msp2(options?: {
 
 
 /**
- * Microsoft RLE
+ *
  */
 export function msrle(options?: {
 
@@ -3040,7 +2749,7 @@ export function msrle(options?: {
 
 
 /**
- * MS Screen 1
+ *
  */
 export function mss1(options?: {
 
@@ -3057,7 +2766,7 @@ export function mss1(options?: {
 
 
 /**
- * MS Windows Media Video V9 Screen
+ *
  */
 export function mss2(options?: {
 
@@ -3074,7 +2783,7 @@ export function mss2(options?: {
 
 
 /**
- * Microsoft Video 1
+ *
  */
 export function msvideo1(options?: {
 
@@ -3091,7 +2800,7 @@ export function msvideo1(options?: {
 
 
 /**
- * LCL (LossLess Codec Library) MSZH
+ *
  */
 export function mszh(options?: {
 
@@ -3108,7 +2817,7 @@ export function mszh(options?: {
 
 
 /**
- * MS Expression Encoder Screen
+ *
  */
 export function mts2(options?: {
 
@@ -3125,7 +2834,7 @@ export function mts2(options?: {
 
 
 /**
- * MidiVid 3.0
+ *
  */
 export function mv30(options?: {
 
@@ -3142,7 +2851,7 @@ export function mv30(options?: {
 
 
 /**
- * Silicon Graphics Motion Video Compressor 1
+ *
  */
 export function mvc1(options?: {
 
@@ -3159,7 +2868,7 @@ export function mvc1(options?: {
 
 
 /**
- * Silicon Graphics Motion Video Compressor 2
+ *
  */
 export function mvc2(options?: {
 
@@ -3176,7 +2885,7 @@ export function mvc2(options?: {
 
 
 /**
- * MidiVid VQ
+ *
  */
 export function mvdv(options?: {
 
@@ -3193,7 +2902,7 @@ export function mvdv(options?: {
 
 
 /**
- * MidiVid Archive Codec
+ *
  */
 export function mvha(options?: {
 
@@ -3210,7 +2919,7 @@ export function mvha(options?: {
 
 
 /**
- * MatchWare Screen Capture Codec
+ *
  */
 export function mwsc(options?: {
 
@@ -3227,7 +2936,7 @@ export function mwsc(options?: {
 
 
 /**
- * Mobotix MxPEG video
+ *
  */
 export function mxpeg(options?: {
 
@@ -3244,7 +2953,7 @@ export function mxpeg(options?: {
 
 
 /**
- * NotchLC
+ *
  */
 export function notchlc(options?: {
 
@@ -3261,7 +2970,7 @@ export function notchlc(options?: {
 
 
 /**
- * NuppelVideo/RTJPEG
+ *
  */
 export function nuv(options?: {
 
@@ -3278,7 +2987,7 @@ export function nuv(options?: {
 
 
 /**
- * Amazing Studio Packed Animation File Video
+ *
  */
 export function paf_video(options?: {
 
@@ -3295,7 +3004,7 @@ export function paf_video(options?: {
 
 
 /**
- * PAM (Portable AnyMap) image
+ *
  */
 export function pam(options?: {
 
@@ -3312,7 +3021,7 @@ export function pam(options?: {
 
 
 /**
- * PBM (Portable BitMap) image
+ *
  */
 export function pbm(options?: {
 
@@ -3329,7 +3038,7 @@ export function pbm(options?: {
 
 
 /**
- * PC Paintbrush PCX image
+ *
  */
 export function pcx(options?: {
 
@@ -3346,7 +3055,7 @@ export function pcx(options?: {
 
 
 /**
- * PFM (Portable FloatMap) image
+ *
  */
 export function pfm(options?: {
 
@@ -3363,7 +3072,7 @@ export function pfm(options?: {
 
 
 /**
- * PGM (Portable GrayMap) image
+ *
  */
 export function pgm(options?: {
 
@@ -3380,7 +3089,7 @@ export function pgm(options?: {
 
 
 /**
- * PGMYUV (Portable GrayMap YUV) image
+ *
  */
 export function pgmyuv(options?: {
 
@@ -3397,7 +3106,7 @@ export function pgmyuv(options?: {
 
 
 /**
- * PGX (JPEG2000 Test Format)
+ *
  */
 export function pgx(options?: {
 
@@ -3414,7 +3123,7 @@ export function pgx(options?: {
 
 
 /**
- * PHM (Portable HalfFloatMap) image
+ *
  */
 export function phm(options?: {
 
@@ -3431,7 +3140,7 @@ export function phm(options?: {
 
 
 /**
- * Kodak Photo CD
+ *
  * @param options.lowres - Lower the decoding resolution by a power of two (from 0 to 4) (default 0)
  */
 export function photocd(options?: {
@@ -3451,7 +3160,7 @@ export function photocd(options?: {
 
 
 /**
- * Pictor/PC Paint
+ *
  */
 export function pictor(options?: {
 
@@ -3468,7 +3177,7 @@ export function pictor(options?: {
 
 
 /**
- * Apple Pixlet
+ *
  */
 export function pixlet(options?: {
 
@@ -3485,7 +3194,7 @@ export function pixlet(options?: {
 
 
 /**
- * PNG (Portable Network Graphics) image
+ *
  */
 export function png(options?: {
 
@@ -3502,7 +3211,7 @@ export function png(options?: {
 
 
 /**
- * PPM (Portable PixelMap) image
+ *
  */
 export function ppm(options?: {
 
@@ -3519,7 +3228,7 @@ export function ppm(options?: {
 
 
 /**
- * Apple ProRes (iCodec Pro)
+ *
  */
 export function prores(options?: {
 
@@ -3536,7 +3245,7 @@ export function prores(options?: {
 
 
 /**
- * Brooktree ProSumer Video
+ *
  */
 export function prosumer(options?: {
 
@@ -3553,7 +3262,7 @@ export function prosumer(options?: {
 
 
 /**
- * Photoshop PSD file
+ *
  */
 export function psd(options?: {
 
@@ -3570,7 +3279,7 @@ export function psd(options?: {
 
 
 /**
- * V.Flash PTX image
+ *
  */
 export function ptx(options?: {
 
@@ -3587,7 +3296,7 @@ export function ptx(options?: {
 
 
 /**
- * Apple QuickDraw
+ *
  */
 export function qdraw(options?: {
 
@@ -3604,7 +3313,7 @@ export function qdraw(options?: {
 
 
 /**
- * QOI (Quite OK Image format) image
+ *
  */
 export function qoi(options?: {
 
@@ -3621,7 +3330,7 @@ export function qoi(options?: {
 
 
 /**
- * Q-team QPEG
+ *
  */
 export function qpeg(options?: {
 
@@ -3638,7 +3347,7 @@ export function qpeg(options?: {
 
 
 /**
- * QuickTime Animation (RLE) video
+ *
  */
 export function qtrle(options?: {
 
@@ -3655,7 +3364,7 @@ export function qtrle(options?: {
 
 
 /**
- * AJA Kona 10-bit RGB Codec
+ *
  */
 export function r10k(options?: {
 
@@ -3672,7 +3381,7 @@ export function r10k(options?: {
 
 
 /**
- * Uncompressed RGB 10-bit
+ *
  */
 export function r210(options?: {
 
@@ -3689,7 +3398,7 @@ export function r210(options?: {
 
 
 /**
- * RemotelyAnywhere Screen Capture
+ *
  * @param options.skip_cursor - skip the cursor (default false)
  */
 export function rasc(options?: {
@@ -3709,7 +3418,7 @@ export function rasc(options?: {
 
 
 /**
- * raw video
+ *
  * @param options.top - top field first (default auto)
  */
 export function rawvideo(options?: {
@@ -3729,7 +3438,7 @@ export function rawvideo(options?: {
 
 
 /**
- * RL2 video
+ *
  */
 export function rl2(options?: {
 
@@ -3746,7 +3455,7 @@ export function rl2(options?: {
 
 
 /**
- * id RoQ video (codec roq)
+ * (codec roq)
  */
 export function roqvideo(options?: {
 
@@ -3763,7 +3472,7 @@ export function roqvideo(options?: {
 
 
 /**
- * QuickTime video (RPZA)
+ *
  */
 export function rpza(options?: {
 
@@ -3780,7 +3489,7 @@ export function rpza(options?: {
 
 
 /**
- * innoHeim/Rsupport Screen Capture Codec
+ *
  */
 export function rscc(options?: {
 
@@ -3797,7 +3506,7 @@ export function rscc(options?: {
 
 
 /**
- * RealVideo 1.0
+ *
  */
 export function rv10(options?: {
 
@@ -3814,7 +3523,7 @@ export function rv10(options?: {
 
 
 /**
- * RealVideo 2.0
+ *
  */
 export function rv20(options?: {
 
@@ -3831,7 +3540,7 @@ export function rv20(options?: {
 
 
 /**
- * RealVideo 3.0
+ *
  */
 export function rv30(options?: {
 
@@ -3848,7 +3557,7 @@ export function rv30(options?: {
 
 
 /**
- * RealVideo 4.0
+ *
  */
 export function rv40(options?: {
 
@@ -3865,7 +3574,7 @@ export function rv40(options?: {
 
 
 /**
- * LucasArts SANM/Smush video
+ *
  */
 export function sanm(options?: {
 
@@ -3882,7 +3591,7 @@ export function sanm(options?: {
 
 
 /**
- * ScreenPressor
+ *
  */
 export function scpr(options?: {
 
@@ -3899,7 +3608,7 @@ export function scpr(options?: {
 
 
 /**
- * Screenpresso
+ *
  */
 export function screenpresso(options?: {
 
@@ -3916,7 +3625,7 @@ export function screenpresso(options?: {
 
 
 /**
- * Digital Pictures SGA Video
+ *
  */
 export function sga(options?: {
 
@@ -3933,7 +3642,7 @@ export function sga(options?: {
 
 
 /**
- * SGI image
+ *
  */
 export function sgi(options?: {
 
@@ -3950,7 +3659,7 @@ export function sgi(options?: {
 
 
 /**
- * Silicon Graphics RLE 8-bit video
+ *
  */
 export function sgirle(options?: {
 
@@ -3967,7 +3676,7 @@ export function sgirle(options?: {
 
 
 /**
- * BitJazz SheerVideo
+ *
  */
 export function sheervideo(options?: {
 
@@ -3984,7 +3693,7 @@ export function sheervideo(options?: {
 
 
 /**
- * Simbiosis Interactive IMX Video
+ *
  */
 export function simbiosis_imx(options?: {
 
@@ -4001,7 +3710,7 @@ export function simbiosis_imx(options?: {
 
 
 /**
- * Smacker video (codec smackvideo)
+ * (codec smackvideo)
  */
 export function smackvid(options?: {
 
@@ -4018,7 +3727,7 @@ export function smackvid(options?: {
 
 
 /**
- * QuickTime Graphics (SMC)
+ *
  */
 export function smc(options?: {
 
@@ -4035,7 +3744,7 @@ export function smc(options?: {
 
 
 /**
- * SMV JPEG
+ *
  */
 export function smvjpeg(options?: {
 
@@ -4052,7 +3761,7 @@ export function smvjpeg(options?: {
 
 
 /**
- * Snow
+ *
  */
 export function snow(options?: {
 
@@ -4069,7 +3778,7 @@ export function snow(options?: {
 
 
 /**
- * Sunplus JPEG (SP5X)
+ *
  */
 export function sp5x(options?: {
 
@@ -4086,7 +3795,7 @@ export function sp5x(options?: {
 
 
 /**
- * NewTek SpeedHQ
+ *
  */
 export function speedhq(options?: {
 
@@ -4103,7 +3812,7 @@ export function speedhq(options?: {
 
 
 /**
- * Screen Recorder Gold Codec
+ *
  */
 export function srgc(options?: {
 
@@ -4120,7 +3829,7 @@ export function srgc(options?: {
 
 
 /**
- * Sun Rasterfile image
+ *
  */
 export function sunrast(options?: {
 
@@ -4137,7 +3846,7 @@ export function sunrast(options?: {
 
 
 /**
- * Sorenson Vector Quantizer 1 / Sorenson Video 1 / SVQ1
+ *
  */
 export function svq1(options?: {
 
@@ -4154,7 +3863,7 @@ export function svq1(options?: {
 
 
 /**
- * Sorenson Vector Quantizer 3 / Sorenson Video 3 / SVQ3
+ *
  */
 export function svq3(options?: {
 
@@ -4171,7 +3880,7 @@ export function svq3(options?: {
 
 
 /**
- * Truevision Targa image
+ *
  */
 export function targa(options?: {
 
@@ -4188,7 +3897,7 @@ export function targa(options?: {
 
 
 /**
- * Pinnacle TARGA CineWave YUV16
+ *
  */
 export function targa_y216(options?: {
 
@@ -4205,7 +3914,7 @@ export function targa_y216(options?: {
 
 
 /**
- * TDSC
+ *
  */
 export function tdsc(options?: {
 
@@ -4222,7 +3931,7 @@ export function tdsc(options?: {
 
 
 /**
- * Electronic Arts TGQ video (codec tgq)
+ * (codec tgq)
  */
 export function eatgq(options?: {
 
@@ -4239,7 +3948,7 @@ export function eatgq(options?: {
 
 
 /**
- * Electronic Arts TGV video (codec tgv)
+ * (codec tgv)
  */
 export function eatgv(options?: {
 
@@ -4256,7 +3965,7 @@ export function eatgv(options?: {
 
 
 /**
- * Theora
+ *
  */
 export function theora(options?: {
 
@@ -4273,7 +3982,7 @@ export function theora(options?: {
 
 
 /**
- * Nintendo Gamecube THP video
+ *
  */
 export function thp(options?: {
 
@@ -4290,7 +3999,7 @@ export function thp(options?: {
 
 
 /**
- * Tiertex Limited SEQ video
+ *
  */
 export function tiertexseqvideo(options?: {
 
@@ -4307,7 +4016,7 @@ export function tiertexseqvideo(options?: {
 
 
 /**
- * TIFF image
+ *
  * @param options.subimage - decode subimage instead if available (default false)
  * @param options.thumbnail - decode embedded thumbnail subimage instead if available (default false)
  * @param options.page - page number of multi-page image to decode (starting from 1) (from 0 to 65535) (default 0)
@@ -4333,7 +4042,7 @@ export function tiff(options?: {
 
 
 /**
- * 8088flex TMV
+ *
  */
 export function tmv(options?: {
 
@@ -4350,7 +4059,7 @@ export function tmv(options?: {
 
 
 /**
- * Electronic Arts TQI Video (codec tqi)
+ * (codec tqi)
  */
 export function eatqi(options?: {
 
@@ -4367,7 +4076,7 @@ export function eatqi(options?: {
 
 
 /**
- * Duck TrueMotion 1.0
+ *
  */
 export function truemotion1(options?: {
 
@@ -4384,7 +4093,7 @@ export function truemotion1(options?: {
 
 
 /**
- * Duck TrueMotion 2.0
+ *
  */
 export function truemotion2(options?: {
 
@@ -4401,7 +4110,7 @@ export function truemotion2(options?: {
 
 
 /**
- * Duck TrueMotion 2.0 Real Time
+ *
  */
 export function truemotion2rt(options?: {
 
@@ -4418,7 +4127,7 @@ export function truemotion2rt(options?: {
 
 
 /**
- * TechSmith Screen Capture Codec (codec tscc)
+ * (codec tscc)
  */
 export function camtasia(options?: {
 
@@ -4435,7 +4144,7 @@ export function camtasia(options?: {
 
 
 /**
- * TechSmith Screen Codec 2
+ *
  */
 export function tscc2(options?: {
 
@@ -4452,7 +4161,7 @@ export function tscc2(options?: {
 
 
 /**
- * Renderware TXD (TeXture Dictionary) image
+ *
  */
 export function txd(options?: {
 
@@ -4469,7 +4178,7 @@ export function txd(options?: {
 
 
 /**
- * IBM UltiMotion (codec ulti)
+ * (codec ulti)
  */
 export function ultimotion(options?: {
 
@@ -4486,7 +4195,7 @@ export function ultimotion(options?: {
 
 
 /**
- * Ut Video
+ *
  */
 export function utvideo(options?: {
 
@@ -4503,7 +4212,7 @@ export function utvideo(options?: {
 
 
 /**
- * Uncompressed 4:2:2 10-bit
+ *
  * @param options.custom_stride - Custom V210 stride (from -1 to INT_MAX) (default 0)
  */
 export function v210(options?: {
@@ -4523,7 +4232,7 @@ export function v210(options?: {
 
 
 /**
- * Uncompressed 4:2:2 10-bit
+ *
  */
 export function v210x(options?: {
 
@@ -4540,7 +4249,7 @@ export function v210x(options?: {
 
 
 /**
- * Uncompressed packed 4:4:4
+ *
  */
 export function v308(options?: {
 
@@ -4557,7 +4266,7 @@ export function v308(options?: {
 
 
 /**
- * Uncompressed packed QT 4:4:4:4
+ *
  */
 export function v408(options?: {
 
@@ -4574,7 +4283,7 @@ export function v408(options?: {
 
 
 /**
- * Uncompressed 4:4:4 10-bit
+ *
  */
 export function v410(options?: {
 
@@ -4591,7 +4300,7 @@ export function v410(options?: {
 
 
 /**
- * Beam Software VB
+ *
  */
 export function vb(options?: {
 
@@ -4608,7 +4317,7 @@ export function vb(options?: {
 
 
 /**
- * VBLE Lossless Codec
+ *
  */
 export function vble(options?: {
 
@@ -4625,7 +4334,7 @@ export function vble(options?: {
 
 
 /**
- * Vizrt Binary Image
+ *
  */
 export function vbn(options?: {
 
@@ -4642,7 +4351,7 @@ export function vbn(options?: {
 
 
 /**
- * SMPTE VC-1
+ *
  */
 export function vc1(options?: {
 
@@ -4659,7 +4368,7 @@ export function vc1(options?: {
 
 
 /**
- * V4L2 mem2mem VC1 decoder wrapper (codec vc1)
+ * (codec vc1)
  * @param options.num_output_buffers - Number of buffers in the output context (from 6 to INT_MAX) (default 16)
  * @param options.num_capture_buffers - Number of buffers in the capture context (from 20 to INT_MAX) (default 20)
  */
@@ -4682,42 +4391,7 @@ export function vc1_v4l2m2m(options?: {
 
 
 /**
- * Nvidia CUVID VC1 decoder (codec vc1)
- * @param options.deint - Set deinterlacing mode (from 0 to 2) (default weave)
- * @param options.gpu - GPU to be used for decoding
- * @param options.surfaces - Maximum surfaces to be used for decoding (from 0 to INT_MAX) (default 25)
- * @param options.drop_second_field - Drop second field when deinterlacing (default false)
- * @param options.crop - Crop (top)x(bottom)x(left)x(right)
- * @param options.resize - Resize (width)x(height)
- */
-export function vc1_cuvid(options?: {
-  deint?: number | null | "weave" | "bob" | "adaptive";
-  gpu?: string | null;
-  surfaces?: number | null;
-  drop_second_field?: boolean | null;
-  crop?: string | null;
-  resize?: string | null;
-
-}): FFMpegDecoderOption {
-  return merge({
-    "deint": options?.deint,
-    "gpu": options?.gpu,
-    "surfaces": options?.surfaces,
-    "drop_second_field": options?.drop_second_field,
-    "crop": options?.crop,
-    "resize": options?.resize,
-
-  });
-}
-
-
-
-
-
-
-
-/**
- * Windows Media Video 9 Image v2
+ *
  */
 export function vc1image(options?: {
 
@@ -4734,7 +4408,7 @@ export function vc1image(options?: {
 
 
 /**
- * ATI VCR1
+ *
  */
 export function vcr1(options?: {
 
@@ -4751,7 +4425,7 @@ export function vcr1(options?: {
 
 
 /**
- * Miro VideoXL (codec vixl)
+ * (codec vixl)
  */
 export function xl(options?: {
 
@@ -4768,7 +4442,7 @@ export function xl(options?: {
 
 
 /**
- * Sierra VMD video
+ *
  */
 export function vmdvideo(options?: {
 
@@ -4785,7 +4459,7 @@ export function vmdvideo(options?: {
 
 
 /**
- * VMware Screen Codec / VMware Video
+ *
  */
 export function vmnc(options?: {
 
@@ -4802,7 +4476,7 @@ export function vmnc(options?: {
 
 
 /**
- * On2 VP3
+ *
  */
 export function vp3(options?: {
 
@@ -4819,7 +4493,7 @@ export function vp3(options?: {
 
 
 /**
- * On2 VP4
+ *
  */
 export function vp4(options?: {
 
@@ -4836,7 +4510,7 @@ export function vp4(options?: {
 
 
 /**
- * On2 VP5
+ *
  */
 export function vp5(options?: {
 
@@ -4853,7 +4527,7 @@ export function vp5(options?: {
 
 
 /**
- * On2 VP6
+ *
  */
 export function vp6(options?: {
 
@@ -4870,7 +4544,7 @@ export function vp6(options?: {
 
 
 /**
- * On2 VP6 (Flash version, with alpha channel)
+ *
  */
 export function vp6a(options?: {
 
@@ -4887,7 +4561,7 @@ export function vp6a(options?: {
 
 
 /**
- * On2 VP6 (Flash version)
+ *
  */
 export function vp6f(options?: {
 
@@ -4904,7 +4578,7 @@ export function vp6f(options?: {
 
 
 /**
- * On2 VP7
+ *
  */
 export function vp7(options?: {
 
@@ -4921,7 +4595,7 @@ export function vp7(options?: {
 
 
 /**
- * On2 VP8
+ *
  */
 export function vp8(options?: {
 
@@ -4938,7 +4612,7 @@ export function vp8(options?: {
 
 
 /**
- * V4L2 mem2mem VP8 decoder wrapper (codec vp8)
+ * (codec vp8)
  * @param options.num_output_buffers - Number of buffers in the output context (from 6 to INT_MAX) (default 16)
  * @param options.num_capture_buffers - Number of buffers in the capture context (from 20 to INT_MAX) (default 20)
  */
@@ -4961,7 +4635,7 @@ export function vp8_v4l2m2m(options?: {
 
 
 /**
- * libvpx VP8 (codec vp8)
+ * (codec vp8)
  */
 export function libvpx(options?: {
 
@@ -4978,42 +4652,7 @@ export function libvpx(options?: {
 
 
 /**
- * Nvidia CUVID VP8 decoder (codec vp8)
- * @param options.deint - Set deinterlacing mode (from 0 to 2) (default weave)
- * @param options.gpu - GPU to be used for decoding
- * @param options.surfaces - Maximum surfaces to be used for decoding (from 0 to INT_MAX) (default 25)
- * @param options.drop_second_field - Drop second field when deinterlacing (default false)
- * @param options.crop - Crop (top)x(bottom)x(left)x(right)
- * @param options.resize - Resize (width)x(height)
- */
-export function vp8_cuvid(options?: {
-  deint?: number | null | "weave" | "bob" | "adaptive";
-  gpu?: string | null;
-  surfaces?: number | null;
-  drop_second_field?: boolean | null;
-  crop?: string | null;
-  resize?: string | null;
-
-}): FFMpegDecoderOption {
-  return merge({
-    "deint": options?.deint,
-    "gpu": options?.gpu,
-    "surfaces": options?.surfaces,
-    "drop_second_field": options?.drop_second_field,
-    "crop": options?.crop,
-    "resize": options?.resize,
-
-  });
-}
-
-
-
-
-
-
-
-/**
- * Google VP9
+ *
  */
 export function vp9(options?: {
 
@@ -5030,7 +4669,7 @@ export function vp9(options?: {
 
 
 /**
- * V4L2 mem2mem VP9 decoder wrapper (codec vp9)
+ * (codec vp9)
  * @param options.num_output_buffers - Number of buffers in the output context (from 6 to INT_MAX) (default 16)
  * @param options.num_capture_buffers - Number of buffers in the capture context (from 20 to INT_MAX) (default 20)
  */
@@ -5053,42 +4692,7 @@ export function vp9_v4l2m2m(options?: {
 
 
 /**
- * Nvidia CUVID VP9 decoder (codec vp9)
- * @param options.deint - Set deinterlacing mode (from 0 to 2) (default weave)
- * @param options.gpu - GPU to be used for decoding
- * @param options.surfaces - Maximum surfaces to be used for decoding (from 0 to INT_MAX) (default 25)
- * @param options.drop_second_field - Drop second field when deinterlacing (default false)
- * @param options.crop - Crop (top)x(bottom)x(left)x(right)
- * @param options.resize - Resize (width)x(height)
- */
-export function vp9_cuvid(options?: {
-  deint?: number | null | "weave" | "bob" | "adaptive";
-  gpu?: string | null;
-  surfaces?: number | null;
-  drop_second_field?: boolean | null;
-  crop?: string | null;
-  resize?: string | null;
-
-}): FFMpegDecoderOption {
-  return merge({
-    "deint": options?.deint,
-    "gpu": options?.gpu,
-    "surfaces": options?.surfaces,
-    "drop_second_field": options?.drop_second_field,
-    "crop": options?.crop,
-    "resize": options?.resize,
-
-  });
-}
-
-
-
-
-
-
-
-/**
- * WinCAM Motion Video
+ *
  */
 export function wcmv(options?: {
 
@@ -5105,7 +4709,7 @@ export function wcmv(options?: {
 
 
 /**
- * WebP image
+ *
  */
 export function webp(options?: {
 
@@ -5122,7 +4726,7 @@ export function webp(options?: {
 
 
 /**
- * Windows Media Video 7
+ *
  */
 export function wmv1(options?: {
 
@@ -5139,7 +4743,7 @@ export function wmv1(options?: {
 
 
 /**
- * Windows Media Video 8
+ *
  */
 export function wmv2(options?: {
 
@@ -5156,7 +4760,7 @@ export function wmv2(options?: {
 
 
 /**
- * Windows Media Video 9
+ *
  */
 export function wmv3(options?: {
 
@@ -5173,7 +4777,7 @@ export function wmv3(options?: {
 
 
 /**
- * Windows Media Video 9 Image
+ *
  */
 export function wmv3image(options?: {
 
@@ -5190,7 +4794,7 @@ export function wmv3image(options?: {
 
 
 /**
- * Winnov WNV1
+ *
  */
 export function wnv1(options?: {
 
@@ -5207,7 +4811,7 @@ export function wnv1(options?: {
 
 
 /**
- * AVPacket to AVFrame passthrough
+ *
  */
 export function wrapped_avframe(options?: {
 
@@ -5224,7 +4828,7 @@ export function wrapped_avframe(options?: {
 
 
 /**
- * Westwood Studios VQA (Vector Quantized Animation) video (codec ws_vqa)
+ * (codec ws_vqa)
  */
 export function vqavideo(options?: {
 
@@ -5241,7 +4845,7 @@ export function vqavideo(options?: {
 
 
 /**
- * Wing Commander III / Xan
+ *
  */
 export function xan_wc3(options?: {
 
@@ -5258,7 +4862,7 @@ export function xan_wc3(options?: {
 
 
 /**
- * Wing Commander IV / Xxan
+ *
  */
 export function xan_wc4(options?: {
 
@@ -5275,7 +4879,7 @@ export function xan_wc4(options?: {
 
 
 /**
- * eXtended BINary text
+ *
  */
 export function xbin(options?: {
 
@@ -5292,7 +4896,7 @@ export function xbin(options?: {
 
 
 /**
- * XBM (X BitMap) image
+ *
  */
 export function xbm(options?: {
 
@@ -5309,7 +4913,7 @@ export function xbm(options?: {
 
 
 /**
- * X-face image
+ *
  */
 export function xface(options?: {
 
@@ -5326,7 +4930,7 @@ export function xface(options?: {
 
 
 /**
- * XPM (X PixMap) image
+ *
  */
 export function xpm(options?: {
 
@@ -5343,7 +4947,7 @@ export function xpm(options?: {
 
 
 /**
- * XWD (X Window Dump) image
+ *
  */
 export function xwd(options?: {
 
@@ -5360,7 +4964,7 @@ export function xwd(options?: {
 
 
 /**
- * Uncompressed YUV 4:1:1 12-bit
+ *
  */
 export function y41p(options?: {
 
@@ -5377,7 +4981,7 @@ export function y41p(options?: {
 
 
 /**
- * YUY2 Lossless Codec
+ *
  */
 export function ylc(options?: {
 
@@ -5394,7 +4998,7 @@ export function ylc(options?: {
 
 
 /**
- * Psygnosis YOP Video
+ *
  */
 export function yop(options?: {
 
@@ -5411,7 +5015,7 @@ export function yop(options?: {
 
 
 /**
- * Uncompressed packed 4:2:0
+ *
  */
 export function yuv4(options?: {
 
@@ -5428,7 +5032,7 @@ export function yuv4(options?: {
 
 
 /**
- * ZeroCodec Lossless Video
+ *
  */
 export function zerocodec(options?: {
 
@@ -5445,7 +5049,7 @@ export function zerocodec(options?: {
 
 
 /**
- * LCL (LossLess Codec Library) ZLIB
+ *
  */
 export function zlib(options?: {
 
@@ -5462,7 +5066,7 @@ export function zlib(options?: {
 
 
 /**
- * Zip Motion Blocks Video
+ *
  */
 export function zmbv(options?: {
 
@@ -5479,7 +5083,7 @@ export function zmbv(options?: {
 
 
 /**
- * 8SVX exponential
+ *
  */
 export function _8svx_exp(options?: {
 
@@ -5496,7 +5100,7 @@ export function _8svx_exp(options?: {
 
 
 /**
- * 8SVX fibonacci
+ *
  */
 export function _8svx_fib(options?: {
 
@@ -5513,7 +5117,7 @@ export function _8svx_fib(options?: {
 
 
 /**
- * AAC (Advanced Audio Coding)
+ *
  * @param options.dual_mono_mode - Select the channel to decode for dual mono (from -1 to 2) (default auto)
  * @param options.channel_order - Order in which the channels are to be exported (from 0 to 1) (default default)
  */
@@ -5536,7 +5140,7 @@ export function aac(options?: {
 
 
 /**
- * AAC (Advanced Audio Coding) (codec aac)
+ * (codec aac)
  */
 export function aac_fixed(options?: {
 
@@ -5553,7 +5157,45 @@ export function aac_fixed(options?: {
 
 
 /**
- * AAC LATM (Advanced Audio Coding LATM syntax)
+ * (codec aac)
+ * @param options.conceal - Error concealment method (from 0 to 2) (default noise)
+ * @param options.drc_boost - Dynamic Range Control: boost, where [0] is none and [127] is max boost (from -1 to 127) (default -1)
+ * @param options.drc_cut - Dynamic Range Control: attenuation factor, where [0] is none and [127] is max compression (from -1 to 127) (default -1)
+ * @param options.drc_level - Dynamic Range Control: reference level, quantized to 0.25dB steps where [0] is 0dB and [127] is -31.75dB, -1 for auto, and -2 for disabled (from -2 to 127) (default -1)
+ * @param options.drc_heavy - Dynamic Range Control: heavy compression, where [1] is on (RF mode) and [0] is off (from -1 to 1) (default -1)
+ * @param options.level_limit - Signal level limiting (default auto)
+ * @param options.downmix - Request a specific channel layout from the decoder
+ */
+export function libfdk_aac(options?: {
+  conceal?: number | null | "spectral" | "noise" | "energy";
+  drc_boost?: number | null;
+  drc_cut?: number | null;
+  drc_level?: number | null;
+  drc_heavy?: number | null;
+  level_limit?: boolean | null;
+  downmix?: string | null;
+
+}): FFMpegDecoderOption {
+  return merge({
+    "conceal": options?.conceal,
+    "drc_boost": options?.drc_boost,
+    "drc_cut": options?.drc_cut,
+    "drc_level": options?.drc_level,
+    "drc_heavy": options?.drc_heavy,
+    "level_limit": options?.level_limit,
+    "downmix": options?.downmix,
+
+  });
+}
+
+
+
+
+
+
+
+/**
+ *
  */
 export function aac_latm(options?: {
 
@@ -5570,7 +5212,7 @@ export function aac_latm(options?: {
 
 
 /**
- * ATSC A/52A (AC-3)
+ *
  * @param options.cons_noisegen - enable consistent noise generation (default false)
  * @param options.drc_scale - percentage of dynamic range compression to apply (from 0 to 6) (default 1)
  * @param options.heavy_compr - enable heavy dynamic range compression (default false)
@@ -5602,7 +5244,7 @@ export function ac3(options?: {
 
 
 /**
- * ATSC A/52A (AC-3) (codec ac3)
+ * (codec ac3)
  * @param options.cons_noisegen - enable consistent noise generation (default false)
  * @param options.drc_scale - percentage of dynamic range compression to apply (from 0 to 6) (default 1)
  * @param options.heavy_compr - enable heavy dynamic range compression (default false)
@@ -5631,7 +5273,7 @@ export function ac3_fixed(options?: {
 
 
 /**
- * ADPCM 4X Movie
+ *
  */
 export function adpcm_4xm(options?: {
 
@@ -5648,7 +5290,7 @@ export function adpcm_4xm(options?: {
 
 
 /**
- * SEGA CRI ADX ADPCM
+ *
  */
 export function adpcm_adx(options?: {
 
@@ -5665,7 +5307,7 @@ export function adpcm_adx(options?: {
 
 
 /**
- * ADPCM Nintendo Gamecube AFC
+ *
  */
 export function adpcm_afc(options?: {
 
@@ -5682,7 +5324,7 @@ export function adpcm_afc(options?: {
 
 
 /**
- * ADPCM AmuseGraphics Movie
+ *
  */
 export function adpcm_agm(options?: {
 
@@ -5699,7 +5341,7 @@ export function adpcm_agm(options?: {
 
 
 /**
- * ADPCM Yamaha AICA
+ *
  */
 export function adpcm_aica(options?: {
 
@@ -5716,7 +5358,7 @@ export function adpcm_aica(options?: {
 
 
 /**
- * ADPCM Argonaut Games
+ *
  */
 export function adpcm_argo(options?: {
 
@@ -5733,7 +5375,7 @@ export function adpcm_argo(options?: {
 
 
 /**
- * ADPCM Creative Technology
+ *
  */
 export function adpcm_ct(options?: {
 
@@ -5750,7 +5392,7 @@ export function adpcm_ct(options?: {
 
 
 /**
- * ADPCM Nintendo Gamecube DTK
+ *
  */
 export function adpcm_dtk(options?: {
 
@@ -5767,7 +5409,7 @@ export function adpcm_dtk(options?: {
 
 
 /**
- * ADPCM Electronic Arts
+ *
  */
 export function adpcm_ea(options?: {
 
@@ -5784,7 +5426,7 @@ export function adpcm_ea(options?: {
 
 
 /**
- * ADPCM Electronic Arts Maxis CDROM XA
+ *
  */
 export function adpcm_ea_maxis_xa(options?: {
 
@@ -5801,7 +5443,7 @@ export function adpcm_ea_maxis_xa(options?: {
 
 
 /**
- * ADPCM Electronic Arts R1
+ *
  */
 export function adpcm_ea_r1(options?: {
 
@@ -5818,7 +5460,7 @@ export function adpcm_ea_r1(options?: {
 
 
 /**
- * ADPCM Electronic Arts R2
+ *
  */
 export function adpcm_ea_r2(options?: {
 
@@ -5835,7 +5477,7 @@ export function adpcm_ea_r2(options?: {
 
 
 /**
- * ADPCM Electronic Arts R3
+ *
  */
 export function adpcm_ea_r3(options?: {
 
@@ -5852,7 +5494,7 @@ export function adpcm_ea_r3(options?: {
 
 
 /**
- * ADPCM Electronic Arts XAS
+ *
  */
 export function adpcm_ea_xas(options?: {
 
@@ -5869,7 +5511,7 @@ export function adpcm_ea_xas(options?: {
 
 
 /**
- * G.722 ADPCM (codec adpcm_g722)
+ * (codec adpcm_g722)
  * @param options.bits_per_codeword - Bits per G722 codeword (from 6 to 8) (default 8)
  */
 export function g722(options?: {
@@ -5889,7 +5531,7 @@ export function g722(options?: {
 
 
 /**
- * G.726 ADPCM (codec adpcm_g726)
+ * (codec adpcm_g726)
  */
 export function g726(options?: {
 
@@ -5906,7 +5548,7 @@ export function g726(options?: {
 
 
 /**
- * G.726 ADPCM little-endian (codec adpcm_g726le)
+ * (codec adpcm_g726le)
  */
 export function g726le(options?: {
 
@@ -5923,7 +5565,7 @@ export function g726le(options?: {
 
 
 /**
- * ADPCM IMA Acorn Replay
+ *
  */
 export function adpcm_ima_acorn(options?: {
 
@@ -5940,7 +5582,7 @@ export function adpcm_ima_acorn(options?: {
 
 
 /**
- * ADPCM IMA High Voltage Software ALP
+ *
  */
 export function adpcm_ima_alp(options?: {
 
@@ -5957,7 +5599,7 @@ export function adpcm_ima_alp(options?: {
 
 
 /**
- * ADPCM IMA AMV
+ *
  */
 export function adpcm_ima_amv(options?: {
 
@@ -5974,7 +5616,7 @@ export function adpcm_ima_amv(options?: {
 
 
 /**
- * ADPCM IMA CRYO APC
+ *
  */
 export function adpcm_ima_apc(options?: {
 
@@ -5991,7 +5633,7 @@ export function adpcm_ima_apc(options?: {
 
 
 /**
- * ADPCM IMA Ubisoft APM
+ *
  */
 export function adpcm_ima_apm(options?: {
 
@@ -6008,7 +5650,7 @@ export function adpcm_ima_apm(options?: {
 
 
 /**
- * ADPCM IMA Cunning Developments
+ *
  */
 export function adpcm_ima_cunning(options?: {
 
@@ -6025,7 +5667,7 @@ export function adpcm_ima_cunning(options?: {
 
 
 /**
- * ADPCM IMA Eurocom DAT4
+ *
  */
 export function adpcm_ima_dat4(options?: {
 
@@ -6042,7 +5684,7 @@ export function adpcm_ima_dat4(options?: {
 
 
 /**
- * ADPCM IMA Duck DK3
+ *
  */
 export function adpcm_ima_dk3(options?: {
 
@@ -6059,7 +5701,7 @@ export function adpcm_ima_dk3(options?: {
 
 
 /**
- * ADPCM IMA Duck DK4
+ *
  */
 export function adpcm_ima_dk4(options?: {
 
@@ -6076,7 +5718,7 @@ export function adpcm_ima_dk4(options?: {
 
 
 /**
- * ADPCM IMA Electronic Arts EACS
+ *
  */
 export function adpcm_ima_ea_eacs(options?: {
 
@@ -6093,7 +5735,7 @@ export function adpcm_ima_ea_eacs(options?: {
 
 
 /**
- * ADPCM IMA Electronic Arts SEAD
+ *
  */
 export function adpcm_ima_ea_sead(options?: {
 
@@ -6110,7 +5752,7 @@ export function adpcm_ima_ea_sead(options?: {
 
 
 /**
- * ADPCM IMA Funcom ISS
+ *
  */
 export function adpcm_ima_iss(options?: {
 
@@ -6127,7 +5769,7 @@ export function adpcm_ima_iss(options?: {
 
 
 /**
- * ADPCM IMA MobiClip MOFLEX
+ *
  */
 export function adpcm_ima_moflex(options?: {
 
@@ -6144,7 +5786,7 @@ export function adpcm_ima_moflex(options?: {
 
 
 /**
- * ADPCM IMA Capcom's MT Framework
+ *
  */
 export function adpcm_ima_mtf(options?: {
 
@@ -6161,7 +5803,7 @@ export function adpcm_ima_mtf(options?: {
 
 
 /**
- * ADPCM IMA Dialogic OKI
+ *
  */
 export function adpcm_ima_oki(options?: {
 
@@ -6178,7 +5820,7 @@ export function adpcm_ima_oki(options?: {
 
 
 /**
- * ADPCM IMA QuickTime
+ *
  */
 export function adpcm_ima_qt(options?: {
 
@@ -6195,7 +5837,7 @@ export function adpcm_ima_qt(options?: {
 
 
 /**
- * ADPCM IMA Radical
+ *
  */
 export function adpcm_ima_rad(options?: {
 
@@ -6212,7 +5854,7 @@ export function adpcm_ima_rad(options?: {
 
 
 /**
- * ADPCM IMA Loki SDL MJPEG
+ *
  */
 export function adpcm_ima_smjpeg(options?: {
 
@@ -6229,7 +5871,7 @@ export function adpcm_ima_smjpeg(options?: {
 
 
 /**
- * ADPCM IMA Simon & Schuster Interactive
+ *
  */
 export function adpcm_ima_ssi(options?: {
 
@@ -6246,7 +5888,7 @@ export function adpcm_ima_ssi(options?: {
 
 
 /**
- * ADPCM IMA WAV
+ *
  */
 export function adpcm_ima_wav(options?: {
 
@@ -6263,7 +5905,7 @@ export function adpcm_ima_wav(options?: {
 
 
 /**
- * ADPCM IMA Westwood
+ *
  */
 export function adpcm_ima_ws(options?: {
 
@@ -6280,7 +5922,7 @@ export function adpcm_ima_ws(options?: {
 
 
 /**
- * ADPCM Microsoft
+ *
  */
 export function adpcm_ms(options?: {
 
@@ -6297,7 +5939,7 @@ export function adpcm_ms(options?: {
 
 
 /**
- * ADPCM MTAF
+ *
  */
 export function adpcm_mtaf(options?: {
 
@@ -6314,7 +5956,7 @@ export function adpcm_mtaf(options?: {
 
 
 /**
- * ADPCM Playstation
+ *
  */
 export function adpcm_psx(options?: {
 
@@ -6331,7 +5973,7 @@ export function adpcm_psx(options?: {
 
 
 /**
- * ADPCM Sound Blaster Pro 2-bit
+ *
  */
 export function adpcm_sbpro_2(options?: {
 
@@ -6348,7 +5990,7 @@ export function adpcm_sbpro_2(options?: {
 
 
 /**
- * ADPCM Sound Blaster Pro 2.6-bit
+ *
  */
 export function adpcm_sbpro_3(options?: {
 
@@ -6365,7 +6007,7 @@ export function adpcm_sbpro_3(options?: {
 
 
 /**
- * ADPCM Sound Blaster Pro 4-bit
+ *
  */
 export function adpcm_sbpro_4(options?: {
 
@@ -6382,7 +6024,7 @@ export function adpcm_sbpro_4(options?: {
 
 
 /**
- * ADPCM Shockwave Flash
+ *
  */
 export function adpcm_swf(options?: {
 
@@ -6399,7 +6041,7 @@ export function adpcm_swf(options?: {
 
 
 /**
- * ADPCM Nintendo THP
+ *
  */
 export function adpcm_thp(options?: {
 
@@ -6416,7 +6058,7 @@ export function adpcm_thp(options?: {
 
 
 /**
- * ADPCM Nintendo THP (little-endian)
+ *
  */
 export function adpcm_thp_le(options?: {
 
@@ -6433,7 +6075,7 @@ export function adpcm_thp_le(options?: {
 
 
 /**
- * LucasArts VIMA audio
+ *
  */
 export function adpcm_vima(options?: {
 
@@ -6450,7 +6092,7 @@ export function adpcm_vima(options?: {
 
 
 /**
- * ADPCM CDROM XA
+ *
  */
 export function adpcm_xa(options?: {
 
@@ -6467,7 +6109,7 @@ export function adpcm_xa(options?: {
 
 
 /**
- * ADPCM Yamaha
+ *
  */
 export function adpcm_yamaha(options?: {
 
@@ -6484,7 +6126,7 @@ export function adpcm_yamaha(options?: {
 
 
 /**
- * ADPCM Zork
+ *
  */
 export function adpcm_zork(options?: {
 
@@ -6501,7 +6143,7 @@ export function adpcm_zork(options?: {
 
 
 /**
- * ALAC (Apple Lossless Audio Codec)
+ *
  * @param options.extra_bits_bug - Force non-standard decoding process (default false)
  */
 export function alac(options?: {
@@ -6521,7 +6163,7 @@ export function alac(options?: {
 
 
 /**
- * AMR-NB (Adaptive Multi-Rate NarrowBand) (codec amr_nb)
+ * (codec amr_nb)
  */
 export function amrnb(options?: {
 
@@ -6538,7 +6180,7 @@ export function amrnb(options?: {
 
 
 /**
- * OpenCORE AMR-NB (Adaptive Multi-Rate Narrow-Band) (codec amr_nb)
+ * (codec amr_nb)
  */
 export function libopencore_amrnb(options?: {
 
@@ -6555,7 +6197,7 @@ export function libopencore_amrnb(options?: {
 
 
 /**
- * AMR-WB (Adaptive Multi-Rate WideBand) (codec amr_wb)
+ * (codec amr_wb)
  */
 export function amrwb(options?: {
 
@@ -6572,7 +6214,7 @@ export function amrwb(options?: {
 
 
 /**
- * OpenCORE AMR-WB (Adaptive Multi-Rate Wide-Band) (codec amr_wb)
+ * (codec amr_wb)
  */
 export function libopencore_amrwb(options?: {
 
@@ -6589,7 +6231,7 @@ export function libopencore_amrwb(options?: {
 
 
 /**
- * Monkey's Audio
+ *
  * @param options.max_samples - maximum number of samples decoded per call (from 1 to INT_MAX) (default 4608)
  */
 export function ape(options?: {
@@ -6609,7 +6251,7 @@ export function ape(options?: {
 
 
 /**
- * aptX (Audio Processing Technology for Bluetooth)
+ *
  */
 export function aptx(options?: {
 
@@ -6626,7 +6268,7 @@ export function aptx(options?: {
 
 
 /**
- * aptX HD (Audio Processing Technology for Bluetooth)
+ *
  */
 export function aptx_hd(options?: {
 
@@ -6643,7 +6285,7 @@ export function aptx_hd(options?: {
 
 
 /**
- * ATRAC1 (Adaptive TRansform Acoustic Coding)
+ *
  */
 export function atrac1(options?: {
 
@@ -6660,7 +6302,7 @@ export function atrac1(options?: {
 
 
 /**
- * ATRAC3 (Adaptive TRansform Acoustic Coding 3)
+ *
  */
 export function atrac3(options?: {
 
@@ -6677,7 +6319,7 @@ export function atrac3(options?: {
 
 
 /**
- * ATRAC3 AL (Adaptive TRansform Acoustic Coding 3 Advanced Lossless)
+ *
  */
 export function atrac3al(options?: {
 
@@ -6694,7 +6336,7 @@ export function atrac3al(options?: {
 
 
 /**
- * ATRAC3+ (Adaptive TRansform Acoustic Coding 3+) (codec atrac3p)
+ * (codec atrac3p)
  */
 export function atrac3plus(options?: {
 
@@ -6711,7 +6353,7 @@ export function atrac3plus(options?: {
 
 
 /**
- * ATRAC3+ AL (Adaptive TRansform Acoustic Coding 3+ Advanced Lossless) (codec atrac3pal)
+ * (codec atrac3pal)
  */
 export function atrac3plusal(options?: {
 
@@ -6728,7 +6370,7 @@ export function atrac3plusal(options?: {
 
 
 /**
- * ATRAC9 (Adaptive TRansform Acoustic Coding 9)
+ *
  */
 export function atrac9(options?: {
 
@@ -6745,7 +6387,7 @@ export function atrac9(options?: {
 
 
 /**
- * On2 Audio for Video Codec (codec avc)
+ * (codec avc)
  */
 export function on2avc(options?: {
 
@@ -6762,7 +6404,7 @@ export function on2avc(options?: {
 
 
 /**
- * Bink Audio (DCT)
+ *
  */
 export function binkaudio_dct(options?: {
 
@@ -6779,7 +6421,7 @@ export function binkaudio_dct(options?: {
 
 
 /**
- * Bink Audio (RDFT)
+ *
  */
 export function binkaudio_rdft(options?: {
 
@@ -6796,7 +6438,7 @@ export function binkaudio_rdft(options?: {
 
 
 /**
- * Discworld II BMV audio
+ *
  */
 export function bmv_audio(options?: {
 
@@ -6813,7 +6455,7 @@ export function bmv_audio(options?: {
 
 
 /**
- * RFC 3389 comfort noise generator
+ *
  */
 export function comfortnoise(options?: {
 
@@ -6830,7 +6472,7 @@ export function comfortnoise(options?: {
 
 
 /**
- * Cook / Cooker / Gecko (RealAudio G2)
+ *
  */
 export function cook(options?: {
 
@@ -6847,7 +6489,7 @@ export function cook(options?: {
 
 
 /**
- * DPCM Xilam DERF
+ *
  */
 export function derf_dpcm(options?: {
 
@@ -6864,7 +6506,7 @@ export function derf_dpcm(options?: {
 
 
 /**
- * DFPWM1a audio
+ *
  */
 export function dfpwm(options?: {
 
@@ -6881,7 +6523,7 @@ export function dfpwm(options?: {
 
 
 /**
- * Dolby E
+ *
  * @param options.channel_order - Order in which the channels are to be exported (from 0 to 1) (default default)
  */
 export function dolby_e(options?: {
@@ -6901,7 +6543,7 @@ export function dolby_e(options?: {
 
 
 /**
- * DSD (Direct Stream Digital), least significant bit first
+ *
  */
 export function dsd_lsbf(options?: {
 
@@ -6918,7 +6560,7 @@ export function dsd_lsbf(options?: {
 
 
 /**
- * DSD (Direct Stream Digital), least significant bit first, planar
+ *
  */
 export function dsd_lsbf_planar(options?: {
 
@@ -6935,7 +6577,7 @@ export function dsd_lsbf_planar(options?: {
 
 
 /**
- * DSD (Direct Stream Digital), most significant bit first
+ *
  */
 export function dsd_msbf(options?: {
 
@@ -6952,7 +6594,7 @@ export function dsd_msbf(options?: {
 
 
 /**
- * DSD (Direct Stream Digital), most significant bit first, planar
+ *
  */
 export function dsd_msbf_planar(options?: {
 
@@ -6969,7 +6611,7 @@ export function dsd_msbf_planar(options?: {
 
 
 /**
- * Delphine Software International CIN audio
+ *
  */
 export function dsicinaudio(options?: {
 
@@ -6986,7 +6628,7 @@ export function dsicinaudio(options?: {
 
 
 /**
- * Digital Speech Standard - Standard Play mode (DSS SP)
+ *
  */
 export function dss_sp(options?: {
 
@@ -7003,7 +6645,7 @@ export function dss_sp(options?: {
 
 
 /**
- * DST (Digital Stream Transfer)
+ *
  */
 export function dst(options?: {
 
@@ -7020,7 +6662,7 @@ export function dst(options?: {
 
 
 /**
- * DCA (DTS Coherent Acoustics) (codec dts)
+ * (codec dts)
  * @param options.core_only - Decode core only without extensions (default false)
  * @param options.channel_order - Order in which the channels are to be exported (from 0 to 1) (default default)
  * @param options.downmix - Request a specific channel layout from the decoder
@@ -7046,7 +6688,7 @@ export function dca(options?: {
 
 
 /**
- * Ulead DV Audio
+ *
  */
 export function dvaudio(options?: {
 
@@ -7063,7 +6705,7 @@ export function dvaudio(options?: {
 
 
 /**
- * ATSC A/52B (AC-3, E-AC-3)
+ *
  * @param options.cons_noisegen - enable consistent noise generation (default false)
  * @param options.drc_scale - percentage of dynamic range compression to apply (from 0 to 6) (default 1)
  * @param options.heavy_compr - enable heavy dynamic range compression (default false)
@@ -7095,7 +6737,7 @@ export function eac3(options?: {
 
 
 /**
- * EVRC (Enhanced Variable Rate Codec)
+ *
  * @param options.postfilter - enable postfilter (default true)
  */
 export function evrc(options?: {
@@ -7115,7 +6757,7 @@ export function evrc(options?: {
 
 
 /**
- * MobiClip FastAudio
+ *
  */
 export function fastaudio(options?: {
 
@@ -7132,7 +6774,7 @@ export function fastaudio(options?: {
 
 
 /**
- * FLAC (Free Lossless Audio Codec)
+ *
  * @param options.use_buggy_lpc - emulate old buggy lavc behavior (default false)
  */
 export function flac(options?: {
@@ -7152,7 +6794,7 @@ export function flac(options?: {
 
 
 /**
- * G.723.1
+ *
  * @param options.postfilter - enable postfilter (default true)
  */
 export function g723_1(options?: {
@@ -7172,7 +6814,7 @@ export function g723_1(options?: {
 
 
 /**
- * G.729
+ *
  */
 export function g729(options?: {
 
@@ -7189,7 +6831,7 @@ export function g729(options?: {
 
 
 /**
- * DPCM Gremlin
+ *
  */
 export function gremlin_dpcm(options?: {
 
@@ -7206,7 +6848,7 @@ export function gremlin_dpcm(options?: {
 
 
 /**
- * GSM
+ *
  */
 export function gsm(options?: {
 
@@ -7223,7 +6865,7 @@ export function gsm(options?: {
 
 
 /**
- * GSM Microsoft variant
+ *
  */
 export function gsm_ms(options?: {
 
@@ -7240,7 +6882,7 @@ export function gsm_ms(options?: {
 
 
 /**
- * CRI HCA
+ *
  */
 export function hca(options?: {
 
@@ -7257,7 +6899,7 @@ export function hca(options?: {
 
 
 /**
- * HCOM Audio
+ *
  */
 export function hcom(options?: {
 
@@ -7274,7 +6916,7 @@ export function hcom(options?: {
 
 
 /**
- * IAC (Indeo Audio Coder)
+ *
  */
 export function iac(options?: {
 
@@ -7291,7 +6933,7 @@ export function iac(options?: {
 
 
 /**
- * iLBC (Internet Low Bitrate Codec)
+ *
  */
 export function ilbc(options?: {
 
@@ -7308,7 +6950,7 @@ export function ilbc(options?: {
 
 
 /**
- * IMC (Intel Music Coder)
+ *
  */
 export function imc(options?: {
 
@@ -7325,7 +6967,7 @@ export function imc(options?: {
 
 
 /**
- * DPCM Interplay
+ *
  */
 export function interplay_dpcm(options?: {
 
@@ -7342,7 +6984,7 @@ export function interplay_dpcm(options?: {
 
 
 /**
- * Interplay ACM
+ *
  */
 export function interplayacm(options?: {
 
@@ -7359,7 +7001,7 @@ export function interplayacm(options?: {
 
 
 /**
- * MACE (Macintosh Audio Compression/Expansion) 3:1
+ *
  */
 export function mace3(options?: {
 
@@ -7376,7 +7018,7 @@ export function mace3(options?: {
 
 
 /**
- * MACE (Macintosh Audio Compression/Expansion) 6:1
+ *
  */
 export function mace6(options?: {
 
@@ -7393,7 +7035,7 @@ export function mace6(options?: {
 
 
 /**
- * Voxware MetaSound
+ *
  */
 export function metasound(options?: {
 
@@ -7410,7 +7052,7 @@ export function metasound(options?: {
 
 
 /**
- * MLP (Meridian Lossless Packing)
+ *
  * @param options.downmix - Request a specific channel layout from the decoder
  */
 export function mlp(options?: {
@@ -7430,7 +7072,7 @@ export function mlp(options?: {
 
 
 /**
- * MP1 (MPEG audio layer 1)
+ *
  */
 export function mp1(options?: {
 
@@ -7447,7 +7089,7 @@ export function mp1(options?: {
 
 
 /**
- * MP1 (MPEG audio layer 1) (codec mp1)
+ * (codec mp1)
  */
 export function mp1float(options?: {
 
@@ -7464,7 +7106,7 @@ export function mp1float(options?: {
 
 
 /**
- * MP2 (MPEG audio layer 2)
+ *
  */
 export function mp2(options?: {
 
@@ -7481,7 +7123,7 @@ export function mp2(options?: {
 
 
 /**
- * MP2 (MPEG audio layer 2) (codec mp2)
+ * (codec mp2)
  */
 export function mp2float(options?: {
 
@@ -7498,7 +7140,7 @@ export function mp2float(options?: {
 
 
 /**
- * MP3 (MPEG audio layer 3) (codec mp3)
+ * (codec mp3)
  */
 export function mp3float(options?: {
 
@@ -7515,7 +7157,7 @@ export function mp3float(options?: {
 
 
 /**
- * MP3 (MPEG audio layer 3)
+ *
  */
 export function mp3(options?: {
 
@@ -7532,7 +7174,7 @@ export function mp3(options?: {
 
 
 /**
- * ADU (Application Data Unit) MP3 (MPEG audio layer 3) (codec mp3adu)
+ * (codec mp3adu)
  */
 export function mp3adufloat(options?: {
 
@@ -7549,7 +7191,7 @@ export function mp3adufloat(options?: {
 
 
 /**
- * ADU (Application Data Unit) MP3 (MPEG audio layer 3)
+ *
  */
 export function mp3adu(options?: {
 
@@ -7566,7 +7208,7 @@ export function mp3adu(options?: {
 
 
 /**
- * MP3onMP4 (codec mp3on4)
+ * (codec mp3on4)
  */
 export function mp3on4float(options?: {
 
@@ -7583,7 +7225,7 @@ export function mp3on4float(options?: {
 
 
 /**
- * MP3onMP4
+ *
  */
 export function mp3on4(options?: {
 
@@ -7600,7 +7242,7 @@ export function mp3on4(options?: {
 
 
 /**
- * MPEG-4 Audio Lossless Coding (ALS) (codec mp4als)
+ * (codec mp4als)
  */
 export function als(options?: {
 
@@ -7617,7 +7259,7 @@ export function als(options?: {
 
 
 /**
- * MSN Siren
+ *
  */
 export function msnsiren(options?: {
 
@@ -7634,7 +7276,7 @@ export function msnsiren(options?: {
 
 
 /**
- * Musepack SV7 (codec musepack7)
+ * (codec musepack7)
  */
 export function mpc7(options?: {
 
@@ -7651,7 +7293,7 @@ export function mpc7(options?: {
 
 
 /**
- * Musepack SV8 (codec musepack8)
+ * (codec musepack8)
  */
 export function mpc8(options?: {
 
@@ -7668,7 +7310,7 @@ export function mpc8(options?: {
 
 
 /**
- * Nellymoser Asao
+ *
  */
 export function nellymoser(options?: {
 
@@ -7685,7 +7327,7 @@ export function nellymoser(options?: {
 
 
 /**
- * Opus
+ *
  * @param options.apply_phase_inv - Apply intensity stereo phase inversion (default true)
  */
 export function opus(options?: {
@@ -7705,7 +7347,7 @@ export function opus(options?: {
 
 
 /**
- * libopus Opus (codec opus)
+ * (codec opus)
  * @param options.apply_phase_inv - Apply intensity stereo phase inversion (default true)
  */
 export function libopus(options?: {
@@ -7725,7 +7367,7 @@ export function libopus(options?: {
 
 
 /**
- * Amazing Studio Packed Animation File Audio
+ *
  */
 export function paf_audio(options?: {
 
@@ -7742,7 +7384,7 @@ export function paf_audio(options?: {
 
 
 /**
- * PCM A-law / G.711 A-law
+ *
  */
 export function pcm_alaw(options?: {
 
@@ -7759,7 +7401,7 @@ export function pcm_alaw(options?: {
 
 
 /**
- * PCM signed 16|20|24-bit big-endian for Blu-ray media
+ *
  */
 export function pcm_bluray(options?: {
 
@@ -7776,7 +7418,7 @@ export function pcm_bluray(options?: {
 
 
 /**
- * PCM signed 16|20|24-bit big-endian for DVD media
+ *
  */
 export function pcm_dvd(options?: {
 
@@ -7793,7 +7435,7 @@ export function pcm_dvd(options?: {
 
 
 /**
- * PCM 16.8 floating point little-endian
+ *
  */
 export function pcm_f16le(options?: {
 
@@ -7810,7 +7452,7 @@ export function pcm_f16le(options?: {
 
 
 /**
- * PCM 24.0 floating point little-endian
+ *
  */
 export function pcm_f24le(options?: {
 
@@ -7827,7 +7469,7 @@ export function pcm_f24le(options?: {
 
 
 /**
- * PCM 32-bit floating point big-endian
+ *
  */
 export function pcm_f32be(options?: {
 
@@ -7844,7 +7486,7 @@ export function pcm_f32be(options?: {
 
 
 /**
- * PCM 32-bit floating point little-endian
+ *
  */
 export function pcm_f32le(options?: {
 
@@ -7861,7 +7503,7 @@ export function pcm_f32le(options?: {
 
 
 /**
- * PCM 64-bit floating point big-endian
+ *
  */
 export function pcm_f64be(options?: {
 
@@ -7878,7 +7520,7 @@ export function pcm_f64be(options?: {
 
 
 /**
- * PCM 64-bit floating point little-endian
+ *
  */
 export function pcm_f64le(options?: {
 
@@ -7895,7 +7537,7 @@ export function pcm_f64le(options?: {
 
 
 /**
- * PCM signed 20-bit little-endian planar
+ *
  */
 export function pcm_lxf(options?: {
 
@@ -7912,7 +7554,7 @@ export function pcm_lxf(options?: {
 
 
 /**
- * PCM mu-law / G.711 mu-law
+ *
  */
 export function pcm_mulaw(options?: {
 
@@ -7929,7 +7571,7 @@ export function pcm_mulaw(options?: {
 
 
 /**
- * PCM signed 16-bit big-endian
+ *
  */
 export function pcm_s16be(options?: {
 
@@ -7946,7 +7588,7 @@ export function pcm_s16be(options?: {
 
 
 /**
- * PCM signed 16-bit big-endian planar
+ *
  */
 export function pcm_s16be_planar(options?: {
 
@@ -7963,7 +7605,7 @@ export function pcm_s16be_planar(options?: {
 
 
 /**
- * PCM signed 16-bit little-endian
+ *
  */
 export function pcm_s16le(options?: {
 
@@ -7980,7 +7622,7 @@ export function pcm_s16le(options?: {
 
 
 /**
- * PCM signed 16-bit little-endian planar
+ *
  */
 export function pcm_s16le_planar(options?: {
 
@@ -7997,7 +7639,7 @@ export function pcm_s16le_planar(options?: {
 
 
 /**
- * PCM signed 24-bit big-endian
+ *
  */
 export function pcm_s24be(options?: {
 
@@ -8014,7 +7656,7 @@ export function pcm_s24be(options?: {
 
 
 /**
- * PCM D-Cinema audio signed 24-bit
+ *
  */
 export function pcm_s24daud(options?: {
 
@@ -8031,7 +7673,7 @@ export function pcm_s24daud(options?: {
 
 
 /**
- * PCM signed 24-bit little-endian
+ *
  */
 export function pcm_s24le(options?: {
 
@@ -8048,7 +7690,7 @@ export function pcm_s24le(options?: {
 
 
 /**
- * PCM signed 24-bit little-endian planar
+ *
  */
 export function pcm_s24le_planar(options?: {
 
@@ -8065,7 +7707,7 @@ export function pcm_s24le_planar(options?: {
 
 
 /**
- * PCM signed 32-bit big-endian
+ *
  */
 export function pcm_s32be(options?: {
 
@@ -8082,7 +7724,7 @@ export function pcm_s32be(options?: {
 
 
 /**
- * PCM signed 32-bit little-endian
+ *
  */
 export function pcm_s32le(options?: {
 
@@ -8099,7 +7741,7 @@ export function pcm_s32le(options?: {
 
 
 /**
- * PCM signed 32-bit little-endian planar
+ *
  */
 export function pcm_s32le_planar(options?: {
 
@@ -8116,7 +7758,7 @@ export function pcm_s32le_planar(options?: {
 
 
 /**
- * PCM signed 64-bit big-endian
+ *
  */
 export function pcm_s64be(options?: {
 
@@ -8133,7 +7775,7 @@ export function pcm_s64be(options?: {
 
 
 /**
- * PCM signed 64-bit little-endian
+ *
  */
 export function pcm_s64le(options?: {
 
@@ -8150,7 +7792,7 @@ export function pcm_s64le(options?: {
 
 
 /**
- * PCM signed 8-bit
+ *
  */
 export function pcm_s8(options?: {
 
@@ -8167,7 +7809,7 @@ export function pcm_s8(options?: {
 
 
 /**
- * PCM signed 8-bit planar
+ *
  */
 export function pcm_s8_planar(options?: {
 
@@ -8184,7 +7826,7 @@ export function pcm_s8_planar(options?: {
 
 
 /**
- * PCM SGA
+ *
  */
 export function pcm_sga(options?: {
 
@@ -8201,7 +7843,7 @@ export function pcm_sga(options?: {
 
 
 /**
- * PCM unsigned 16-bit big-endian
+ *
  */
 export function pcm_u16be(options?: {
 
@@ -8218,7 +7860,7 @@ export function pcm_u16be(options?: {
 
 
 /**
- * PCM unsigned 16-bit little-endian
+ *
  */
 export function pcm_u16le(options?: {
 
@@ -8235,7 +7877,7 @@ export function pcm_u16le(options?: {
 
 
 /**
- * PCM unsigned 24-bit big-endian
+ *
  */
 export function pcm_u24be(options?: {
 
@@ -8252,7 +7894,7 @@ export function pcm_u24be(options?: {
 
 
 /**
- * PCM unsigned 24-bit little-endian
+ *
  */
 export function pcm_u24le(options?: {
 
@@ -8269,7 +7911,7 @@ export function pcm_u24le(options?: {
 
 
 /**
- * PCM unsigned 32-bit big-endian
+ *
  */
 export function pcm_u32be(options?: {
 
@@ -8286,7 +7928,7 @@ export function pcm_u32be(options?: {
 
 
 /**
- * PCM unsigned 32-bit little-endian
+ *
  */
 export function pcm_u32le(options?: {
 
@@ -8303,7 +7945,7 @@ export function pcm_u32le(options?: {
 
 
 /**
- * PCM unsigned 8-bit
+ *
  */
 export function pcm_u8(options?: {
 
@@ -8320,7 +7962,7 @@ export function pcm_u8(options?: {
 
 
 /**
- * PCM Archimedes VIDC
+ *
  */
 export function pcm_vidc(options?: {
 
@@ -8337,7 +7979,7 @@ export function pcm_vidc(options?: {
 
 
 /**
- * QCELP / PureVoice
+ *
  */
 export function qcelp(options?: {
 
@@ -8354,7 +7996,7 @@ export function qcelp(options?: {
 
 
 /**
- * QDesign Music Codec 2
+ *
  */
 export function qdm2(options?: {
 
@@ -8371,7 +8013,7 @@ export function qdm2(options?: {
 
 
 /**
- * QDesign Music Codec 1
+ *
  */
 export function qdmc(options?: {
 
@@ -8388,7 +8030,7 @@ export function qdmc(options?: {
 
 
 /**
- * RealAudio 1.0 (14.4K) (codec ra_144)
+ * (codec ra_144)
  */
 export function real_144(options?: {
 
@@ -8405,7 +8047,7 @@ export function real_144(options?: {
 
 
 /**
- * RealAudio 2.0 (28.8K) (codec ra_288)
+ * (codec ra_288)
  */
 export function real_288(options?: {
 
@@ -8422,7 +8064,7 @@ export function real_288(options?: {
 
 
 /**
- * RealAudio Lossless
+ *
  */
 export function ralf(options?: {
 
@@ -8439,7 +8081,7 @@ export function ralf(options?: {
 
 
 /**
- * DPCM id RoQ
+ *
  */
 export function roq_dpcm(options?: {
 
@@ -8456,7 +8098,7 @@ export function roq_dpcm(options?: {
 
 
 /**
- * SMPTE 302M
+ *
  * @param options.non_pcm_mode - Chooses what to do with NON-PCM (from 0 to 3) (default decode_drop)
  */
 export function s302m(options?: {
@@ -8476,7 +8118,7 @@ export function s302m(options?: {
 
 
 /**
- * SBC (low-complexity subband codec)
+ *
  */
 export function sbc(options?: {
 
@@ -8493,7 +8135,7 @@ export function sbc(options?: {
 
 
 /**
- * DPCM Squareroot-Delta-Exact
+ *
  */
 export function sdx2_dpcm(options?: {
 
@@ -8510,7 +8152,7 @@ export function sdx2_dpcm(options?: {
 
 
 /**
- * Shorten
+ *
  */
 export function shorten(options?: {
 
@@ -8527,7 +8169,7 @@ export function shorten(options?: {
 
 
 /**
- * RealAudio SIPR / ACELP.NET
+ *
  */
 export function sipr(options?: {
 
@@ -8544,7 +8186,7 @@ export function sipr(options?: {
 
 
 /**
- * Siren
+ *
  */
 export function siren(options?: {
 
@@ -8561,7 +8203,7 @@ export function siren(options?: {
 
 
 /**
- * Smacker audio (codec smackaudio)
+ * (codec smackaudio)
  */
 export function smackaud(options?: {
 
@@ -8578,7 +8220,7 @@ export function smackaud(options?: {
 
 
 /**
- * DPCM Sol
+ *
  */
 export function sol_dpcm(options?: {
 
@@ -8595,7 +8237,7 @@ export function sol_dpcm(options?: {
 
 
 /**
- * Sonic
+ *
  */
 export function sonic(options?: {
 
@@ -8612,7 +8254,7 @@ export function sonic(options?: {
 
 
 /**
- * Speex
+ *
  */
 export function speex(options?: {
 
@@ -8629,7 +8271,7 @@ export function speex(options?: {
 
 
 /**
- * TAK (Tom's lossless Audio Kompressor)
+ *
  */
 export function tak(options?: {
 
@@ -8646,7 +8288,7 @@ export function tak(options?: {
 
 
 /**
- * TrueHD
+ *
  * @param options.downmix - Request a specific channel layout from the decoder
  */
 export function truehd(options?: {
@@ -8666,7 +8308,7 @@ export function truehd(options?: {
 
 
 /**
- * DSP Group TrueSpeech
+ *
  */
 export function truespeech(options?: {
 
@@ -8683,7 +8325,7 @@ export function truespeech(options?: {
 
 
 /**
- * TTA (True Audio)
+ *
  * @param options.password - Set decoding password
  */
 export function tta(options?: {
@@ -8703,7 +8345,7 @@ export function tta(options?: {
 
 
 /**
- * VQF TwinVQ
+ *
  */
 export function twinvq(options?: {
 
@@ -8720,7 +8362,7 @@ export function twinvq(options?: {
 
 
 /**
- * Sierra VMD audio
+ *
  */
 export function vmdaudio(options?: {
 
@@ -8737,7 +8379,7 @@ export function vmdaudio(options?: {
 
 
 /**
- * Vorbis
+ *
  */
 export function vorbis(options?: {
 
@@ -8754,7 +8396,7 @@ export function vorbis(options?: {
 
 
 /**
- * libvorbis (codec vorbis)
+ * (codec vorbis)
  */
 export function libvorbis(options?: {
 
@@ -8771,7 +8413,7 @@ export function libvorbis(options?: {
 
 
 /**
- * Wave synthesis pseudo-codec
+ *
  */
 export function wavesynth(options?: {
 
@@ -8788,7 +8430,7 @@ export function wavesynth(options?: {
 
 
 /**
- * WavPack
+ *
  */
 export function wavpack(options?: {
 
@@ -8805,7 +8447,7 @@ export function wavpack(options?: {
 
 
 /**
- * Westwood Audio (SND1) (codec westwood_snd1)
+ * (codec westwood_snd1)
  */
 export function ws_snd1(options?: {
 
@@ -8822,7 +8464,7 @@ export function ws_snd1(options?: {
 
 
 /**
- * Windows Media Audio Lossless
+ *
  */
 export function wmalossless(options?: {
 
@@ -8839,7 +8481,7 @@ export function wmalossless(options?: {
 
 
 /**
- * Windows Media Audio 9 Professional
+ *
  */
 export function wmapro(options?: {
 
@@ -8856,7 +8498,7 @@ export function wmapro(options?: {
 
 
 /**
- * Windows Media Audio 1
+ *
  */
 export function wmav1(options?: {
 
@@ -8873,7 +8515,7 @@ export function wmav1(options?: {
 
 
 /**
- * Windows Media Audio 2
+ *
  */
 export function wmav2(options?: {
 
@@ -8890,7 +8532,7 @@ export function wmav2(options?: {
 
 
 /**
- * Windows Media Audio Voice
+ *
  */
 export function wmavoice(options?: {
 
@@ -8907,7 +8549,7 @@ export function wmavoice(options?: {
 
 
 /**
- * DPCM Xan
+ *
  */
 export function xan_dpcm(options?: {
 
@@ -8924,7 +8566,7 @@ export function xan_dpcm(options?: {
 
 
 /**
- * Xbox Media Audio 1
+ *
  */
 export function xma1(options?: {
 
@@ -8941,7 +8583,7 @@ export function xma1(options?: {
 
 
 /**
- * Xbox Media Audio 2
+ *
  */
 export function xma2(options?: {
 
@@ -8958,7 +8600,30 @@ export function xma2(options?: {
 
 
 /**
- * ASS (Advanced SubStation Alpha) subtitle (codec ass)
+ * (codec arib_caption)
+ * @param options.aribb24_base_path - set the base path for the libaribb24 library
+ * @param options.aribb24_skip_ruby_text - skip ruby text blocks during decoding (default true)
+ */
+export function libaribb24(options?: {
+  aribb24_base_path?: string | null;
+  aribb24_skip_ruby_text?: boolean | null;
+
+}): FFMpegDecoderOption {
+  return merge({
+    "aribb24-base-path": options?.aribb24_base_path,
+    "aribb24-skip-ruby-text": options?.aribb24_skip_ruby_text,
+
+  });
+}
+
+
+
+
+
+
+
+/**
+ * (codec ass)
  */
 export function ssa(options?: {
 
@@ -8975,7 +8640,7 @@ export function ssa(options?: {
 
 
 /**
- * ASS (Advanced SubStation Alpha) subtitle
+ *
  */
 export function ass(options?: {
 
@@ -8992,7 +8657,7 @@ export function ass(options?: {
 
 
 /**
- * DVB subtitles (codec dvb_subtitle)
+ * (codec dvb_subtitle)
  * @param options.compute_edt - compute end of time using pts or timeout (default false)
  * @param options.compute_clut - compute clut when not available(-1) or only once (-2) or always(1) or never(0) (default auto)
  * @param options.dvb_substream - (from -1 to 63) (default -1)
@@ -9018,7 +8683,7 @@ export function dvbsub(options?: {
 
 
 /**
- * DVD subtitles (codec dvd_subtitle)
+ * (codec dvd_subtitle)
  * @param options.palette - set the global palette
  * @param options.ifo_palette - obtain the global palette from .IFO file
  * @param options.forced_subs_only - Only show forced subtitles (default false)
@@ -9044,7 +8709,7 @@ export function dvdsub(options?: {
 
 
 /**
- * Closed Caption (EIA-608 / CEA-708) (codec eia_608)
+ * (codec eia_608)
  * @param options.real_time - emit subtitle events as they are decoded for real-time display (default false)
  * @param options.real_time_latency_msec - minimum elapsed time between emitting real-time subtitle events (from 0 to 500) (default 200)
  * @param options.data_field - select data field (from -1 to 1) (default auto)
@@ -9070,7 +8735,7 @@ export function cc_dec(options?: {
 
 
 /**
- * HDMV Presentation Graphic Stream subtitles (codec hdmv_pgs_subtitle)
+ * (codec hdmv_pgs_subtitle)
  * @param options.forced_subs_only - Only show forced subtitles (default false)
  */
 export function pgssub(options?: {
@@ -9090,7 +8755,7 @@ export function pgssub(options?: {
 
 
 /**
- * JACOsub subtitle
+ *
  */
 export function jacosub(options?: {
 
@@ -9107,7 +8772,7 @@ export function jacosub(options?: {
 
 
 /**
- * MicroDVD subtitle
+ *
  */
 export function microdvd(options?: {
 
@@ -9124,7 +8789,7 @@ export function microdvd(options?: {
 
 
 /**
- * 3GPP Timed Text subtitle
+ *
  * @param options.width - Frame width, usually video width (from 0 to INT_MAX) (default 0)
  * @param options.height - Frame height, usually video height (from 0 to INT_MAX) (default 0)
  */
@@ -9147,7 +8812,7 @@ export function mov_text(options?: {
 
 
 /**
- * MPL2 subtitle
+ *
  */
 export function mpl2(options?: {
 
@@ -9164,7 +8829,7 @@ export function mpl2(options?: {
 
 
 /**
- * PJS subtitle
+ *
  * @param options.keep_ass_markup - Set if ASS tags must be escaped (default false)
  */
 export function pjs(options?: {
@@ -9184,7 +8849,7 @@ export function pjs(options?: {
 
 
 /**
- * RealText subtitle
+ *
  */
 export function realtext(options?: {
 
@@ -9201,7 +8866,7 @@ export function realtext(options?: {
 
 
 /**
- * SAMI subtitle
+ *
  */
 export function sami(options?: {
 
@@ -9218,7 +8883,7 @@ export function sami(options?: {
 
 
 /**
- * Spruce subtitle format
+ *
  * @param options.keep_ass_markup - Set if ASS tags must be escaped (default false)
  */
 export function stl(options?: {
@@ -9238,7 +8903,7 @@ export function stl(options?: {
 
 
 /**
- * SubRip subtitle (codec subrip)
+ * (codec subrip)
  */
 export function srt(options?: {
 
@@ -9255,7 +8920,7 @@ export function srt(options?: {
 
 
 /**
- * SubRip subtitle
+ *
  */
 export function subrip(options?: {
 
@@ -9272,7 +8937,7 @@ export function subrip(options?: {
 
 
 /**
- * SubViewer subtitle
+ *
  */
 export function subviewer(options?: {
 
@@ -9289,7 +8954,7 @@ export function subviewer(options?: {
 
 
 /**
- * SubViewer1 subtitle
+ *
  * @param options.keep_ass_markup - Set if ASS tags must be escaped (default false)
  */
 export function subviewer1(options?: {
@@ -9309,7 +8974,7 @@ export function subviewer1(options?: {
 
 
 /**
- * Raw text subtitle
+ *
  * @param options.keep_ass_markup - Set if ASS tags must be escaped (default false)
  */
 export function text(options?: {
@@ -9329,7 +8994,7 @@ export function text(options?: {
 
 
 /**
- * VPlayer subtitle
+ *
  * @param options.keep_ass_markup - Set if ASS tags must be escaped (default false)
  */
 export function vplayer(options?: {
@@ -9349,7 +9014,7 @@ export function vplayer(options?: {
 
 
 /**
- * WebVTT subtitle
+ *
  */
 export function webvtt(options?: {
 
@@ -9366,7 +9031,7 @@ export function webvtt(options?: {
 
 
 /**
- * XSUB
+ *
  */
 export function xsub(options?: {
 

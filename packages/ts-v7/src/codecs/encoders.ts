@@ -211,6 +211,41 @@ export function asv2(options?: {
 
 
 /**
+ * librav1e AV1 (codec av1)
+ * @param options.qp - use constant quantizer mode (from -1 to 255) (default -1)
+ * @param options.speed - what speed preset to use (from -1 to 10) (default -1)
+ * @param options.tiles - number of tiles encode with (from -1 to I64_MAX) (default 0)
+ * @param options.tile_rows - number of tiles rows to encode with (from -1 to I64_MAX) (default 0)
+ * @param options.tile_columns - number of tiles columns to encode with (from -1 to I64_MAX) (default 0)
+ * @param options.rav1e_params - set the rav1e configuration using a :-separated list of key=value parameters
+ */
+export function librav1e(options?: {
+  qp?: number | null;
+  speed?: number | null;
+  tiles?: number | null;
+  tile_rows?: number | null;
+  tile_columns?: number | null;
+  rav1e_params?: string | null;
+
+}): FFMpegEncoderOption {
+  return merge({
+    "qp": options?.qp,
+    "speed": options?.speed,
+    "tiles": options?.tiles,
+    "tile-rows": options?.tile_rows,
+    "tile-columns": options?.tile_columns,
+    "rav1e-params": options?.rav1e_params,
+
+  });
+}
+
+
+
+
+
+
+
+/**
  * NVIDIA NVENC av1 encoder (codec av1)
  * @param options.preset - Set the encoding preset (from 0 to 18) (default p4)
  * @param options.tune - Set the encoding tuning info (from 1 to 4) (default hq)
@@ -1829,6 +1864,32 @@ export function h264_vulkan(options?: {
 
 
 /**
+ * Vidvox Hap
+ * @param options.format - (from 11 to 15) (default hap)
+ * @param options.chunks - chunk count (from 1 to 64) (default 1)
+ * @param options.compressor - second-stage compressor (from 160 to 176) (default snappy)
+ */
+export function hap(options?: {
+  format?: number | null | "hap" | "hap_alpha" | "hap_q";
+  chunks?: number | null;
+  compressor?: number | null | "none" | "snappy";
+
+}): FFMpegEncoderOption {
+  return merge({
+    "format": options?.format,
+    "chunks": options?.chunks,
+    "compressor": options?.compressor,
+
+  });
+}
+
+
+
+
+
+
+
+/**
  * HDR (Radiance RGBE format) image
  */
 export function hdr(options?: {
@@ -2306,6 +2367,35 @@ export function jpegls(options?: {
 }): FFMpegEncoderOption {
   return merge({
     "pred": options?.pred,
+
+  });
+}
+
+
+
+
+
+
+
+/**
+ * libjxl JPEG XL (codec jpegxl)
+ * @param options.effort - Encoding effort (from 1 to 9) (default 7)
+ * @param options.distance - Maximum Butteraugli distance (quality setting, lower = better, zero = lossless, default 1.0) (from -1 to 15) (default -1)
+ * @param options.modular - Force modular mode (from 0 to 1) (default 0)
+ * @param options.xyb - Use XYB-encoding for lossy images (from 0 to 1) (default 1)
+ */
+export function libjxl(options?: {
+  effort?: number | null;
+  distance?: number | null;
+  modular?: number | null;
+  xyb?: number | null;
+
+}): FFMpegEncoderOption {
+  return merge({
+    "effort": options?.effort,
+    "distance": options?.distance,
+    "modular": options?.modular,
+    "xyb": options?.xyb,
 
   });
 }
@@ -4747,6 +4837,62 @@ export function aac(options?: {
 
 
 /**
+ * Fraunhofer FDK AAC (codec aac)
+ * @param options.afterburner - Afterburner (improved quality) (from 0 to 1) (default 1)
+ * @param options.eld_sbr - Enable SBR for ELD (for SBR in other configurations, use the -profile parameter) (from 0 to 1) (default 0)
+ * @param options.eld_v2 - Enable ELDv2 (LD-MPS extension for ELD stereo signals) (from 0 to 1) (default 0)
+ * @param options.signaling - SBR/PS signaling style (from -1 to 2) (default default)
+ * @param options.latm - Output LATM/LOAS encapsulated data (from 0 to 1) (default 0)
+ * @param options.header_period - StreamMuxConfig and PCE repetition period (in frames) (from 0 to 65535) (default 0)
+ * @param options.vbr - VBR mode (1-5) (from 0 to 5) (default 0)
+ * @param options.drc_profile - The desired compression profile for AAC DRC (from 0 to 256) (default 0)
+ * @param options.drc_target_ref - Expected target reference level at decoder side in dB (for clipping prevention/limiter) (from -31.75 to 0) (default 0)
+ * @param options.comp_profile - The desired compression profile for AAC DRC (from 0 to 256) (default 0)
+ * @param options.comp_target_ref - Expected target reference level at decoder side in dB (for clipping prevention/limiter) (from -31.75 to 0) (default 0)
+ * @param options.prog_ref - The program reference level or dialog level in dB (from -31.75 to 0) (default 0)
+ * @param options.frame_length - The desired frame length (from -1 to 1024) (default -1)
+ */
+export function libfdk_aac(options?: {
+  afterburner?: number | null;
+  eld_sbr?: number | null;
+  eld_v2?: number | null;
+  signaling?: number | null | "default" | "implicit" | "explicit_sbr" | "explicit_hierarchical";
+  latm?: number | null;
+  header_period?: number | null;
+  vbr?: number | null;
+  drc_profile?: number | null;
+  drc_target_ref?: number | null;
+  comp_profile?: number | null;
+  comp_target_ref?: number | null;
+  prog_ref?: number | null;
+  frame_length?: number | null;
+
+}): FFMpegEncoderOption {
+  return merge({
+    "afterburner": options?.afterburner,
+    "eld_sbr": options?.eld_sbr,
+    "eld_v2": options?.eld_v2,
+    "signaling": options?.signaling,
+    "latm": options?.latm,
+    "header_period": options?.header_period,
+    "vbr": options?.vbr,
+    "drc_profile": options?.drc_profile,
+    "drc_target_ref": options?.drc_target_ref,
+    "comp_profile": options?.comp_profile,
+    "comp_target_ref": options?.comp_target_ref,
+    "prog_ref": options?.prog_ref,
+    "frame_length": options?.frame_length,
+
+  });
+}
+
+
+
+
+
+
+
+/**
  * ATSC A/52A (AC-3)
  * @param options.center_mixlev - Center Mix Level (from 0 to 1) (default 0.594604)
  * @param options.surround_mixlev - Surround Mix Level (from 0 to 1) (default 0.5)
@@ -5289,6 +5435,26 @@ export function aptx_hd(options?: {
 
 
 /**
+ * codec2 encoder using libcodec2 (codec codec2)
+ * @param options.mode - codec2 mode (from 0 to 8) (default 1300)
+ */
+export function libcodec2(options?: {
+  mode?: number | null | "3200" | "2400" | "1600" | "1400" | "1300" | "1200" | "700" | "700B" | "700C";
+
+}): FFMpegEncoderOption {
+  return merge({
+    "mode": options?.mode,
+
+  });
+}
+
+
+
+
+
+
+
+/**
  * RFC 3389 comfort noise generator
  */
 export function comfortnoise(options?: {
@@ -5475,6 +5641,40 @@ export function g723_1(options?: {
 
 
 /**
+ * libgsm GSM (codec gsm)
+ */
+export function libgsm(options?: {
+
+}): FFMpegEncoderOption {
+  return merge({
+
+  });
+}
+
+
+
+
+
+
+
+/**
+ * libgsm GSM Microsoft variant (codec gsm_ms)
+ */
+export function libgsm_ms(options?: {
+
+}): FFMpegEncoderOption {
+  return merge({
+
+  });
+}
+
+
+
+
+
+
+
+/**
  * MLP (Meridian Lossless Packing)
  * @param options.max_interval - Max number of frames between each new header (from 8 to 128) (default 16)
  * @param options.lpc_coeff_precision - LPC coefficient precision (from 0 to 15) (default 15)
@@ -5547,6 +5747,44 @@ export function mp2fixed(options?: {
 
 
 /**
+ * libtwolame MP2 (MPEG audio layer 2) (codec mp2)
+ * @param options.mode - Mpeg Mode (from -1 to 3) (default auto)
+ * @param options.psymodel - Psychoacoustic Model (from -1 to 4) (default 3)
+ * @param options.energy_levels - enable energy levels (from 0 to 1) (default 0)
+ * @param options.error_protection - enable CRC error protection (from 0 to 1) (default 0)
+ * @param options.copyright - set MPEG Audio Copyright flag (from 0 to 1) (default 0)
+ * @param options.original - set MPEG Audio Original flag (from 0 to 1) (default 0)
+ * @param options.verbosity - set library optput level (0-10) (from 0 to 10) (default 0)
+ */
+export function libtwolame(options?: {
+  mode?: number | null | "auto" | "stereo" | "joint_stereo" | "dual_channel" | "mono";
+  psymodel?: number | null;
+  energy_levels?: number | null;
+  error_protection?: number | null;
+  copyright?: number | null;
+  original?: number | null;
+  verbosity?: number | null;
+
+}): FFMpegEncoderOption {
+  return merge({
+    "mode": options?.mode,
+    "psymodel": options?.psymodel,
+    "energy_levels": options?.energy_levels,
+    "error_protection": options?.error_protection,
+    "copyright": options?.copyright,
+    "original": options?.original,
+    "verbosity": options?.verbosity,
+
+  });
+}
+
+
+
+
+
+
+
+/**
  * libmp3lame MP3 (MPEG audio layer 3) (codec mp3)
  * @param options.reservoir - use bit reservoir (default true)
  * @param options.joint_stereo - use joint stereo (default true)
@@ -5568,6 +5806,23 @@ export function libmp3lame(options?: {
     "abr": options?.abr,
     "copyright": options?.copyright,
     "original": options?.original,
+
+  });
+}
+
+
+
+
+
+
+
+/**
+ * libshine MP3 (MPEG audio layer 3) (codec mp3)
+ */
+export function libshine(options?: {
+
+}): FFMpegEncoderOption {
+  return merge({
 
   });
 }
@@ -6281,6 +6536,38 @@ export function sonicls(options?: {
 
 }): FFMpegEncoderOption {
   return merge({
+
+  });
+}
+
+
+
+
+
+
+
+/**
+ * libspeex Speex (codec speex)
+ * @param options.abr - Use average bit rate (from 0 to 1) (default 0)
+ * @param options.cbr_quality - Set quality value (0 to 10) for CBR (from 0 to 10) (default 8)
+ * @param options.frames_per_packet - Number of frames to encode in each packet (from 1 to 8) (default 1)
+ * @param options.vad - Voice Activity Detection (from 0 to 1) (default 0)
+ * @param options.dtx - Discontinuous Transmission (from 0 to 1) (default 0)
+ */
+export function libspeex(options?: {
+  abr?: number | null;
+  cbr_quality?: number | null;
+  frames_per_packet?: number | null;
+  vad?: number | null;
+  dtx?: number | null;
+
+}): FFMpegEncoderOption {
+  return merge({
+    "abr": options?.abr,
+    "cbr_quality": options?.cbr_quality,
+    "frames_per_packet": options?.frames_per_packet,
+    "vad": options?.vad,
+    "dtx": options?.dtx,
 
   });
 }

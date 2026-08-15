@@ -1,0 +1,28 @@
+{
+  "index": null,
+  "node": {
+    "inputs": [
+      {
+        "index": null,
+        "node": {
+          "filename": "output_video.mp4",
+          "inputs": [
+            {
+              "index": null,
+              "node": {
+                "filename": "input_video.mkv",
+                "inputs": [],
+                "kwargs": "FrozenDict({})"
+              },
+              "optional": false
+            }
+          ],
+          "kwargs": "FrozenDict({'shortest': True, 'b:v': '1000k', 'b:a': '128k'})"
+        },
+        "optional": false
+      }
+    ],
+    "kwargs": "FrozenDict({'y': True, 'stdin': False})"
+  },
+  "optional": false
+}

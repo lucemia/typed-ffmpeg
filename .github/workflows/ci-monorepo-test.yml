@@ -98,6 +98,8 @@ jobs:
             ffmpeg-version: v7
           - python-version: '3.10'
             ffmpeg-version: v8
+          - python-version: '3.10'
+            ffmpeg-version: v9
           - python-version: '3.12'
             ffmpeg-version: v8
 

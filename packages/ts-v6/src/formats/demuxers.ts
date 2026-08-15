@@ -367,8 +367,14 @@ export type FFMpegDemuxerOption = Readonly<Record<string, unknown>>;
 
 
 
+
+
+
+
+
+
 /**
- * 3DO STR
+ * 3dostr
  */
 export function _3dostr(options?: {
 
@@ -385,7 +391,7 @@ export function _3dostr(options?: {
 
 
 /**
- * 4X Technologies
+ * 4xm
  */
 export function _4xm(options?: {
 
@@ -402,7 +408,7 @@ export function _4xm(options?: {
 
 
 /**
- * Audible AA format files
+ * aa
  * @param options.aa_fixed_key - Fixed key used for handling Audible AA files
  */
 export function aa(options?: {
@@ -422,7 +428,7 @@ export function aa(options?: {
 
 
 /**
- * raw ADTS AAC (Advanced Audio Coding)
+ * aac
  */
 export function aac(options?: {
 
@@ -439,7 +445,7 @@ export function aac(options?: {
 
 
 /**
- * CRI AAX
+ * aax
  */
 export function aax(options?: {
 
@@ -456,7 +462,7 @@ export function aax(options?: {
 
 
 /**
- * raw AC-3
+ * ac3
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
 export function ac3(options?: {
@@ -476,7 +482,7 @@ export function ac3(options?: {
 
 
 /**
- * raw AC-4
+ * ac4
  */
 export function ac4(options?: {
 
@@ -493,7 +499,7 @@ export function ac4(options?: {
 
 
 /**
- * tri-Ace Audio Container
+ * ace
  */
 export function ace(options?: {
 
@@ -510,7 +516,7 @@ export function ace(options?: {
 
 
 /**
- * Interplay ACM
+ * acm
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
 export function acm(options?: {
@@ -547,7 +553,7 @@ export function act(options?: {
 
 
 /**
- * Artworx Data Format
+ * adf
  * @param options.linespeed - set simulated line speed (bytes per second) (from 1 to INT_MAX) (default 6000)
  * @param options.video_size - set video size, such as 640x480 or hd720.
  * @param options.framerate - set framerate (frames per second) (default "25")
@@ -573,7 +579,7 @@ export function adf(options?: {
 
 
 /**
- * ADP
+ * adp
  */
 export function adp(options?: {
 
@@ -590,7 +596,7 @@ export function adp(options?: {
 
 
 /**
- * Sony PS2 ADS
+ * ads
  */
 export function ads(options?: {
 
@@ -607,7 +613,7 @@ export function ads(options?: {
 
 
 /**
- * CRI ADX
+ * adx
  */
 export function adx(options?: {
 
@@ -624,7 +630,7 @@ export function adx(options?: {
 
 
 /**
- * MD STUDIO audio
+ * aea
  */
 export function aea(options?: {
 
@@ -641,7 +647,7 @@ export function aea(options?: {
 
 
 /**
- * AFC
+ * afc
  */
 export function afc(options?: {
 
@@ -658,7 +664,7 @@ export function afc(options?: {
 
 
 /**
- * Audio IFF
+ * aiff
  */
 export function aiff(options?: {
 
@@ -675,7 +681,7 @@ export function aiff(options?: {
 
 
 /**
- * CRI AIX
+ * aix
  */
 export function aix(options?: {
 
@@ -692,7 +698,7 @@ export function aix(options?: {
 
 
 /**
- * PCM A-law
+ * alaw
  * @param options.sample_rate - (from 0 to INT_MAX) (default 44100)
  * @param options.channels - (from 0 to INT_MAX) (default 1)
  * @param options.ch_layout -
@@ -718,7 +724,7 @@ export function alaw(options?: {
 
 
 /**
- * Alias/Wavefront PIX image
+ * alias_pix
  * @param options.pattern_type - set pattern type (from 0 to INT_MAX) (default 4)
  * @param options.start_number - set first number in the sequence (from INT_MIN to INT_MAX) (default 0)
  * @param options.start_number_range - set range for looking at the first sequence number (from 1 to INT_MAX) (default 5)
@@ -762,7 +768,7 @@ export function alias_pix(options?: {
 
 
 /**
- * LEGO Racers ALP
+ * alp
  */
 export function alp(options?: {
 
@@ -779,7 +785,30 @@ export function alp(options?: {
 
 
 /**
- * 3GPP AMR
+ * alsa
+ * @param options.sample_rate - (from 1 to INT_MAX) (default 48000)
+ * @param options.channels - (from 1 to INT_MAX) (default 2)
+ */
+export function alsa(options?: {
+  sample_rate?: number | null;
+  channels?: number | null;
+
+}): FFMpegDemuxerOption {
+  return merge({
+    "sample_rate": options?.sample_rate,
+    "channels": options?.channels,
+
+  });
+}
+
+
+
+
+
+
+
+/**
+ * amr
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
 export function amr(options?: {
@@ -799,7 +828,7 @@ export function amr(options?: {
 
 
 /**
- * raw AMR-NB
+ * amrnb
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
 export function amrnb(options?: {
@@ -819,7 +848,7 @@ export function amrnb(options?: {
 
 
 /**
- * raw AMR-WB
+ * amrwb
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
 export function amrwb(options?: {
@@ -839,7 +868,7 @@ export function amrwb(options?: {
 
 
 /**
- * Deluxe Paint Animation
+ * anm
  */
 export function anm(options?: {
 
@@ -856,7 +885,7 @@ export function anm(options?: {
 
 
 /**
- * raw APAC
+ * apac
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
 export function apac(options?: {
@@ -876,7 +905,7 @@ export function apac(options?: {
 
 
 /**
- * CRYO APC
+ * apc
  */
 export function apc(options?: {
 
@@ -893,7 +922,7 @@ export function apc(options?: {
 
 
 /**
- * Monkey's Audio
+ * ape
  */
 export function ape(options?: {
 
@@ -910,7 +939,7 @@ export function ape(options?: {
 
 
 /**
- * Ubisoft Rayman 2 APM
+ * apm
  */
 export function apm(options?: {
 
@@ -927,7 +956,7 @@ export function apm(options?: {
 
 
 /**
- * Animated Portable Network Graphics
+ * apng
  * @param options.ignore_loop - ignore loop setting (default true)
  * @param options.max_fps - maximum framerate (0 is no limit) (from 0 to INT_MAX) (default 0)
  * @param options.default_fps - default framerate (0 is as fast as possible) (from 0 to INT_MAX) (default 15)
@@ -953,7 +982,7 @@ export function apng(options?: {
 
 
 /**
- * raw aptX
+ * aptx
  * @param options.sample_rate - (from 0 to INT_MAX) (default 48000)
  */
 export function aptx(options?: {
@@ -973,7 +1002,7 @@ export function aptx(options?: {
 
 
 /**
- * raw aptX HD
+ * aptx_hd
  * @param options.sample_rate - (from 0 to INT_MAX) (default 48000)
  */
 export function aptx_hd(options?: {
@@ -993,7 +1022,7 @@ export function aptx_hd(options?: {
 
 
 /**
- * AQTitle subtitles
+ * aqtitle
  * @param options.subfps - set the movie frame rate (from 0 to INT_MAX) (default 25/1)
  */
 export function aqtitle(options?: {
@@ -1013,7 +1042,7 @@ export function aqtitle(options?: {
 
 
 /**
- * Argonaut Games ASF
+ * argo_asf
  */
 export function argo_asf(options?: {
 
@@ -1030,7 +1059,7 @@ export function argo_asf(options?: {
 
 
 /**
- * Argonaut Games BRP
+ * argo_brp
  */
 export function argo_brp(options?: {
 
@@ -1047,7 +1076,7 @@ export function argo_brp(options?: {
 
 
 /**
- * Argonaut Games CVG
+ * argo_cvg
  */
 export function argo_cvg(options?: {
 
@@ -1064,7 +1093,7 @@ export function argo_cvg(options?: {
 
 
 /**
- * ASF (Advanced / Active Streaming Format)
+ * asf
  * @param options.no_resync_search - Don't try to resynchronize by looking for a certain optional start code (default false)
  * @param options.export_xmp - Export full XMP metadata (default false)
  */
@@ -1087,7 +1116,7 @@ export function asf(options?: {
 
 
 /**
- * ASF (Advanced / Active Streaming Format)
+ * asf_o
  */
 export function asf_o(options?: {
 
@@ -1104,7 +1133,7 @@ export function asf_o(options?: {
 
 
 /**
- * SSA (SubStation Alpha) subtitle
+ * ass
  */
 export function ass(options?: {
 
@@ -1121,7 +1150,7 @@ export function ass(options?: {
 
 
 /**
- * AST (Audio Stream)
+ * ast
  */
 export function ast(options?: {
 
@@ -1138,7 +1167,7 @@ export function ast(options?: {
 
 
 /**
- * Sun AU
+ * au
  */
 export function au(options?: {
 
@@ -1155,7 +1184,7 @@ export function au(options?: {
 
 
 /**
- * AV1 Annex B
+ * av1
  * @param options.framerate - (default "25")
  */
 export function av1(options?: {
@@ -1175,7 +1204,7 @@ export function av1(options?: {
 
 
 /**
- * AVI (Audio Video Interleaved)
+ * avi
  * @param options.use_odml - use odml index (default true)
  */
 export function avi(options?: {
@@ -1195,7 +1224,7 @@ export function avi(options?: {
 
 
 /**
- * AVR (Audio Visual Research)
+ * avr
  */
 export function avr(options?: {
 
@@ -1212,7 +1241,7 @@ export function avr(options?: {
 
 
 /**
- * Argonaut Games Creature Shock
+ * avs
  */
 export function avs(options?: {
 
@@ -1229,7 +1258,7 @@ export function avs(options?: {
 
 
 /**
- * raw AVS2-P2/IEEE1857.4
+ * avs2
  * @param options.framerate - (default "25")
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
@@ -1252,7 +1281,7 @@ export function avs2(options?: {
 
 
 /**
- * raw AVS3-P2/IEEE1857.10
+ * avs3
  * @param options.framerate - (default "25")
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
@@ -1275,7 +1304,7 @@ export function avs3(options?: {
 
 
 /**
- * Bethesda Softworks VID
+ * bethsoftvid
  */
 export function bethsoftvid(options?: {
 
@@ -1292,7 +1321,7 @@ export function bethsoftvid(options?: {
 
 
 /**
- * Brute Force & Ignorance
+ * bfi
  */
 export function bfi(options?: {
 
@@ -1309,7 +1338,7 @@ export function bfi(options?: {
 
 
 /**
- * BFSTM (Binary Cafe Stream)
+ * bfstm
  */
 export function bfstm(options?: {
 
@@ -1326,7 +1355,7 @@ export function bfstm(options?: {
 
 
 /**
- * Binary text
+ * bin
  * @param options.linespeed - set simulated line speed (bytes per second) (from 1 to INT_MAX) (default 6000)
  * @param options.video_size - set video size, such as 640x480 or hd720.
  * @param options.framerate - set framerate (frames per second) (default "25")
@@ -1352,7 +1381,7 @@ export function bin(options?: {
 
 
 /**
- * Bink
+ * bink
  */
 export function bink(options?: {
 
@@ -1369,7 +1398,7 @@ export function bink(options?: {
 
 
 /**
- * Bink Audio
+ * binka
  */
 export function binka(options?: {
 
@@ -1386,7 +1415,7 @@ export function binka(options?: {
 
 
 /**
- * G.729 BIT file format
+ * bit
  */
 export function bit(options?: {
 
@@ -1403,7 +1432,7 @@ export function bit(options?: {
 
 
 /**
- * Bitpacked
+ * bitpacked
  * @param options.pixel_format - set pixel format (default "yuv420p")
  * @param options.video_size - set frame size
  * @param options.framerate - set frame rate (default "25")
@@ -1429,7 +1458,7 @@ export function bitpacked(options?: {
 
 
 /**
- * piped bmp sequence
+ * bmp_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -1461,7 +1490,7 @@ export function bmp_pipe(options?: {
 
 
 /**
- * Discworld II BMV
+ * bmv
  */
 export function bmv(options?: {
 
@@ -1478,7 +1507,7 @@ export function bmv(options?: {
 
 
 /**
- * Black Ops Audio
+ * boa
  */
 export function boa(options?: {
 
@@ -1495,7 +1524,7 @@ export function boa(options?: {
 
 
 /**
- * raw Bonk
+ * bonk
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
 export function bonk(options?: {
@@ -1515,7 +1544,7 @@ export function bonk(options?: {
 
 
 /**
- * BRender PIX image
+ * brender_pix
  * @param options.pattern_type - set pattern type (from 0 to INT_MAX) (default 4)
  * @param options.start_number - set first number in the sequence (from INT_MIN to INT_MAX) (default 0)
  * @param options.start_number_range - set range for looking at the first sequence number (from 1 to INT_MAX) (default 5)
@@ -1559,7 +1588,7 @@ export function brender_pix(options?: {
 
 
 /**
- * BRSTM (Binary Revolution Stream)
+ * brstm
  */
 export function brstm(options?: {
 
@@ -1576,7 +1605,7 @@ export function brstm(options?: {
 
 
 /**
- * Interplay C93
+ * c93
  */
 export function c93(options?: {
 
@@ -1593,7 +1622,7 @@ export function c93(options?: {
 
 
 /**
- * Apple CAF (Core Audio Format)
+ * caf
  */
 export function caf(options?: {
 
@@ -1610,7 +1639,7 @@ export function caf(options?: {
 
 
 /**
- * raw Chinese AVS (Audio Video Standard)
+ * cavsvideo
  * @param options.framerate - (default "25")
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
@@ -1633,7 +1662,7 @@ export function cavsvideo(options?: {
 
 
 /**
- * CD Graphics
+ * cdg
  */
 export function cdg(options?: {
 
@@ -1650,7 +1679,7 @@ export function cdg(options?: {
 
 
 /**
- * Commodore CDXL video
+ * cdxl
  * @param options.sample_rate - (from 8000 to INT_MAX) (default 11025)
  * @param options.frame_rate - (default "15")
  */
@@ -1673,7 +1702,7 @@ export function cdxl(options?: {
 
 
 /**
- * Phantom Cine
+ * cine
  */
 export function cine(options?: {
 
@@ -1690,7 +1719,7 @@ export function cine(options?: {
 
 
 /**
- * codec2 .c2 demuxer
+ * codec2
  * @param options.frames_per_packet - Number of frames to read at a time. Higher = faster decoding, lower granularity (from 1 to INT_MAX) (default 1)
  */
 export function codec2(options?: {
@@ -1710,7 +1739,7 @@ export function codec2(options?: {
 
 
 /**
- * raw codec2 demuxer
+ * codec2raw
  * @param options.mode - codec2 mode [mandatory] (from -1 to 8) (default -1)
  * @param options.frames_per_packet - Number of frames to read at a time. Higher = faster decoding, lower granularity (from 1 to INT_MAX) (default 1)
  */
@@ -1733,7 +1762,7 @@ export function codec2raw(options?: {
 
 
 /**
- * Virtual concatenation script
+ * concat
  * @param options.safe - enable safe mode (default true)
  * @param options.auto_convert - automatically convert bitstream format (default true)
  * @param options.segment_time_metadata - output file segment start time and duration as packet metadata (default false)
@@ -1759,7 +1788,7 @@ export function concat(options?: {
 
 
 /**
- * piped cri sequence
+ * cri_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -1791,7 +1820,7 @@ export function cri_pipe(options?: {
 
 
 /**
- * raw data
+ * data
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
 export function data(options?: {
@@ -1811,7 +1840,7 @@ export function data(options?: {
 
 
 /**
- * D-Cinema audio
+ * daud
  */
 export function daud(options?: {
 
@@ -1828,7 +1857,7 @@ export function daud(options?: {
 
 
 /**
- * Sega DC STR
+ * dcstr
  */
 export function dcstr(options?: {
 
@@ -1845,7 +1874,7 @@ export function dcstr(options?: {
 
 
 /**
- * piped dds sequence
+ * dds_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -1877,7 +1906,7 @@ export function dds_pipe(options?: {
 
 
 /**
- * Xilam DERF
+ * derf
  */
 export function derf(options?: {
 
@@ -1894,7 +1923,7 @@ export function derf(options?: {
 
 
 /**
- * Chronomaster DFA
+ * dfa
  */
 export function dfa(options?: {
 
@@ -1911,7 +1940,7 @@ export function dfa(options?: {
 
 
 /**
- * raw DFPWM1a
+ * dfpwm
  * @param options.sample_rate - (from 0 to INT_MAX) (default 48000)
  * @param options.channels - (from 0 to INT_MAX) (default 1)
  * @param options.ch_layout -
@@ -1937,7 +1966,7 @@ export function dfpwm(options?: {
 
 
 /**
- * Video DAV
+ * dhav
  */
 export function dhav(options?: {
 
@@ -1954,7 +1983,7 @@ export function dhav(options?: {
 
 
 /**
- * raw Dirac
+ * dirac
  * @param options.framerate - (default "25")
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
@@ -1977,7 +2006,7 @@ export function dirac(options?: {
 
 
 /**
- * raw DNxHD (SMPTE VC-3)
+ * dnxhd
  * @param options.framerate - (default "25")
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
@@ -2000,7 +2029,7 @@ export function dnxhd(options?: {
 
 
 /**
- * piped dpx sequence
+ * dpx_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -2032,7 +2061,7 @@ export function dpx_pipe(options?: {
 
 
 /**
- * DSD Stream File (DSF)
+ * dsf
  */
 export function dsf(options?: {
 
@@ -2049,7 +2078,7 @@ export function dsf(options?: {
 
 
 /**
- * Delphine Software International CIN
+ * dsicin
  */
 export function dsicin(options?: {
 
@@ -2066,7 +2095,7 @@ export function dsicin(options?: {
 
 
 /**
- * Digital Speech Standard (DSS)
+ * dss
  */
 export function dss(options?: {
 
@@ -2083,7 +2112,7 @@ export function dss(options?: {
 
 
 /**
- * raw DTS
+ * dts
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
 export function dts(options?: {
@@ -2103,7 +2132,7 @@ export function dts(options?: {
 
 
 /**
- * raw DTS-HD
+ * dtshd
  */
 export function dtshd(options?: {
 
@@ -2120,7 +2149,7 @@ export function dtshd(options?: {
 
 
 /**
- * DV (Digital Video)
+ * dv
  */
 export function dv(options?: {
 
@@ -2137,7 +2166,7 @@ export function dv(options?: {
 
 
 /**
- * raw dvbsub
+ * dvbsub
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
 export function dvbsub(options?: {
@@ -2177,7 +2206,7 @@ export function dvbtxt(options?: {
 
 
 /**
- * DXA
+ * dxa
  */
 export function dxa(options?: {
 
@@ -2194,7 +2223,7 @@ export function dxa(options?: {
 
 
 /**
- * Electronic Arts Multimedia
+ * ea
  * @param options.merge_alpha - return VP6 alpha in the main video stream (default false)
  */
 export function ea(options?: {
@@ -2214,7 +2243,7 @@ export function ea(options?: {
 
 
 /**
- * Electronic Arts cdata
+ * ea_cdata
  */
 export function ea_cdata(options?: {
 
@@ -2231,7 +2260,7 @@ export function ea_cdata(options?: {
 
 
 /**
- * raw E-AC-3
+ * eac3
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
 export function eac3(options?: {
@@ -2251,7 +2280,7 @@ export function eac3(options?: {
 
 
 /**
- * Ensoniq Paris Audio File
+ * epaf
  */
 export function epaf(options?: {
 
@@ -2268,7 +2297,7 @@ export function epaf(options?: {
 
 
 /**
- * EVC Annex B
+ * evc
  * @param options.framerate - (default "25")
  */
 export function evc(options?: {
@@ -2288,7 +2317,7 @@ export function evc(options?: {
 
 
 /**
- * piped exr sequence
+ * exr_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -2320,7 +2349,7 @@ export function exr_pipe(options?: {
 
 
 /**
- * PCM 32-bit floating-point big-endian
+ * f32be
  * @param options.sample_rate - (from 0 to INT_MAX) (default 44100)
  * @param options.channels - (from 0 to INT_MAX) (default 1)
  * @param options.ch_layout -
@@ -2346,7 +2375,7 @@ export function f32be(options?: {
 
 
 /**
- * PCM 32-bit floating-point little-endian
+ * f32le
  * @param options.sample_rate - (from 0 to INT_MAX) (default 44100)
  * @param options.channels - (from 0 to INT_MAX) (default 1)
  * @param options.ch_layout -
@@ -2372,7 +2401,7 @@ export function f32le(options?: {
 
 
 /**
- * PCM 64-bit floating-point big-endian
+ * f64be
  * @param options.sample_rate - (from 0 to INT_MAX) (default 44100)
  * @param options.channels - (from 0 to INT_MAX) (default 1)
  * @param options.ch_layout -
@@ -2398,7 +2427,7 @@ export function f64be(options?: {
 
 
 /**
- * PCM 64-bit floating-point little-endian
+ * f64le
  * @param options.sample_rate - (from 0 to INT_MAX) (default 44100)
  * @param options.channels - (from 0 to INT_MAX) (default 1)
  * @param options.ch_layout -
@@ -2424,7 +2453,7 @@ export function f64le(options?: {
 
 
 /**
- * Linux framebuffer
+ * fbdev
  * @param options.framerate - (default "25")
  */
 export function fbdev(options?: {
@@ -2444,7 +2473,7 @@ export function fbdev(options?: {
 
 
 /**
- * FFmpeg metadata in text
+ * ffmetadata
  */
 export function ffmetadata(options?: {
 
@@ -2461,7 +2490,7 @@ export function ffmetadata(options?: {
 
 
 /**
- * Sega FILM / CPK
+ * film_cpk
  */
 export function film_cpk(options?: {
 
@@ -2478,7 +2507,7 @@ export function film_cpk(options?: {
 
 
 /**
- * Adobe Filmstrip
+ * filmstrip
  */
 export function filmstrip(options?: {
 
@@ -2495,7 +2524,7 @@ export function filmstrip(options?: {
 
 
 /**
- * Flexible Image Transport System
+ * fits
  * @param options.framerate - set the framerate (default "1")
  */
 export function fits(options?: {
@@ -2515,7 +2544,7 @@ export function fits(options?: {
 
 
 /**
- * raw FLAC
+ * flac
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
 export function flac(options?: {
@@ -2535,7 +2564,7 @@ export function flac(options?: {
 
 
 /**
- * FLI/FLC/FLX animation
+ * flic
  */
 export function flic(options?: {
 
@@ -2552,7 +2581,7 @@ export function flic(options?: {
 
 
 /**
- * FLV (Flash Video)
+ * flv
  * @param options.flv_metadata - Allocate streams according to the onMetaData array (default false)
  * @param options.flv_full_metadata - Dump full metadata of the onMetadata (default false)
  * @param options.flv_ignore_prevtag - Ignore the Size of previous tag (default false)
@@ -2581,7 +2610,7 @@ export function flv(options?: {
 
 
 /**
- * Megalux Frame
+ * frm
  */
 export function frm(options?: {
 
@@ -2598,7 +2627,7 @@ export function frm(options?: {
 
 
 /**
- * FMOD Sample Bank
+ * fsb
  */
 export function fsb(options?: {
 
@@ -2615,7 +2644,7 @@ export function fsb(options?: {
 
 
 /**
- * Capcom's MT Framework sound
+ * fwse
  */
 export function fwse(options?: {
 
@@ -2632,7 +2661,7 @@ export function fwse(options?: {
 
 
 /**
- * raw G.722
+ * g722
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
 export function g722(options?: {
@@ -2652,7 +2681,7 @@ export function g722(options?: {
 
 
 /**
- * G.723.1
+ * g723_1
  */
 export function g723_1(options?: {
 
@@ -2669,7 +2698,7 @@ export function g723_1(options?: {
 
 
 /**
- * raw big-endian G.726 ("left aligned")
+ * g726
  * @param options.code_size - Bits per G.726 code (from 2 to 5) (default 4)
  * @param options.sample_rate - (from 0 to INT_MAX) (default 8000)
  */
@@ -2692,7 +2721,7 @@ export function g726(options?: {
 
 
 /**
- * raw little-endian G.726 ("right aligned")
+ * g726le
  * @param options.code_size - Bits per G.726 code (from 2 to 5) (default 4)
  * @param options.sample_rate - (from 0 to INT_MAX) (default 8000)
  */
@@ -2715,7 +2744,7 @@ export function g726le(options?: {
 
 
 /**
- * G.729 raw format demuxer
+ * g729
  * @param options.bit_rate - (from 0 to INT_MAX) (default 8000)
  */
 export function g729(options?: {
@@ -2735,7 +2764,7 @@ export function g729(options?: {
 
 
 /**
- * Gremlin Digital Video
+ * gdv
  */
 export function gdv(options?: {
 
@@ -2752,7 +2781,7 @@ export function gdv(options?: {
 
 
 /**
- * piped gem sequence
+ * gem_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -2784,7 +2813,7 @@ export function gem_pipe(options?: {
 
 
 /**
- * GENeric Header
+ * genh
  */
 export function genh(options?: {
 
@@ -2801,7 +2830,7 @@ export function genh(options?: {
 
 
 /**
- * CompuServe Graphics Interchange Format (GIF)
+ * gif
  * @param options.min_delay - minimum valid delay between frames (in hundredths of second) (from 0 to 6000) (default 2)
  * @param options.max_gif_delay - maximum valid delay between frames (in hundredths of seconds) (from 0 to 65535) (default 65535)
  * @param options.default_delay - default delay between frames (in hundredths of second) (from 0 to 6000) (default 10)
@@ -2830,7 +2859,7 @@ export function gif(options?: {
 
 
 /**
- * piped gif sequence
+ * gif_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -2862,7 +2891,7 @@ export function gif_pipe(options?: {
 
 
 /**
- * raw GSM
+ * gsm
  * @param options.sample_rate - (from 1 to 6.50753e+07) (default 8000)
  */
 export function gsm(options?: {
@@ -2882,7 +2911,7 @@ export function gsm(options?: {
 
 
 /**
- * GXF (General eXchange Format)
+ * gxf
  */
 export function gxf(options?: {
 
@@ -2899,7 +2928,7 @@ export function gxf(options?: {
 
 
 /**
- * raw H.261
+ * h261
  * @param options.framerate - (default "25")
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
@@ -2922,7 +2951,7 @@ export function h261(options?: {
 
 
 /**
- * raw H.263
+ * h263
  * @param options.framerate - (default "25")
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
@@ -2945,7 +2974,7 @@ export function h263(options?: {
 
 
 /**
- * raw H.264 video
+ * h264
  * @param options.framerate - (default "25")
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
@@ -2968,7 +2997,7 @@ export function h264(options?: {
 
 
 /**
- * CRI HCA
+ * hca
  * @param options.hca_lowkey - Low key used for handling CRI HCA files (from 0 to UINT32_MAX) (default 0)
  * @param options.hca_highkey - High key used for handling CRI HCA files (from 0 to UINT32_MAX) (default 0)
  * @param options.hca_subkey - Subkey used for handling CRI HCA files (from 0 to 65535) (default 0)
@@ -2994,7 +3023,7 @@ export function hca(options?: {
 
 
 /**
- * Macintosh HCOM
+ * hcom
  */
 export function hcom(options?: {
 
@@ -3011,7 +3040,7 @@ export function hcom(options?: {
 
 
 /**
- * piped hdr sequence
+ * hdr_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -3043,7 +3072,7 @@ export function hdr_pipe(options?: {
 
 
 /**
- * raw HEVC video
+ * hevc
  * @param options.framerate - (default "25")
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
@@ -3066,13 +3095,11 @@ export function hevc(options?: {
 
 
 /**
- * Apple HTTP Live Streaming
+ * hls
  * @param options.live_start_index - segment index to start live streams at (negative values are from the end) (from INT_MIN to INT_MAX) (default -3)
  * @param options.prefer_x_start - prefer to use #EXT-X-START if it's in playlist instead of live_start_index (default false)
- * @param options.allowed_extensions - List of file extensions that hls is allowed to access (default "3gp,aac,avi,ac3,eac3,flac,mkv,m3u8,m4a,m4s,m4v,mpg,mov,mp2,mp3,mp4,mpeg,mpegts,ogg,ogv,oga,ts,vob,vtt,wav,webvtt,cmfv,cmfa,ec3,fmp4")
- * @param options.allowed_segment_extensions - List of file extensions that hls is allowed to access (default "3gp,aac,avi,ac3,eac3,flac,mkv,m3u8,m4a,m4s,m4v,mpg,mov,mp2,mp3,mp4,mpeg,mpegts,ogg,ogv,oga,ts,vob,vtt,wav,webvtt,cmfv,cmfa,ec3,fmp4,html")
- * @param options.extension_picky - Be picky with all extensions matching (default true)
- * @param options.max_reload - Maximum number of times a insufficient list is attempted to be reloaded (from 0 to INT_MAX) (default 100)
+ * @param options.allowed_extensions - List of file extensions that hls is allowed to access (default "3gp,aac,avi,ac3,eac3,flac,mkv,m3u8,m4a,m4s,m4v,mpg,mov,mp2,mp3,mp4,mpeg,mpegts,ogg,ogv,oga,ts,vob,wav")
+ * @param options.max_reload - Maximum number of times a insufficient list is attempted to be reloaded (from 0 to INT_MAX) (default 3)
  * @param options.m3u8_hold_counters - The maximum number of times to load m3u8 when it refreshes without new segments (from 0 to INT_MAX) (default 1000)
  * @param options.http_persistent - Use persistent HTTP connections (default true)
  * @param options.http_multiple - Use multiple HTTP connections for fetching segments (default auto)
@@ -3084,8 +3111,6 @@ export function hls(options?: {
   live_start_index?: number | null;
   prefer_x_start?: boolean | null;
   allowed_extensions?: string | null;
-  allowed_segment_extensions?: string | null;
-  extension_picky?: boolean | null;
   max_reload?: number | null;
   m3u8_hold_counters?: number | null;
   http_persistent?: boolean | null;
@@ -3099,8 +3124,6 @@ export function hls(options?: {
     "live_start_index": options?.live_start_index,
     "prefer_x_start": options?.prefer_x_start,
     "allowed_extensions": options?.allowed_extensions,
-    "allowed_segment_extensions": options?.allowed_segment_extensions,
-    "extension_picky": options?.extension_picky,
     "max_reload": options?.max_reload,
     "m3u8_hold_counters": options?.m3u8_hold_counters,
     "http_persistent": options?.http_persistent,
@@ -3119,7 +3142,7 @@ export function hls(options?: {
 
 
 /**
- * Cryo HNM v4
+ * hnm
  */
 export function hnm(options?: {
 
@@ -3136,7 +3159,7 @@ export function hnm(options?: {
 
 
 /**
- * Microsoft Windows ICO
+ * ico
  */
 export function ico(options?: {
 
@@ -3153,7 +3176,7 @@ export function ico(options?: {
 
 
 /**
- * id Cinematic
+ * idcin
  */
 export function idcin(options?: {
 
@@ -3170,7 +3193,7 @@ export function idcin(options?: {
 
 
 /**
- * iCE Draw File
+ * idf
  * @param options.linespeed - set simulated line speed (bytes per second) (from 1 to INT_MAX) (default 6000)
  * @param options.video_size - set video size, such as 640x480 or hd720.
  * @param options.framerate - set framerate (frames per second) (default "25")
@@ -3196,7 +3219,7 @@ export function idf(options?: {
 
 
 /**
- * IFF (Interchange File Format)
+ * iff
  */
 export function iff(options?: {
 
@@ -3213,7 +3236,7 @@ export function iff(options?: {
 
 
 /**
- * IFV CCTV DVR
+ * ifv
  */
 export function ifv(options?: {
 
@@ -3230,7 +3253,7 @@ export function ifv(options?: {
 
 
 /**
- * iLBC storage
+ * ilbc
  */
 export function ilbc(options?: {
 
@@ -3247,7 +3270,7 @@ export function ilbc(options?: {
 
 
 /**
- * image2 sequence
+ * image2
  * @param options.pattern_type - set pattern type (from 0 to INT_MAX) (default 4)
  * @param options.start_number - set first number in the sequence (from INT_MIN to INT_MAX) (default 0)
  * @param options.start_number_range - set range for looking at the first sequence number (from 1 to INT_MAX) (default 5)
@@ -3291,7 +3314,7 @@ export function image2(options?: {
 
 
 /**
- * piped image2 sequence
+ * image2pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -3323,7 +3346,7 @@ export function image2pipe(options?: {
 
 
 /**
- * raw Ingenient MJPEG
+ * ingenient
  * @param options.framerate - (default "25")
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
@@ -3346,7 +3369,7 @@ export function ingenient(options?: {
 
 
 /**
- * Interplay MVE
+ * ipmovie
  */
 export function ipmovie(options?: {
 
@@ -3363,7 +3386,7 @@ export function ipmovie(options?: {
 
 
 /**
- * raw IPU Video
+ * ipu
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
 export function ipu(options?: {
@@ -3383,7 +3406,7 @@ export function ipu(options?: {
 
 
 /**
- * Berkeley/IRCAM/CARL Sound Format
+ * ircam
  */
 export function ircam(options?: {
 
@@ -3400,7 +3423,7 @@ export function ircam(options?: {
 
 
 /**
- * Funcom ISS
+ * iss
  */
 export function iss(options?: {
 
@@ -3417,7 +3440,7 @@ export function iss(options?: {
 
 
 /**
- * IndigoVision 8000 video
+ * iv8
  */
 export function iv8(options?: {
 
@@ -3434,7 +3457,7 @@ export function iv8(options?: {
 
 
 /**
- * On2 IVF
+ * ivf
  */
 export function ivf(options?: {
 
@@ -3451,7 +3474,7 @@ export function ivf(options?: {
 
 
 /**
- * IVR (Internet Video Recording)
+ * ivr
  */
 export function ivr(options?: {
 
@@ -3468,7 +3491,7 @@ export function ivr(options?: {
 
 
 /**
- * piped j2k sequence
+ * j2k_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -3500,7 +3523,7 @@ export function j2k_pipe(options?: {
 
 
 /**
- * JACOsub subtitle format
+ * jacosub
  */
 export function jacosub(options?: {
 
@@ -3517,7 +3540,7 @@ export function jacosub(options?: {
 
 
 /**
- * piped jpeg sequence
+ * jpeg_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -3549,7 +3572,7 @@ export function jpeg_pipe(options?: {
 
 
 /**
- * piped jpegls sequence
+ * jpegls_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -3581,7 +3604,7 @@ export function jpegls_pipe(options?: {
 
 
 /**
- * Animated JPEG XL
+ * jpegxl_anim
  */
 export function jpegxl_anim(options?: {
 
@@ -3598,7 +3621,7 @@ export function jpegxl_anim(options?: {
 
 
 /**
- * piped jpegxl sequence
+ * jpegxl_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -3630,7 +3653,7 @@ export function jpegxl_pipe(options?: {
 
 
 /**
- * Bitmap Brothers JV
+ * jv
  */
 export function jv(options?: {
 
@@ -3647,7 +3670,7 @@ export function jv(options?: {
 
 
 /**
- * KUX (YouKu)
+ * kux
  * @param options.flv_metadata - Allocate streams according to the onMetaData array (default false)
  * @param options.flv_full_metadata - Dump full metadata of the onMetadata (default false)
  * @param options.flv_ignore_prevtag - Ignore the Size of previous tag (default false)
@@ -3676,7 +3699,7 @@ export function kux(options?: {
 
 
 /**
- * Simon & Schuster Interactive VAG
+ * kvag
  */
 export function kvag(options?: {
 
@@ -3693,7 +3716,7 @@ export function kvag(options?: {
 
 
 /**
- * LAF (Limitless Audio Format)
+ * laf
  */
 export function laf(options?: {
 
@@ -3710,7 +3733,7 @@ export function laf(options?: {
 
 
 /**
- * Libavfilter virtual input device
+ * lavfi
  * @param options.graph - set libavfilter graph
  * @param options.graph_file - set libavfilter graph filename
  * @param options.dumpgraph - dump graph to stderr
@@ -3736,7 +3759,7 @@ export function lavfi(options?: {
 
 
 /**
- * live RTMP FLV (Flash Video)
+ * live_flv
  * @param options.flv_metadata - Allocate streams according to the onMetaData array (default false)
  * @param options.flv_full_metadata - Dump full metadata of the onMetadata (default false)
  * @param options.flv_ignore_prevtag - Ignore the Size of previous tag (default false)
@@ -3765,7 +3788,7 @@ export function live_flv(options?: {
 
 
 /**
- * raw lmlm4
+ * lmlm4
  */
 export function lmlm4(options?: {
 
@@ -3782,7 +3805,7 @@ export function lmlm4(options?: {
 
 
 /**
- * LOAS AudioSyncStream
+ * loas
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
 export function loas(options?: {
@@ -3802,7 +3825,7 @@ export function loas(options?: {
 
 
 /**
- * LRC lyrics
+ * lrc
  */
 export function lrc(options?: {
 
@@ -3819,7 +3842,7 @@ export function lrc(options?: {
 
 
 /**
- * Video CCTV DAT
+ * luodat
  */
 export function luodat(options?: {
 
@@ -3836,7 +3859,7 @@ export function luodat(options?: {
 
 
 /**
- * LVF
+ * lvf
  */
 export function lvf(options?: {
 
@@ -3853,7 +3876,7 @@ export function lvf(options?: {
 
 
 /**
- * VR native stream (LXF)
+ * lxf
  */
 export function lxf(options?: {
 
@@ -3870,7 +3893,7 @@ export function lxf(options?: {
 
 
 /**
- * raw MPEG-4 video
+ * m4v
  * @param options.framerate - (default "25")
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
@@ -3893,7 +3916,7 @@ export function m4v(options?: {
 
 
 /**
- * MCA Audio Format
+ * mca
  */
 export function mca(options?: {
 
@@ -3910,7 +3933,7 @@ export function mca(options?: {
 
 
 /**
- * MacCaption
+ * mcc
  */
 export function mcc(options?: {
 
@@ -3927,7 +3950,7 @@ export function mcc(options?: {
 
 
 /**
- * Metal Gear Solid: The Twin Snakes
+ * mgsts
  */
 export function mgsts(options?: {
 
@@ -3944,7 +3967,7 @@ export function mgsts(options?: {
 
 
 /**
- * MicroDVD subtitle format
+ * microdvd
  * @param options.subfps - set the movie frame rate fallback (from 0 to INT_MAX) (default 0/1)
  */
 export function microdvd(options?: {
@@ -3964,7 +3987,7 @@ export function microdvd(options?: {
 
 
 /**
- * raw MJPEG video
+ * mjpeg
  * @param options.framerate - (default "25")
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
@@ -3987,7 +4010,7 @@ export function mjpeg(options?: {
 
 
 /**
- * raw MJPEG 2000 video
+ * mjpeg_2000
  * @param options.framerate - (default "25")
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
@@ -4010,7 +4033,7 @@ export function mjpeg_2000(options?: {
 
 
 /**
- * raw MLP
+ * mlp
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
 export function mlp(options?: {
@@ -4030,7 +4053,7 @@ export function mlp(options?: {
 
 
 /**
- * Magic Lantern Video (MLV)
+ * mlv
  */
 export function mlv(options?: {
 
@@ -4047,7 +4070,7 @@ export function mlv(options?: {
 
 
 /**
- * American Laser Games MM
+ * mm
  */
 export function mm(options?: {
 
@@ -4064,7 +4087,7 @@ export function mm(options?: {
 
 
 /**
- * Yamaha SMAF
+ * mmf
  */
 export function mmf(options?: {
 
@@ -4081,7 +4104,7 @@ export function mmf(options?: {
 
 
 /**
- * MobiClip MODS
+ * mods
  */
 export function mods(options?: {
 
@@ -4098,7 +4121,7 @@ export function mods(options?: {
 
 
 /**
- * MobiClip MOFLEX
+ * moflex
  */
 export function moflex(options?: {
 
@@ -4115,7 +4138,7 @@ export function moflex(options?: {
 
 
 /**
- * MP2/3 (MPEG audio layer 2/3)
+ * mp3
  * @param options.usetoc - use table of contents (default false)
  */
 export function mp3(options?: {
@@ -4135,7 +4158,7 @@ export function mp3(options?: {
 
 
 /**
- * Musepack
+ * mpc
  */
 export function mpc(options?: {
 
@@ -4152,7 +4175,7 @@ export function mpc(options?: {
 
 
 /**
- * Musepack SV8
+ * mpc8
  */
 export function mpc8(options?: {
 
@@ -4169,7 +4192,7 @@ export function mpc8(options?: {
 
 
 /**
- * MPEG-PS (MPEG-2 Program Stream)
+ * mpeg
  */
 export function mpeg(options?: {
 
@@ -4186,7 +4209,7 @@ export function mpeg(options?: {
 
 
 /**
- * MPEG-TS (MPEG-2 Transport Stream)
+ * mpegts
  * @param options.resync_size - set size limit for looking up a new synchronization (from 0 to INT_MAX) (default 65536)
  * @param options.fix_teletext_pts - try to fix pts values of dvb teletext streams (default true)
  * @param options.ts_packetsize - output option carrying the raw packet size (from 0 to 0) (default 0)
@@ -4224,7 +4247,7 @@ export function mpegts(options?: {
 
 
 /**
- * raw MPEG-TS (MPEG-2 Transport Stream)
+ * mpegtsraw
  * @param options.resync_size - set size limit for looking up a new synchronization (from 0 to INT_MAX) (default 65536)
  * @param options.compute_pcr - compute exact PCR for each transport stream packet (default false)
  * @param options.ts_packetsize - output option carrying the raw packet size (from 0 to 0) (default 0)
@@ -4250,7 +4273,7 @@ export function mpegtsraw(options?: {
 
 
 /**
- * raw MPEG video
+ * mpegvideo
  * @param options.framerate - (default "25")
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
@@ -4273,7 +4296,7 @@ export function mpegvideo(options?: {
 
 
 /**
- * MIME multipart JPEG
+ * mpjpeg
  * @param options.strict_mime_boundary - require MIME boundaries match (default false)
  */
 export function mpjpeg(options?: {
@@ -4293,7 +4316,7 @@ export function mpjpeg(options?: {
 
 
 /**
- * MPL2 subtitles
+ * mpl2
  */
 export function mpl2(options?: {
 
@@ -4310,7 +4333,7 @@ export function mpl2(options?: {
 
 
 /**
- * MPlayer subtitles
+ * mpsub
  */
 export function mpsub(options?: {
 
@@ -4327,7 +4350,7 @@ export function mpsub(options?: {
 
 
 /**
- * Sony PS3 MSF
+ * msf
  */
 export function msf(options?: {
 
@@ -4344,7 +4367,7 @@ export function msf(options?: {
 
 
 /**
- * MSN TCP Webcam stream
+ * msnwctcp
  */
 export function msnwctcp(options?: {
 
@@ -4361,7 +4384,7 @@ export function msnwctcp(options?: {
 
 
 /**
- * Microsoft Paint (MSP))
+ * msp
  */
 export function msp(options?: {
 
@@ -4378,7 +4401,7 @@ export function msp(options?: {
 
 
 /**
- * Konami PS2 MTAF
+ * mtaf
  */
 export function mtaf(options?: {
 
@@ -4395,7 +4418,7 @@ export function mtaf(options?: {
 
 
 /**
- * MTV
+ * mtv
  */
 export function mtv(options?: {
 
@@ -4412,7 +4435,7 @@ export function mtv(options?: {
 
 
 /**
- * PCM mu-law
+ * mulaw
  * @param options.sample_rate - (from 0 to INT_MAX) (default 44100)
  * @param options.channels - (from 0 to INT_MAX) (default 1)
  * @param options.ch_layout -
@@ -4438,7 +4461,7 @@ export function mulaw(options?: {
 
 
 /**
- * Eurocom MUSX
+ * musx
  */
 export function musx(options?: {
 
@@ -4455,7 +4478,7 @@ export function musx(options?: {
 
 
 /**
- * Silicon Graphics Movie
+ * mv
  */
 export function mv(options?: {
 
@@ -4472,7 +4495,7 @@ export function mv(options?: {
 
 
 /**
- * Motion Pixels MVI
+ * mvi
  */
 export function mvi(options?: {
 
@@ -4489,7 +4512,7 @@ export function mvi(options?: {
 
 
 /**
- * MXF (Material eXchange Format)
+ * mxf
  * @param options.eia608_extract - extract eia 608 captions from s436m track (default false)
  */
 export function mxf(options?: {
@@ -4509,7 +4532,7 @@ export function mxf(options?: {
 
 
 /**
- * MxPEG clip
+ * mxg
  */
 export function mxg(options?: {
 
@@ -4526,7 +4549,7 @@ export function mxg(options?: {
 
 
 /**
- * NC camera feed
+ * nc
  */
 export function nc(options?: {
 
@@ -4543,7 +4566,7 @@ export function nc(options?: {
 
 
 /**
- * NIST SPeech HEader REsources
+ * nistsphere
  */
 export function nistsphere(options?: {
 
@@ -4560,7 +4583,7 @@ export function nistsphere(options?: {
 
 
 /**
- * Computerized Speech Lab NSP
+ * nsp
  */
 export function nsp(options?: {
 
@@ -4577,7 +4600,7 @@ export function nsp(options?: {
 
 
 /**
- * Nullsoft Streaming Video
+ * nsv
  */
 export function nsv(options?: {
 
@@ -4594,7 +4617,7 @@ export function nsv(options?: {
 
 
 /**
- * NUT
+ * nut
  */
 export function nut(options?: {
 
@@ -4611,7 +4634,7 @@ export function nut(options?: {
 
 
 /**
- * NuppelVideo
+ * nuv
  */
 export function nuv(options?: {
 
@@ -4628,7 +4651,7 @@ export function nuv(options?: {
 
 
 /**
- * AV1 low overhead OBU
+ * obu
  * @param options.framerate - (default "25")
  */
 export function obu(options?: {
@@ -4648,7 +4671,7 @@ export function obu(options?: {
 
 
 /**
- * Ogg
+ * ogg
  */
 export function ogg(options?: {
 
@@ -4665,7 +4688,7 @@ export function ogg(options?: {
 
 
 /**
- * Sony OpenMG audio
+ * oma
  */
 export function oma(options?: {
 
@@ -4682,7 +4705,7 @@ export function oma(options?: {
 
 
 /**
- * raw OSQ
+ * osq
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
 export function osq(options?: {
@@ -4702,7 +4725,7 @@ export function osq(options?: {
 
 
 /**
- * OSS (Open Sound System) capture
+ * oss
  * @param options.sample_rate - (from 1 to INT_MAX) (default 48000)
  * @param options.channels - (from 1 to INT_MAX) (default 2)
  */
@@ -4725,7 +4748,7 @@ export function oss(options?: {
 
 
 /**
- * Amazing Studio Packed Animation File
+ * paf
  */
 export function paf(options?: {
 
@@ -4742,7 +4765,7 @@ export function paf(options?: {
 
 
 /**
- * piped pam sequence
+ * pam_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -4774,7 +4797,7 @@ export function pam_pipe(options?: {
 
 
 /**
- * piped pbm sequence
+ * pbm_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -4806,7 +4829,7 @@ export function pbm_pipe(options?: {
 
 
 /**
- * piped pcx sequence
+ * pcx_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -4838,7 +4861,7 @@ export function pcx_pipe(options?: {
 
 
 /**
- * PlayDate Video
+ * pdv
  */
 export function pdv(options?: {
 
@@ -4855,7 +4878,7 @@ export function pdv(options?: {
 
 
 /**
- * piped pfm sequence
+ * pfm_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -4887,7 +4910,7 @@ export function pfm_pipe(options?: {
 
 
 /**
- * piped pgm sequence
+ * pgm_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -4919,7 +4942,7 @@ export function pgm_pipe(options?: {
 
 
 /**
- * piped pgmyuv sequence
+ * pgmyuv_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -4951,7 +4974,7 @@ export function pgmyuv_pipe(options?: {
 
 
 /**
- * piped pgx sequence
+ * pgx_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -4983,7 +5006,7 @@ export function pgx_pipe(options?: {
 
 
 /**
- * piped phm sequence
+ * phm_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -5015,7 +5038,7 @@ export function phm_pipe(options?: {
 
 
 /**
- * piped photocd sequence
+ * photocd_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -5047,7 +5070,7 @@ export function photocd_pipe(options?: {
 
 
 /**
- * piped pictor sequence
+ * pictor_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -5079,7 +5102,7 @@ export function pictor_pipe(options?: {
 
 
 /**
- * PJS (Phoenix Japanimation Society) subtitles
+ * pjs
  */
 export function pjs(options?: {
 
@@ -5096,7 +5119,7 @@ export function pjs(options?: {
 
 
 /**
- * Playstation Portable PMP
+ * pmp
  */
 export function pmp(options?: {
 
@@ -5113,7 +5136,7 @@ export function pmp(options?: {
 
 
 /**
- * piped png sequence
+ * png_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -5145,7 +5168,7 @@ export function png_pipe(options?: {
 
 
 /**
- * Pro Pinball Series Soundbank
+ * pp_bnk
  */
 export function pp_bnk(options?: {
 
@@ -5162,7 +5185,7 @@ export function pp_bnk(options?: {
 
 
 /**
- * piped ppm sequence
+ * ppm_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -5194,7 +5217,7 @@ export function ppm_pipe(options?: {
 
 
 /**
- * piped psd sequence
+ * psd_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -5226,7 +5249,7 @@ export function psd_pipe(options?: {
 
 
 /**
- * Sony Playstation STR
+ * psxstr
  */
 export function psxstr(options?: {
 
@@ -5243,7 +5266,7 @@ export function psxstr(options?: {
 
 
 /**
- * TechnoTrend PVA
+ * pva
  */
 export function pva(options?: {
 
@@ -5260,7 +5283,7 @@ export function pva(options?: {
 
 
 /**
- * PVF (Portable Voice Format)
+ * pvf
  */
 export function pvf(options?: {
 
@@ -5277,7 +5300,7 @@ export function pvf(options?: {
 
 
 /**
- * QCP
+ * qcp
  */
 export function qcp(options?: {
 
@@ -5294,7 +5317,7 @@ export function qcp(options?: {
 
 
 /**
- * piped qdraw sequence
+ * qdraw_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -5326,7 +5349,7 @@ export function qdraw_pipe(options?: {
 
 
 /**
- * piped qoi sequence
+ * qoi_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -5358,7 +5381,7 @@ export function qoi_pipe(options?: {
 
 
 /**
- * REDCODE R3D
+ * r3d
  */
 export function r3d(options?: {
 
@@ -5375,7 +5398,7 @@ export function r3d(options?: {
 
 
 /**
- * raw video
+ * rawvideo
  * @param options.pixel_format - set pixel format (default "yuv420p")
  * @param options.video_size - set frame size
  * @param options.framerate - set frame rate (default "25")
@@ -5401,7 +5424,7 @@ export function rawvideo(options?: {
 
 
 /**
- * RealText subtitle format
+ * realtext
  */
 export function realtext(options?: {
 
@@ -5418,7 +5441,7 @@ export function realtext(options?: {
 
 
 /**
- * RedSpark
+ * redspark
  */
 export function redspark(options?: {
 
@@ -5435,7 +5458,7 @@ export function redspark(options?: {
 
 
 /**
- * RKA (RK Audio)
+ * rka
  */
 export function rka(options?: {
 
@@ -5452,7 +5475,7 @@ export function rka(options?: {
 
 
 /**
- * RL2
+ * rl2
  */
 export function rl2(options?: {
 
@@ -5469,7 +5492,7 @@ export function rl2(options?: {
 
 
 /**
- * RealMedia
+ * rm
  */
 export function rm(options?: {
 
@@ -5486,7 +5509,7 @@ export function rm(options?: {
 
 
 /**
- * id RoQ
+ * roq
  */
 export function roq(options?: {
 
@@ -5503,7 +5526,7 @@ export function roq(options?: {
 
 
 /**
- * RPL / ARMovie
+ * rpl
  */
 export function rpl(options?: {
 
@@ -5520,7 +5543,7 @@ export function rpl(options?: {
 
 
 /**
- * GameCube RSD
+ * rsd
  */
 export function rsd(options?: {
 
@@ -5537,7 +5560,7 @@ export function rsd(options?: {
 
 
 /**
- * Lego Mindstorms RSO
+ * rso
  */
 export function rso(options?: {
 
@@ -5554,7 +5577,7 @@ export function rso(options?: {
 
 
 /**
- * RTP input
+ * rtp
  * @param options.rtp_flags - set RTP flags (default 0)
  * @param options.listen_timeout - set maximum timeout (in seconds) to wait for incoming connections (default 10)
  * @param options.localaddr - local address
@@ -5589,7 +5612,7 @@ export function rtp(options?: {
 
 
 /**
- * RTSP input
+ * rtsp
  * @param options.initial_pause - do not start playing the stream immediately (default false)
  * @param options.rtsp_transport - set RTSP transport protocols (default 0)
  * @param options.rtsp_flags - set RTSP flags (default 0)
@@ -5639,7 +5662,7 @@ export function rtsp(options?: {
 
 
 /**
- * PCM signed 16-bit big-endian
+ * s16be
  * @param options.sample_rate - (from 0 to INT_MAX) (default 44100)
  * @param options.channels - (from 0 to INT_MAX) (default 1)
  * @param options.ch_layout -
@@ -5665,7 +5688,7 @@ export function s16be(options?: {
 
 
 /**
- * PCM signed 16-bit little-endian
+ * s16le
  * @param options.sample_rate - (from 0 to INT_MAX) (default 44100)
  * @param options.channels - (from 0 to INT_MAX) (default 1)
  * @param options.ch_layout -
@@ -5691,7 +5714,7 @@ export function s16le(options?: {
 
 
 /**
- * PCM signed 24-bit big-endian
+ * s24be
  * @param options.sample_rate - (from 0 to INT_MAX) (default 44100)
  * @param options.channels - (from 0 to INT_MAX) (default 1)
  * @param options.ch_layout -
@@ -5717,7 +5740,7 @@ export function s24be(options?: {
 
 
 /**
- * PCM signed 24-bit little-endian
+ * s24le
  * @param options.sample_rate - (from 0 to INT_MAX) (default 44100)
  * @param options.channels - (from 0 to INT_MAX) (default 1)
  * @param options.ch_layout -
@@ -5743,7 +5766,7 @@ export function s24le(options?: {
 
 
 /**
- * PCM signed 32-bit big-endian
+ * s32be
  * @param options.sample_rate - (from 0 to INT_MAX) (default 44100)
  * @param options.channels - (from 0 to INT_MAX) (default 1)
  * @param options.ch_layout -
@@ -5769,7 +5792,7 @@ export function s32be(options?: {
 
 
 /**
- * PCM signed 32-bit little-endian
+ * s32le
  * @param options.sample_rate - (from 0 to INT_MAX) (default 44100)
  * @param options.channels - (from 0 to INT_MAX) (default 1)
  * @param options.ch_layout -
@@ -5795,7 +5818,7 @@ export function s32le(options?: {
 
 
 /**
- * SMPTE 337M
+ * s337m
  */
 export function s337m(options?: {
 
@@ -5812,7 +5835,7 @@ export function s337m(options?: {
 
 
 /**
- * PCM signed 8-bit
+ * s8
  * @param options.sample_rate - (from 0 to INT_MAX) (default 44100)
  * @param options.channels - (from 0 to INT_MAX) (default 1)
  * @param options.ch_layout -
@@ -5838,7 +5861,7 @@ export function s8(options?: {
 
 
 /**
- * SAMI subtitle format
+ * sami
  */
 export function sami(options?: {
 
@@ -5855,7 +5878,7 @@ export function sami(options?: {
 
 
 /**
- * SAP input
+ * sap
  */
 export function sap(options?: {
 
@@ -5872,7 +5895,7 @@ export function sap(options?: {
 
 
 /**
- * raw SBC (low-complexity subband codec)
+ * sbc
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
 export function sbc(options?: {
@@ -5892,7 +5915,7 @@ export function sbc(options?: {
 
 
 /**
- * SBaGen binaural beats script
+ * sbg
  * @param options.sample_rate - (from 0 to INT_MAX) (default 0)
  * @param options.max_file_size - (from 0 to INT_MAX) (default 5000000)
  */
@@ -5915,7 +5938,7 @@ export function sbg(options?: {
 
 
 /**
- * Scenarist Closed Captions
+ * scc
  */
 export function scc(options?: {
 
@@ -5932,7 +5955,7 @@ export function scc(options?: {
 
 
 /**
- * Square Enix SCD
+ * scd
  */
 export function scd(options?: {
 
@@ -5949,7 +5972,7 @@ export function scd(options?: {
 
 
 /**
- * Xbox SDNS
+ * sdns
  */
 export function sdns(options?: {
 
@@ -5966,7 +5989,7 @@ export function sdns(options?: {
 
 
 /**
- * SDP
+ * sdp
  * @param options.sdp_flags - SDP flags (default 0)
  * @param options.listen_timeout - set maximum timeout (in seconds) to wait for incoming connections (default 10)
  * @param options.localaddr - local address
@@ -6001,7 +6024,7 @@ export function sdp(options?: {
 
 
 /**
- * SDR2
+ * sdr2
  */
 export function sdr2(options?: {
 
@@ -6018,7 +6041,7 @@ export function sdr2(options?: {
 
 
 /**
- * MIDI Sample Dump Standard
+ * sds
  */
 export function sds(options?: {
 
@@ -6035,7 +6058,7 @@ export function sds(options?: {
 
 
 /**
- * Sample Dump eXchange
+ * sdx
  */
 export function sdx(options?: {
 
@@ -6052,7 +6075,7 @@ export function sdx(options?: {
 
 
 /**
- * SER (Simple uncompressed video format for astronomical capturing)
+ * ser
  * @param options.framerate - set frame rate (default "25")
  */
 export function ser(options?: {
@@ -6072,7 +6095,7 @@ export function ser(options?: {
 
 
 /**
- * Digital Pictures SGA
+ * sga
  */
 export function sga(options?: {
 
@@ -6089,7 +6112,7 @@ export function sga(options?: {
 
 
 /**
- * piped sgi sequence
+ * sgi_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -6121,7 +6144,7 @@ export function sgi_pipe(options?: {
 
 
 /**
- * raw Shorten
+ * shn
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
 export function shn(options?: {
@@ -6141,7 +6164,7 @@ export function shn(options?: {
 
 
 /**
- * Beam Software SIFF
+ * siff
  */
 export function siff(options?: {
 
@@ -6158,7 +6181,7 @@ export function siff(options?: {
 
 
 /**
- * Simbiosis Interactive IMX
+ * simbiosis_imx
  */
 export function simbiosis_imx(options?: {
 
@@ -6175,7 +6198,7 @@ export function simbiosis_imx(options?: {
 
 
 /**
- * Asterisk raw pcm
+ * sln
  * @param options.sample_rate - (from 0 to INT_MAX) (default 8000)
  * @param options.channels - (from 0 to INT_MAX) (default 1)
  * @param options.ch_layout -
@@ -6201,7 +6224,7 @@ export function sln(options?: {
 
 
 /**
- * Loki SDL MJPEG
+ * smjpeg
  */
 export function smjpeg(options?: {
 
@@ -6218,7 +6241,7 @@ export function smjpeg(options?: {
 
 
 /**
- * Smacker
+ * smk
  */
 export function smk(options?: {
 
@@ -6235,7 +6258,7 @@ export function smk(options?: {
 
 
 /**
- * LucasArts Smush
+ * smush
  */
 export function smush(options?: {
 
@@ -6252,7 +6275,30 @@ export function smush(options?: {
 
 
 /**
- * Sierra SOL
+ * sndio
+ * @param options.sample_rate - (from 1 to INT_MAX) (default 48000)
+ * @param options.channels - (from 1 to INT_MAX) (default 2)
+ */
+export function sndio(options?: {
+  sample_rate?: number | null;
+  channels?: number | null;
+
+}): FFMpegDemuxerOption {
+  return merge({
+    "sample_rate": options?.sample_rate,
+    "channels": options?.channels,
+
+  });
+}
+
+
+
+
+
+
+
+/**
+ * sol
  */
 export function sol(options?: {
 
@@ -6269,7 +6315,7 @@ export function sol(options?: {
 
 
 /**
- * SoX (Sound eXchange) native
+ * sox
  */
 export function sox(options?: {
 
@@ -6286,7 +6332,7 @@ export function sox(options?: {
 
 
 /**
- * IEC 61937 (compressed data in S/PDIF)
+ * spdif
  */
 export function spdif(options?: {
 
@@ -6303,7 +6349,7 @@ export function spdif(options?: {
 
 
 /**
- * SubRip subtitle
+ * srt
  */
 export function srt(options?: {
 
@@ -6320,7 +6366,7 @@ export function srt(options?: {
 
 
 /**
- * Spruce subtitle format
+ * stl
  */
 export function stl(options?: {
 
@@ -6337,7 +6383,7 @@ export function stl(options?: {
 
 
 /**
- * SubViewer subtitle format
+ * subviewer
  */
 export function subviewer(options?: {
 
@@ -6354,7 +6400,7 @@ export function subviewer(options?: {
 
 
 /**
- * SubViewer v1 subtitle format
+ * subviewer1
  */
 export function subviewer1(options?: {
 
@@ -6371,7 +6417,7 @@ export function subviewer1(options?: {
 
 
 /**
- * piped sunrast sequence
+ * sunrast_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -6403,7 +6449,7 @@ export function sunrast_pipe(options?: {
 
 
 /**
- * raw HDMV Presentation Graphic Stream subtitles
+ * sup
  */
 export function sup(options?: {
 
@@ -6420,7 +6466,7 @@ export function sup(options?: {
 
 
 /**
- * Konami PS2 SVAG
+ * svag
  */
 export function svag(options?: {
 
@@ -6437,7 +6483,7 @@ export function svag(options?: {
 
 
 /**
- * piped svg sequence
+ * svg_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -6469,7 +6515,7 @@ export function svg_pipe(options?: {
 
 
 /**
- * Square SVS
+ * svs
  */
 export function svs(options?: {
 
@@ -6486,7 +6532,7 @@ export function svs(options?: {
 
 
 /**
- * SWF (ShockWave Flash)
+ * swf
  */
 export function swf(options?: {
 
@@ -6503,7 +6549,7 @@ export function swf(options?: {
 
 
 /**
- * raw TAK
+ * tak
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
 export function tak(options?: {
@@ -6523,7 +6569,7 @@ export function tak(options?: {
 
 
 /**
- * TED Talks captions
+ * tedcaptions
  * @param options.start_time - set the start time (offset) of the subtitles, in ms (from I64_MIN to I64_MAX) (default 15000)
  */
 export function tedcaptions(options?: {
@@ -6543,7 +6589,7 @@ export function tedcaptions(options?: {
 
 
 /**
- * THP
+ * thp
  */
 export function thp(options?: {
 
@@ -6560,7 +6606,7 @@ export function thp(options?: {
 
 
 /**
- * Tiertex Limited SEQ
+ * tiertexseq
  */
 export function tiertexseq(options?: {
 
@@ -6577,7 +6623,7 @@ export function tiertexseq(options?: {
 
 
 /**
- * piped tiff sequence
+ * tiff_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -6609,7 +6655,7 @@ export function tiff_pipe(options?: {
 
 
 /**
- * 8088flex TMV
+ * tmv
  */
 export function tmv(options?: {
 
@@ -6626,7 +6672,7 @@ export function tmv(options?: {
 
 
 /**
- * raw TrueHD
+ * truehd
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
 export function truehd(options?: {
@@ -6646,7 +6692,7 @@ export function truehd(options?: {
 
 
 /**
- * TTA (True Audio)
+ * tta
  */
 export function tta(options?: {
 
@@ -6663,7 +6709,7 @@ export function tta(options?: {
 
 
 /**
- * Tele-typewriter
+ * tty
  * @param options.chars_per_frame - (from 1 to INT_MAX) (default 6000)
  * @param options.video_size - A string describing frame size, such as 640x480 or hd720.
  * @param options.framerate - (default "25")
@@ -6689,7 +6735,7 @@ export function tty(options?: {
 
 
 /**
- * Renderware TeXture Dictionary
+ * txd
  */
 export function txd(options?: {
 
@@ -6706,7 +6752,7 @@ export function txd(options?: {
 
 
 /**
- * TiVo TY Stream
+ * ty
  */
 export function ty(options?: {
 
@@ -6723,7 +6769,7 @@ export function ty(options?: {
 
 
 /**
- * PCM unsigned 16-bit big-endian
+ * u16be
  * @param options.sample_rate - (from 0 to INT_MAX) (default 44100)
  * @param options.channels - (from 0 to INT_MAX) (default 1)
  * @param options.ch_layout -
@@ -6749,7 +6795,7 @@ export function u16be(options?: {
 
 
 /**
- * PCM unsigned 16-bit little-endian
+ * u16le
  * @param options.sample_rate - (from 0 to INT_MAX) (default 44100)
  * @param options.channels - (from 0 to INT_MAX) (default 1)
  * @param options.ch_layout -
@@ -6775,7 +6821,7 @@ export function u16le(options?: {
 
 
 /**
- * PCM unsigned 24-bit big-endian
+ * u24be
  * @param options.sample_rate - (from 0 to INT_MAX) (default 44100)
  * @param options.channels - (from 0 to INT_MAX) (default 1)
  * @param options.ch_layout -
@@ -6801,7 +6847,7 @@ export function u24be(options?: {
 
 
 /**
- * PCM unsigned 24-bit little-endian
+ * u24le
  * @param options.sample_rate - (from 0 to INT_MAX) (default 44100)
  * @param options.channels - (from 0 to INT_MAX) (default 1)
  * @param options.ch_layout -
@@ -6827,7 +6873,7 @@ export function u24le(options?: {
 
 
 /**
- * PCM unsigned 32-bit big-endian
+ * u32be
  * @param options.sample_rate - (from 0 to INT_MAX) (default 44100)
  * @param options.channels - (from 0 to INT_MAX) (default 1)
  * @param options.ch_layout -
@@ -6853,7 +6899,7 @@ export function u32be(options?: {
 
 
 /**
- * PCM unsigned 32-bit little-endian
+ * u32le
  * @param options.sample_rate - (from 0 to INT_MAX) (default 44100)
  * @param options.channels - (from 0 to INT_MAX) (default 1)
  * @param options.ch_layout -
@@ -6879,7 +6925,7 @@ export function u32le(options?: {
 
 
 /**
- * PCM unsigned 8-bit
+ * u8
  * @param options.sample_rate - (from 0 to INT_MAX) (default 44100)
  * @param options.channels - (from 0 to INT_MAX) (default 1)
  * @param options.ch_layout -
@@ -6905,7 +6951,7 @@ export function u8(options?: {
 
 
 /**
- * CRI USM
+ * usm
  */
 export function usm(options?: {
 
@@ -6922,7 +6968,7 @@ export function usm(options?: {
 
 
 /**
- * Uncompressed 4:2:2 10-bit
+ * v210
  * @param options.video_size - set frame size
  * @param options.framerate - set frame rate (default "25")
  */
@@ -6945,7 +6991,7 @@ export function v210(options?: {
 
 
 /**
- * Uncompressed 4:2:2 10-bit
+ * v210x
  * @param options.video_size - set frame size
  * @param options.framerate - set frame rate (default "25")
  */
@@ -6968,7 +7014,7 @@ export function v210x(options?: {
 
 
 /**
- * Sony PS2 VAG
+ * vag
  */
 export function vag(options?: {
 
@@ -6985,7 +7031,7 @@ export function vag(options?: {
 
 
 /**
- * piped vbn sequence
+ * vbn_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -7017,7 +7063,7 @@ export function vbn_pipe(options?: {
 
 
 /**
- * raw VC-1
+ * vc1
  * @param options.framerate - (default "25")
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
@@ -7040,7 +7086,7 @@ export function vc1(options?: {
 
 
 /**
- * VC-1 test bitstream
+ * vc1test
  */
 export function vc1test(options?: {
 
@@ -7057,7 +7103,7 @@ export function vc1test(options?: {
 
 
 /**
- * PCM Archimedes VIDC
+ * vidc
  * @param options.sample_rate - (from 0 to INT_MAX) (default 44100)
  * @param options.channels - (from 0 to INT_MAX) (default 1)
  * @param options.ch_layout -
@@ -7083,7 +7129,7 @@ export function vidc(options?: {
 
 
 /**
- * Vividas VIV
+ * vividas
  */
 export function vividas(options?: {
 
@@ -7100,7 +7146,7 @@ export function vividas(options?: {
 
 
 /**
- * Vivo
+ * vivo
  */
 export function vivo(options?: {
 
@@ -7117,7 +7163,7 @@ export function vivo(options?: {
 
 
 /**
- * Sierra VMD
+ * vmd
  */
 export function vmd(options?: {
 
@@ -7134,7 +7180,7 @@ export function vmd(options?: {
 
 
 /**
- * VobSub subtitle format
+ * vobsub
  * @param options.sub_name - URI for .sub file
  */
 export function vobsub(options?: {
@@ -7154,7 +7200,7 @@ export function vobsub(options?: {
 
 
 /**
- * Creative Voice
+ * voc
  */
 export function voc(options?: {
 
@@ -7171,7 +7217,7 @@ export function voc(options?: {
 
 
 /**
- * Sony PS2 VPK
+ * vpk
  */
 export function vpk(options?: {
 
@@ -7188,7 +7234,7 @@ export function vpk(options?: {
 
 
 /**
- * VPlayer subtitles
+ * vplayer
  */
 export function vplayer(options?: {
 
@@ -7205,7 +7251,7 @@ export function vplayer(options?: {
 
 
 /**
- * Nippon Telegraph and Telephone Corporation (NTT) TwinVQ
+ * vqf
  */
 export function vqf(options?: {
 
@@ -7222,7 +7268,7 @@ export function vqf(options?: {
 
 
 /**
- * raw H.266/VVC video
+ * vvc
  * @param options.framerate - (default "25")
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
@@ -7245,7 +7291,7 @@ export function vvc(options?: {
 
 
 /**
- * Sony Wave64
+ * w64
  * @param options.max_size - max size of single packet (from 1024 to 4.1943e+06) (default 4096)
  */
 export function w64(options?: {
@@ -7265,7 +7311,7 @@ export function w64(options?: {
 
 
 /**
- * Marble WADY
+ * wady
  */
 export function wady(options?: {
 
@@ -7282,7 +7328,7 @@ export function wady(options?: {
 
 
 /**
- * WAV / WAVE (Waveform Audio)
+ * wav
  * @param options.ignore_length - Ignore length (default false)
  * @param options.max_size - max size of single packet (from 1024 to 4.1943e+06) (default 4096)
  */
@@ -7305,7 +7351,7 @@ export function wav(options?: {
 
 
 /**
- * Waveform Archiver
+ * wavarc
  */
 export function wavarc(options?: {
 
@@ -7322,7 +7368,7 @@ export function wavarc(options?: {
 
 
 /**
- * Wing Commander III movie
+ * wc3movie
  */
 export function wc3movie(options?: {
 
@@ -7339,7 +7385,7 @@ export function wc3movie(options?: {
 
 
 /**
- * WebM DASH Manifest
+ * webm_dash_manifest
  * @param options.live - flag indicating that the input is a live file that only has the headers. (default false)
  * @param options.bandwidth - bandwidth of this stream to be specified in the DASH manifest. (from 0 to INT_MAX) (default 0)
  */
@@ -7362,7 +7408,7 @@ export function webm_dash_manifest(options?: {
 
 
 /**
- * piped webp sequence
+ * webp_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -7394,7 +7440,7 @@ export function webp_pipe(options?: {
 
 
 /**
- * WebVTT subtitle
+ * webvtt
  * @param options.kind - Set kind of WebVTT track (from 0 to INT_MAX) (default subtitles)
  */
 export function webvtt(options?: {
@@ -7414,7 +7460,7 @@ export function webvtt(options?: {
 
 
 /**
- * Westwood Studios audio
+ * wsaud
  */
 export function wsaud(options?: {
 
@@ -7431,7 +7477,7 @@ export function wsaud(options?: {
 
 
 /**
- * Wideband Single-bit Data (WSD)
+ * wsd
  * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
 export function wsd(options?: {
@@ -7451,7 +7497,7 @@ export function wsd(options?: {
 
 
 /**
- * Westwood Studios VQA
+ * wsvqa
  */
 export function wsvqa(options?: {
 
@@ -7468,7 +7514,7 @@ export function wsvqa(options?: {
 
 
 /**
- * Windows Television (WTV)
+ * wtv
  */
 export function wtv(options?: {
 
@@ -7485,7 +7531,7 @@ export function wtv(options?: {
 
 
 /**
- * WavPack
+ * wv
  */
 export function wv(options?: {
 
@@ -7502,7 +7548,7 @@ export function wv(options?: {
 
 
 /**
- * Psion 3 audio
+ * wve
  */
 export function wve(options?: {
 
@@ -7519,7 +7565,7 @@ export function wve(options?: {
 
 
 /**
- * X11 screen capture, using XCB
+ * x11grab
  * @param options.window_id - Window to capture. (from 0 to UINT32_MAX) (default 0)
  * @param options.x - Initial x coordinate. (from 0 to INT_MAX) (default 0)
  * @param options.y - Initial y coordinate. (from 0 to INT_MAX) (default 0)
@@ -7572,7 +7618,7 @@ export function x11grab(options?: {
 
 
 /**
- * Maxis XA
+ * xa
  */
 export function xa(options?: {
 
@@ -7589,7 +7635,7 @@ export function xa(options?: {
 
 
 /**
- * eXtended BINary text (XBIN)
+ * xbin
  * @param options.linespeed - set simulated line speed (bytes per second) (from 1 to INT_MAX) (default 6000)
  * @param options.video_size - set video size, such as 640x480 or hd720.
  * @param options.framerate - set framerate (frames per second) (default "25")
@@ -7615,7 +7661,7 @@ export function xbin(options?: {
 
 
 /**
- * piped xbm sequence
+ * xbm_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -7647,7 +7693,7 @@ export function xbm_pipe(options?: {
 
 
 /**
- * Konami XMD
+ * xmd
  */
 export function xmd(options?: {
 
@@ -7664,7 +7710,7 @@ export function xmd(options?: {
 
 
 /**
- * Microsoft XMV
+ * xmv
  */
 export function xmv(options?: {
 
@@ -7681,7 +7727,7 @@ export function xmv(options?: {
 
 
 /**
- * piped xpm sequence
+ * xpm_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -7713,7 +7759,7 @@ export function xpm_pipe(options?: {
 
 
 /**
- * Sony PS3 XVAG
+ * xvag
  */
 export function xvag(options?: {
 
@@ -7730,7 +7776,7 @@ export function xvag(options?: {
 
 
 /**
- * piped xwd sequence
+ * xwd_pipe
  * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
  * @param options.framerate - set the video framerate (default "25")
  * @param options.pixel_format - set video pixel format
@@ -7762,7 +7808,7 @@ export function xwd_pipe(options?: {
 
 
 /**
- * Microsoft xWMA
+ * xwma
  */
 export function xwma(options?: {
 
@@ -7779,7 +7825,7 @@ export function xwma(options?: {
 
 
 /**
- * Psygnosis YOP
+ * yop
  */
 export function yop(options?: {
 
@@ -7796,7 +7842,7 @@ export function yop(options?: {
 
 
 /**
- * YUV4MPEG pipe
+ * yuv4mpegpipe
  */
 export function yuv4mpegpipe(options?: {
 

@@ -1,0 +1,56 @@
+{
+  "index": null,
+  "node": {
+    "inputs": [
+      {
+        "index": null,
+        "node": {
+          "filename": "1.8",
+          "inputs": [
+            {
+              "index": 0,
+              "node": {
+                "filename": "input_video.mkv",
+                "inputs": [],
+                "kwargs": "FrozenDict({})"
+              },
+              "optional": false
+            },
+            {
+              "index": 0,
+              "node": {
+                "filename": "input_video.mkv",
+                "inputs": [],
+                "kwargs": "FrozenDict({})"
+              },
+              "optional": false
+            }
+          ],
+          "kwargs": "FrozenDict({'sn': True, 'c:a': 'aac', 'b:a': '192k', 'ac': '2', 'c:v': 'libx264', 'crf': '18', 'preset': 'slow', 'tune': 'film', 'aq-strength': True})"
+        },
+        "optional": false
+      },
+      {
+        "index": null,
+        "node": {
+          "filename": "output_video.mp4",
+          "inputs": [
+            {
+              "index": null,
+              "node": {
+                "filename": "input_video.mkv",
+                "inputs": [],
+                "kwargs": "FrozenDict({})"
+              },
+              "optional": false
+            }
+          ],
+          "kwargs": "FrozenDict({'mbtree': '0', 'pix_fmt': 'yuv420p', 'map_metadata': True, 'map_chapters': True})"
+        },
+        "optional": false
+      }
+    ],
+    "kwargs": "FrozenDict({'stdin': False})"
+  },
+  "optional": false
+}
