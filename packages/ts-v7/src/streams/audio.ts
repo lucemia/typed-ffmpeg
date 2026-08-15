@@ -3771,8 +3771,7 @@ return filterNode.audio(0) as unknown as AudioStream;
 
 /**
  * Receive commands sent through a libzmq client, and forward them to filters in the filtergraph. zmq and azmq work as a pass-through filters. zmq must be inserted between two video filters, azmq between two audio filters. Both are capable to send messages to any filter type. To enable these filters you need to install the libzmq library and headers and configure FFmpeg with --enable-libzmq. For more information about libzmq see: http://www.zeromq.org/ The zmq and azmq filters work as a libzmq server, which receives messages sent through a network interface defined by the bind_address (or the abbreviation "b") option. Default value of this option is tcp://localhost:5555. You may want to alter this value to your needs, but do not forget to escape any ':' signs (see filtergraph escaping). The received message must be in the form: @example TARGET COMMAND [ARG] @end example TARGET specifies the target of the command, usually the name of the filter class or a specific filter instance name. The default filter instance name uses the pattern Parsed__, but you can override this by using the filter_name@id syntax (see Filtergraph syntax). COMMAND specifies the name of the command for the target filter. ARG is optional and specifies the optional argument list for the given COMMAND. Upon reception, the message is processed and the corresponding command is injected into the filtergraph. Depending on the result, the filter will send a reply to the client, adopting the format: @example ERROR_CODE ERROR_REASON MESSAGE @end example MESSAGE is optional.
- *
- * Note: Removed in FFmpeg 8.0.
+
  *
  * @param options.bind_address - set bind address (default "tcp://*:5555")
  * @see https://ffmpeg.org/ffmpeg-filters.html#zmq
@@ -3989,6 +3988,8 @@ return filterNode.audio(0) as unknown as AudioStream;
 
 
 
+
+
 /**
  * Apply a biquad IIR filter with the given coefficients. Where b0, b1, b2 and a0, a1, a2 are the numerator and denominator coefficients respectively. and channels, c specify which channels to filter, by default all available are filtered.
 
@@ -4066,7 +4067,7 @@ return filterNode.audio(0) as unknown as AudioStream;
 /**
  * Bauer stereo to binaural transformation, which improves headphone listening of stereo audio records. To enable compilation of this filter you need to configure FFmpeg with --enable-libbs2b. It accepts the following parameters:
  *
- * Note: Removed in FFmpeg 8.0.
+ * Note: New in FFmpeg 7.0.
  *
  * @param options.profile - Pre-defined crossfeed level. @end table
  * @param options.fcut - Cut frequency (in Hz).
@@ -4095,6 +4096,8 @@ extraOptions?: Record<string, unknown>;
     );
 return filterNode.audio(0) as unknown as AudioStream;
   }
+
+
 
 
 
@@ -4223,6 +4226,10 @@ extraOptions?: Record<string, unknown>;
     );
 return filterNode.audio(0) as unknown as AudioStream;
   }
+
+
+
+
 
 
 
@@ -5796,6 +5803,8 @@ return filterNode.audio(0) as unknown as AudioStream;
 
 
 
+
+
 /**
  * Mix channels with specific gain levels. The filter accepts the output channel layout followed by a set of channels definitions. This filter is also designed to efficiently remap the channels of an audio stream. The filter accepts parameters of the form: "l|outdef|outdef|..."
 
@@ -5932,7 +5941,7 @@ return filterNode.audio(0) as unknown as AudioStream;
 /**
  * Apply time-stretching and pitch-shifting with librubberband. To enable compilation of this filter, you need to configure FFmpeg with --enable-librubberband. The filter accepts the following options:
  *
- * Note: Removed in FFmpeg 8.0.
+ * Note: New in FFmpeg 7.0.
  *
  * @param options.tempo - Change filter tempo scale factor. Syntax for the command is : "tempo"
  * @param options.pitch - Change filter pitch scale factor. Syntax for the command is : "pitch"
@@ -5982,6 +5991,8 @@ extraOptions?: Record<string, unknown>;
     );
 return filterNode.audio(0) as unknown as AudioStream;
   }
+
+
 
 
 
@@ -6936,7 +6947,7 @@ return filterNode.audio(0) as unknown as AudioStream;
 /**
  * SOFAlizer uses head-related transfer functions (HRTFs) to create virtual loudspeakers around the user for binaural listening via headphones (audio formats up to 9 channels supported). The HRTFs are stored in SOFA files (see http://www.sofacoustics.org/ for a database). SOFAlizer is developed at the Acoustics Research Institute (ARI) of the Austrian Academy of Sciences. To enable compilation of this filter you need to configure FFmpeg with --enable-libmysofa. The filter accepts the following options:
  *
- * Note: Removed in FFmpeg 8.0.
+ * Note: New in FFmpeg 7.0.
  *
  * @param options.sofa - Set the SOFA file used for rendering.
  * @param options.gain - Set gain applied to audio. Value is in dB. Default is 0.
@@ -7496,6 +7507,8 @@ return filterNode.audio(0) as unknown as AudioStream;
 
 
 
+
+
 /**
  * Boost or cut the lower frequencies and cut or boost higher frequencies of the audio using a two-pole shelving filter with a response similar to that of a standard hi-fi's tone-controls. This is also known as shelving equalisation (EQ). The filter accepts the following options:
 
@@ -7864,6 +7877,8 @@ extraOptions?: Record<string, unknown>;
     );
 return filterNode.audio(0) as unknown as AudioStream;
   }
+
+
 
 
 

@@ -1105,18 +1105,6 @@
   },
   {
     "__class__": "FFMpegOption",
-    "argname": "filename",
-    "canon": null,
-    "flags": 6020,
-    "help": "deprecated, use -/filter",
-    "name": "filter_script",
-    "type": {
-      "__class__": "FFMpegOptionType",
-      "value": "OPT_TYPE_STRING"
-    }
-  },
-  {
-    "__class__": "FFMpegOption",
     "argname": "",
     "canon": null,
     "flags": 3972,
@@ -1170,18 +1158,6 @@
     "flags": 5,
     "help": "create a complex filtergraph",
     "name": "lavfi",
-    "type": {
-      "__class__": "FFMpegOptionType",
-      "value": "OPT_TYPE_FUNC"
-    }
-  },
-  {
-    "__class__": "FFMpegOption",
-    "argname": "filename",
-    "canon": null,
-    "flags": 5,
-    "help": "deprecated, use -/filter_complex instead",
-    "name": "filter_complex_script",
     "type": {
       "__class__": "FFMpegOptionType",
       "value": "OPT_TYPE_FUNC"
@@ -1563,6 +1539,30 @@
     "__class__": "FFMpegOption",
     "argname": null,
     "canon": null,
+    "flags": 3980,
+    "help": "set SMPTE2084 mastering display color volume info",
+    "name": "mastering_display",
+    "type": {
+      "__class__": "FFMpegOptionType",
+      "value": "OPT_TYPE_STRING"
+    }
+  },
+  {
+    "__class__": "FFMpegOption",
+    "argname": null,
+    "canon": null,
+    "flags": 3980,
+    "help": "set SMPTE2084 Max CLL and Max FALL values",
+    "name": "content_light",
+    "type": {
+      "__class__": "FFMpegOptionType",
+      "value": "OPT_TYPE_STRING"
+    }
+  },
+  {
+    "__class__": "FFMpegOption",
+    "argname": null,
+    "canon": null,
     "flags": 6536,
     "help": "disable video",
     "name": "vn",
@@ -1732,7 +1732,7 @@
     "argname": null,
     "canon": null,
     "flags": 6028,
-    "help": "set framerate mode for matching video streams; overrides vsync",
+    "help": "set framerate mode for matching video streams",
     "name": "fps_mode",
     "type": {
       "__class__": "FFMpegOptionType",
@@ -2281,6 +2281,18 @@
   },
   {
     "__class__": "FFMpegOption",
+    "argname": "device",
+    "canon": null,
+    "flags": 5,
+    "help": "set VAAPI hardware device (DirectX adapter index, DRM path or X11 display name)",
+    "name": "vaapi_device",
+    "type": {
+      "__class__": "FFMpegOptionType",
+      "value": "OPT_TYPE_FUNC"
+    }
+  },
+  {
+    "__class__": "FFMpegOption",
     "argname": "args",
     "canon": null,
     "flags": 5,
@@ -2298,54 +2310,6 @@
     "flags": 5,
     "help": "set hardware device used when filtering",
     "name": "filter_hw_device",
-    "type": {
-      "__class__": "FFMpegOptionType",
-      "value": "OPT_TYPE_FUNC"
-    }
-  },
-  {
-    "__class__": "FFMpegOption",
-    "argname": "threshold",
-    "canon": null,
-    "flags": 5,
-    "help": "deprecated, does nothing",
-    "name": "adrift_threshold",
-    "type": {
-      "__class__": "FFMpegOptionType",
-      "value": "OPT_TYPE_FUNC"
-    }
-  },
-  {
-    "__class__": "FFMpegOption",
-    "argname": "",
-    "canon": null,
-    "flags": 8076,
-    "help": "deprecated, use the setfield video filter",
-    "name": "top",
-    "type": {
-      "__class__": "FFMpegOptionType",
-      "value": "OPT_TYPE_INT"
-    }
-  },
-  {
-    "__class__": "FFMpegOption",
-    "argname": null,
-    "canon": null,
-    "flags": 12,
-    "help": "deprecated, does nothing",
-    "name": "qphist",
-    "type": {
-      "__class__": "FFMpegOptionType",
-      "value": "OPT_TYPE_FUNC"
-    }
-  },
-  {
-    "__class__": "FFMpegOption",
-    "argname": "",
-    "canon": null,
-    "flags": 5,
-    "help": "set video sync method globally; deprecated, use -fps_mode",
-    "name": "vsync",
     "type": {
       "__class__": "FFMpegOptionType",
       "value": "OPT_TYPE_FUNC"

@@ -395,6 +395,60 @@ export type FFMpegDecoderOption = Readonly<Record<string, unknown>>;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
  * Uncompressed 4:2:2 10-bit
  */
@@ -703,12 +757,16 @@ export function aura2(options?: {
 
 /**
  * dav1d AV1 decoder by VideoLAN (codec av1)
+ * @param options.tilethreads - Tile threads (from 0 to 256) (default 0)
+ * @param options.framethreads - Frame threads (from 0 to 256) (default 0)
  * @param options.max_frame_delay - Max frame delay (from 0 to 256) (default 0)
  * @param options.filmgrain - Apply Film Grain (default auto)
  * @param options.oppoint - Select an operating point of the scalable bitstream (from -1 to 31) (default -1)
  * @param options.alllayers - Output all spatial layers (default false)
  */
 export function libdav1d(options?: {
+  tilethreads?: number | null;
+  framethreads?: number | null;
   max_frame_delay?: number | null;
   filmgrain?: boolean | null;
   oppoint?: number | null;
@@ -716,6 +774,8 @@ export function libdav1d(options?: {
 
 }): FFMpegDecoderOption {
   return merge({
+    "tilethreads": options?.tilethreads,
+    "framethreads": options?.framethreads,
     "max_frame_delay": options?.max_frame_delay,
     "filmgrain": options?.filmgrain,
     "oppoint": options?.oppoint,
@@ -740,6 +800,41 @@ export function av1(options?: {
 }): FFMpegDecoderOption {
   return merge({
     "operating_point": options?.operating_point,
+
+  });
+}
+
+
+
+
+
+
+
+/**
+ * Nvidia CUVID AV1 decoder (codec av1)
+ * @param options.deint - Set deinterlacing mode (from 0 to 2) (default weave)
+ * @param options.gpu - GPU to be used for decoding
+ * @param options.surfaces - Maximum surfaces to be used for decoding (from -1 to INT_MAX) (default -1)
+ * @param options.drop_second_field - Drop second field when deinterlacing (default false)
+ * @param options.crop - Crop (top)x(bottom)x(left)x(right)
+ * @param options.resize - Resize (width)x(height)
+ */
+export function av1_cuvid(options?: {
+  deint?: number | null | "weave" | "bob" | "adaptive";
+  gpu?: string | null;
+  surfaces?: number | null;
+  drop_second_field?: boolean | null;
+  crop?: string | null;
+  resize?: string | null;
+
+}): FFMpegDecoderOption {
+  return merge({
+    "deint": options?.deint,
+    "gpu": options?.gpu,
+    "surfaces": options?.surfaces,
+    "drop_second_field": options?.drop_second_field,
+    "crop": options?.crop,
+    "resize": options?.resize,
 
   });
 }
@@ -1744,6 +1839,29 @@ export function h263(options?: {
 
 
 /**
+ * V4L2 mem2mem H.263 decoder wrapper (codec h263)
+ * @param options.num_output_buffers - Number of buffers in the output context (from 2 to INT_MAX) (default 16)
+ * @param options.num_capture_buffers - Number of buffers in the capture context (from 2 to INT_MAX) (default 20)
+ */
+export function h263_v4l2m2m(options?: {
+  num_output_buffers?: number | null;
+  num_capture_buffers?: number | null;
+
+}): FFMpegDecoderOption {
+  return merge({
+    "num_output_buffers": options?.num_output_buffers,
+    "num_capture_buffers": options?.num_capture_buffers,
+
+  });
+}
+
+
+
+
+
+
+
+/**
  * Intel H.263
  */
 export function h263i(options?: {
@@ -1813,6 +1931,64 @@ export function h264(options?: {
 
 
 /**
+ * V4L2 mem2mem H.264 decoder wrapper (codec h264)
+ * @param options.num_output_buffers - Number of buffers in the output context (from 2 to INT_MAX) (default 16)
+ * @param options.num_capture_buffers - Number of buffers in the capture context (from 2 to INT_MAX) (default 20)
+ */
+export function h264_v4l2m2m(options?: {
+  num_output_buffers?: number | null;
+  num_capture_buffers?: number | null;
+
+}): FFMpegDecoderOption {
+  return merge({
+    "num_output_buffers": options?.num_output_buffers,
+    "num_capture_buffers": options?.num_capture_buffers,
+
+  });
+}
+
+
+
+
+
+
+
+/**
+ * Nvidia CUVID H264 decoder (codec h264)
+ * @param options.deint - Set deinterlacing mode (from 0 to 2) (default weave)
+ * @param options.gpu - GPU to be used for decoding
+ * @param options.surfaces - Maximum surfaces to be used for decoding (from -1 to INT_MAX) (default -1)
+ * @param options.drop_second_field - Drop second field when deinterlacing (default false)
+ * @param options.crop - Crop (top)x(bottom)x(left)x(right)
+ * @param options.resize - Resize (width)x(height)
+ */
+export function h264_cuvid(options?: {
+  deint?: number | null | "weave" | "bob" | "adaptive";
+  gpu?: string | null;
+  surfaces?: number | null;
+  drop_second_field?: boolean | null;
+  crop?: string | null;
+  resize?: string | null;
+
+}): FFMpegDecoderOption {
+  return merge({
+    "deint": options?.deint,
+    "gpu": options?.gpu,
+    "surfaces": options?.surfaces,
+    "drop_second_field": options?.drop_second_field,
+    "crop": options?.crop,
+    "resize": options?.resize,
+
+  });
+}
+
+
+
+
+
+
+
+/**
  * Vidvox Hap
  */
 export function hap(options?: {
@@ -1868,6 +2044,64 @@ export function hevc(options?: {
     "view_ids": options?.view_ids,
     "view_ids_available": options?.view_ids_available,
     "view_pos_available": options?.view_pos_available,
+
+  });
+}
+
+
+
+
+
+
+
+/**
+ * V4L2 mem2mem HEVC decoder wrapper (codec hevc)
+ * @param options.num_output_buffers - Number of buffers in the output context (from 2 to INT_MAX) (default 16)
+ * @param options.num_capture_buffers - Number of buffers in the capture context (from 2 to INT_MAX) (default 20)
+ */
+export function hevc_v4l2m2m(options?: {
+  num_output_buffers?: number | null;
+  num_capture_buffers?: number | null;
+
+}): FFMpegDecoderOption {
+  return merge({
+    "num_output_buffers": options?.num_output_buffers,
+    "num_capture_buffers": options?.num_capture_buffers,
+
+  });
+}
+
+
+
+
+
+
+
+/**
+ * Nvidia CUVID HEVC decoder (codec hevc)
+ * @param options.deint - Set deinterlacing mode (from 0 to 2) (default weave)
+ * @param options.gpu - GPU to be used for decoding
+ * @param options.surfaces - Maximum surfaces to be used for decoding (from -1 to INT_MAX) (default -1)
+ * @param options.drop_second_field - Drop second field when deinterlacing (default false)
+ * @param options.crop - Crop (top)x(bottom)x(left)x(right)
+ * @param options.resize - Resize (width)x(height)
+ */
+export function hevc_cuvid(options?: {
+  deint?: number | null | "weave" | "bob" | "adaptive";
+  gpu?: string | null;
+  surfaces?: number | null;
+  drop_second_field?: boolean | null;
+  crop?: string | null;
+  resize?: string | null;
+
+}): FFMpegDecoderOption {
+  return merge({
+    "deint": options?.deint,
+    "gpu": options?.gpu,
+    "surfaces": options?.surfaces,
+    "drop_second_field": options?.drop_second_field,
+    "crop": options?.crop,
+    "resize": options?.resize,
 
   });
 }
@@ -2188,6 +2422,40 @@ export function jpegls(options?: {
 
 
 /**
+ * libjxl JPEG XL (codec jpegxl)
+ */
+export function libjxl(options?: {
+
+}): FFMpegDecoderOption {
+  return merge({
+
+  });
+}
+
+
+
+
+
+
+
+/**
+ * libjxl JPEG XL animated (codec jpegxl_anim)
+ */
+export function libjxl_anim(options?: {
+
+}): FFMpegDecoderOption {
+  return merge({
+
+  });
+}
+
+
+
+
+
+
+
+/**
  * Bitmap Brothers JV video
  */
 export function jv(options?: {
@@ -2429,6 +2697,41 @@ export function mjpeg(options?: {
 
 
 /**
+ * Nvidia CUVID MJPEG decoder (codec mjpeg)
+ * @param options.deint - Set deinterlacing mode (from 0 to 2) (default weave)
+ * @param options.gpu - GPU to be used for decoding
+ * @param options.surfaces - Maximum surfaces to be used for decoding (from -1 to INT_MAX) (default -1)
+ * @param options.drop_second_field - Drop second field when deinterlacing (default false)
+ * @param options.crop - Crop (top)x(bottom)x(left)x(right)
+ * @param options.resize - Resize (width)x(height)
+ */
+export function mjpeg_cuvid(options?: {
+  deint?: number | null | "weave" | "bob" | "adaptive";
+  gpu?: string | null;
+  surfaces?: number | null;
+  drop_second_field?: boolean | null;
+  crop?: string | null;
+  resize?: string | null;
+
+}): FFMpegDecoderOption {
+  return merge({
+    "deint": options?.deint,
+    "gpu": options?.gpu,
+    "surfaces": options?.surfaces,
+    "drop_second_field": options?.drop_second_field,
+    "crop": options?.crop,
+    "resize": options?.resize,
+
+  });
+}
+
+
+
+
+
+
+
+/**
  * Apple MJPEG-B
  */
 export function mjpegb(options?: {
@@ -2514,6 +2817,64 @@ export function mpeg1video(options?: {
 
 
 /**
+ * V4L2 mem2mem MPEG1 decoder wrapper (codec mpeg1video)
+ * @param options.num_output_buffers - Number of buffers in the output context (from 2 to INT_MAX) (default 16)
+ * @param options.num_capture_buffers - Number of buffers in the capture context (from 2 to INT_MAX) (default 20)
+ */
+export function mpeg1_v4l2m2m(options?: {
+  num_output_buffers?: number | null;
+  num_capture_buffers?: number | null;
+
+}): FFMpegDecoderOption {
+  return merge({
+    "num_output_buffers": options?.num_output_buffers,
+    "num_capture_buffers": options?.num_capture_buffers,
+
+  });
+}
+
+
+
+
+
+
+
+/**
+ * Nvidia CUVID MPEG1VIDEO decoder (codec mpeg1video)
+ * @param options.deint - Set deinterlacing mode (from 0 to 2) (default weave)
+ * @param options.gpu - GPU to be used for decoding
+ * @param options.surfaces - Maximum surfaces to be used for decoding (from -1 to INT_MAX) (default -1)
+ * @param options.drop_second_field - Drop second field when deinterlacing (default false)
+ * @param options.crop - Crop (top)x(bottom)x(left)x(right)
+ * @param options.resize - Resize (width)x(height)
+ */
+export function mpeg1_cuvid(options?: {
+  deint?: number | null | "weave" | "bob" | "adaptive";
+  gpu?: string | null;
+  surfaces?: number | null;
+  drop_second_field?: boolean | null;
+  crop?: string | null;
+  resize?: string | null;
+
+}): FFMpegDecoderOption {
+  return merge({
+    "deint": options?.deint,
+    "gpu": options?.gpu,
+    "surfaces": options?.surfaces,
+    "drop_second_field": options?.drop_second_field,
+    "crop": options?.crop,
+    "resize": options?.resize,
+
+  });
+}
+
+
+
+
+
+
+
+/**
  * MPEG-2 video
  * @param options.cc_format - extract a specific Closed Captions format (from 0 to 4) (default auto)
  */
@@ -2551,12 +2912,128 @@ export function mpegvideo(options?: {
 
 
 /**
+ * V4L2 mem2mem MPEG2 decoder wrapper (codec mpeg2video)
+ * @param options.num_output_buffers - Number of buffers in the output context (from 2 to INT_MAX) (default 16)
+ * @param options.num_capture_buffers - Number of buffers in the capture context (from 2 to INT_MAX) (default 20)
+ */
+export function mpeg2_v4l2m2m(options?: {
+  num_output_buffers?: number | null;
+  num_capture_buffers?: number | null;
+
+}): FFMpegDecoderOption {
+  return merge({
+    "num_output_buffers": options?.num_output_buffers,
+    "num_capture_buffers": options?.num_capture_buffers,
+
+  });
+}
+
+
+
+
+
+
+
+/**
+ * Nvidia CUVID MPEG2VIDEO decoder (codec mpeg2video)
+ * @param options.deint - Set deinterlacing mode (from 0 to 2) (default weave)
+ * @param options.gpu - GPU to be used for decoding
+ * @param options.surfaces - Maximum surfaces to be used for decoding (from -1 to INT_MAX) (default -1)
+ * @param options.drop_second_field - Drop second field when deinterlacing (default false)
+ * @param options.crop - Crop (top)x(bottom)x(left)x(right)
+ * @param options.resize - Resize (width)x(height)
+ */
+export function mpeg2_cuvid(options?: {
+  deint?: number | null | "weave" | "bob" | "adaptive";
+  gpu?: string | null;
+  surfaces?: number | null;
+  drop_second_field?: boolean | null;
+  crop?: string | null;
+  resize?: string | null;
+
+}): FFMpegDecoderOption {
+  return merge({
+    "deint": options?.deint,
+    "gpu": options?.gpu,
+    "surfaces": options?.surfaces,
+    "drop_second_field": options?.drop_second_field,
+    "crop": options?.crop,
+    "resize": options?.resize,
+
+  });
+}
+
+
+
+
+
+
+
+/**
  * MPEG-4 part 2
  */
 export function mpeg4(options?: {
 
 }): FFMpegDecoderOption {
   return merge({
+
+  });
+}
+
+
+
+
+
+
+
+/**
+ * V4L2 mem2mem MPEG4 decoder wrapper (codec mpeg4)
+ * @param options.num_output_buffers - Number of buffers in the output context (from 2 to INT_MAX) (default 16)
+ * @param options.num_capture_buffers - Number of buffers in the capture context (from 2 to INT_MAX) (default 20)
+ */
+export function mpeg4_v4l2m2m(options?: {
+  num_output_buffers?: number | null;
+  num_capture_buffers?: number | null;
+
+}): FFMpegDecoderOption {
+  return merge({
+    "num_output_buffers": options?.num_output_buffers,
+    "num_capture_buffers": options?.num_capture_buffers,
+
+  });
+}
+
+
+
+
+
+
+
+/**
+ * Nvidia CUVID MPEG4 decoder (codec mpeg4)
+ * @param options.deint - Set deinterlacing mode (from 0 to 2) (default weave)
+ * @param options.gpu - GPU to be used for decoding
+ * @param options.surfaces - Maximum surfaces to be used for decoding (from -1 to INT_MAX) (default -1)
+ * @param options.drop_second_field - Drop second field when deinterlacing (default false)
+ * @param options.crop - Crop (top)x(bottom)x(left)x(right)
+ * @param options.resize - Resize (width)x(height)
+ */
+export function mpeg4_cuvid(options?: {
+  deint?: number | null | "weave" | "bob" | "adaptive";
+  gpu?: string | null;
+  surfaces?: number | null;
+  drop_second_field?: boolean | null;
+  crop?: string | null;
+  resize?: string | null;
+
+}): FFMpegDecoderOption {
+  return merge({
+    "deint": options?.deint,
+    "gpu": options?.gpu,
+    "surfaces": options?.surfaces,
+    "drop_second_field": options?.drop_second_field,
+    "crop": options?.crop,
+    "resize": options?.resize,
 
   });
 }
@@ -3852,6 +4329,32 @@ export function sunrast(options?: {
 
 
 /**
+ * Librsvg rasterizer (codec svg)
+ * @param options.width - Width to render to (0 for default) (from 0 to INT_MAX) (default 0)
+ * @param options.height - Height to render to (0 for default) (from 0 to INT_MAX) (default 0)
+ * @param options.keep_ar - Keep aspect ratio with custom width/height (default true)
+ */
+export function librsvg(options?: {
+  width?: number | null;
+  height?: number | null;
+  keep_ar?: boolean | null;
+
+}): FFMpegDecoderOption {
+  return merge({
+    "width": options?.width,
+    "height": options?.height,
+    "keep_ar": options?.keep_ar,
+
+  });
+}
+
+
+
+
+
+
+
+/**
  * Sorenson Vector Quantizer 1 / Sorenson Video 1 / SVQ1
  */
 export function svq1(options?: {
@@ -4374,6 +4877,64 @@ export function vc1(options?: {
 
 
 /**
+ * V4L2 mem2mem VC1 decoder wrapper (codec vc1)
+ * @param options.num_output_buffers - Number of buffers in the output context (from 2 to INT_MAX) (default 16)
+ * @param options.num_capture_buffers - Number of buffers in the capture context (from 2 to INT_MAX) (default 20)
+ */
+export function vc1_v4l2m2m(options?: {
+  num_output_buffers?: number | null;
+  num_capture_buffers?: number | null;
+
+}): FFMpegDecoderOption {
+  return merge({
+    "num_output_buffers": options?.num_output_buffers,
+    "num_capture_buffers": options?.num_capture_buffers,
+
+  });
+}
+
+
+
+
+
+
+
+/**
+ * Nvidia CUVID VC1 decoder (codec vc1)
+ * @param options.deint - Set deinterlacing mode (from 0 to 2) (default weave)
+ * @param options.gpu - GPU to be used for decoding
+ * @param options.surfaces - Maximum surfaces to be used for decoding (from -1 to INT_MAX) (default -1)
+ * @param options.drop_second_field - Drop second field when deinterlacing (default false)
+ * @param options.crop - Crop (top)x(bottom)x(left)x(right)
+ * @param options.resize - Resize (width)x(height)
+ */
+export function vc1_cuvid(options?: {
+  deint?: number | null | "weave" | "bob" | "adaptive";
+  gpu?: string | null;
+  surfaces?: number | null;
+  drop_second_field?: boolean | null;
+  crop?: string | null;
+  resize?: string | null;
+
+}): FFMpegDecoderOption {
+  return merge({
+    "deint": options?.deint,
+    "gpu": options?.gpu,
+    "surfaces": options?.surfaces,
+    "drop_second_field": options?.drop_second_field,
+    "crop": options?.crop,
+    "resize": options?.resize,
+
+  });
+}
+
+
+
+
+
+
+
+/**
  * Windows Media Video 9 Image v2
  */
 export function vc1image(options?: {
@@ -4629,6 +5190,29 @@ export function vp8(options?: {
 
 
 /**
+ * V4L2 mem2mem VP8 decoder wrapper (codec vp8)
+ * @param options.num_output_buffers - Number of buffers in the output context (from 2 to INT_MAX) (default 16)
+ * @param options.num_capture_buffers - Number of buffers in the capture context (from 2 to INT_MAX) (default 20)
+ */
+export function vp8_v4l2m2m(options?: {
+  num_output_buffers?: number | null;
+  num_capture_buffers?: number | null;
+
+}): FFMpegDecoderOption {
+  return merge({
+    "num_output_buffers": options?.num_output_buffers,
+    "num_capture_buffers": options?.num_capture_buffers,
+
+  });
+}
+
+
+
+
+
+
+
+/**
  * libvpx VP8 (codec vp8)
  */
 export function libvpx(options?: {
@@ -4646,12 +5230,105 @@ export function libvpx(options?: {
 
 
 /**
+ * Nvidia CUVID VP8 decoder (codec vp8)
+ * @param options.deint - Set deinterlacing mode (from 0 to 2) (default weave)
+ * @param options.gpu - GPU to be used for decoding
+ * @param options.surfaces - Maximum surfaces to be used for decoding (from -1 to INT_MAX) (default -1)
+ * @param options.drop_second_field - Drop second field when deinterlacing (default false)
+ * @param options.crop - Crop (top)x(bottom)x(left)x(right)
+ * @param options.resize - Resize (width)x(height)
+ */
+export function vp8_cuvid(options?: {
+  deint?: number | null | "weave" | "bob" | "adaptive";
+  gpu?: string | null;
+  surfaces?: number | null;
+  drop_second_field?: boolean | null;
+  crop?: string | null;
+  resize?: string | null;
+
+}): FFMpegDecoderOption {
+  return merge({
+    "deint": options?.deint,
+    "gpu": options?.gpu,
+    "surfaces": options?.surfaces,
+    "drop_second_field": options?.drop_second_field,
+    "crop": options?.crop,
+    "resize": options?.resize,
+
+  });
+}
+
+
+
+
+
+
+
+/**
  * Google VP9
  */
 export function vp9(options?: {
 
 }): FFMpegDecoderOption {
   return merge({
+
+  });
+}
+
+
+
+
+
+
+
+/**
+ * V4L2 mem2mem VP9 decoder wrapper (codec vp9)
+ * @param options.num_output_buffers - Number of buffers in the output context (from 2 to INT_MAX) (default 16)
+ * @param options.num_capture_buffers - Number of buffers in the capture context (from 2 to INT_MAX) (default 20)
+ */
+export function vp9_v4l2m2m(options?: {
+  num_output_buffers?: number | null;
+  num_capture_buffers?: number | null;
+
+}): FFMpegDecoderOption {
+  return merge({
+    "num_output_buffers": options?.num_output_buffers,
+    "num_capture_buffers": options?.num_capture_buffers,
+
+  });
+}
+
+
+
+
+
+
+
+/**
+ * Nvidia CUVID VP9 decoder (codec vp9)
+ * @param options.deint - Set deinterlacing mode (from 0 to 2) (default weave)
+ * @param options.gpu - GPU to be used for decoding
+ * @param options.surfaces - Maximum surfaces to be used for decoding (from -1 to INT_MAX) (default -1)
+ * @param options.drop_second_field - Drop second field when deinterlacing (default false)
+ * @param options.crop - Crop (top)x(bottom)x(left)x(right)
+ * @param options.resize - Resize (width)x(height)
+ */
+export function vp9_cuvid(options?: {
+  deint?: number | null | "weave" | "bob" | "adaptive";
+  gpu?: string | null;
+  surfaces?: number | null;
+  drop_second_field?: boolean | null;
+  crop?: string | null;
+  resize?: string | null;
+
+}): FFMpegDecoderOption {
+  return merge({
+    "deint": options?.deint,
+    "gpu": options?.gpu,
+    "surfaces": options?.surfaces,
+    "drop_second_field": options?.drop_second_field,
+    "crop": options?.crop,
+    "resize": options?.resize,
 
   });
 }
@@ -5185,12 +5862,39 @@ export function aac_fixed(options?: {
 
 
 /**
- * aac (AudioToolbox) (codec aac)
+ * Fraunhofer FDK AAC (codec aac)
+ * @param options.conceal - Error concealment method (from 0 to 2) (default noise)
+ * @param options.drc_boost - Dynamic Range Control: boost, where [0] is none and [127] is max boost (from -1 to 127) (default -1)
+ * @param options.drc_cut - Dynamic Range Control: attenuation factor, where [0] is none and [127] is max compression (from -1 to 127) (default -1)
+ * @param options.drc_level - Dynamic Range Control: reference level, quantized to 0.25dB steps where [0] is 0dB and [127] is -31.75dB, -1 for auto, and -2 for disabled (from -2 to 127) (default -1)
+ * @param options.drc_heavy - Dynamic Range Control: heavy compression, where [1] is on (RF mode) and [0] is off (from -1 to 1) (default -1)
+ * @param options.level_limit - Signal level limiting (default auto)
+ * @param options.drc_effect - Dynamic Range Control: effect type, where e.g. [0] is none and [6] is general (from -1 to 8) (default -1)
+ * @param options.album_mode - Dynamic Range Control: album mode, where [0] is off and [1] is on (from -1 to 1) (default -1)
+ * @param options.downmix - Request a specific channel layout from the decoder
  */
-export function aac_at(options?: {
+export function libfdk_aac(options?: {
+  conceal?: number | null | "spectral" | "noise" | "energy";
+  drc_boost?: number | null;
+  drc_cut?: number | null;
+  drc_level?: number | null;
+  drc_heavy?: number | null;
+  level_limit?: boolean | null;
+  drc_effect?: number | null;
+  album_mode?: number | null;
+  downmix?: string | null;
 
 }): FFMpegDecoderOption {
   return merge({
+    "conceal": options?.conceal,
+    "drc_boost": options?.drc_boost,
+    "drc_cut": options?.drc_cut,
+    "drc_level": options?.drc_level,
+    "drc_heavy": options?.drc_heavy,
+    "level_limit": options?.level_limit,
+    "drc_effect": options?.drc_effect,
+    "album_mode": options?.album_mode,
+    "downmix": options?.downmix,
 
   });
 }
@@ -5269,23 +5973,6 @@ export function ac3_fixed(options?: {
     "drc_scale": options?.drc_scale,
     "heavy_compr": options?.heavy_compr,
     "downmix": options?.downmix,
-
-  });
-}
-
-
-
-
-
-
-
-/**
- * ac3 (AudioToolbox) (codec ac3)
- */
-export function ac3_at(options?: {
-
-}): FFMpegDecoderOption {
-  return merge({
 
   });
 }
@@ -5385,23 +6072,6 @@ export function adpcm_aica(options?: {
  * ADPCM Argonaut Games
  */
 export function adpcm_argo(options?: {
-
-}): FFMpegDecoderOption {
-  return merge({
-
-  });
-}
-
-
-
-
-
-
-
-/**
- * ADPCM Circus
- */
-export function adpcm_circus(options?: {
 
 }): FFMpegDecoderOption {
   return merge({
@@ -5793,77 +6463,9 @@ export function adpcm_ima_ea_sead(options?: {
 
 
 /**
- * ADPCM IMA Acorn Escape
- */
-export function adpcm_ima_escape(options?: {
-
-}): FFMpegDecoderOption {
-  return merge({
-
-  });
-}
-
-
-
-
-
-
-
-/**
- * ADPCM IMA HVQM2
- */
-export function adpcm_ima_hvqm2(options?: {
-
-}): FFMpegDecoderOption {
-  return merge({
-
-  });
-}
-
-
-
-
-
-
-
-/**
- * ADPCM IMA HVQM4
- */
-export function adpcm_ima_hvqm4(options?: {
-
-}): FFMpegDecoderOption {
-  return merge({
-
-  });
-}
-
-
-
-
-
-
-
-/**
  * ADPCM IMA Funcom ISS
  */
 export function adpcm_ima_iss(options?: {
-
-}): FFMpegDecoderOption {
-  return merge({
-
-  });
-}
-
-
-
-
-
-
-
-/**
- * ADPCM IMA Magix
- */
-export function adpcm_ima_magix(options?: {
 
 }): FFMpegDecoderOption {
   return merge({
@@ -5929,43 +6531,9 @@ export function adpcm_ima_oki(options?: {
 
 
 /**
- * ADPCM IMA PlayDate
- */
-export function adpcm_ima_pda(options?: {
-
-}): FFMpegDecoderOption {
-  return merge({
-
-  });
-}
-
-
-
-
-
-
-
-/**
  * ADPCM IMA QuickTime
  */
 export function adpcm_ima_qt(options?: {
-
-}): FFMpegDecoderOption {
-  return merge({
-
-  });
-}
-
-
-
-
-
-
-
-/**
- * adpcm_ima_qt (AudioToolbox) (codec adpcm_ima_qt)
- */
-export function adpcm_ima_qt_at(options?: {
 
 }): FFMpegDecoderOption {
   return merge({
@@ -6116,43 +6684,9 @@ export function adpcm_mtaf(options?: {
 
 
 /**
- * ADPCM Silicon Graphics N64
- */
-export function adpcm_n64(options?: {
-
-}): FFMpegDecoderOption {
-  return merge({
-
-  });
-}
-
-
-
-
-
-
-
-/**
  * ADPCM Playstation
  */
 export function adpcm_psx(options?: {
-
-}): FFMpegDecoderOption {
-  return merge({
-
-  });
-}
-
-
-
-
-
-
-
-/**
- * ADPCM Playstation C
- */
-export function adpcm_psxc(options?: {
 
 }): FFMpegDecoderOption {
   return merge({
@@ -6371,23 +6905,6 @@ export function adpcm_zork(options?: {
 
 
 /**
- * CRI AHX
- */
-export function ahx(options?: {
-
-}): FFMpegDecoderOption {
-  return merge({
-
-  });
-}
-
-
-
-
-
-
-
-/**
  * ALAC (Apple Lossless Audio Codec)
  * @param options.extra_bits_bug - Force non-standard decoding process (default false)
  */
@@ -6397,23 +6914,6 @@ export function alac(options?: {
 }): FFMpegDecoderOption {
   return merge({
     "extra_bits_bug": options?.extra_bits_bug,
-
-  });
-}
-
-
-
-
-
-
-
-/**
- * alac (AudioToolbox) (codec alac)
- */
-export function alac_at(options?: {
-
-}): FFMpegDecoderOption {
-  return merge({
 
   });
 }
@@ -6442,9 +6942,9 @@ export function amrnb(options?: {
 
 
 /**
- * amr_nb (AudioToolbox) (codec amr_nb)
+ * OpenCORE AMR-NB (Adaptive Multi-Rate Narrow-Band) (codec amr_nb)
  */
-export function amr_nb_at(options?: {
+export function libopencore_amrnb(options?: {
 
 }): FFMpegDecoderOption {
   return merge({
@@ -6462,6 +6962,23 @@ export function amr_nb_at(options?: {
  * AMR-WB (Adaptive Multi-Rate WideBand) (codec amr_wb)
  */
 export function amrwb(options?: {
+
+}): FFMpegDecoderOption {
+  return merge({
+
+  });
+}
+
+
+
+
+
+
+
+/**
+ * OpenCORE AMR-WB (Adaptive Multi-Rate Wide-Band) (codec amr_wb)
+ */
+export function libopencore_amrwb(options?: {
 
 }): FFMpegDecoderOption {
   return merge({
@@ -6768,6 +7285,23 @@ export function cbd2_dpcm(options?: {
 
 
 /**
+ * codec2 decoder using libcodec2 (codec codec2)
+ */
+export function libcodec2(options?: {
+
+}): FFMpegDecoderOption {
+  return merge({
+
+  });
+}
+
+
+
+
+
+
+
+/**
  * RFC 3389 comfort noise generator
  */
 export function comfortnoise(options?: {
@@ -7050,23 +7584,6 @@ export function eac3(options?: {
 
 
 /**
- * eac3 (AudioToolbox) (codec eac3)
- */
-export function eac3_at(options?: {
-
-}): FFMpegDecoderOption {
-  return merge({
-
-  });
-}
-
-
-
-
-
-
-
-/**
  * EVRC (Enhanced Variable Rate Codec)
  * @param options.postfilter - enable postfilter (default true)
  */
@@ -7229,6 +7746,23 @@ export function gsm(options?: {
 
 
 /**
+ * libgsm GSM (codec gsm)
+ */
+export function libgsm(options?: {
+
+}): FFMpegDecoderOption {
+  return merge({
+
+  });
+}
+
+
+
+
+
+
+
+/**
  * GSM Microsoft variant
  */
 export function gsm_ms(options?: {
@@ -7246,9 +7780,9 @@ export function gsm_ms(options?: {
 
 
 /**
- * gsm_ms (AudioToolbox) (codec gsm_ms)
+ * libgsm GSM Microsoft variant (codec gsm_ms)
  */
-export function gsm_ms_at(options?: {
+export function libgsm_ms(options?: {
 
 }): FFMpegDecoderOption {
   return merge({
@@ -7317,23 +7851,6 @@ export function iac(options?: {
  * iLBC (Internet Low Bitrate Codec)
  */
 export function ilbc(options?: {
-
-}): FFMpegDecoderOption {
-  return merge({
-
-  });
-}
-
-
-
-
-
-
-
-/**
- * ilbc (AudioToolbox) (codec ilbc)
- */
-export function ilbc_at(options?: {
 
 }): FFMpegDecoderOption {
   return merge({
@@ -7521,23 +8038,6 @@ export function mp1float(options?: {
 
 
 /**
- * mp1 (AudioToolbox) (codec mp1)
- */
-export function mp1_at(options?: {
-
-}): FFMpegDecoderOption {
-  return merge({
-
-  });
-}
-
-
-
-
-
-
-
-/**
  * MP2 (MPEG audio layer 2)
  */
 export function mp2(options?: {
@@ -7572,23 +8072,6 @@ export function mp2float(options?: {
 
 
 /**
- * mp2 (AudioToolbox) (codec mp2)
- */
-export function mp2_at(options?: {
-
-}): FFMpegDecoderOption {
-  return merge({
-
-  });
-}
-
-
-
-
-
-
-
-/**
  * MP3 (MPEG audio layer 3) (codec mp3)
  */
 export function mp3float(options?: {
@@ -7609,23 +8092,6 @@ export function mp3float(options?: {
  * MP3 (MPEG audio layer 3)
  */
 export function mp3(options?: {
-
-}): FFMpegDecoderOption {
-  return merge({
-
-  });
-}
-
-
-
-
-
-
-
-/**
- * mp3 (AudioToolbox) (codec mp3)
- */
-export function mp3_at(options?: {
 
 }): FFMpegDecoderOption {
   return merge({
@@ -7887,23 +8353,6 @@ export function pcm_alaw(options?: {
 
 
 /**
- * pcm_alaw (AudioToolbox) (codec pcm_alaw)
- */
-export function pcm_alaw_at(options?: {
-
-}): FFMpegDecoderOption {
-  return merge({
-
-  });
-}
-
-
-
-
-
-
-
-/**
  * PCM signed 16|20|24-bit big-endian for Blu-ray media
  */
 export function pcm_bluray(options?: {
@@ -8060,23 +8509,6 @@ export function pcm_lxf(options?: {
  * PCM mu-law / G.711 mu-law
  */
 export function pcm_mulaw(options?: {
-
-}): FFMpegDecoderOption {
-  return merge({
-
-  });
-}
-
-
-
-
-
-
-
-/**
- * pcm_mulaw (AudioToolbox) (codec pcm_mulaw)
- */
-export function pcm_mulaw_at(options?: {
 
 }): FFMpegDecoderOption {
   return merge({
@@ -8533,43 +8965,9 @@ export function qdm2(options?: {
 
 
 /**
- * qdm2 (AudioToolbox) (codec qdm2)
- */
-export function qdm2_at(options?: {
-
-}): FFMpegDecoderOption {
-  return merge({
-
-  });
-}
-
-
-
-
-
-
-
-/**
  * QDesign Music Codec 1
  */
 export function qdmc(options?: {
-
-}): FFMpegDecoderOption {
-  return merge({
-
-  });
-}
-
-
-
-
-
-
-
-/**
- * qdmc (AudioToolbox) (codec qdmc)
- */
-export function qdmc_at(options?: {
 
 }): FFMpegDecoderOption {
   return merge({
@@ -8859,6 +9257,23 @@ export function speex(options?: {
 
 
 /**
+ * libspeex Speex (codec speex)
+ */
+export function libspeex(options?: {
+
+}): FFMpegDecoderOption {
+  return merge({
+
+  });
+}
+
+
+
+
+
+
+
+/**
  * TAK (Tom's lossless Audio Kompressor)
  */
 export function tak(options?: {
@@ -8970,6 +9385,23 @@ export function vmdaudio(options?: {
  * Vorbis
  */
 export function vorbis(options?: {
+
+}): FFMpegDecoderOption {
+  return merge({
+
+  });
+}
+
+
+
+
+
+
+
+/**
+ * libvorbis (codec vorbis)
+ */
+export function libvorbis(options?: {
 
 }): FFMpegDecoderOption {
   return merge({

@@ -377,6 +377,10 @@ export type FFMpegDemuxerOption = Readonly<Record<string, unknown>>;
 
 
 
+
+
+
+
 /**
  * 3DO STR
  */
@@ -618,14 +622,11 @@ export function ads(options?: {
 
 /**
  * CRI ADX
- * @param options.raw_packet_size - (from 1 to INT_MAX) (default 1024)
  */
 export function adx(options?: {
-  raw_packet_size?: number | null;
 
 }): FFMpegDemuxerOption {
   return merge({
-    "raw_packet_size": options?.raw_packet_size,
 
   });
 }
@@ -740,7 +741,7 @@ export function alaw(options?: {
  * @param options.loop - force loop over input file sequence (default false)
  */
 export function alias_pix(options?: {
-  pattern_type?: number | null | "glob" | "sequence" | "none";
+  pattern_type?: number | null | "glob_sequence" | "glob" | "sequence" | "none";
   start_number?: number | null;
   start_number_range?: number | null;
   ts_from_file?: number | null | "none" | "sec" | "ns";
@@ -1205,23 +1206,6 @@ export function av1(options?: {
 
 
 /**
- * avfoundation    AVFoundation input device
- */
-export function d(options?: {
-
-}): FFMpegDemuxerOption {
-  return merge({
-
-  });
-}
-
-
-
-
-
-
-
-/**
  * AVI (Audio Video Interleaved)
  * @param options.use_odml - use odml index (default true)
  */
@@ -1451,7 +1435,7 @@ export function bit(options?: {
 
 /**
  * Bitpacked
- * @param options.pixel_format - set pixel format (default yuv420p)
+ * @param options.pixel_format - set pixel format (default "yuv420p")
  * @param options.video_size - set frame size
  * @param options.framerate - set frame rate (default "25")
  */
@@ -1574,7 +1558,7 @@ export function bonk(options?: {
  * @param options.loop - force loop over input file sequence (default false)
  */
 export function brender_pix(options?: {
-  pattern_type?: number | null | "glob" | "sequence" | "none";
+  pattern_type?: number | null | "glob_sequence" | "glob" | "sequence" | "none";
   start_number?: number | null;
   start_number_range?: number | null;
   ts_from_file?: number | null | "none" | "sec" | "ns";
@@ -2456,6 +2440,23 @@ export function f64le(options?: {
 
 
 /**
+ * fbdev           Linux framebuffer
+ */
+export function d(options?: {
+
+}): FFMpegDemuxerOption {
+  return merge({
+
+  });
+}
+
+
+
+
+
+
+
+/**
  * FFmpeg metadata in text
  */
 export function ffmetadata(options?: {
@@ -3162,23 +3163,6 @@ export function hnm(options?: {
 
 
 /**
- * HXVF/HXVS IP camera format
- */
-export function hxvs(options?: {
-
-}): FFMpegDemuxerOption {
-  return merge({
-
-  });
-}
-
-
-
-
-
-
-
-/**
  * Raw Immersive Audio Model and Formats
  */
 export function iamf(options?: {
@@ -3319,7 +3303,7 @@ export function ilbc(options?: {
  * @param options.loop - force loop over input file sequence (default false)
  */
 export function image2(options?: {
-  pattern_type?: number | null | "glob" | "sequence" | "none";
+  pattern_type?: number | null | "glob_sequence" | "glob" | "sequence" | "none";
   start_number?: number | null;
   start_number_range?: number | null;
   ts_from_file?: number | null | "none" | "sec" | "ns";
@@ -3690,38 +3674,6 @@ export function jpegxl_pipe(options?: {
 
 
 /**
- * piped jpegxs sequence
- * @param options.frame_size - force frame size in bytes (from 0 to INT_MAX) (default 0)
- * @param options.framerate - set the video framerate (default "25")
- * @param options.pixel_format - set video pixel format
- * @param options.video_size - set video size
- * @param options.loop - force loop over input file sequence (default false)
- */
-export function jpegxs_pipe(options?: {
-  frame_size?: number | null;
-  framerate?: string | null;
-  pixel_format?: string | null;
-  video_size?: string | null;
-  loop?: boolean | null;
-
-}): FFMpegDemuxerOption {
-  return merge({
-    "frame_size": options?.frame_size,
-    "framerate": options?.framerate,
-    "pixel_format": options?.pixel_format,
-    "video_size": options?.video_size,
-    "loop": options?.loop,
-
-  });
-}
-
-
-
-
-
-
-
-/**
  * Bitmap Brothers JV
  */
 export function jv(options?: {
@@ -3731,6 +3683,11 @@ export function jv(options?: {
 
   });
 }
+
+
+
+
+
 
 
 
@@ -4777,6 +4734,11 @@ export function osq(options?: {
 
 
 
+
+
+
+
+
 /**
  * Amazing Studio Packed Animation File
  */
@@ -5446,20 +5408,17 @@ export function r3d(options?: {
 
 /**
  * raw video
- * @param options.stride - frame line size in bytes
- * @param options.pixel_format - set pixel format (default yuv420p)
+ * @param options.pixel_format - set pixel format (default "yuv420p")
  * @param options.video_size - set frame size
  * @param options.framerate - set frame rate (default "25")
  */
 export function rawvideo(options?: {
-  stride?: number | null;
   pixel_format?: string | null;
   video_size?: string | null;
   framerate?: string | null;
 
 }): FFMpegDemuxerOption {
   return merge({
-    "stride": options?.stride,
     "pixel_format": options?.pixel_format,
     "video_size": options?.video_size,
     "framerate": options?.framerate,
@@ -5690,9 +5649,9 @@ export function rtp(options?: {
  * @param options.timeout - set timeout (in microseconds) of socket I/O operations (from INT_MIN to I64_MAX) (default 0)
  * @param options.reorder_queue_size - set number of packets to buffer for handling of reordered packets (from -1 to INT_MAX) (default -1)
  * @param options.buffer_size - Underlying protocol send/receive buffer size (from -1 to INT_MAX) (default -1)
- * @param options.user_agent - override User-Agent header (default "Lavf62.12.100")
+ * @param options.user_agent - override User-Agent header (default "Lavf62.3.100")
  * @param options.ca_file - Certificate Authority database file
- * @param options.tls_verify - Verify the peer certificate (default false)
+ * @param options.tls_verify - Verify the peer certificate (from 0 to 1) (default 0)
  * @param options.cert_file - Certificate file
  * @param options.key_file - Private key file
  * @param options.verifyhost - Verify against a specific hostname
@@ -5710,7 +5669,7 @@ export function rtsp(options?: {
   buffer_size?: number | null;
   user_agent?: string | null;
   ca_file?: string | null;
-  tls_verify?: boolean | null;
+  tls_verify?: number | null;
   cert_file?: string | null;
   key_file?: string | null;
   verifyhost?: string | null;
@@ -7139,6 +7098,11 @@ export function vidc(options?: {
 
 
 
+
+
+
+
+
 /**
  * Vividas VIV
  */
@@ -7568,6 +7532,11 @@ export function wve(options?: {
 
   });
 }
+
+
+
+
+
 
 
 

@@ -1,0 +1,28 @@
+{
+  "index": null,
+  "node": {
+    "inputs": [
+      {
+        "index": null,
+        "node": {
+          "filename": "output.mp4",
+          "inputs": [
+            {
+              "index": null,
+              "node": {
+                "filename": "input.mp4",
+                "inputs": [],
+                "kwargs": "FrozenDict({})"
+              },
+              "optional": false
+            }
+          ],
+          "kwargs": "FrozenDict({})"
+        },
+        "optional": false
+      }
+    ],
+    "kwargs": "FrozenDict({})"
+  },
+  "optional": false
+}

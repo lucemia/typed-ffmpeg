@@ -5,7 +5,7 @@ import re
 import sys
 from pathlib import Path
 
-PACKAGES = ["core", "data-v5", "data-v6", "data-v7", "data-v8", "v5", "v6", "v7", "v8", "latest", "compatible"]
+PACKAGES = ["core", "data-v5", "data-v6", "data-v7", "data-v8", "data-v9", "v5", "v6", "v7", "v8", "v9", "latest", "compatible"]
 REPO_ROOT = Path(__file__).parent.parent
 
 # Internal packages whose dependency constraints should be updated

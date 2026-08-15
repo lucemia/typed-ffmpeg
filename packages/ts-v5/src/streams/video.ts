@@ -351,8 +351,7 @@ return filterNode.video(0) as unknown as VideoStream;
 
 /**
  * Same as the subtitles filter, except that it doesn't require libavcodec and libavformat to work. On the other hand, it is limited to ASS (Advanced Substation Alpha) subtitles files. This filter accepts the following option in addition to the common options from the subtitles filter:
- *
- * Note: Removed in FFmpeg 8.0.
+
  *
  * @param options.filename - set the filename of file to read
  * @param options.original_size - set the size of the original video (used to scale fonts)
@@ -508,81 +507,6 @@ extraOptions?: Record<string, unknown>;
       "planes": options?.planes,
       "sizeY": options?.sizeY,
       "enable": options?.enable,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-/**
- * Apply average blur filter. The filter accepts the following options:
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.sizeX - Set horizontal radius size. Range is [1, 1024] and default value is 1.
- * @param options.planes - Set which planes to filter. Default value is 0xf, by which all planes are processed.
- * @param options.sizeY - Set vertical radius size. Range is [1, 1024] and default value is 0. If zero, sizeX value will be used.
- * @see https://ffmpeg.org/ffmpeg-filters.html#avgblur_opencl
- */
-  avgblur_opencl(
-    options?: {
-    sizeX?: FFInt;
-    planes?: FFInt;
-    sizeY?: FFInt;
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "avgblur_opencl", typingsInput: ["video"], typingsOutput: ["video"] },
-      [this],
-      merge(
-    {
-      "sizeX": options?.sizeX,
-      "planes": options?.planes,
-      "sizeY": options?.sizeY,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-/**
- * Apply avgblur mask to input video
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.sizeX - Set horizontal radius (from 1 to 32) (default 3)
- * @param options.planes - Set planes to filter (bitmask) (from 0 to 15) (default 15)
- * @param options.sizeY - Set vertical radius (from 1 to 32) (default 3)
- */
-  avgblur_vulkan(
-    options?: {
-    sizeX?: FFInt;
-    planes?: FFInt;
-    sizeY?: FFInt;
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "avgblur_vulkan", typingsInput: ["video"], typingsOutput: ["video"] },
-      [this],
-      merge(
-    {
-      "sizeX": options?.sizeX,
-      "planes": options?.planes,
-      "sizeY": options?.sizeY,
 },
     options?.extraOptions,
   ),
@@ -903,66 +827,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 /**
- * Blend two video frames in Vulkan
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.c0_mode - set component #0 blend mode (from 0 to 39) (default normal)
- * @param options.c1_mode - set component #1 blend mode (from 0 to 39) (default normal)
- * @param options.c2_mode - set component #2 blend mode (from 0 to 39) (default normal)
- * @param options.c3_mode - set component #3 blend mode (from 0 to 39) (default normal)
- * @param options.all_mode - set blend mode for all components (from -1 to 39) (default -1)
- * @param options.c0_opacity - set color component #0 opacity (from 0 to 1) (default 1)
- * @param options.c1_opacity - set color component #1 opacity (from 0 to 1) (default 1)
- * @param options.c2_opacity - set color component #2 opacity (from 0 to 1) (default 1)
- * @param options.c3_opacity - set color component #3 opacity (from 0 to 1) (default 1)
- * @param options.all_opacity - set opacity for all color components (from 0 to 1) (default 1)
- */
-  blend_vulkan(
-    _bottom: VideoStream,
-
-    options?: {
-    c0_mode?: FFInt | "normal" | "multiply";
-    c1_mode?: FFInt | "normal" | "multiply";
-    c2_mode?: FFInt | "normal" | "multiply";
-    c3_mode?: FFInt | "normal" | "multiply";
-    all_mode?: FFInt | "normal" | "multiply";
-    c0_opacity?: FFDouble;
-    c1_opacity?: FFDouble;
-    c2_opacity?: FFDouble;
-    c3_opacity?: FFDouble;
-    all_opacity?: FFDouble;
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "blend_vulkan", typingsInput: ["video", "video"], typingsOutput: ["video"] },
-      [this, _bottom],
-      merge(
-    {
-      "c0_mode": options?.c0_mode,
-      "c1_mode": options?.c1_mode,
-      "c2_mode": options?.c2_mode,
-      "c3_mode": options?.c3_mode,
-      "all_mode": options?.all_mode,
-      "c0_opacity": options?.c0_opacity,
-      "c1_opacity": options?.c1_opacity,
-      "c2_opacity": options?.c2_opacity,
-      "c3_opacity": options?.c3_opacity,
-      "all_opacity": options?.all_opacity,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-/**
  * Determines blockiness of frames without altering the input frames. Based on Remco Muijs and Ihor Kirenko: "A no-reference blocking artifact measure for adaptive video processing." 2005 13th European signal processing conference. The filter accepts the following options:
 
  *
@@ -1095,55 +959,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 
-/**
- * Apply a boxblur algorithm to the input video. It accepts the following parameters:
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.luma_radius - Radius of the luma blurring box (default "2")
- * @param options.luma_power - How many times should the boxblur be applied to luma (from 0 to INT_MAX) (default 2)
- * @param options.chroma_radius - Radius of the chroma blurring box
- * @param options.chroma_power - How many times should the boxblur be applied to chroma (from -1 to INT_MAX) (default -1)
- * @param options.alpha_radius - Set an expression for the box radius in pixels used for blurring the corresponding input plane. The radius value must be a non-negative number, and must not be greater than the value of the expression min(w,h)/2 for the luma and alpha planes, and of min(cw,ch)/2 for the chroma planes. Default value for luma_radius is "2". If not specified, chroma_radius and alpha_radius default to the corresponding value set for luma_radius. The expressions can contain the following constants: @end table
- * @param options.alpha_power - Specify how many times the boxblur filter is applied to the corresponding plane. Default value for luma_power is 2. If not specified, chroma_power and alpha_power default to the corresponding value set for luma_power. A value of 0 will disable the effect.
- * @see https://ffmpeg.org/ffmpeg-filters.html#boxblur_opencl
- */
-  boxblur_opencl(
-    options?: {
-    luma_radius?: FFString;
-    luma_power?: FFInt;
-    chroma_radius?: FFString;
-    chroma_power?: FFInt;
-    alpha_radius?: FFString;
-    alpha_power?: FFInt;
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "boxblur_opencl", typingsInput: ["video"], typingsOutput: ["video"] },
-      [this],
-      merge(
-    {
-      "luma_radius": options?.luma_radius,
-      "luma_power": options?.luma_power,
-      "chroma_radius": options?.chroma_radius,
-      "chroma_power": options?.chroma_power,
-      "alpha_radius": options?.alpha_radius,
-      "alpha_power": options?.alpha_power,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-
-
 
 
 
@@ -1225,40 +1040,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 
-
-
-
-
-
-
-/**
- * Offset chroma of input video (chromatic aberration)
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.dist_x - Set horizontal distortion amount (from -10 to 10) (default 0)
- * @param options.dist_y - Set vertical distortion amount (from -10 to 10) (default 0)
- */
-  chromaber_vulkan(
-    options?: {
-    dist_x?: FFFloat;
-    dist_y?: FFFloat;
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "chromaber_vulkan", typingsInput: ["video"], typingsOutput: ["video"] },
-      [this],
-      merge(
-    {
-      "dist_x": options?.dist_x,
-      "dist_y": options?.dist_y,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
 
 
 
@@ -1922,44 +1703,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 /**
- * RGB colorspace color keying. The filter accepts the following options:
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.color - The color which will be replaced with transparency.
- * @param options.similarity - Similarity percentage with the key color. 0.01 matches only the exact key color, while 1.0 matches everything.
- * @param options.blend - Blend percentage. 0.0 makes pixels either fully transparent, or not transparent at all. Higher values result in semi-transparent pixels, with a higher transparency the more similar the pixels color is to the key color.
- * @see https://ffmpeg.org/ffmpeg-filters.html#colorkey_opencl
- */
-  colorkey_opencl(
-    options?: {
-    color?: FFColor;
-    similarity?: FFFloat;
-    blend?: FFFloat;
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "colorkey_opencl", typingsInput: ["video"], typingsOutput: ["video"] },
-      [this],
-      merge(
-    {
-      "color": options?.color,
-      "similarity": options?.similarity,
-      "blend": options?.blend,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-/**
  * Adjust video input frames using levels. The filter accepts the following options:
 
  *
@@ -2306,68 +2049,6 @@ extraOptions?: Record<string, unknown>;
       "2mode": options?._2mode,
       "3mode": options?._3mode,
       "enable": options?.enable,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-/**
- * Apply convolution of 3x3, 5x5, 7x7 matrix. The filter accepts the following options:
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options._0m - set matrix for 2nd plane (default "0 0 0 0 1 0 0 0 0")
- * @param options._2m - set matrix for 3rd plane (default "0 0 0 0 1 0 0 0 0")
- * @param options._3m - Set matrix for each plane. Matrix is sequence of 9, 25 or 49 signed numbers. Default value for each plane is 0 0 0 0 1 0 0 0 0.
- * @param options._0rdiv - set rdiv for 1nd plane (from 0 to INT_MAX) (default 1)
- * @param options._1rdiv - set rdiv for 2nd plane (from 0 to INT_MAX) (default 1)
- * @param options._2rdiv - set rdiv for 3rd plane (from 0 to INT_MAX) (default 1)
- * @param options._3rdiv - Set multiplier for calculated value for each plane. If unset or 0, it will be sum of all matrix elements. The option value must be a float number greater or equal to 0.0. Default value is 1.0.
- * @param options._0bias - set bias for 1st plane (from 0 to INT_MAX) (default 0)
- * @param options._1bias - set bias for 2nd plane (from 0 to INT_MAX) (default 0)
- * @param options._2bias - set bias for 3rd plane (from 0 to INT_MAX) (default 0)
- * @param options._3bias - Set bias for each plane. This value is added to the result of the multiplication. Useful for making the overall image brighter or darker. The option value must be a float number greater or equal to 0.0. Default value is 0.0.
- * @see https://ffmpeg.org/ffmpeg-filters.html#convolution_opencl
- */
-  convolution_opencl(
-    options?: {
-    _0m?: FFString;
-    _2m?: FFString;
-    _3m?: FFString;
-    _0rdiv?: FFFloat;
-    _1rdiv?: FFFloat;
-    _2rdiv?: FFFloat;
-    _3rdiv?: FFFloat;
-    _0bias?: FFFloat;
-    _1bias?: FFFloat;
-    _2bias?: FFFloat;
-    _3bias?: FFFloat;
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "convolution_opencl", typingsInput: ["video"], typingsOutput: ["video"] },
-      [this],
-      merge(
-    {
-      "0m": options?._0m,
-      "2m": options?._2m,
-      "3m": options?._3m,
-      "0rdiv": options?._0rdiv,
-      "1rdiv": options?._1rdiv,
-      "2rdiv": options?._2rdiv,
-      "3rdiv": options?._3rdiv,
-      "0bias": options?._0bias,
-      "1bias": options?._1bias,
-      "2bias": options?._2bias,
-      "3bias": options?._3bias,
 },
     options?.extraOptions,
   ),
@@ -3094,43 +2775,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 /**
- * Deinterlacing of VAAPI surfaces
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.mode - Deinterlacing mode (from 0 to 4) (default default)
- * @param options.rate - Generate output at frame rate or field rate (from 1 to 2) (default frame)
- * @param options.auto - Only deinterlace fields, passing frames through unchanged (from 0 to 1) (default 0)
- */
-  deinterlace_vaapi(
-    options?: {
-    mode?: FFInt | "default" | "bob" | "weave" | "motion_adaptive" | "motion_compensated";
-    rate?: FFInt | "frame" | "field";
-    auto?: FFInt;
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "deinterlace_vaapi", typingsInput: ["video"], typingsOutput: ["video"] },
-      [this],
-      merge(
-    {
-      "mode": options?.mode,
-      "rate": options?.rate,
-      "auto": options?.auto,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-/**
  * Remove judder produced by partially interlaced telecined content. Judder can be introduced, for instance, by pullup filter. If the original source was partially telecined content then the output of pullup,dejudder will have a variable frame rate. May change the recorded frame rate of the container. Aside from that change, this filter will not affect constant frame rate video. The option available in this filter is:
 
  *
@@ -3194,37 +2838,6 @@ extraOptions?: Record<string, unknown>;
       "h": options?.h,
       "show": options?.show,
       "enable": options?.enable,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-/**
- * VAAPI VPP for de-noise
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.denoise - denoise level (from 0 to 64) (default 0)
- */
-  denoise_vaapi(
-    options?: {
-    denoise?: FFInt;
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "denoise_vaapi", typingsInput: ["video"], typingsOutput: ["video"] },
-      [this],
-      merge(
-    {
-      "denoise": options?.denoise,
 },
     options?.extraOptions,
   ),
@@ -3335,53 +2948,6 @@ extraOptions?: Record<string, unknown>;
       "search": options?.search,
       "filename": options?.filename,
       "opencl": options?.opencl,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-/**
- * Feature-point based video stabilization filter. The filter accepts the following options:
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.tripod - Simulates a tripod by preventing any camera movement whatsoever from the original frame. Defaults to 0.
- * @param options.debug - Whether or not additional debug info should be displayed, both in the processed output and in the console. Note that in order to see console debug output you will also need to pass -v verbose to ffmpeg. Viewing point matches in the output video is only supported for RGB input. Defaults to 0.
- * @param options.adaptive_crop - Whether or not to do a tiny bit of cropping at the borders to cut down on the amount of mirrored pixels. Defaults to 1.
- * @param options.refine_features - Whether or not feature points should be refined at a sub-pixel level. This can be turned off for a slight performance gain at the cost of precision. Defaults to 1.
- * @param options.smooth_strength - The strength of the smoothing applied to the camera path from 0.0 to 1.0. 1.0 is the maximum smoothing strength while values less than that result in less smoothing. 0.0 causes the filter to adaptively choose a smoothing strength on a per-frame basis. Defaults to 0.0.
- * @param options.smooth_window_multiplier - Controls the size of the smoothing window (the number of frames buffered to determine motion information from). The size of the smoothing window is determined by multiplying the framerate of the video by this number. Acceptable values range from 0.1 to 10.0. Larger values increase the amount of motion data available for determining how to smooth the camera path, potentially improving smoothness, but also increase latency and memory usage. Defaults to 2.0.
- * @see https://ffmpeg.org/ffmpeg-filters.html#deshake_opencl
- */
-  deshake_opencl(
-    options?: {
-    tripod?: FFBoolean;
-    debug?: FFBoolean;
-    adaptive_crop?: FFBoolean;
-    refine_features?: FFBoolean;
-    smooth_strength?: FFFloat;
-    smooth_window_multiplier?: FFFloat;
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "deshake_opencl", typingsInput: ["video"], typingsOutput: ["video"] },
-      [this],
-      merge(
-    {
-      "tripod": options?.tripod,
-      "debug": options?.debug,
-      "adaptive_crop": options?.adaptive_crop,
-      "refine_features": options?.refine_features,
-      "smooth_strength": options?.smooth_strength,
-      "smooth_window_multiplier": options?.smooth_window_multiplier,
 },
     options?.extraOptions,
   ),
@@ -3520,50 +3086,6 @@ extraOptions?: Record<string, unknown>;
       "threshold2": options?.threshold2,
       "threshold3": options?.threshold3,
       "enable": options?.enable,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-/**
- * Apply dilation effect to the video. This filter replaces the pixel by the local(3x3) maximum. It accepts the following options:
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.threshold0 - set threshold for 1st plane (from 0 to 65535) (default 65535)
- * @param options.threshold1 - set threshold for 2nd plane (from 0 to 65535) (default 65535)
- * @param options.threshold2 - set threshold for 3rd plane (from 0 to 65535) (default 65535)
- * @param options.threshold3 - Limit the maximum change for each plane. Range is [0, 65535] and default value is 65535. If 0, plane will remain unchanged.
- * @param options.coordinates - Flag which specifies the pixel to refer to. Range is [0, 255] and default value is 255, i.e. all eight pixels are used. Flags to local 3x3 coordinates region centered on x: 1 2 3 4 x 5 6 7 8
- * @see https://ffmpeg.org/ffmpeg-filters.html#dilation_opencl
- */
-  dilation_opencl(
-    options?: {
-    threshold0?: FFFloat;
-    threshold1?: FFFloat;
-    threshold2?: FFFloat;
-    threshold3?: FFFloat;
-    coordinates?: FFInt;
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "dilation_opencl", typingsInput: ["video"], typingsOutput: ["video"] },
-      [this],
-      merge(
-    {
-      "threshold0": options?.threshold0,
-      "threshold1": options?.threshold1,
-      "threshold2": options?.threshold2,
-      "threshold3": options?.threshold3,
-      "coordinates": options?.coordinates,
 },
     options?.extraOptions,
   ),
@@ -3988,8 +3510,7 @@ return filterNode.video(0) as unknown as VideoStream;
 
 /**
  * Draw a text string or text from a specified file on top of a video, using the libfreetype library. To enable compilation of this filter, you need to configure FFmpeg with --enable-libfreetype. To enable default font fallback and the font option you need to configure FFmpeg with --enable-libfontconfig. To enable the text_shaping option, you need to configure FFmpeg with --enable-libfribidi.
- *
- * Note: Removed in FFmpeg 8.0.
+
  *
  * @param options.fontfile - The font file to be used for drawing text. The path must be included. This parameter is mandatory if the fontconfig support is disabled.
  * @param options.text - The text string to be drawn. The text must be a sequence of UTF-8 encoded characters. This parameter is mandatory if no file is specified with the parameter textfile.
@@ -4020,7 +3541,6 @@ return filterNode.video(0) as unknown as VideoStream;
  * @param options.fix_bounds - If true, check and fix text coords to avoid clipping.
  * @param options.start_number - The starting frame number for the n/frame_num variable. The default value is "0".
  * @param options.text_source - Text source should be set as side_data_detection_bboxes if you want to use text data in detection bboxes of side data. If text source is set, text and textfile will be ignored and still use text data in detection bboxes of side data. So please do not use this parameter if you are not sure about the text source.
- * @param options.text_shaping - If set to 1, attempt to shape the text (for example, reverse the order of right-to-left text and join Arabic characters) before drawing it. Otherwise, just draw the text exactly as given. By default 1 (if supported).
  * @param options.ft_load_flags - The flags to be used for loading the fonts. The flags map the corresponding flags supported by libfreetype, and are a combination of the following values: @end table Default value is "default". For more information consult the documentation for the FT_LOAD_* libfreetype flags.
  * @see https://ffmpeg.org/ffmpeg-filters.html#drawtext
  */
@@ -4055,7 +3575,6 @@ return filterNode.video(0) as unknown as VideoStream;
     fix_bounds?: FFBoolean;
     start_number?: FFInt;
     text_source?: FFString;
-    text_shaping?: FFBoolean;
     ft_load_flags?: FFFlags | "default" | "no_scale" | "no_hinting" | "render" | "no_bitmap" | "vertical_layout" | "force_autohint" | "crop_bitmap" | "pedantic" | "ignore_global_advance_width" | "no_recurse" | "ignore_transform" | "monochrome" | "linear_design" | "no_autohint";
     enable?: FFString;
 extraOptions?: Record<string, unknown>;
@@ -4095,7 +3614,6 @@ extraOptions?: Record<string, unknown>;
       "fix_bounds": options?.fix_bounds,
       "start_number": options?.start_number,
       "text_source": options?.text_source,
-      "text_shaping": options?.text_shaping,
       "ft_load_flags": options?.ft_load_flags,
       "enable": options?.enable,
 },
@@ -4359,50 +3877,6 @@ extraOptions?: Record<string, unknown>;
       "threshold2": options?.threshold2,
       "threshold3": options?.threshold3,
       "enable": options?.enable,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-/**
- * Apply erosion effect to the video. This filter replaces the pixel by the local(3x3) minimum. It accepts the following options:
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.threshold0 - set threshold for 1st plane (from 0 to 65535) (default 65535)
- * @param options.threshold1 - set threshold for 2nd plane (from 0 to 65535) (default 65535)
- * @param options.threshold2 - set threshold for 3rd plane (from 0 to 65535) (default 65535)
- * @param options.threshold3 - Limit the maximum change for each plane. Range is [0, 65535] and default value is 65535. If 0, plane will remain unchanged.
- * @param options.coordinates - Flag which specifies the pixel to refer to. Range is [0, 255] and default value is 255, i.e. all eight pixels are used. Flags to local 3x3 coordinates region centered on x: 1 2 3 4 x 5 6 7 8
- * @see https://ffmpeg.org/ffmpeg-filters.html#erosion_opencl
- */
-  erosion_opencl(
-    options?: {
-    threshold0?: FFFloat;
-    threshold1?: FFFloat;
-    threshold2?: FFFloat;
-    threshold3?: FFFloat;
-    coordinates?: FFInt;
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "erosion_opencl", typingsInput: ["video"], typingsOutput: ["video"] },
-      [this],
-      merge(
-    {
-      "threshold0": options?.threshold0,
-      "threshold1": options?.threshold1,
-      "threshold2": options?.threshold2,
-      "threshold3": options?.threshold3,
-      "coordinates": options?.coordinates,
 },
     options?.extraOptions,
   ),
@@ -4961,36 +4435,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 /**
- * Flip both horizontally and vertically
- *
- * Note: Removed in FFmpeg 8.0.
- *
- */
-  flip_vulkan(
-    options?: {
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "flip_vulkan", typingsInput: ["video"], typingsOutput: ["video"] },
-      [this],
-      merge(
-    {
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-
-
-/**
  * Flood area with values of same pixel components with another values. It accepts the following options:
 
  *
@@ -5304,45 +4748,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 /**
- * Apply a frei0r effect to the input video. To enable the compilation of this filter, you need to install the frei0r header and configure FFmpeg with --enable-frei0r. It accepts the following parameters:
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.filter_name - The name of the frei0r effect to load. If the environment variable FREI0R_PATH is defined, the frei0r effect is searched for in each of the directories specified by the colon-separated list in FREI0R_PATH. Otherwise, the standard frei0r paths are searched, in this order: HOME/.frei0r-1/lib/, /usr/local/lib/frei0r-1/, /usr/lib/frei0r-1/.
- * @param options.filter_params - A '|'-separated list of parameters to pass to the frei0r effect.
- * @see https://ffmpeg.org/ffmpeg-filters.html#frei0r
- */
-  frei0r(
-    options?: {
-    filter_name?: FFString;
-    filter_params?: FFString;
-    enable?: FFString;
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "frei0r", typingsInput: ["video"], typingsOutput: ["video"] },
-      [this],
-      merge(
-    {
-      "filter_name": options?.filter_name,
-      "filter_params": options?.filter_params,
-      "enable": options?.enable,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-
-
-/**
  * Apply fast and simple postprocessing. It is a faster version of spp. It splits (I)DCT into horizontal/vertical passes. Unlike the simple post- processing filter, one of them is performed once per block, not per pixel. This allows for much higher speed. The filter accepts the following options:
 
  *
@@ -5414,49 +4819,6 @@ extraOptions?: Record<string, unknown>;
       "planes": options?.planes,
       "sigmaV": options?.sigmaV,
       "enable": options?.enable,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-/**
- * Gaussian Blur in Vulkan
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.sigma - Set sigma (from 0.01 to 1024) (default 0.5)
- * @param options.sigmaV - Set vertical sigma (from 0 to 1024) (default 0)
- * @param options.planes - Set planes to filter (from 0 to 15) (default 15)
- * @param options.size - Set kernel size (from 1 to 127) (default 19)
- * @param options.sizeV - Set vertical kernel size (from 0 to 127) (default 0)
- */
-  gblur_vulkan(
-    options?: {
-    sigma?: FFFloat;
-    sigmaV?: FFFloat;
-    planes?: FFInt;
-    size?: FFInt;
-    sizeV?: FFInt;
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "gblur_vulkan", typingsInput: ["video"], typingsOutput: ["video"] },
-      [this],
-      merge(
-    {
-      "sigma": options?.sigma,
-      "sigmaV": options?.sigmaV,
-      "planes": options?.planes,
-      "size": options?.size,
-      "sizeV": options?.sizeV,
 },
     options?.extraOptions,
   ),
@@ -5745,34 +5107,6 @@ extraOptions?: Record<string, unknown>;
       merge(
     {
       "enable": options?.enable,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-/**
- * Horizontally flip the input video in Vulkan
- *
- * Note: Removed in FFmpeg 8.0.
- *
- */
-  hflip_vulkan(
-    options?: {
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "hflip_vulkan", typingsInput: ["video"], typingsOutput: ["video"] },
-      [this],
-      merge(
-    {
 },
     options?.extraOptions,
   ),
@@ -6243,38 +5577,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 /**
- * Upload system memory frames to a CUDA device. It accepts the following optional parameters:
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.device - The number of the CUDA device to use
- * @see https://ffmpeg.org/ffmpeg-filters.html#hwupload_cuda
- */
-  hwupload_cuda(
-    options?: {
-    device?: FFInt;
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "hwupload_cuda", typingsInput: ["video"], typingsOutput: ["video"] },
-      [this],
-      merge(
-    {
-      "device": options?.device,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-/**
  * Grow first stream into second stream by connecting components. This makes it possible to build more robust edge masks. This filter accepts the following options:
 
  *
@@ -6609,8 +5911,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 
-
-
 /**
  * Slowly update darker pixels. This filter makes short flashes of light appear longer. This filter accepts the following options:
 
@@ -6713,6 +6013,82 @@ extraOptions?: Record<string, unknown>;
       "i": options?.i,
       "fc": options?.fc,
       "enable": options?.enable,
+},
+    options?.extraOptions,
+  ),
+    );
+return filterNode.video(0) as unknown as VideoStream;
+  }
+
+
+
+
+
+
+/**
+ * Calulate the VMAF (Video Multi-Method Assessment Fusion) score for a reference/distorted pair of input videos. The first input is the distorted video, and the second input is the reference video. The obtained VMAF score is printed through the logging system. It requires Netflix's vmaf library (libvmaf) as a pre-requisite. After installing the library it can be enabled using: ./configure --enable-libvmaf. The filter has following options:
+ *
+ * Note: Removed in FFmpeg 7.0.
+ *
+ * @param options.model_path - Deprecated, use model='path=...'.
+ * @param options.log_path - Set the file path to be used to store log files.
+ * @param options.log_fmt - Set the format of the log file (xml, json, csv, or sub).
+ * @param options.enable_transform - Deprecated, use model='enable_transform=true'.
+ * @param options.psnr - Deprecated, use feature='name=psnr'.
+ * @param options.ssim - Deprecated, use feature='name=ssim'.
+ * @param options.ms_ssim - Deprecated, use feature='name=ms_ssim'.
+ * @param options.pool - Set the pool method to be used for computing vmaf.
+ * @param options.n_threads - Set number of threads to be used when initializing libvmaf. Default value: 0, no threads.
+ * @param options.n_subsample - Set frame subsampling interval to be used.
+ * @param options.enable_conf_interval - Deprecated, use model='enable_conf_interval=true'.
+ * @param options.model - A `|` delimited list of vmaf models. Each model can be configured with a number of parameters. Default value: "version=vmaf_v0.6.1"
+ * @param options.feature - A `|` delimited list of features. Each feature can be configured with a number of parameters.
+ * @see https://ffmpeg.org/ffmpeg-filters.html#libvmaf
+ */
+  libvmaf(
+    _reference: VideoStream,
+
+    options?: {
+    model_path?: FFString;
+    log_path?: FFString;
+    log_fmt?: FFString;
+    enable_transform?: FFBoolean;
+    psnr?: FFBoolean;
+    ssim?: FFBoolean;
+    ms_ssim?: FFBoolean;
+    pool?: FFString;
+    n_threads?: FFInt;
+    n_subsample?: FFInt;
+    enable_conf_interval?: FFBoolean;
+    model?: FFString;
+    feature?: FFString;
+    eofAction?: FFString;
+    shortest?: FFBoolean;
+    repeatlast?: FFBoolean;
+extraOptions?: Record<string, unknown>;
+    },
+  ): VideoStream {
+    const filterNode = filterNodeFactory(
+      { name: "libvmaf", typingsInput: ["video", "video"], typingsOutput: ["video"] },
+      [this, _reference],
+      merge(
+    {
+      "model_path": options?.model_path,
+      "log_path": options?.log_path,
+      "log_fmt": options?.log_fmt,
+      "enable_transform": options?.enable_transform,
+      "psnr": options?.psnr,
+      "ssim": options?.ssim,
+      "ms_ssim": options?.ms_ssim,
+      "pool": options?.pool,
+      "n_threads": options?.n_threads,
+      "n_subsample": options?.n_subsample,
+      "enable_conf_interval": options?.enable_conf_interval,
+      "model": options?.model,
+      "feature": options?.feature,
+      "eof_action": options?.eofAction,
+      "shortest": options?.shortest,
+      "repeatlast": options?.repeatlast,
 },
     options?.extraOptions,
   ),
@@ -7161,8 +6537,6 @@ extraOptions?: Record<string, unknown>;
     );
 return filterNode.video(0) as unknown as VideoStream;
   }
-
-
 
 
 
@@ -7927,50 +7301,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 /**
- * Non-local Means denoise filter through OpenCL, this filter accepts same options as nlmeans.
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.s - denoising strength (from 1 to 30) (default 1)
- * @param options.p - patch size (from 0 to 99) (default 7)
- * @param options.pc - patch size for chroma planes (from 0 to 99) (default 0)
- * @param options.r - research window (from 0 to 99) (default 15)
- * @param options.rc - research window for chroma planes (from 0 to 99) (default 0)
- * @see https://ffmpeg.org/ffmpeg-filters.html#nlmeans_opencl
- */
-  nlmeans_opencl(
-    options?: {
-    s?: FFDouble;
-    p?: FFInt;
-    pc?: FFInt;
-    r?: FFInt;
-    rc?: FFInt;
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "nlmeans_opencl", typingsInput: ["video"], typingsOutput: ["video"] },
-      [this],
-      merge(
-    {
-      "s": options?.s,
-      "p": options?.p,
-      "pc": options?.pc,
-      "r": options?.r,
-      "rc": options?.rc,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-/**
  * Deinterlace video using neural network edge directed interpolation. This filter accepts the following options:
 
  *
@@ -8210,8 +7540,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 
-
-
 /**
  * 2D Video Oscilloscope. Useful to measure spatial impulse, step responses, chroma delays, etc. It accepts the following parameters:
 
@@ -8338,125 +7666,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 /**
- * Overlay one video on top of another. It takes two inputs and has one output. The first input is the "main" video on which the second input is overlaid. This filter requires same memory layout for all the inputs. So, format conversion may be needed. The filter accepts the following options:
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.x - Set the x coordinate of the overlaid video on the main video. Default value is 0.
- * @param options.y - Set the y coordinate of the overlaid video on the main video. Default value is 0.
- * @see https://ffmpeg.org/ffmpeg-filters.html#overlay_opencl
- */
-  overlay_opencl(
-    _overlay: VideoStream,
-
-    options?: {
-    x?: FFInt;
-    y?: FFInt;
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "overlay_opencl", typingsInput: ["video", "video"], typingsOutput: ["video"] },
-      [this, _overlay],
-      merge(
-    {
-      "x": options?.x,
-      "y": options?.y,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-/**
- * Overlay one video on the top of another. It takes two inputs and has one output. The first input is the "main" video on which the second input is overlaid. This filter requires same memory layout for all the inputs. So, format conversion may be needed. The filter accepts the following options:
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.x - Set the x coordinate of the overlaid video on the main video. Default value is 0.
- * @param options.y - Set the y coordinate of the overlaid video on the main video. Default value is 0.
- * @param options.w - Set the width of the overlaid video on the main video. Default value is the width of input overlay video.
- * @param options.h - Set the height of the overlaid video on the main video. Default value is the height of input overlay video.
- * @param options.alpha - Set blocking detection thresholds. Allowed range is 0.0 to 1.0, it requires an input video with alpha channel. Default value is 0.0.
- * @see https://ffmpeg.org/ffmpeg-filters.html#overlay_vaapi
- */
-  overlay_vaapi(
-    _overlay: VideoStream,
-
-    options?: {
-    x?: FFInt;
-    y?: FFInt;
-    w?: FFInt;
-    h?: FFInt;
-    alpha?: FFFloat;
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "overlay_vaapi", typingsInput: ["video", "video"], typingsOutput: ["video"] },
-      [this, _overlay],
-      merge(
-    {
-      "x": options?.x,
-      "y": options?.y,
-      "w": options?.w,
-      "h": options?.h,
-      "alpha": options?.alpha,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-/**
- * Overlay a source on top of another
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.x - Set horizontal offset (from 0 to INT_MAX) (default 0)
- * @param options.y - Set vertical offset (from 0 to INT_MAX) (default 0)
- */
-  overlay_vulkan(
-    _overlay: VideoStream,
-
-    options?: {
-    x?: FFInt;
-    y?: FFInt;
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "overlay_vulkan", typingsInput: ["video", "video"], typingsOutput: ["video"] },
-      [this, _overlay],
-      merge(
-    {
-      "x": options?.x,
-      "y": options?.y,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-/**
  * Apply Overcomplete Wavelet denoiser. The filter accepts the following options:
 
  *
@@ -8531,53 +7740,6 @@ extraOptions?: Record<string, unknown>;
       "y": options?.y,
       "color": options?.color,
       "eval": options?.eval,
-      "aspect": options?.aspect,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-/**
- * Add paddings to the input image, and place the original input at the provided x, y coordinates. It accepts the following options:
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.width - set the pad area width (default "iw")
- * @param options.height - Specify an expression for the size of the output image with the paddings added. If the value for width or height is 0, the corresponding input size is used for the output. The width expression can reference the value set by the height expression, and vice versa. The default value of width and height is 0.
- * @param options.x - set the x offset for the input image position (default "0")
- * @param options.y - The x and y offsets as specified by the x and y expressions, or NAN if not yet specified.
- * @param options.color - Specify the color of the padded area. For the syntax of this option, check the "Color" section in the ffmpeg-utils manual.
- * @param options.aspect - Pad to an aspect instead to a resolution.
- * @see https://ffmpeg.org/ffmpeg-filters.html#pad_opencl
- */
-  pad_opencl(
-    options?: {
-    width?: FFString;
-    height?: FFString;
-    x?: FFString;
-    y?: FFString;
-    color?: FFColor;
-    aspect?: FFRational;
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "pad_opencl", typingsInput: ["video"], typingsOutput: ["video"] },
-      [this],
-      merge(
-    {
-      "width": options?.width,
-      "height": options?.height,
-      "x": options?.x,
-      "y": options?.y,
-      "color": options?.color,
       "aspect": options?.aspect,
 },
     options?.extraOptions,
@@ -9105,86 +8267,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 /**
- * Apply the Prewitt operator (https://en.wikipedia.org/wiki/Prewitt_operator) to input video stream. The filter accepts the following option:
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.planes - Set which planes to filter. Default value is 0xf, by which all planes are processed.
- * @param options.scale - Set value which will be multiplied with filtered result. Range is [0.0, 65535] and default value is 1.0.
- * @param options.delta - Set value which will be added to filtered result. Range is [-65535, 65535] and default value is 0.0.
- * @see https://ffmpeg.org/ffmpeg-filters.html#prewitt_opencl
- */
-  prewitt_opencl(
-    options?: {
-    planes?: FFInt;
-    scale?: FFFloat;
-    delta?: FFFloat;
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "prewitt_opencl", typingsInput: ["video"], typingsOutput: ["video"] },
-      [this],
-      merge(
-    {
-      "planes": options?.planes,
-      "scale": options?.scale,
-      "delta": options?.delta,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-/**
- * ProcAmp (color balance) adjustments for hue, saturation, brightness, contrast
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.b - Output video brightness (from -100 to 100) (default 0)
- * @param options.s - Output video saturation (from 0 to 10) (default 1)
- * @param options.c - Output video contrast (from 0 to 10) (default 1)
- * @param options.h - Output video hue (from -180 to 180) (default 0)
- */
-  procamp_vaapi(
-    options?: {
-    b?: FFFloat;
-    s?: FFFloat;
-    c?: FFFloat;
-    h?: FFFloat;
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "procamp_vaapi", typingsInput: ["video"], typingsOutput: ["video"] },
-      [this],
-      merge(
-    {
-      "b": options?.b,
-      "s": options?.s,
-      "c": options?.c,
-      "h": options?.h,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-
-
-/**
  * Alter frame colors in video with pseudocolors. This filter accepts the following options:
 
  *
@@ -9549,44 +8631,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 /**
- * Remap pixels using 2nd: Xmap and 3rd: Ymap input video stream. Destination pixel at position (X, Y) will be picked from source (x, y) position where x = Xmap(X, Y) and y = Ymap(X, Y). If mapping values are out of range, zero value for pixel will be used for destination pixel. Xmap and Ymap input video streams must be of same dimensions. Output video stream will have Xmap/Ymap video stream dimensions. Xmap and Ymap input video streams are 32bit float pixel format, single channel.
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.interp - Specify interpolation used for remapping of pixels. Allowed values are near and linear. Default value is linear.
- * @param options.fill - Specify the color of the unmapped pixels. For the syntax of this option, check the "Color" section in the ffmpeg-utils manual. Default color is black.
- * @see https://ffmpeg.org/ffmpeg-filters.html#remap_opencl
- */
-  remap_opencl(
-    _xmap: VideoStream,
-    _ymap: VideoStream,
-
-    options?: {
-    interp?: FFInt | "near" | "linear";
-    fill?: FFColor;
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "remap_opencl", typingsInput: ["video", "video", "video"], typingsOutput: ["video"] },
-      [this, _xmap, _ymap],
-      merge(
-    {
-      "interp": options?.interp,
-      "fill": options?.fill,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-/**
  * The removegrain filter is a spatial denoiser for progressive video.
 
  *
@@ -9818,44 +8862,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 /**
- * Apply the Roberts cross operator (https://en.wikipedia.org/wiki/Roberts_cross) to input video stream. The filter accepts the following option:
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.planes - Set which planes to filter. Default value is 0xf, by which all planes are processed.
- * @param options.scale - Set value which will be multiplied with filtered result. Range is [0.0, 65535] and default value is 1.0.
- * @param options.delta - Set value which will be added to filtered result. Range is [-65535, 65535] and default value is 0.0.
- * @see https://ffmpeg.org/ffmpeg-filters.html#roberts_opencl
- */
-  roberts_opencl(
-    options?: {
-    planes?: FFInt;
-    scale?: FFFloat;
-    delta?: FFFloat;
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "roberts_opencl", typingsInput: ["video"], typingsOutput: ["video"] },
-      [this],
-      merge(
-    {
-      "planes": options?.planes,
-      "scale": options?.scale,
-      "delta": options?.delta,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-/**
  * Rotate video by an arbitrary angle expressed in radians. The filter accepts the following options: A description of the optional parameters follows.
 
  *
@@ -9894,8 +8900,6 @@ extraOptions?: Record<string, unknown>;
     );
 return filterNode.video(0) as unknown as VideoStream;
   }
-
-
 
 
 
@@ -10031,8 +9035,7 @@ return filterNode.video(0) as unknown as VideoStream;
 
 /**
  * Scale (resize) the input video, based on a reference video. See the scale filter for available options, scale2ref supports the same but uses the reference video instead of the main input as basis. scale2ref also supports the following additional constants for the w and h options:
- *
- * Note: Removed in FFmpeg 8.0.
+
  *
  * @param options.w - Output video width
  * @param options.h - Set the output video dimension expression. The command accepts the same syntax of the corresponding option. If the specified expression is not valid, it is kept at its current value.
@@ -10104,110 +9107,6 @@ extraOptions?: Record<string, unknown>;
   ),
     );
 return filterNode;
-  }
-
-
-
-
-
-
-/**
- * Scale to/from VAAPI surfaces.
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.w - Output video width (default "iw")
- * @param options.h - Output video height (default "ih")
- * @param options.format - Output video format (software format of hardware frames)
- * @param options.mode - Scaling mode (from 0 to 768) (default hq)
- * @param options.out_color_matrix - Output colour matrix coefficient set
- * @param options.out_range - Output colour range (from 0 to 2) (default 0)
- * @param options.out_color_primaries - Output colour primaries
- * @param options.out_color_transfer - Output colour transfer characteristics
- * @param options.out_chroma_location - Output chroma sample location
- * @param options.force_original_aspect_ratio - decrease or increase w/h if necessary to keep the original AR (from 0 to 2) (default disable)
- * @param options.force_divisible_by - enforce that the output resolution is divisible by a defined integer when force_original_aspect_ratio is used (from 1 to 256) (default 1)
- */
-  scale_vaapi(
-    options?: {
-    w?: FFString;
-    h?: FFString;
-    format?: FFString;
-    mode?: FFInt | "default" | "fast" | "hq" | "nl_anamorphic";
-    out_color_matrix?: FFString;
-    out_range?: FFInt | "full" | "limited" | "jpeg" | "mpeg" | "tv" | "pc";
-    out_color_primaries?: FFString;
-    out_color_transfer?: FFString;
-    out_chroma_location?: FFString;
-    force_original_aspect_ratio?: FFInt | "disable" | "decrease" | "increase";
-    force_divisible_by?: FFInt;
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "scale_vaapi", typingsInput: ["video"], typingsOutput: ["video"] },
-      [this],
-      merge(
-    {
-      "w": options?.w,
-      "h": options?.h,
-      "format": options?.format,
-      "mode": options?.mode,
-      "out_color_matrix": options?.out_color_matrix,
-      "out_range": options?.out_range,
-      "out_color_primaries": options?.out_color_primaries,
-      "out_color_transfer": options?.out_color_transfer,
-      "out_chroma_location": options?.out_chroma_location,
-      "force_original_aspect_ratio": options?.force_original_aspect_ratio,
-      "force_divisible_by": options?.force_divisible_by,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-/**
- * Scale Vulkan frames
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.w - Output video width (default "iw")
- * @param options.h - Output video height (default "ih")
- * @param options.scaler - Scaler function (from 0 to 2) (default bilinear)
- * @param options.format - Output video format (software format of hardware frames)
- * @param options.out_range - Output colour range (from 0 to 2) (default 0) (from 0 to 2) (default 0)
- */
-  scale_vulkan(
-    options?: {
-    w?: FFString;
-    h?: FFString;
-    scaler?: FFInt | "bilinear" | "nearest";
-    format?: FFString;
-    out_range?: FFInt | "full" | "limited" | "jpeg" | "mpeg" | "tv" | "pc";
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "scale_vulkan", typingsInput: ["video"], typingsOutput: ["video"] },
-      [this],
-      merge(
-    {
-      "w": options?.w,
-      "h": options?.h,
-      "scaler": options?.scaler,
-      "format": options?.format,
-      "out_range": options?.out_range,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
   }
 
 
@@ -10759,37 +9658,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 /**
- * VAAPI VPP for sharpness
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.sharpness - sharpness level (from 0 to 64) (default 44)
- */
-  sharpness_vaapi(
-    options?: {
-    sharpness?: FFInt;
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "sharpness_vaapi", typingsInput: ["video"], typingsOutput: ["video"] },
-      [this],
-      merge(
-    {
-      "sharpness": options?.sharpness,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-/**
  * Apply shear transform to input video. This filter supports the following options:
 
  *
@@ -11241,46 +10109,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 /**
- * Apply the Sobel operator (https://en.wikipedia.org/wiki/Sobel_operator) to input video stream. The filter accepts the following option:
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.planes - Set which planes to filter. Default value is 0xf, by which all planes are processed.
- * @param options.scale - Set value which will be multiplied with filtered result. Range is [0.0, 65535] and default value is 1.0.
- * @param options.delta - Set value which will be added to filtered result. Range is [-65535, 65535] and default value is 0.0.
- * @see https://ffmpeg.org/ffmpeg-filters.html#sobel_opencl
- */
-  sobel_opencl(
-    options?: {
-    planes?: FFInt;
-    scale?: FFFloat;
-    delta?: FFFloat;
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "sobel_opencl", typingsInput: ["video"], typingsOutput: ["video"] },
-      [this],
-      merge(
-    {
-      "planes": options?.planes,
-      "scale": options?.scale,
-      "delta": options?.delta,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-
-
-/**
  * Synthesize audio from 2 input video spectrums, first input stream represents magnitude across time and second represents phase across time. The filter will transform from frequency domain as displayed in videos back to time domain as presented in audio output. This filter is primarily created for reversing processed showspectrum filter outputs, but can synthesize sound from other spectrograms too. But in such case results are going to be poor if the phase data is not available, because in such cases phase data need to be recreated, usually it's just recreated from random noise. For best results use gray only output (channel color mode in showspectrum filter) and log scale for magnitude video and lin scale for phase video. To produce phase, for 2nd video, use data option. Inputs videos should generally use fullframe slide mode as that saves resources needed for decoding video. The filter accepts the following options:
 
  *
@@ -11533,8 +10361,7 @@ return filterNode.video(0) as unknown as VideoStream;
 
 /**
  * Draw subtitles on top of input video using the libass library. To enable compilation of this filter you need to configure FFmpeg with --enable-libass. This filter also requires a build with libavcodec and libavformat to convert the passed subtitles file to ASS (Advanced Substation Alpha) subtitles format. The filter accepts the following options:
- *
- * Note: Removed in FFmpeg 8.0.
+
  *
  * @param options.filename - Set the filename of the subtitle file to read. It must be specified.
  * @param options.original_size - Specify the size of the original video, the video for which the ASS file was composed. For the syntax of this option, check the "Video size" section in the ffmpeg-utils manual. Due to a misdesign in ASS aspect ratio arithmetic, this is necessary to correctly scale the fonts if the aspect ratio has been changed.
@@ -12211,106 +11038,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 /**
- * Perform HDR(PQ/HLG) to SDR conversion with tone-mapping. It accepts the following parameters:
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.tonemap - Specify the tone-mapping operator to be used. Same as tonemap option in tonemap.
- * @param options.transfer - Set the output transfer characteristics. Possible values are: @end table Default is bt709.
- * @param options.matrix - Set the output colorspace matrix. Possible value are: @end table Default is same as input.
- * @param options.primaries - Set the output color primaries. Possible values are: @end table Default is same as input.
- * @param options.range - Set the output color range. Possible values are: @end table Default is same as input.
- * @param options.format - Specify the output pixel format. Currently supported formats are: @end table
- * @param options.peak - signal peak override (from 0 to DBL_MAX) (default 0)
- * @param options.param - Tune the tone mapping algorithm. same as param option in tonemap.
- * @param options.desat - Apply desaturation for highlights that exceed this level of brightness. The higher the parameter, the more color information will be preserved. This setting helps prevent unnaturally blown-out colors for super-highlights, by (smoothly) turning into white instead. This makes images feel more natural, at the cost of reducing information about out-of-range colors. The default value is 0.5, and the algorithm here is a little different from the cpu version tonemap currently. A setting of 0.0 disables this option.
- * @param options.threshold - The tonemapping algorithm parameters is fine-tuned per each scene. And a threshold is used to detect whether the scene has changed or not. If the distance between the current frame average brightness and the current running average exceeds a threshold value, we would re-calculate scene average and peak brightness. The default value is 0.2.
- * @see https://ffmpeg.org/ffmpeg-filters.html#tonemap_opencl
- */
-  tonemap_opencl(
-    options?: {
-    tonemap?: FFInt | "none" | "linear" | "gamma" | "clip" | "reinhard" | "hable" | "mobius";
-    transfer?: FFInt | "bt709" | "bt2020";
-    matrix?: FFInt | "bt709" | "bt2020";
-    primaries?: FFInt | "bt709" | "bt2020";
-    range?: FFInt | "tv" | "pc" | "limited" | "full";
-    format?: FFPixFmt;
-    peak?: FFDouble;
-    param?: FFDouble;
-    desat?: FFDouble;
-    threshold?: FFDouble;
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "tonemap_opencl", typingsInput: ["video"], typingsOutput: ["video"] },
-      [this],
-      merge(
-    {
-      "tonemap": options?.tonemap,
-      "transfer": options?.transfer,
-      "matrix": options?.matrix,
-      "primaries": options?.primaries,
-      "range": options?.range,
-      "format": options?.format,
-      "peak": options?.peak,
-      "param": options?.param,
-      "desat": options?.desat,
-      "threshold": options?.threshold,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-/**
- * Perform HDR(High Dynamic Range) to SDR(Standard Dynamic Range) conversion with tone-mapping. It maps the dynamic range of HDR10 content to the SDR content. It currently only accepts HDR10 as input. It accepts the following parameters:
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.format - Specify the output pixel format. Currently supported formats are: @end table Default is nv12.
- * @param options.matrix - Set the output colorspace matrix. Default is same as input.
- * @param options.primaries - Set the output color primaries. Default is same as input.
- * @param options.transfer - Set the output transfer characteristics. Default is bt709.
- * @see https://ffmpeg.org/ffmpeg-filters.html#tonemap_vaapi
- */
-  tonemap_vaapi(
-    options?: {
-    format?: FFString;
-    matrix?: FFString;
-    primaries?: FFString;
-    transfer?: FFString;
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "tonemap_vaapi", typingsInput: ["video"], typingsOutput: ["video"] },
-      [this],
-      merge(
-    {
-      "format": options?.format,
-      "matrix": options?.matrix,
-      "primaries": options?.primaries,
-      "transfer": options?.transfer,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-/**
  * Temporarily pad video frames. The filter accepts the following options:
 
  *
@@ -12376,108 +11103,6 @@ extraOptions?: Record<string, unknown>;
   ): VideoStream {
     const filterNode = filterNodeFactory(
       { name: "transpose", typingsInput: ["video"], typingsOutput: ["video"] },
-      [this],
-      merge(
-    {
-      "dir": options?.dir,
-      "passthrough": options?.passthrough,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-/**
- * Transpose input video
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.dir - set transpose direction (from 0 to 3) (default cclock_flip)
- * @param options.passthrough - do not apply transposition if the input matches the specified geometry (from 0 to INT_MAX) (default none)
- */
-  transpose_opencl(
-    options?: {
-    dir?: FFInt | "cclock_flip" | "clock" | "cclock" | "clock_flip";
-    passthrough?: FFInt | "none" | "portrait" | "landscape";
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "transpose_opencl", typingsInput: ["video"], typingsOutput: ["video"] },
-      [this],
-      merge(
-    {
-      "dir": options?.dir,
-      "passthrough": options?.passthrough,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-/**
- * VAAPI VPP for transpose
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.dir - set transpose direction (from 0 to 6) (default cclock_flip)
- * @param options.passthrough - do not apply transposition if the input matches the specified geometry (from 0 to INT_MAX) (default none)
- */
-  transpose_vaapi(
-    options?: {
-    dir?: FFInt | "cclock_flip" | "clock" | "cclock" | "clock_flip" | "reversal" | "hflip" | "vflip";
-    passthrough?: FFInt | "none" | "portrait" | "landscape";
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "transpose_vaapi", typingsInput: ["video"], typingsOutput: ["video"] },
-      [this],
-      merge(
-    {
-      "dir": options?.dir,
-      "passthrough": options?.passthrough,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-/**
- * Transpose Vulkan Filter
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.dir - set transpose direction (from 0 to 7) (default cclock_flip)
- * @param options.passthrough - do not apply transposition if the input matches the specified geometry (from 0 to INT_MAX) (default none)
- */
-  transpose_vulkan(
-    options?: {
-    dir?: FFInt | "cclock_flip" | "clock" | "cclock" | "clock_flip";
-    passthrough?: FFInt | "none" | "portrait" | "landscape";
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "transpose_vulkan", typingsInput: ["video"], typingsOutput: ["video"] },
       [this],
       merge(
     {
@@ -12595,53 +11220,6 @@ extraOptions?: Record<string, unknown>;
       "alpha_msize_y": options?.alpha_msize_y,
       "alpha_amount": options?.alpha_amount,
       "enable": options?.enable,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-/**
- * Sharpen or blur the input video. It accepts the following parameters:
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.luma_msize_x - Set the luma matrix horizontal size. Range is [1, 23] and default value is 5.
- * @param options.luma_msize_y - Set the luma matrix vertical size. Range is [1, 23] and default value is 5.
- * @param options.luma_amount - Set the luma effect strength. Range is [-10, 10] and default value is 1.0. Negative values will blur the input video, while positive values will sharpen it, a value of zero will disable the effect.
- * @param options.chroma_msize_x - Set the chroma matrix horizontal size. Range is [1, 23] and default value is 5.
- * @param options.chroma_msize_y - Set the chroma matrix vertical size. Range is [1, 23] and default value is 5.
- * @param options.chroma_amount - Set the chroma effect strength. Range is [-10, 10] and default value is 0.0. Negative values will blur the input video, while positive values will sharpen it, a value of zero will disable the effect.
- * @see https://ffmpeg.org/ffmpeg-filters.html#unsharp_opencl
- */
-  unsharp_opencl(
-    options?: {
-    luma_msize_x?: FFFloat;
-    luma_msize_y?: FFFloat;
-    luma_amount?: FFFloat;
-    chroma_msize_x?: FFFloat;
-    chroma_msize_y?: FFFloat;
-    chroma_amount?: FFFloat;
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "unsharp_opencl", typingsInput: ["video"], typingsOutput: ["video"] },
-      [this],
-      merge(
-    {
-      "luma_msize_x": options?.luma_msize_x,
-      "luma_msize_y": options?.luma_msize_y,
-      "luma_amount": options?.luma_amount,
-      "chroma_msize_x": options?.chroma_msize_x,
-      "chroma_msize_y": options?.chroma_msize_y,
-      "chroma_amount": options?.chroma_amount,
 },
     options?.extraOptions,
   ),
@@ -13017,34 +11595,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 /**
- * Vertically flip the input video in Vulkan
- *
- * Note: Removed in FFmpeg 8.0.
- *
- */
-  vflip_vulkan(
-    options?: {
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "vflip_vulkan", typingsInput: ["video"], typingsOutput: ["video"] },
-      [this],
-      merge(
-    {
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
-/**
  * Detect variable frame rate video. This filter tries to detect if the input is variable or constant frame rate. At end it will output number of frames detected as having variable delta pts, and ones with constant delta pts. If there was frames with variable delta, than it will also show min, max and average delta encountered.
 
  *
@@ -13130,8 +11680,7 @@ return filterNode.video(0) as unknown as VideoStream;
 
 /**
  * Analyze video stabilization/deshaking. Perform pass 1 of 2, see vidstabtransform for pass 2. This filter generates a file with relative translation and rotation transform information about subsequent frames, which is then used by the vidstabtransform filter. To enable compilation of this filter you need to configure FFmpeg with --enable-libvidstab. This filter accepts the following options:
- *
- * Note: Removed in FFmpeg 8.0.
+
  *
  * @param options.result - Set the path to the file used to write the transforms information. Default value is transforms.trf.
  * @param options.shakiness - Set how shaky the video is and how quick the camera is. It accepts an integer in the range 1-10, a value of 1 means little shakiness, a value of 10 means strong shakiness. Default value is 5.
@@ -13180,8 +11729,7 @@ return filterNode.video(0) as unknown as VideoStream;
 
 /**
  * Video stabilization/deshaking: pass 2 of 2, see vidstabdetect for pass 1. Read a file with transform information for each frame and apply/compensate them. Together with the vidstabdetect filter this can be used to deshake videos. See also http://public.hronopik.de/vid.stab. It is important to also use the unsharp filter, see below. To enable compilation of this filter you need to configure FFmpeg with --enable-libvidstab.
- *
- * Note: Removed in FFmpeg 8.0.
+
  *
  * @param options.input - Set path to the file used to read the transforms. Default value is transforms.trf.
  * @param options.smoothing - Set the number of frames (value*2 + 1) used for lowpass filtering the camera movements. Default value is 10. For example a number of 10 means that 21 frames are used (10 in the past and 10 in the future) to smoothen the motion in the video. A larger value leads to a smoother video, but limits the acceleration of the camera (pan/tilt movements). 0 is a special case where a static camera is simulated.
@@ -13634,52 +12182,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 
-/**
- * Cross fade two videos with custom transition effect by using OpenCL. It accepts the following options:
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.transition - Set one of possible transition effects. @end table
- * @param options.source - OpenCL program source file for custom transition.
- * @param options.kernel - Set name of kernel to use for custom transition from program source file.
- * @param options.duration - Set duration of video transition.
- * @param options.offset - Set time of start of transition relative to first video.
- * @see https://ffmpeg.org/ffmpeg-filters.html#xfade_opencl
- */
-  xfade_opencl(
-    _xfade: VideoStream,
-
-    options?: {
-    transition?: FFInt | "custom" | "fade" | "wipeleft" | "wiperight" | "wipeup" | "wipedown" | "slideleft" | "slideright" | "slideup" | "slidedown";
-    source?: FFString;
-    kernel?: FFString;
-    duration?: FFDuration;
-    offset?: FFDuration;
-extraOptions?: Record<string, unknown>;
-    },
-  ): VideoStream {
-    const filterNode = filterNodeFactory(
-      { name: "xfade_opencl", typingsInput: ["video", "video"], typingsOutput: ["video"] },
-      [this, _xfade],
-      merge(
-    {
-      "transition": options?.transition,
-      "source": options?.source,
-      "kernel": options?.kernel,
-      "duration": options?.duration,
-      "offset": options?.offset,
-},
-    options?.extraOptions,
-  ),
-    );
-return filterNode.video(0) as unknown as VideoStream;
-  }
-
-
-
-
-
-
 
 
 
@@ -13766,8 +12268,7 @@ return filterNode.video(0) as unknown as VideoStream;
 
 /**
  * Receive commands sent through a libzmq client, and forward them to filters in the filtergraph. zmq and azmq work as a pass-through filters. zmq must be inserted between two video filters, azmq between two audio filters. Both are capable to send messages to any filter type. To enable these filters you need to install the libzmq library and headers and configure FFmpeg with --enable-libzmq. For more information about libzmq see: http://www.zeromq.org/ The zmq and azmq filters work as a libzmq server, which receives messages sent through a network interface defined by the bind_address (or the abbreviation "b") option. Default value of this option is tcp://localhost:5555. You may want to alter this value to your needs, but do not forget to escape any ':' signs (see filtergraph escaping). The received message must be in the form: @example TARGET COMMAND [ARG] @end example TARGET specifies the target of the command, usually the name of the filter class or a specific filter instance name. The default filter instance name uses the pattern Parsed__, but you can override this by using the filter_name@id syntax (see Filtergraph syntax). COMMAND specifies the name of the command for the target filter. ARG is optional and specifies the optional argument list for the given COMMAND. Upon reception, the message is processed and the corresponding command is injected into the filtergraph. Depending on the result, the filter will send a reply to the client, adopting the format: @example ERROR_CODE ERROR_REASON MESSAGE @end example MESSAGE is optional.
- *
- * Note: Removed in FFmpeg 8.0.
+
  *
  * @param options.bind_address - set bind address (default "tcp://*:5555")
  * @see https://ffmpeg.org/ffmpeg-filters.html#zmq
@@ -13844,8 +12345,7 @@ return filterNode.video(0) as unknown as VideoStream;
 
 /**
  * Scale (resize) the input video, using the z.lib library: https://github.com/sekrit-twc/zimg. To enable compilation of this filter, you need to configure FFmpeg with --enable-libzimg. The zscale filter forces the output display aspect ratio to be the same as the input, by changing the output sample aspect ratio. If the input image format is different from the format requested by the next filter, the zscale filter will convert the input to the requested format.
- *
- * Note: Removed in FFmpeg 8.0.
+
  *
  * @param options.w - Output video width
  * @param options.h - Set the output video dimension expression. The command accepts the same syntax of the corresponding option. If the specified expression is not valid, it is kept at its current value.

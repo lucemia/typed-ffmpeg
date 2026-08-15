@@ -1,0 +1,33 @@
+[project]
+name = "ffmpeg-data-v9"
+version = "4.3"
+description = "Cache data files for typed-ffmpeg-v9 (FFmpeg 9.x)"
+authors = [
+    {name = "lucemia", email = "lucemia@gmail.com"}
+]
+requires-python = ">=3.10"
+license = "MIT"
+keywords = ["ffmpeg", "data"]
+classifiers = [
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Topic :: Multimedia :: Video",
+]
+
+dependencies = []
+
+[build-system]
+requires = ["setuptools>=84.0.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["ffmpeg_data_v9*"]
+
+[tool.setuptools.package-data]
+"ffmpeg_data_v9" = ["cache/list/*.json"]

@@ -1,0 +1,44 @@
+{
+  "index": null,
+  "node": {
+    "inputs": [
+      {
+        "index": null,
+        "node": {
+          "filename": "output.mp4",
+          "inputs": [
+            {
+              "index": 0,
+              "node": {
+                "input_typings": [
+                  "video"
+                ],
+                "inputs": [
+                  {
+                    "index": null,
+                    "node": {
+                      "filename": "input.mov",
+                      "inputs": [],
+                      "kwargs": "FrozenDict({})"
+                    },
+                    "optional": false
+                  }
+                ],
+                "kwargs": "FrozenDict({'fontfile': 'resources/fonts/arial.ttf', 'text': \"'=\\\\;\\\\:'\", 'fontcolor': 'white', 'fontsize': '30', 'x': '(W-tw)/2', 'y': 'text_h', 'borderw': '2', 'timecode': '00\\\\:00\\\\:00\\\\:00', 'r': '25/1'})",
+                "name": "drawtext",
+                "output_typings": [
+                  "video"
+                ]
+              },
+              "optional": false
+            }
+          ],
+          "kwargs": "FrozenDict({})"
+        },
+        "optional": false
+      }
+    ],
+    "kwargs": "FrozenDict({})"
+  },
+  "optional": false
+}

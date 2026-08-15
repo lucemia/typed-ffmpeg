@@ -40,7 +40,9 @@ repos:
       - id: ruff
         args: [--fix, --unsafe-fixes]
         files: ^(src/|packages/)
-        exclude: ^packages/v[5678]/src/ffmpeg/
+        # Match any major: an enumerated v[5678] silently starts linting
+        # generated code the moment a new version is added.
+        exclude: ^packages/v[0-9]+/src/ffmpeg/
 
   - repo: local
     hooks:

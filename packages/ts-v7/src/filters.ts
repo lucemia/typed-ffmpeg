@@ -933,6 +933,8 @@ return filterNode.audio(0) as unknown as AudioStream;
 
 
 
+
+
 /**
  * Blend two video frames into each other. The blend filter takes two input streams and outputs one stream, the first input is the "top" layer and second input is "bottom" layer. By default, the output terminates when the longest input terminates. The tblend (time blend) filter takes two consecutive frames from one single stream, and outputs the result obtained by blending the new frame on top of the old frame. A description of the accepted options follows.
 
@@ -1027,7 +1029,7 @@ return filterNode.video(0) as unknown as VideoStream;
 /**
  * Blend two Vulkan frames into each other. The blend filter takes two input streams and outputs one stream, the first input is the "top" layer and second input is "bottom" layer. By default, the output terminates when the longest input terminates. A description of the accepted options follows.
  *
- * Note: Removed in FFmpeg 8.0.
+ * Note: New in FFmpeg 7.0.
  *
  * @param options.c0_mode - set component #0 blend mode (from 0 to 39) (default normal)
  * @param options.c1_mode - set component #1 blend mode (from 0 to 39) (default normal)
@@ -1230,6 +1232,10 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 
+
+
+
+
 /**
  * Apply custom color maps to video stream. This filter needs three input video streams. First stream is video stream that is going to be filtered out. Second and third video stream specify color patches for source color to target color mapping. The filter accepts the following options:
 
@@ -1278,6 +1284,8 @@ extraOptions?: Record<string, unknown>;
   );
 return filterNode.video(0) as unknown as VideoStream;
 }
+
+
 
 
 
@@ -2201,8 +2209,7 @@ return filterNode.video(0) as unknown as VideoStream;
 
 /**
  * Stack input videos horizontally. This is the VA-API variant of the hstack filter, each input stream may have different height, this filter will scale down/up each input stream while keeping the original aspect. It accepts the following options:
- *
- * Note: Removed in FFmpeg 8.0.
+
  *
  * @param options.inputs - See hstack.
  * @param options.shortest - See hstack.
@@ -2455,7 +2462,7 @@ return filterNode.audio(0) as unknown as AudioStream;
 /**
  * Load a LADSPA (Linux Audio Developer's Simple Plugin API) plugin. To enable compilation of this filter you need to configure FFmpeg with --enable-ladspa.
  *
- * Note: Removed in FFmpeg 8.0.
+ * Note: New in FFmpeg 7.0.
  *
  * @param options.file - Specifies the name of LADSPA plugin library to load. If the environment variable LADSPA_PATH is defined, the LADSPA plugin is searched in each one of the directories specified by the colon separated list in LADSPA_PATH, otherwise in the standard LADSPA paths, which are in this order: HOME/.ladspa/lib/, /usr/local/lib/ladspa/, /usr/lib/ladspa/.
  * @param options.plugin - Specifies the plugin within the library. Some libraries contain only one plugin, but others contain many of them. If this is not set filter will list all available plugins within the specified library.
@@ -2650,7 +2657,7 @@ return filterNode.video(0) as unknown as VideoStream;
 /**
  * Load a LV2 (LADSPA Version 2) plugin. To enable compilation of this filter you need to configure FFmpeg with --enable-lv2.
  *
- * Note: Removed in FFmpeg 8.0.
+ * Note: New in FFmpeg 7.0.
  *
  * @param options.plugin - Specifies the plugin URI. You may need to escape ':'.
  * @param options.controls - Set the '|' separated list of controls which are zero or more floating point values that determine the behavior of the loaded plugin (for example delay, threshold or gain). If controls is set to help, all available controls and their valid ranges are printed.
@@ -3355,9 +3362,66 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 /**
+ * Overlay one video on top of another. This is the CUDA variant of the overlay filter. It only accepts CUDA frames. The underlying input pixel formats have to match. It takes two inputs and has one output. The first input is the "main" video on which the second input is overlaid. It accepts the following parameters:
+ *
+ * Note: New in FFmpeg 7.0.
+ *
+ * @param options.x - set the x expression of overlay (default "0")
+ * @param options.y - Set expressions for the x and y coordinates of the overlaid video on the main video. They can contain the following parameters: @end table Default value is "0" for both expressions.
+ * @param options.eof_action - See framesync.
+ * @param options.eval - Set when the expressions for x and y are evaluated. It accepts the following values: @end table Default value is frame.
+ * @param options.shortest - See framesync.
+ * @param options.repeatlast - See framesync.
+ * @see https://ffmpeg.org/ffmpeg-filters.html#overlay_cuda
+ */
+export function overlay_cuda(
+
+
+  _main: VideoStream,
+
+  _overlay: VideoStream,
+
+
+  options?: {
+    x?: FFString;
+    y?: FFString;
+    eof_action?: FFInt | "repeat" | "endall" | "pass";
+    eval?: FFInt | "init" | "frame";
+    shortest?: FFBoolean;
+    repeatlast?: FFBoolean;
+extraOptions?: Record<string, unknown>;
+  },
+): VideoStream {
+
+  const inputStreams: FilterableStream[] = [_main, _overlay];
+
+  const filterNode = filterNodeFactory(
+    { name: "overlay_cuda", typingsInput: ["video", "video"], typingsOutput: ["video"] },
+    inputStreams,
+    merge(
+    {
+      "x": options?.x,
+      "y": options?.y,
+      "eof_action": options?.eof_action,
+      "eval": options?.eval,
+      "shortest": options?.shortest,
+      "repeatlast": options?.repeatlast,
+},
+    options?.extraOptions,
+  ),
+  );
+return filterNode.video(0) as unknown as VideoStream;
+}
+
+
+
+
+
+
+/**
  * Overlay one video on top of another. It takes two inputs and has one output. The first input is the "main" video on which the second input is overlaid. This filter requires same memory layout for all the inputs. So, format conversion may be needed. The filter accepts the following options:
  *
- * Note: Removed in FFmpeg 8.0.
+ * Note: New in FFmpeg 7.0.
  *
  * @param options.x - Set the x coordinate of the overlaid video on the main video. Default value is 0.
  * @param options.y - Set the y coordinate of the overlaid video on the main video. Default value is 0.
@@ -3401,8 +3465,7 @@ return filterNode.video(0) as unknown as VideoStream;
 
 /**
  * Overlay one video on the top of another. It takes two inputs and has one output. The first input is the "main" video on which the second input is overlaid. The filter accepts the following options:
- *
- * Note: Removed in FFmpeg 8.0.
+
  *
  * @param options.x - Overlay x position (default "0")
  * @param options.y - Set expressions for the x and y coordinates of the overlaid video on the main video. Default value is "0" for both expressions.
@@ -3465,7 +3528,7 @@ return filterNode.video(0) as unknown as VideoStream;
 /**
  * Overlay one video on top of another. It takes two inputs and has one output. The first input is the "main" video on which the second input is overlaid. This filter requires all inputs to use the same pixel format. So, format conversion may be needed. The filter accepts the following options:
  *
- * Note: Removed in FFmpeg 8.0.
+ * Note: New in FFmpeg 7.0.
  *
  * @param options.x - Set the x coordinate of the overlaid video on the main video. Default value is 0.
  * @param options.y - Set the y coordinate of the overlaid video on the main video. Default value is 0.
@@ -3650,7 +3713,7 @@ return filterNode.video(0) as unknown as VideoStream;
 /**
  * Filter video using an OpenCL program.
  *
- * Note: Removed in FFmpeg 8.0.
+ * Note: New in FFmpeg 7.0.
  *
  * @param options.source - OpenCL program source file.
  * @param options.kernel - Kernel name in program.
@@ -3818,7 +3881,7 @@ return filterNode.video(0) as unknown as VideoStream;
 /**
  * Remap pixels using 2nd: Xmap and 3rd: Ymap input video stream. Destination pixel at position (X, Y) will be picked from source (x, y) position where x = Xmap(X, Y) and y = Ymap(X, Y). If mapping values are out of range, zero value for pixel will be used for destination pixel. Xmap and Ymap input video streams must be of same dimensions. Output video stream will have Xmap/Ymap video stream dimensions. Xmap and Ymap input video streams are 32bit float pixel format, single channel.
  *
- * Note: Removed in FFmpeg 8.0.
+ * Note: New in FFmpeg 7.0.
  *
  * @param options.interp - Specify interpolation used for remapping of pixels. Allowed values are near and linear. Default value is linear.
  * @param options.fill - Specify the color of the unmapped pixels. For the syntax of this option, check the "Color" section in the ffmpeg-utils manual. Default color is black.
@@ -3890,8 +3953,7 @@ return filterNode.video(0) as unknown as VideoStream;
 
 /**
  * Scale the input video size and/or convert the image format to the given reference.
- *
- * Note: Removed in FFmpeg 8.0.
+
  *
  * @param options.w - Output video width
  * @param options.h - Output video height
@@ -3980,6 +4042,8 @@ extraOptions?: Record<string, unknown>;
   );
 return filterNode;
 }
+
+
 
 
 
@@ -4407,8 +4471,7 @@ return filterNode.video(0) as unknown as VideoStream;
 
 /**
  * Calculate the SSIM between two 360 video streams.
- *
- * Note: Removed in FFmpeg 8.0.
+
  *
  * @param options.stats_file - Set file where to store per-frame difference information
  * @param options.compute_chroma - Specifies if non-luma channels must be computed (from 0 to 1) (default 1)
@@ -4597,6 +4660,8 @@ extraOptions?: Record<string, unknown>;
   );
 return filterNode.video(0) as unknown as VideoStream;
 }
+
+
 
 
 
@@ -4866,8 +4931,7 @@ return filterNode.video(0) as unknown as VideoStream;
 
 /**
  * Stack input videos vertically. This is the VA-API variant of the vstack filter, each input stream may have different width, this filter will scale down/up each input stream while keeping the original aspect. It accepts the following options:
- *
- * Note: Removed in FFmpeg 8.0.
+
  *
  * @param options.inputs - See vstack.
  * @param options.shortest - See vstack.
@@ -5021,7 +5085,7 @@ return filterNode.video(0) as unknown as VideoStream;
 /**
  * Cross fade two videos with custom transition effect by using OpenCL. It accepts the following options:
  *
- * Note: Removed in FFmpeg 8.0.
+ * Note: New in FFmpeg 7.0.
  *
  * @param options.transition - Set one of possible transition effects. @end table
  * @param options.source - OpenCL program source file for custom transition.
@@ -5075,7 +5139,7 @@ return filterNode.video(0) as unknown as VideoStream;
 /**
  * Cross fade one video with another video.
  *
- * Note: Removed in FFmpeg 8.0.
+ * Note: New in FFmpeg 7.0.
  *
  * @param options.transition - set cross fade transition (from 0 to 16) (default fade)
  * @param options.duration - set cross fade duration (default 1)
@@ -5271,8 +5335,7 @@ return filterNode.video(0) as unknown as VideoStream;
 
 /**
  * Stack video inputs into custom layout. This is the VA-API variant of the xstack filter, each input stream may have different size, this filter will scale down/up each input stream to the given output size, or the size of the first input stream. It accepts the following options:
- *
- * Note: Removed in FFmpeg 8.0.
+
  *
  * @param options.inputs - See xstack.
  * @param options.shortest - See xstack.

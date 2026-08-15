@@ -14,7 +14,7 @@ export type FFMpegEncoderOption = Readonly<Record<string, unknown>>;
 
 
 /**
- * Multicolor charset for Commodore 64 (codec a64_multi)
+ * (codec a64_multi)
  */
 export function a64multi(options?: {
 
@@ -31,7 +31,7 @@ export function a64multi(options?: {
 
 
 /**
- * Multicolor charset for Commodore 64, extended with 5th color (colram) (codec a64_multi5)
+ * (codec a64_multi5)
  */
 export function a64multi5(options?: {
 
@@ -48,7 +48,7 @@ export function a64multi5(options?: {
 
 
 /**
- * Alias/Wavefront PIX image
+ *
  */
 export function alias_pix(options?: {
 
@@ -65,7 +65,7 @@ export function alias_pix(options?: {
 
 
 /**
- * AMV Video
+ *
  * @param options.mpv_flags - Flags common for all mpegvideo-based encoders. (default 0)
  * @param options.luma_elim_threshold - single coefficient elimination threshold for luminance (negative values also consider dc coefficient) (from INT_MIN to INT_MAX) (default 0)
  * @param options.chroma_elim_threshold - single coefficient elimination threshold for chrominance (negative values also consider dc coefficient) (from INT_MIN to INT_MAX) (default 0)
@@ -151,7 +151,7 @@ export function amv(options?: {
 
 
 /**
- * APNG (Animated Portable Network Graphics) image
+ *
  * @param options.dpi - Set image resolution (in dots per inch) (from 0 to 65536) (default 0)
  * @param options.dpm - Set image resolution (in dots per meter) (from 0 to 65536) (default 0)
  * @param options.pred - Prediction method (from 0 to 5) (default none)
@@ -177,7 +177,7 @@ export function apng(options?: {
 
 
 /**
- * ASUS V1
+ *
  */
 export function asv1(options?: {
 
@@ -194,7 +194,7 @@ export function asv1(options?: {
 
 
 /**
- * ASUS V2
+ *
  */
 export function asv2(options?: {
 
@@ -211,129 +211,42 @@ export function asv2(options?: {
 
 
 /**
- * NVIDIA NVENC av1 encoder (codec av1)
- * @param options.preset - Set the encoding preset (from 0 to 18) (default p4)
- * @param options.tune - Set the encoding tuning info (from 1 to 4) (default hq)
- * @param options.level - Set the encoding level restriction (from 0 to 24) (default auto)
- * @param options.tier - Set the encoding tier (from 0 to 1) (default 0)
- * @param options.rc - Override the preset rate-control (from -1 to INT_MAX) (default -1)
- * @param options.multipass - Set the multipass encoding (from 0 to 2) (default disabled)
- * @param options.highbitdepth - Enable 10 bit encode for 8 bit input (default false)
- * @param options.tile_rows - Number of tile rows to encode with (from -1 to 64) (default -1)
- * @param options.tile_columns - Number of tile columns to encode with (from -1 to 64) (default -1)
- * @param options.surfaces - Number of concurrent surfaces (from 0 to 64) (default 0)
- * @param options.gpu - Selects which NVENC capable GPU to use. First GPU is 0, second is 1, and so on. (from -2 to INT_MAX) (default any)
- * @param options.rgb_mode - Configure how nvenc handles packed RGB input. (from 0 to INT_MAX) (default yuv420)
- * @param options.delay - Delay frame output by the given amount of frames (from 0 to INT_MAX) (default INT_MAX)
- * @param options.rc_lookahead - Number of frames to look ahead for rate-control (from 0 to INT_MAX) (default 0)
- * @param options.cq - Set target quality level (0 to 51, 0 means automatic) for constant quality mode in VBR rate control (from 0 to 51) (default 0)
- * @param options.init_qpP - Initial QP value for P frame (from -1 to 255) (default -1)
- * @param options.init_qpB - Initial QP value for B frame (from -1 to 255) (default -1)
- * @param options.init_qpI - Initial QP value for I frame (from -1 to 255) (default -1)
- * @param options.qp - Constant quantization parameter rate control method (from -1 to 255) (default -1)
- * @param options.qp_cb_offset - Quantization parameter offset for cb channel (from -12 to 12) (default 0)
- * @param options.qp_cr_offset - Quantization parameter offset for cr channel (from -12 to 12) (default 0)
- * @param options.no_scenecut - When lookahead is enabled, set this to 1 to disable adaptive I-frame insertion at scene cuts (default false)
- * @param options.forced_idr - If forcing keyframes, force them as IDR frames. (default false)
- * @param options.b_adapt - When lookahead is enabled, set this to 0 to disable adaptive B-frame decision (default true)
- * @param options.spatial_aq - set to 1 to enable Spatial AQ (default false)
- * @param options.temporal_aq - set to 1 to enable Temporal AQ (default false)
- * @param options.zerolatency - Set 1 to indicate zero latency operation (no reordering delay) (default false)
- * @param options.nonref_p - Set this to 1 to enable automatic insertion of non-reference P-frames (default false)
- * @param options.strict_gop - Set 1 to minimize GOP-to-GOP rate fluctuations (default false)
- * @param options.aq_strength - When Spatial AQ is enabled, this field is used to specify AQ strength. AQ strength scale is from 1 (low) - 15 (aggressive) (from 1 to 15) (default 8)
- * @param options.weighted_pred - Enable weighted prediction (default false)
- * @param options.b_ref_mode - Use B frames as references (from -1 to 2) (default -1)
- * @param options.dpb_size - Specifies the DPB size used for encoding (0 means automatic) (from 0 to INT_MAX) (default 0)
- * @param options.ldkfs - Low delay key frame scale; Specifies the Scene Change frame size increase allowed in case of single frame VBV and CBR (from 0 to 255) (default 0)
- * @param options.intra_refresh - Use Periodic Intra Refresh instead of IDR frames (default false)
- * @param options.timing_info - Include timing info in sequence/frame headers (default false)
- * @param options.extra_sei - Pass on extra SEI data (e.g. a53 cc) to be included in the bitstream (default true)
- * @param options.a53cc - Use A53 Closed Captions (if available) (default true)
- * @param options.s12m_tc - Use timecode (if available) (default true)
+ * (codec av1)
+ * @param options.hielevel - Hierarchical prediction levels setting (Deprecated, use svtav1-params) (from -1 to 4) (default -1)
+ * @param options.la_depth - Look ahead distance [0, 120] (Deprecated, use svtav1-params) (from -1 to 120) (default -1)
+ * @param options.tier - Set operating point tier (Deprecated, use svtav1-params) (from -1 to 1) (default -1)
+ * @param options.preset - Encoding preset (from -2 to 13) (default -2)
+ * @param options.crf - Constant Rate Factor value (from 0 to 63) (default 0)
+ * @param options.qp - Initial Quantizer level value (from 0 to 63) (default 0)
+ * @param options.sc_detection - Scene change detection (Deprecated, use svtav1-params) (default auto)
+ * @param options.tile_columns - Log2 of number of tile columns to use (Deprecated, use svtav1-params) (from -1 to 4) (default -1)
+ * @param options.tile_rows - Log2 of number of tile rows to use (Deprecated, use svtav1-params) (from -1 to 6) (default -1)
+ * @param options.svtav1_params - Set the SVT-AV1 configuration using a :-separated list of key=value parameters
  */
-export function av1_nvenc(options?: {
-  preset?: number | null | "default" | "slow" | "medium" | "fast" | "p1" | "p2" | "p3" | "p4" | "p5" | "p6" | "p7";
-  tune?: number | null | "hq" | "ll" | "ull" | "lossless";
-  level?: number | null | "auto" | "2" | "2.0" | "2.1" | "2.2" | "2.3" | "3" | "3.0" | "3.1" | "3.2" | "3.3" | "4" | "4.0" | "4.1" | "4.2" | "4.3" | "5" | "5.0" | "5.1" | "5.2" | "5.3" | "6" | "6.0" | "6.1" | "6.2" | "6.3" | "7" | "7.0" | "7.1" | "7.2" | "7.3";
-  tier?: number | null | "0" | "1";
-  rc?: number | null | "constqp" | "vbr" | "cbr";
-  multipass?: number | null | "disabled" | "qres" | "fullres";
-  highbitdepth?: boolean | null;
-  tile_rows?: number | null;
-  tile_columns?: number | null;
-  surfaces?: number | null;
-  gpu?: number | null | "any" | "list";
-  rgb_mode?: number | null | "yuv420" | "yuv444" | "disabled";
-  delay?: number | null;
-  rc_lookahead?: number | null;
-  cq?: number | null;
-  init_qpP?: number | null;
-  init_qpB?: number | null;
-  init_qpI?: number | null;
+export function libsvtav1(options?: {
+  hielevel?: number | null | "3level" | "4level";
+  la_depth?: number | null;
+  tier?: number | null | "main" | "high";
+  preset?: number | null;
+  crf?: number | null;
   qp?: number | null;
-  qp_cb_offset?: number | null;
-  qp_cr_offset?: number | null;
-  no_scenecut?: boolean | null;
-  forced_idr?: boolean | null;
-  b_adapt?: boolean | null;
-  spatial_aq?: boolean | null;
-  temporal_aq?: boolean | null;
-  zerolatency?: boolean | null;
-  nonref_p?: boolean | null;
-  strict_gop?: boolean | null;
-  aq_strength?: number | null;
-  weighted_pred?: boolean | null;
-  b_ref_mode?: number | null | "disabled" | "each" | "middle";
-  dpb_size?: number | null;
-  ldkfs?: number | null;
-  intra_refresh?: boolean | null;
-  timing_info?: boolean | null;
-  extra_sei?: boolean | null;
-  a53cc?: boolean | null;
-  s12m_tc?: boolean | null;
+  sc_detection?: boolean | null;
+  tile_columns?: number | null;
+  tile_rows?: number | null;
+  svtav1_params?: string | null;
 
 }): FFMpegEncoderOption {
   return merge({
-    "preset": options?.preset,
-    "tune": options?.tune,
-    "level": options?.level,
+    "hielevel": options?.hielevel,
+    "la_depth": options?.la_depth,
     "tier": options?.tier,
-    "rc": options?.rc,
-    "multipass": options?.multipass,
-    "highbitdepth": options?.highbitdepth,
-    "tile-rows": options?.tile_rows,
-    "tile-columns": options?.tile_columns,
-    "surfaces": options?.surfaces,
-    "gpu": options?.gpu,
-    "rgb_mode": options?.rgb_mode,
-    "delay": options?.delay,
-    "rc-lookahead": options?.rc_lookahead,
-    "cq": options?.cq,
-    "init_qpP": options?.init_qpP,
-    "init_qpB": options?.init_qpB,
-    "init_qpI": options?.init_qpI,
+    "preset": options?.preset,
+    "crf": options?.crf,
     "qp": options?.qp,
-    "qp_cb_offset": options?.qp_cb_offset,
-    "qp_cr_offset": options?.qp_cr_offset,
-    "no-scenecut": options?.no_scenecut,
-    "forced-idr": options?.forced_idr,
-    "b_adapt": options?.b_adapt,
-    "spatial-aq": options?.spatial_aq,
-    "temporal-aq": options?.temporal_aq,
-    "zerolatency": options?.zerolatency,
-    "nonref_p": options?.nonref_p,
-    "strict_gop": options?.strict_gop,
-    "aq-strength": options?.aq_strength,
-    "weighted_pred": options?.weighted_pred,
-    "b_ref_mode": options?.b_ref_mode,
-    "dpb_size": options?.dpb_size,
-    "ldkfs": options?.ldkfs,
-    "intra-refresh": options?.intra_refresh,
-    "timing-info": options?.timing_info,
-    "extra_sei": options?.extra_sei,
-    "a53cc": options?.a53cc,
-    "s12m_tc": options?.s12m_tc,
+    "sc_detection": options?.sc_detection,
+    "tile_columns": options?.tile_columns,
+    "tile_rows": options?.tile_rows,
+    "svtav1-params": options?.svtav1_params,
 
   });
 }
@@ -345,7 +258,7 @@ export function av1_nvenc(options?: {
 
 
 /**
- * AV1 (VAAPI) (codec av1)
+ * (codec av1)
  * @param options.low_power - Use low-power encoding mode (only available on some platforms; may not support all encoding features) (default false)
  * @param options.idr_interval - Distance (in I-frames) between IDR frames (from 0 to INT_MAX) (default 0)
  * @param options.b_depth - Maximum B-frame reference depth (from 1 to INT_MAX) (default 1)
@@ -395,7 +308,7 @@ export function av1_vaapi(options?: {
 
 
 /**
- * Avid 1:1 10-bit RGB Packer
+ *
  */
 export function avrp(options?: {
 
@@ -412,7 +325,7 @@ export function avrp(options?: {
 
 
 /**
- * Avid Meridien Uncompressed
+ *
  */
 export function avui(options?: {
 
@@ -429,7 +342,7 @@ export function avui(options?: {
 
 
 /**
- * Uncompressed packed MS 4:4:4:4
+ *
  */
 export function ayuv(options?: {
 
@@ -446,7 +359,7 @@ export function ayuv(options?: {
 
 
 /**
- * Bitpacked
+ *
  */
 export function bitpacked(options?: {
 
@@ -463,7 +376,7 @@ export function bitpacked(options?: {
 
 
 /**
- * BMP (Windows and OS/2 bitmap)
+ *
  */
 export function bmp(options?: {
 
@@ -480,7 +393,7 @@ export function bmp(options?: {
 
 
 /**
- * GoPro CineForm HD
+ *
  * @param options.quality - set quality (from 0 to 12) (default film3+)
  */
 export function cfhd(options?: {
@@ -500,7 +413,7 @@ export function cfhd(options?: {
 
 
 /**
- * Cinepak
+ *
  * @param options.max_extra_cb_iterations - Max extra codebook recalculation passes, more is better and slower (from 0 to INT_MAX) (default 2)
  * @param options.skip_empty_cb - Avoid wasting bytes, ignore vintage MacOS decoder (default false)
  * @param options.max_strips - Limit strips/frame, vintage compatible is 1..3, otherwise the more the better (from 1 to 32) (default 3)
@@ -532,7 +445,7 @@ export function cinepak(options?: {
 
 
 /**
- * Cirrus Logic AccuPak
+ *
  * @param options.dither_type - Dither type (from 0 to 2) (default 1)
  */
 export function cljr(options?: {
@@ -552,7 +465,7 @@ export function cljr(options?: {
 
 
 /**
- * SMPTE VC-2 (codec dirac)
+ * (codec dirac)
  * @param options.tolerance - Max undershoot in percent (from 0 to 45) (default 5)
  * @param options.slice_width - Slice width (from 32 to 1024) (default 32)
  * @param options.slice_height - Slice height (from 8 to 1024) (default 16)
@@ -587,7 +500,7 @@ export function vc2(options?: {
 
 
 /**
- * VC3/DNxHD
+ *
  * @param options.nitris_compat - encode with Avid Nitris compatibility (default false)
  * @param options.ibias - intra quant bias (from INT_MIN to INT_MAX) (default 0)
  * @param options.profile - (from 0 to 5) (default dnxhd)
@@ -613,7 +526,7 @@ export function dnxhd(options?: {
 
 
 /**
- * DPX (Digital Picture Exchange) image
+ *
  */
 export function dpx(options?: {
 
@@ -630,7 +543,7 @@ export function dpx(options?: {
 
 
 /**
- * DV (Digital Video)
+ *
  * @param options.quant_deadzone - Quantizer dead zone (from 0 to 1024) (default 7)
  */
 export function dvvideo(options?: {
@@ -650,7 +563,7 @@ export function dvvideo(options?: {
 
 
 /**
- * OpenEXR image
+ *
  * @param options.compression - set compression type (from 0 to 3) (default none)
  * @param options.format - set pixel type (from 1 to 2) (default float)
  * @param options.gamma - set gamma (from 0.001 to FLT_MAX) (default 1)
@@ -676,7 +589,7 @@ export function exr(options?: {
 
 
 /**
- * FFmpeg video codec #1
+ *
  * @param options.slicecrc - Protect slices with CRCs (default auto)
  * @param options.coder - Coder type (from -2 to 2) (default rice)
  * @param options.context - Context model (from 0 to 1) (default 0)
@@ -702,7 +615,7 @@ export function ffv1(options?: {
 
 
 /**
- * Huffyuv FFmpeg variant
+ *
  * @param options.non_deterministic - Allow multithreading for e.g. context=1 at the expense of determinism (default false)
  * @param options.pred - Prediction method (from 0 to 2) (default left)
  * @param options.context - Set per-frame huffman tables (from 0 to 1) (default 0)
@@ -728,7 +641,7 @@ export function ffvhuff(options?: {
 
 
 /**
- * Flexible Image Transport System
+ *
  */
 export function fits(options?: {
 
@@ -745,7 +658,7 @@ export function fits(options?: {
 
 
 /**
- * Flash Screen Video
+ *
  */
 export function flashsv(options?: {
 
@@ -762,7 +675,7 @@ export function flashsv(options?: {
 
 
 /**
- * Flash Screen Video Version 2
+ *
  */
 export function flashsv2(options?: {
 
@@ -779,7 +692,7 @@ export function flashsv2(options?: {
 
 
 /**
- * FLV / Sorenson Spark / Sorenson H.263 (Flash Video) (codec flv1)
+ * (codec flv1)
  * @param options.mpv_flags - Flags common for all mpegvideo-based encoders. (default 0)
  * @param options.luma_elim_threshold - single coefficient elimination threshold for luminance (negative values also consider dc coefficient) (from INT_MIN to INT_MAX) (default 0)
  * @param options.chroma_elim_threshold - single coefficient elimination threshold for chrominance (negative values also consider dc coefficient) (from INT_MIN to INT_MAX) (default 0)
@@ -871,7 +784,7 @@ export function flv(options?: {
 
 
 /**
- * GIF (Graphics Interchange Format)
+ *
  * @param options.gifflags - set GIF flags (default offsetting+transdiff)
  * @param options.gifimage - enable encoding only images per frame (default false)
  * @param options.global_palette - write a palette to the global gif header where feasible (default true)
@@ -897,7 +810,7 @@ export function gif(options?: {
 
 
 /**
- * H.261
+ *
  * @param options.mpv_flags - Flags common for all mpegvideo-based encoders. (default 0)
  * @param options.luma_elim_threshold - single coefficient elimination threshold for luminance (negative values also consider dc coefficient) (from INT_MIN to INT_MAX) (default 0)
  * @param options.chroma_elim_threshold - single coefficient elimination threshold for chrominance (negative values also consider dc coefficient) (from INT_MIN to INT_MAX) (default 0)
@@ -989,7 +902,7 @@ export function h261(options?: {
 
 
 /**
- * H.263 / H.263-1996
+ *
  * @param options.obmc - use overlapped block motion compensation. (default false)
  * @param options.mb_info - emit macroblock info for RFC 2190 packetization, the parameter value is the maximum payload size (from 0 to INT_MAX) (default 0)
  * @param options.mpv_flags - Flags common for all mpegvideo-based encoders. (default 0)
@@ -1087,7 +1000,7 @@ export function h263(options?: {
 
 
 /**
- * V4L2 mem2mem H.263 encoder wrapper (codec h263)
+ * (codec h263)
  * @param options.num_output_buffers - Number of buffers in the output context (from 2 to INT_MAX) (default 16)
  * @param options.num_capture_buffers - Number of buffers in the capture context (from 4 to INT_MAX) (default 4)
  */
@@ -1110,7 +1023,7 @@ export function h263_v4l2m2m(options?: {
 
 
 /**
- * H.263+ / H.263-1998 / H.263 version 2
+ *
  * @param options.umv - Use unlimited motion vectors. (default false)
  * @param options.aiv - Use alternative inter VLC. (default false)
  * @param options.obmc - use overlapped block motion compensation. (default false)
@@ -1214,7 +1127,7 @@ export function h263p(options?: {
 
 
 /**
- * libx264 H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10 (codec h264)
+ * (codec h264)
  * @param options.preset - Set the encoding preset (cf. x264 --fullhelp) (default "medium")
  * @param options.tune - Tune the encoding params (cf. x264 --fullhelp)
  * @param options.profile - Set profile restrictions (cf. x264 --fullhelp)
@@ -1372,7 +1285,7 @@ export function libx264(options?: {
 
 
 /**
- * libx264 H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10 RGB (codec h264)
+ * (codec h264)
  * @param options.preset - Set the encoding preset (cf. x264 --fullhelp) (default "medium")
  * @param options.tune - Tune the encoding params (cf. x264 --fullhelp)
  * @param options.profile - Set profile restrictions (cf. x264 --fullhelp)
@@ -1530,153 +1443,7 @@ export function libx264rgb(options?: {
 
 
 /**
- * NVIDIA NVENC H.264 encoder (codec h264)
- * @param options.preset - Set the encoding preset (from 0 to 18) (default p4)
- * @param options.tune - Set the encoding tuning info (from 1 to 4) (default hq)
- * @param options.profile - Set the encoding profile (from 0 to 3) (default main)
- * @param options.level - Set the encoding level restriction (from 0 to 62) (default auto)
- * @param options.rc - Override the preset rate-control (from -1 to INT_MAX) (default -1)
- * @param options.rc_lookahead - Number of frames to look ahead for rate-control (from 0 to INT_MAX) (default 0)
- * @param options.surfaces - Number of concurrent surfaces (from 0 to 64) (default 0)
- * @param options.cbr - Use cbr encoding mode (default false)
- * @param options._2pass - Use 2pass encoding mode (default auto)
- * @param options.gpu - Selects which NVENC capable GPU to use. First GPU is 0, second is 1, and so on. (from -2 to INT_MAX) (default any)
- * @param options.rgb_mode - Configure how nvenc handles packed RGB input. (from 0 to INT_MAX) (default yuv420)
- * @param options.delay - Delay frame output by the given amount of frames (from 0 to INT_MAX) (default INT_MAX)
- * @param options.no_scenecut - When lookahead is enabled, set this to 1 to disable adaptive I-frame insertion at scene cuts (default false)
- * @param options.forced_idr - If forcing keyframes, force them as IDR frames. (default false)
- * @param options.b_adapt - When lookahead is enabled, set this to 0 to disable adaptive B-frame decision (default true)
- * @param options.spatial_aq - set to 1 to enable Spatial AQ (default false)
- * @param options.temporal_aq - set to 1 to enable Temporal AQ (default false)
- * @param options.zerolatency - Set 1 to indicate zero latency operation (no reordering delay) (default false)
- * @param options.nonref_p - Set this to 1 to enable automatic insertion of non-reference P-frames (default false)
- * @param options.strict_gop - Set 1 to minimize GOP-to-GOP rate fluctuations (default false)
- * @param options.aq_strength - When Spatial AQ is enabled, this field is used to specify AQ strength. AQ strength scale is from 1 (low) - 15 (aggressive) (from 1 to 15) (default 8)
- * @param options.cq - Set target quality level (0 to 51, 0 means automatic) for constant quality mode in VBR rate control (from 0 to 51) (default 0)
- * @param options.aud - Use access unit delimiters (default false)
- * @param options.bluray_compat - Bluray compatibility workarounds (default false)
- * @param options.init_qpP - Initial QP value for P frame (from -1 to 51) (default -1)
- * @param options.init_qpB - Initial QP value for B frame (from -1 to 51) (default -1)
- * @param options.init_qpI - Initial QP value for I frame (from -1 to 51) (default -1)
- * @param options.qp - Constant quantization parameter rate control method (from -1 to 51) (default -1)
- * @param options.qp_cb_offset - Quantization parameter offset for cb channel (from -12 to 12) (default 0)
- * @param options.qp_cr_offset - Quantization parameter offset for cr channel (from -12 to 12) (default 0)
- * @param options.weighted_pred - Set 1 to enable weighted prediction (from 0 to 1) (default 0)
- * @param options.coder - Coder type (from -1 to 2) (default default)
- * @param options.b_ref_mode - Use B frames as references (from -1 to 2) (default -1)
- * @param options.a53cc - Use A53 Closed Captions (if available) (default true)
- * @param options.dpb_size - Specifies the DPB size used for encoding (0 means automatic) (from 0 to INT_MAX) (default 0)
- * @param options.multipass - Set the multipass encoding (from 0 to 2) (default disabled)
- * @param options.ldkfs - Low delay key frame scale; Specifies the Scene Change frame size increase allowed in case of single frame VBV and CBR (from 0 to 255) (default 0)
- * @param options.extra_sei - Pass on extra SEI data (e.g. a53 cc) to be included in the bitstream (default true)
- * @param options.udu_sei - Pass on user data unregistered SEI if available (default false)
- * @param options.intra_refresh - Use Periodic Intra Refresh instead of IDR frames (default false)
- * @param options.single_slice_intra_refresh - Use single slice intra refresh (default false)
- * @param options.max_slice_size - Maximum encoded slice size in bytes (from 0 to INT_MAX) (default 0)
- * @param options.constrained_encoding - Enable constrainedFrame encoding where each slice in the constrained picture is independent of other slices (default false)
- */
-export function h264_nvenc(options?: {
-  preset?: number | null | "default" | "slow" | "medium" | "fast" | "hp" | "hq" | "bd" | "ll" | "llhq" | "llhp" | "lossless" | "losslesshp" | "p1" | "p2" | "p3" | "p4" | "p5" | "p6" | "p7";
-  tune?: number | null | "hq" | "ll" | "ull" | "lossless";
-  profile?: number | null | "baseline" | "main" | "high" | "high444p";
-  level?: number | null | "auto" | "1" | "1.0" | "1b" | "1.0b" | "1.1" | "1.2" | "1.3" | "2" | "2.0" | "2.1" | "2.2" | "3" | "3.0" | "3.1" | "3.2" | "4" | "4.0" | "4.1" | "4.2" | "5" | "5.0" | "5.1" | "5.2" | "6.0" | "6.1" | "6.2";
-  rc?: number | null | "constqp" | "vbr" | "cbr" | "vbr_minqp" | "ll_2pass_quality" | "ll_2pass_size" | "vbr_2pass" | "cbr_ld_hq" | "cbr_hq" | "vbr_hq";
-  rc_lookahead?: number | null;
-  surfaces?: number | null;
-  cbr?: boolean | null;
-  _2pass?: boolean | null;
-  gpu?: number | null | "any" | "list";
-  rgb_mode?: number | null | "yuv420" | "yuv444" | "disabled";
-  delay?: number | null;
-  no_scenecut?: boolean | null;
-  forced_idr?: boolean | null;
-  b_adapt?: boolean | null;
-  spatial_aq?: boolean | null;
-  temporal_aq?: boolean | null;
-  zerolatency?: boolean | null;
-  nonref_p?: boolean | null;
-  strict_gop?: boolean | null;
-  aq_strength?: number | null;
-  cq?: number | null;
-  aud?: boolean | null;
-  bluray_compat?: boolean | null;
-  init_qpP?: number | null;
-  init_qpB?: number | null;
-  init_qpI?: number | null;
-  qp?: number | null;
-  qp_cb_offset?: number | null;
-  qp_cr_offset?: number | null;
-  weighted_pred?: number | null;
-  coder?: number | null | "default" | "auto" | "cabac" | "cavlc" | "ac" | "vlc";
-  b_ref_mode?: number | null | "disabled" | "each" | "middle";
-  a53cc?: boolean | null;
-  dpb_size?: number | null;
-  multipass?: number | null | "disabled" | "qres" | "fullres";
-  ldkfs?: number | null;
-  extra_sei?: boolean | null;
-  udu_sei?: boolean | null;
-  intra_refresh?: boolean | null;
-  single_slice_intra_refresh?: boolean | null;
-  max_slice_size?: number | null;
-  constrained_encoding?: boolean | null;
-
-}): FFMpegEncoderOption {
-  return merge({
-    "preset": options?.preset,
-    "tune": options?.tune,
-    "profile": options?.profile,
-    "level": options?.level,
-    "rc": options?.rc,
-    "rc-lookahead": options?.rc_lookahead,
-    "surfaces": options?.surfaces,
-    "cbr": options?.cbr,
-    "2pass": options?._2pass,
-    "gpu": options?.gpu,
-    "rgb_mode": options?.rgb_mode,
-    "delay": options?.delay,
-    "no-scenecut": options?.no_scenecut,
-    "forced-idr": options?.forced_idr,
-    "b_adapt": options?.b_adapt,
-    "spatial-aq": options?.spatial_aq,
-    "temporal-aq": options?.temporal_aq,
-    "zerolatency": options?.zerolatency,
-    "nonref_p": options?.nonref_p,
-    "strict_gop": options?.strict_gop,
-    "aq-strength": options?.aq_strength,
-    "cq": options?.cq,
-    "aud": options?.aud,
-    "bluray-compat": options?.bluray_compat,
-    "init_qpP": options?.init_qpP,
-    "init_qpB": options?.init_qpB,
-    "init_qpI": options?.init_qpI,
-    "qp": options?.qp,
-    "qp_cb_offset": options?.qp_cb_offset,
-    "qp_cr_offset": options?.qp_cr_offset,
-    "weighted_pred": options?.weighted_pred,
-    "coder": options?.coder,
-    "b_ref_mode": options?.b_ref_mode,
-    "a53cc": options?.a53cc,
-    "dpb_size": options?.dpb_size,
-    "multipass": options?.multipass,
-    "ldkfs": options?.ldkfs,
-    "extra_sei": options?.extra_sei,
-    "udu_sei": options?.udu_sei,
-    "intra-refresh": options?.intra_refresh,
-    "single-slice-intra-refresh": options?.single_slice_intra_refresh,
-    "max_slice_size": options?.max_slice_size,
-    "constrained-encoding": options?.constrained_encoding,
-
-  });
-}
-
-
-
-
-
-
-
-/**
- * V4L2 mem2mem H.264 encoder wrapper (codec h264)
+ * (codec h264)
  * @param options.num_output_buffers - Number of buffers in the output context (from 2 to INT_MAX) (default 16)
  * @param options.num_capture_buffers - Number of buffers in the capture context (from 4 to INT_MAX) (default 4)
  */
@@ -1699,7 +1466,7 @@ export function h264_v4l2m2m(options?: {
 
 
 /**
- * H.264/AVC (VAAPI) (codec h264)
+ * (codec h264)
  * @param options.low_power - Use low-power encoding mode (only available on some platforms; may not support all encoding features) (default false)
  * @param options.idr_interval - Distance (in I-frames) between IDR frames (from 0 to INT_MAX) (default 0)
  * @param options.b_depth - Maximum B-frame reference depth (from 1 to INT_MAX) (default 1)
@@ -1755,7 +1522,7 @@ export function h264_vaapi(options?: {
 
 
 /**
- * HDR (Radiance RGBE format) image
+ *
  */
 export function hdr(options?: {
 
@@ -1772,7 +1539,7 @@ export function hdr(options?: {
 
 
 /**
- * libx265 H.265 / HEVC (codec hevc)
+ * (codec hevc)
  * @param options.crf - set the x265 crf (from -1 to FLT_MAX) (default -1)
  * @param options.qp - set the x265 qp (from -1 to INT_MAX) (default -1)
  * @param options.forced_idr - if forcing keyframes, force them as IDR frames (default false)
@@ -1816,153 +1583,7 @@ export function libx265(options?: {
 
 
 /**
- * NVIDIA NVENC hevc encoder (codec hevc)
- * @param options.preset - Set the encoding preset (from 0 to 18) (default p4)
- * @param options.tune - Set the encoding tuning info (from 1 to 4) (default hq)
- * @param options.profile - Set the encoding profile (from 0 to 4) (default main)
- * @param options.level - Set the encoding level restriction (from 0 to 186) (default auto)
- * @param options.tier - Set the encoding tier (from 0 to 1) (default main)
- * @param options.rc - Override the preset rate-control (from -1 to INT_MAX) (default -1)
- * @param options.rc_lookahead - Number of frames to look ahead for rate-control (from 0 to INT_MAX) (default 0)
- * @param options.surfaces - Number of concurrent surfaces (from 0 to 64) (default 0)
- * @param options.cbr - Use cbr encoding mode (default false)
- * @param options._2pass - Use 2pass encoding mode (default auto)
- * @param options.gpu - Selects which NVENC capable GPU to use. First GPU is 0, second is 1, and so on. (from -2 to INT_MAX) (default any)
- * @param options.rgb_mode - Configure how nvenc handles packed RGB input. (from 0 to INT_MAX) (default yuv420)
- * @param options.delay - Delay frame output by the given amount of frames (from 0 to INT_MAX) (default INT_MAX)
- * @param options.no_scenecut - When lookahead is enabled, set this to 1 to disable adaptive I-frame insertion at scene cuts (default false)
- * @param options.forced_idr - If forcing keyframes, force them as IDR frames. (default false)
- * @param options.spatial_aq - set to 1 to enable Spatial AQ (default false)
- * @param options.temporal_aq - set to 1 to enable Temporal AQ (default false)
- * @param options.zerolatency - Set 1 to indicate zero latency operation (no reordering delay) (default false)
- * @param options.nonref_p - Set this to 1 to enable automatic insertion of non-reference P-frames (default false)
- * @param options.strict_gop - Set 1 to minimize GOP-to-GOP rate fluctuations (default false)
- * @param options.aq_strength - When Spatial AQ is enabled, this field is used to specify AQ strength. AQ strength scale is from 1 (low) - 15 (aggressive) (from 1 to 15) (default 8)
- * @param options.cq - Set target quality level (0 to 51, 0 means automatic) for constant quality mode in VBR rate control (from 0 to 51) (default 0)
- * @param options.aud - Use access unit delimiters (default false)
- * @param options.bluray_compat - Bluray compatibility workarounds (default false)
- * @param options.init_qpP - Initial QP value for P frame (from -1 to 51) (default -1)
- * @param options.init_qpB - Initial QP value for B frame (from -1 to 51) (default -1)
- * @param options.init_qpI - Initial QP value for I frame (from -1 to 51) (default -1)
- * @param options.qp - Constant quantization parameter rate control method (from -1 to 51) (default -1)
- * @param options.qp_cb_offset - Quantization parameter offset for cb channel (from -12 to 12) (default 0)
- * @param options.qp_cr_offset - Quantization parameter offset for cr channel (from -12 to 12) (default 0)
- * @param options.weighted_pred - Set 1 to enable weighted prediction (from 0 to 1) (default 0)
- * @param options.b_ref_mode - Use B frames as references (from -1 to 2) (default -1)
- * @param options.a53cc - Use A53 Closed Captions (if available) (default true)
- * @param options.s12m_tc - Use timecode (if available) (default true)
- * @param options.dpb_size - Specifies the DPB size used for encoding (0 means automatic) (from 0 to INT_MAX) (default 0)
- * @param options.multipass - Set the multipass encoding (from 0 to 2) (default disabled)
- * @param options.ldkfs - Low delay key frame scale; Specifies the Scene Change frame size increase allowed in case of single frame VBV and CBR (from 0 to 255) (default 0)
- * @param options.extra_sei - Pass on extra SEI data (e.g. a53 cc) to be included in the bitstream (default true)
- * @param options.udu_sei - Pass on user data unregistered SEI if available (default false)
- * @param options.intra_refresh - Use Periodic Intra Refresh instead of IDR frames (default false)
- * @param options.single_slice_intra_refresh - Use single slice intra refresh (default false)
- * @param options.max_slice_size - Maximum encoded slice size in bytes (from 0 to INT_MAX) (default 0)
- * @param options.constrained_encoding - Enable constrainedFrame encoding where each slice in the constrained picture is independent of other slices (default false)
- */
-export function hevc_nvenc(options?: {
-  preset?: number | null | "default" | "slow" | "medium" | "fast" | "hp" | "hq" | "bd" | "ll" | "llhq" | "llhp" | "lossless" | "losslesshp" | "p1" | "p2" | "p3" | "p4" | "p5" | "p6" | "p7";
-  tune?: number | null | "hq" | "ll" | "ull" | "lossless";
-  profile?: number | null | "main" | "main10" | "rext";
-  level?: number | null | "auto" | "1" | "1.0" | "2" | "2.0" | "2.1" | "3" | "3.0" | "3.1" | "4" | "4.0" | "4.1" | "5" | "5.0" | "5.1" | "5.2" | "6" | "6.0" | "6.1" | "6.2";
-  tier?: number | null | "main" | "high";
-  rc?: number | null | "constqp" | "vbr" | "cbr" | "vbr_minqp" | "ll_2pass_quality" | "ll_2pass_size" | "vbr_2pass" | "cbr_ld_hq" | "cbr_hq" | "vbr_hq";
-  rc_lookahead?: number | null;
-  surfaces?: number | null;
-  cbr?: boolean | null;
-  _2pass?: boolean | null;
-  gpu?: number | null | "any" | "list";
-  rgb_mode?: number | null | "yuv420" | "yuv444" | "disabled";
-  delay?: number | null;
-  no_scenecut?: boolean | null;
-  forced_idr?: boolean | null;
-  spatial_aq?: boolean | null;
-  temporal_aq?: boolean | null;
-  zerolatency?: boolean | null;
-  nonref_p?: boolean | null;
-  strict_gop?: boolean | null;
-  aq_strength?: number | null;
-  cq?: number | null;
-  aud?: boolean | null;
-  bluray_compat?: boolean | null;
-  init_qpP?: number | null;
-  init_qpB?: number | null;
-  init_qpI?: number | null;
-  qp?: number | null;
-  qp_cb_offset?: number | null;
-  qp_cr_offset?: number | null;
-  weighted_pred?: number | null;
-  b_ref_mode?: number | null | "disabled" | "each" | "middle";
-  a53cc?: boolean | null;
-  s12m_tc?: boolean | null;
-  dpb_size?: number | null;
-  multipass?: number | null | "disabled" | "qres" | "fullres";
-  ldkfs?: number | null;
-  extra_sei?: boolean | null;
-  udu_sei?: boolean | null;
-  intra_refresh?: boolean | null;
-  single_slice_intra_refresh?: boolean | null;
-  max_slice_size?: number | null;
-  constrained_encoding?: boolean | null;
-
-}): FFMpegEncoderOption {
-  return merge({
-    "preset": options?.preset,
-    "tune": options?.tune,
-    "profile": options?.profile,
-    "level": options?.level,
-    "tier": options?.tier,
-    "rc": options?.rc,
-    "rc-lookahead": options?.rc_lookahead,
-    "surfaces": options?.surfaces,
-    "cbr": options?.cbr,
-    "2pass": options?._2pass,
-    "gpu": options?.gpu,
-    "rgb_mode": options?.rgb_mode,
-    "delay": options?.delay,
-    "no-scenecut": options?.no_scenecut,
-    "forced-idr": options?.forced_idr,
-    "spatial_aq": options?.spatial_aq,
-    "temporal_aq": options?.temporal_aq,
-    "zerolatency": options?.zerolatency,
-    "nonref_p": options?.nonref_p,
-    "strict_gop": options?.strict_gop,
-    "aq-strength": options?.aq_strength,
-    "cq": options?.cq,
-    "aud": options?.aud,
-    "bluray-compat": options?.bluray_compat,
-    "init_qpP": options?.init_qpP,
-    "init_qpB": options?.init_qpB,
-    "init_qpI": options?.init_qpI,
-    "qp": options?.qp,
-    "qp_cb_offset": options?.qp_cb_offset,
-    "qp_cr_offset": options?.qp_cr_offset,
-    "weighted_pred": options?.weighted_pred,
-    "b_ref_mode": options?.b_ref_mode,
-    "a53cc": options?.a53cc,
-    "s12m_tc": options?.s12m_tc,
-    "dpb_size": options?.dpb_size,
-    "multipass": options?.multipass,
-    "ldkfs": options?.ldkfs,
-    "extra_sei": options?.extra_sei,
-    "udu_sei": options?.udu_sei,
-    "intra-refresh": options?.intra_refresh,
-    "single-slice-intra-refresh": options?.single_slice_intra_refresh,
-    "max_slice_size": options?.max_slice_size,
-    "constrained-encoding": options?.constrained_encoding,
-
-  });
-}
-
-
-
-
-
-
-
-/**
- * V4L2 mem2mem HEVC encoder wrapper (codec hevc)
+ * (codec hevc)
  * @param options.num_output_buffers - Number of buffers in the output context (from 2 to INT_MAX) (default 16)
  * @param options.num_capture_buffers - Number of buffers in the capture context (from 4 to INT_MAX) (default 4)
  */
@@ -1985,7 +1606,7 @@ export function hevc_v4l2m2m(options?: {
 
 
 /**
- * H.265/HEVC (VAAPI) (codec hevc)
+ * (codec hevc)
  * @param options.low_power - Use low-power encoding mode (only available on some platforms; may not support all encoding features) (default false)
  * @param options.idr_interval - Distance (in I-frames) between IDR frames (from 0 to INT_MAX) (default 0)
  * @param options.b_depth - Maximum B-frame reference depth (from 1 to INT_MAX) (default 1)
@@ -2041,7 +1662,27 @@ export function hevc_vaapi(options?: {
 
 
 /**
- * Huffyuv / HuffYUV
+ * (codec hevc)
+ * @param options.kvazaar_params - Set kvazaar parameters as a comma-separated list of key=value pairs.
+ */
+export function libkvazaar(options?: {
+  kvazaar_params?: string | null;
+
+}): FFMpegEncoderOption {
+  return merge({
+    "kvazaar-params": options?.kvazaar_params,
+
+  });
+}
+
+
+
+
+
+
+
+/**
+ *
  * @param options.non_deterministic - Allow multithreading for e.g. context=1 at the expense of determinism (default false)
  * @param options.pred - Prediction method (from 0 to 2) (default left)
  */
@@ -2064,7 +1705,7 @@ export function huffyuv(options?: {
 
 
 /**
- * JPEG 2000
+ *
  * @param options.format - Codec Format (from 0 to 1) (default jp2)
  * @param options.tile_width - Tile Width (from 1 to 1.07374e+09) (default 256)
  * @param options.tile_height - Tile Height (from 1 to 1.07374e+09) (default 256)
@@ -2105,7 +1746,7 @@ export function jpeg2000(options?: {
 
 
 /**
- * OpenJPEG JPEG 2000 (codec jpeg2000)
+ * (codec jpeg2000)
  * @param options.format - Codec Format (from 0 to 2) (default jp2)
  * @param options.profile - (from 0 to 4) (default jpeg2000)
  * @param options.cinema_mode - Digital Cinema (from 0 to 3) (default off)
@@ -2146,7 +1787,7 @@ export function libopenjpeg(options?: {
 
 
 /**
- * JPEG-LS
+ *
  * @param options.pred - Prediction method (from 0 to 2) (default left)
  */
 export function jpegls(options?: {
@@ -2166,7 +1807,7 @@ export function jpegls(options?: {
 
 
 /**
- * Lossless JPEG
+ *
  * @param options.pred - Prediction method (from 1 to 3) (default left)
  */
 export function ljpeg(options?: {
@@ -2186,7 +1827,7 @@ export function ljpeg(options?: {
 
 
 /**
- * MagicYUV video
+ *
  * @param options.pred - Prediction method (from 1 to 3) (default left)
  */
 export function magicyuv(options?: {
@@ -2206,7 +1847,7 @@ export function magicyuv(options?: {
 
 
 /**
- * MJPEG (Motion JPEG)
+ *
  * @param options.mpv_flags - Flags common for all mpegvideo-based encoders. (default 0)
  * @param options.luma_elim_threshold - single coefficient elimination threshold for luminance (negative values also consider dc coefficient) (from INT_MIN to INT_MAX) (default 0)
  * @param options.chroma_elim_threshold - single coefficient elimination threshold for chrominance (negative values also consider dc coefficient) (from INT_MIN to INT_MAX) (default 0)
@@ -2292,7 +1933,7 @@ export function mjpeg(options?: {
 
 
 /**
- * MJPEG (VAAPI) (codec mjpeg)
+ * (codec mjpeg)
  * @param options.low_power - Use low-power encoding mode (only available on some platforms; may not support all encoding features) (default false)
  * @param options.idr_interval - Distance (in I-frames) between IDR frames (from 0 to INT_MAX) (default 0)
  * @param options.b_depth - Maximum B-frame reference depth (from 1 to INT_MAX) (default 1)
@@ -2330,7 +1971,7 @@ export function mjpeg_vaapi(options?: {
 
 
 /**
- * MPEG-1 video
+ *
  * @param options.gop_timecode - MPEG GOP Timecode in hh:mm:ss[:;.]ff format. Overrides timecode_frame_start.
  * @param options.drop_frame_timecode - Timecode is in drop frame format. (default false)
  * @param options.scan_offset - Reserve space for SVCD scan offset user data. (default false)
@@ -2443,7 +2084,7 @@ export function mpeg1video(options?: {
 
 
 /**
- * MPEG-2 video
+ *
  * @param options.gop_timecode - MPEG GOP Timecode in hh:mm:ss[:;.]ff format. Overrides timecode_frame_start.
  * @param options.drop_frame_timecode - Timecode is in drop frame format. (default false)
  * @param options.scan_offset - Reserve space for SVCD scan offset user data. (default false)
@@ -2574,7 +2215,7 @@ export function mpeg2video(options?: {
 
 
 /**
- * MPEG-2 (VAAPI) (codec mpeg2video)
+ * (codec mpeg2video)
  * @param options.low_power - Use low-power encoding mode (only available on some platforms; may not support all encoding features) (default false)
  * @param options.idr_interval - Distance (in I-frames) between IDR frames (from 0 to INT_MAX) (default 0)
  * @param options.b_depth - Maximum B-frame reference depth (from 1 to INT_MAX) (default 1)
@@ -2615,7 +2256,7 @@ export function mpeg2_vaapi(options?: {
 
 
 /**
- * MPEG-4 part 2
+ *
  * @param options.data_partitioning - Use data partitioning. (default false)
  * @param options.alternate_scan - Enable alternate scantable. (default false)
  * @param options.mpeg_quant - Use MPEG quantizers instead of H.263 (from 0 to 1) (default 0)
@@ -2725,7 +2366,7 @@ export function mpeg4(options?: {
 
 
 /**
- * libxvidcore MPEG-4 part 2 (codec mpeg4)
+ * (codec mpeg4)
  * @param options.lumi_aq - Luminance masking AQ (from 0 to 1) (default 0)
  * @param options.variance_aq - Variance AQ (from 0 to 1) (default 0)
  * @param options.ssim - Show SSIM information to stdout (from 0 to 2) (default off)
@@ -2763,7 +2404,7 @@ export function libxvid(options?: {
 
 
 /**
- * V4L2 mem2mem MPEG4 encoder wrapper (codec mpeg4)
+ * (codec mpeg4)
  * @param options.num_output_buffers - Number of buffers in the output context (from 2 to INT_MAX) (default 16)
  * @param options.num_capture_buffers - Number of buffers in the capture context (from 4 to INT_MAX) (default 4)
  */
@@ -2786,7 +2427,7 @@ export function mpeg4_v4l2m2m(options?: {
 
 
 /**
- * MPEG-4 part 2 Microsoft variant version 2
+ *
  * @param options.mpv_flags - Flags common for all mpegvideo-based encoders. (default 0)
  * @param options.luma_elim_threshold - single coefficient elimination threshold for luminance (negative values also consider dc coefficient) (from INT_MIN to INT_MAX) (default 0)
  * @param options.chroma_elim_threshold - single coefficient elimination threshold for chrominance (negative values also consider dc coefficient) (from INT_MIN to INT_MAX) (default 0)
@@ -2878,7 +2519,7 @@ export function msmpeg4v2(options?: {
 
 
 /**
- * MPEG-4 part 2 Microsoft variant version 3 (codec msmpeg4v3)
+ * (codec msmpeg4v3)
  * @param options.mpv_flags - Flags common for all mpegvideo-based encoders. (default 0)
  * @param options.luma_elim_threshold - single coefficient elimination threshold for luminance (negative values also consider dc coefficient) (from INT_MIN to INT_MAX) (default 0)
  * @param options.chroma_elim_threshold - single coefficient elimination threshold for chrominance (negative values also consider dc coefficient) (from INT_MIN to INT_MAX) (default 0)
@@ -2970,7 +2611,7 @@ export function msmpeg4(options?: {
 
 
 /**
- * Microsoft RLE
+ *
  */
 export function msrle(options?: {
 
@@ -2987,7 +2628,7 @@ export function msrle(options?: {
 
 
 /**
- * Microsoft Video-1
+ *
  */
 export function msvideo1(options?: {
 
@@ -3004,7 +2645,7 @@ export function msvideo1(options?: {
 
 
 /**
- * PAM (Portable AnyMap) image
+ *
  */
 export function pam(options?: {
 
@@ -3021,7 +2662,7 @@ export function pam(options?: {
 
 
 /**
- * PBM (Portable BitMap) image
+ *
  */
 export function pbm(options?: {
 
@@ -3038,7 +2679,7 @@ export function pbm(options?: {
 
 
 /**
- * PC Paintbrush PCX image
+ *
  */
 export function pcx(options?: {
 
@@ -3055,7 +2696,7 @@ export function pcx(options?: {
 
 
 /**
- * PFM (Portable FloatMap) image
+ *
  */
 export function pfm(options?: {
 
@@ -3072,7 +2713,7 @@ export function pfm(options?: {
 
 
 /**
- * PGM (Portable GrayMap) image
+ *
  */
 export function pgm(options?: {
 
@@ -3089,7 +2730,7 @@ export function pgm(options?: {
 
 
 /**
- * PGMYUV (Portable GrayMap YUV) image
+ *
  */
 export function pgmyuv(options?: {
 
@@ -3106,7 +2747,7 @@ export function pgmyuv(options?: {
 
 
 /**
- * PHM (Portable HalfFloatMap) image
+ *
  */
 export function phm(options?: {
 
@@ -3123,7 +2764,7 @@ export function phm(options?: {
 
 
 /**
- * PNG (Portable Network Graphics) image
+ *
  * @param options.dpi - Set image resolution (in dots per inch) (from 0 to 65536) (default 0)
  * @param options.dpm - Set image resolution (in dots per meter) (from 0 to 65536) (default 0)
  * @param options.pred - Prediction method (from 0 to 5) (default none)
@@ -3149,7 +2790,7 @@ export function png(options?: {
 
 
 /**
- * PPM (Portable PixelMap) image
+ *
  */
 export function ppm(options?: {
 
@@ -3166,7 +2807,7 @@ export function ppm(options?: {
 
 
 /**
- * Apple ProRes
+ *
  * @param options.vendor - vendor ID (default "fmpg")
  */
 export function prores(options?: {
@@ -3186,7 +2827,7 @@ export function prores(options?: {
 
 
 /**
- * Apple ProRes (codec prores)
+ * (codec prores)
  * @param options.vendor - vendor ID (default "fmpg")
  */
 export function prores_aw(options?: {
@@ -3206,7 +2847,7 @@ export function prores_aw(options?: {
 
 
 /**
- * Apple ProRes (iCodec Pro) (codec prores)
+ * (codec prores)
  * @param options.mbs_per_slice - macroblocks per slice (from 1 to 8) (default 8)
  * @param options.profile - (from -1 to 5) (default auto)
  * @param options.vendor - vendor ID (default "Lavc")
@@ -3241,7 +2882,7 @@ export function prores_ks(options?: {
 
 
 /**
- * QOI (Quite OK Image format) image
+ *
  */
 export function qoi(options?: {
 
@@ -3258,7 +2899,7 @@ export function qoi(options?: {
 
 
 /**
- * QuickTime Animation (RLE) video
+ *
  */
 export function qtrle(options?: {
 
@@ -3275,7 +2916,7 @@ export function qtrle(options?: {
 
 
 /**
- * AJA Kona 10-bit RGB Codec
+ *
  */
 export function r10k(options?: {
 
@@ -3292,7 +2933,7 @@ export function r10k(options?: {
 
 
 /**
- * Uncompressed RGB 10-bit
+ *
  */
 export function r210(options?: {
 
@@ -3309,7 +2950,7 @@ export function r210(options?: {
 
 
 /**
- * raw video
+ *
  */
 export function rawvideo(options?: {
 
@@ -3326,7 +2967,7 @@ export function rawvideo(options?: {
 
 
 /**
- * id RoQ video (codec roq)
+ * (codec roq)
  * @param options.quake3_compat - Whether to respect known limitations in Quake 3 decoder (default true)
  */
 export function roqvideo(options?: {
@@ -3346,7 +2987,7 @@ export function roqvideo(options?: {
 
 
 /**
- * QuickTime video (RPZA)
+ *
  * @param options.skip_frame_thresh - (from 0 to 24) (default 1)
  * @param options.continue_one_color_thresh - (from 0 to 24) (default 0)
  * @param options.sixteen_color_thresh - (from 0 to 24) (default 1)
@@ -3372,7 +3013,7 @@ export function rpza(options?: {
 
 
 /**
- * RealVideo 1.0
+ *
  * @param options.mpv_flags - Flags common for all mpegvideo-based encoders. (default 0)
  * @param options.luma_elim_threshold - single coefficient elimination threshold for luminance (negative values also consider dc coefficient) (from INT_MIN to INT_MAX) (default 0)
  * @param options.chroma_elim_threshold - single coefficient elimination threshold for chrominance (negative values also consider dc coefficient) (from INT_MIN to INT_MAX) (default 0)
@@ -3464,7 +3105,7 @@ export function rv10(options?: {
 
 
 /**
- * RealVideo 2.0
+ *
  * @param options.mpv_flags - Flags common for all mpegvideo-based encoders. (default 0)
  * @param options.luma_elim_threshold - single coefficient elimination threshold for luminance (negative values also consider dc coefficient) (from INT_MIN to INT_MAX) (default 0)
  * @param options.chroma_elim_threshold - single coefficient elimination threshold for chrominance (negative values also consider dc coefficient) (from INT_MIN to INT_MAX) (default 0)
@@ -3556,7 +3197,7 @@ export function rv20(options?: {
 
 
 /**
- * SGI image
+ *
  * @param options.rle - Use run-length compression (from 0 to 1) (default 1)
  */
 export function sgi(options?: {
@@ -3576,7 +3217,7 @@ export function sgi(options?: {
 
 
 /**
- * QuickTime Graphics (SMC)
+ *
  */
 export function smc(options?: {
 
@@ -3593,7 +3234,7 @@ export function smc(options?: {
 
 
 /**
- * Snow
+ *
  * @param options.motion_est - motion estimation algorithm (from 0 to 3) (default epzs)
  * @param options.memc_only - Only do ME/MC (I frames -> ref, P frame -> ME+MC). (default false)
  * @param options.no_bitstream - Skip final bitstream writeout. (default false)
@@ -3634,7 +3275,7 @@ export function snow(options?: {
 
 
 /**
- * NewTek SpeedHQ
+ *
  * @param options.mpv_flags - Flags common for all mpegvideo-based encoders. (default 0)
  * @param options.luma_elim_threshold - single coefficient elimination threshold for luminance (negative values also consider dc coefficient) (from INT_MIN to INT_MAX) (default 0)
  * @param options.chroma_elim_threshold - single coefficient elimination threshold for chrominance (negative values also consider dc coefficient) (from INT_MIN to INT_MAX) (default 0)
@@ -3726,7 +3367,7 @@ export function speedhq(options?: {
 
 
 /**
- * Sun Rasterfile image
+ *
  * @param options.rle - Use run-length compression (from 0 to 1) (default 1)
  */
 export function sunrast(options?: {
@@ -3746,7 +3387,7 @@ export function sunrast(options?: {
 
 
 /**
- * Sorenson Vector Quantizer 1 / Sorenson Video 1 / SVQ1
+ *
  * @param options.motion_est - Motion estimation algorithm (from 0 to 2) (default epzs)
  */
 export function svq1(options?: {
@@ -3766,7 +3407,7 @@ export function svq1(options?: {
 
 
 /**
- * Truevision Targa image
+ *
  * @param options.rle - Use run-length compression (from 0 to 1) (default 1)
  */
 export function targa(options?: {
@@ -3786,7 +3427,7 @@ export function targa(options?: {
 
 
 /**
- * libtheora Theora (codec theora)
+ * (codec theora)
  */
 export function libtheora(options?: {
 
@@ -3803,7 +3444,7 @@ export function libtheora(options?: {
 
 
 /**
- * TIFF image
+ *
  * @param options.dpi - set the image resolution (in dpi) (from 1 to 65536) (default 72)
  * @param options.compression_algo - (from 1 to 32946) (default packbits)
  */
@@ -3826,7 +3467,7 @@ export function tiff(options?: {
 
 
 /**
- * Ut Video
+ *
  * @param options.pred - Prediction method (from 0 to 3) (default left)
  */
 export function utvideo(options?: {
@@ -3846,7 +3487,7 @@ export function utvideo(options?: {
 
 
 /**
- * Uncompressed 4:2:2 10-bit
+ *
  */
 export function v210(options?: {
 
@@ -3863,7 +3504,7 @@ export function v210(options?: {
 
 
 /**
- * Uncompressed packed 4:4:4
+ *
  */
 export function v308(options?: {
 
@@ -3880,7 +3521,7 @@ export function v308(options?: {
 
 
 /**
- * Uncompressed packed QT 4:4:4:4
+ *
  */
 export function v408(options?: {
 
@@ -3897,7 +3538,7 @@ export function v408(options?: {
 
 
 /**
- * Uncompressed 4:4:4 10-bit
+ *
  */
 export function v410(options?: {
 
@@ -3914,7 +3555,7 @@ export function v410(options?: {
 
 
 /**
- * Vizrt Binary Image
+ *
  * @param options.format - Texture format (from 0 to 3) (default dxt5)
  */
 export function vbn(options?: {
@@ -3934,7 +3575,7 @@ export function vbn(options?: {
 
 
 /**
- * null video
+ *
  */
 export function vnull(options?: {
 
@@ -3951,7 +3592,7 @@ export function vnull(options?: {
 
 
 /**
- * libvpx VP8 (codec vp8)
+ * (codec vp8)
  * @param options.lag_in_frames - Number of frames to look ahead for alternate reference frame selection (from -1 to INT_MAX) (default -1)
  * @param options.arnr_maxframes - altref noise reduction max frame count (from -1 to INT_MAX) (default -1)
  * @param options.arnr_strength - altref noise reduction filter strength (from -1 to INT_MAX) (default -1)
@@ -4037,7 +3678,7 @@ export function libvpx(options?: {
 
 
 /**
- * V4L2 mem2mem VP8 encoder wrapper (codec vp8)
+ * (codec vp8)
  * @param options.num_output_buffers - Number of buffers in the output context (from 2 to INT_MAX) (default 16)
  * @param options.num_capture_buffers - Number of buffers in the capture context (from 4 to INT_MAX) (default 4)
  */
@@ -4060,7 +3701,7 @@ export function vp8_v4l2m2m(options?: {
 
 
 /**
- * VP8 (VAAPI) (codec vp8)
+ * (codec vp8)
  * @param options.low_power - Use low-power encoding mode (only available on some platforms; may not support all encoding features) (default false)
  * @param options.idr_interval - Distance (in I-frames) between IDR frames (from 0 to INT_MAX) (default 0)
  * @param options.b_depth - Maximum B-frame reference depth (from 1 to INT_MAX) (default 1)
@@ -4101,7 +3742,7 @@ export function vp8_vaapi(options?: {
 
 
 /**
- * VP9 (VAAPI) (codec vp9)
+ * (codec vp9)
  * @param options.low_power - Use low-power encoding mode (only available on some platforms; may not support all encoding features) (default false)
  * @param options.idr_interval - Distance (in I-frames) between IDR frames (from 0 to INT_MAX) (default 0)
  * @param options.b_depth - Maximum B-frame reference depth (from 1 to INT_MAX) (default 1)
@@ -4142,7 +3783,7 @@ export function vp9_vaapi(options?: {
 
 
 /**
- * WBMP (Wireless Application Protocol Bitmap) image
+ *
  */
 export function wbmp(options?: {
 
@@ -4159,7 +3800,7 @@ export function wbmp(options?: {
 
 
 /**
- * libwebp WebP image (codec webp)
+ * (codec webp)
  * @param options.lossless - Use lossless mode (from 0 to 1) (default 0)
  * @param options.preset - Configuration preset (from -1 to 5) (default none)
  * @param options.cr_threshold - Conditional replenishment threshold (from 0 to INT_MAX) (default 0)
@@ -4191,7 +3832,7 @@ export function libwebp_anim(options?: {
 
 
 /**
- * libwebp WebP image (codec webp)
+ * (codec webp)
  * @param options.lossless - Use lossless mode (from 0 to 1) (default 0)
  * @param options.preset - Configuration preset (from -1 to 5) (default none)
  * @param options.cr_threshold - Conditional replenishment threshold (from 0 to INT_MAX) (default 0)
@@ -4223,7 +3864,7 @@ export function libwebp(options?: {
 
 
 /**
- * Windows Media Video 7
+ *
  * @param options.mpv_flags - Flags common for all mpegvideo-based encoders. (default 0)
  * @param options.luma_elim_threshold - single coefficient elimination threshold for luminance (negative values also consider dc coefficient) (from INT_MIN to INT_MAX) (default 0)
  * @param options.chroma_elim_threshold - single coefficient elimination threshold for chrominance (negative values also consider dc coefficient) (from INT_MIN to INT_MAX) (default 0)
@@ -4315,7 +3956,7 @@ export function wmv1(options?: {
 
 
 /**
- * Windows Media Video 8
+ *
  * @param options.mpv_flags - Flags common for all mpegvideo-based encoders. (default 0)
  * @param options.luma_elim_threshold - single coefficient elimination threshold for luminance (negative values also consider dc coefficient) (from INT_MIN to INT_MAX) (default 0)
  * @param options.chroma_elim_threshold - single coefficient elimination threshold for chrominance (negative values also consider dc coefficient) (from INT_MIN to INT_MAX) (default 0)
@@ -4407,7 +4048,7 @@ export function wmv2(options?: {
 
 
 /**
- * AVFrame to AVPacket passthrough
+ *
  */
 export function wrapped_avframe(options?: {
 
@@ -4424,7 +4065,7 @@ export function wrapped_avframe(options?: {
 
 
 /**
- * XBM (X BitMap) image
+ *
  */
 export function xbm(options?: {
 
@@ -4441,7 +4082,7 @@ export function xbm(options?: {
 
 
 /**
- * X-face image
+ *
  */
 export function xface(options?: {
 
@@ -4458,7 +4099,7 @@ export function xface(options?: {
 
 
 /**
- * XWD (X Window Dump) image
+ *
  */
 export function xwd(options?: {
 
@@ -4475,7 +4116,7 @@ export function xwd(options?: {
 
 
 /**
- * Uncompressed YUV 4:1:1 12-bit
+ *
  */
 export function y41p(options?: {
 
@@ -4492,7 +4133,7 @@ export function y41p(options?: {
 
 
 /**
- * Uncompressed packed 4:2:0
+ *
  */
 export function yuv4(options?: {
 
@@ -4509,7 +4150,7 @@ export function yuv4(options?: {
 
 
 /**
- * LCL (LossLess Codec Library) ZLIB
+ *
  */
 export function zlib(options?: {
 
@@ -4526,7 +4167,7 @@ export function zlib(options?: {
 
 
 /**
- * Zip Motion Blocks Video
+ *
  */
 export function zmbv(options?: {
 
@@ -4543,7 +4184,7 @@ export function zmbv(options?: {
 
 
 /**
- * AAC (Advanced Audio Coding)
+ *
  * @param options.aac_coder - Coding algorithm (from 0 to 2) (default twoloop)
  * @param options.aac_ms - Force M/S stereo coding (default auto)
  * @param options.aac_is - Intensity stereo coding (default true)
@@ -4584,7 +4225,63 @@ export function aac(options?: {
 
 
 /**
- * ATSC A/52A (AC-3)
+ * (codec aac)
+ * @param options.afterburner - Afterburner (improved quality) (from 0 to 1) (default 1)
+ * @param options.eld_sbr - Enable SBR for ELD (for SBR in other configurations, use the -profile parameter) (from 0 to 1) (default 0)
+ * @param options.eld_v2 - Enable ELDv2 (LD-MPS extension for ELD stereo signals) (from 0 to 1) (default 0)
+ * @param options.signaling - SBR/PS signaling style (from -1 to 2) (default default)
+ * @param options.latm - Output LATM/LOAS encapsulated data (from 0 to 1) (default 0)
+ * @param options.header_period - StreamMuxConfig and PCE repetition period (in frames) (from 0 to 65535) (default 0)
+ * @param options.vbr - VBR mode (1-5) (from 0 to 5) (default 0)
+ * @param options.drc_profile - The desired compression profile for AAC DRC (from 0 to 256) (default 0)
+ * @param options.drc_target_ref - Expected target reference level at decoder side in dB (for clipping prevention/limiter) (from -31.75 to 0) (default 0)
+ * @param options.comp_profile - The desired compression profile for AAC DRC (from 0 to 256) (default 0)
+ * @param options.comp_target_ref - Expected target reference level at decoder side in dB (for clipping prevention/limiter) (from -31.75 to 0) (default 0)
+ * @param options.prog_ref - The program reference level or dialog level in dB (from -31.75 to 0) (default 0)
+ * @param options.frame_length - The desired frame length (from -1 to 1024) (default -1)
+ */
+export function libfdk_aac(options?: {
+  afterburner?: number | null;
+  eld_sbr?: number | null;
+  eld_v2?: number | null;
+  signaling?: number | null | "default" | "implicit" | "explicit_sbr" | "explicit_hierarchical";
+  latm?: number | null;
+  header_period?: number | null;
+  vbr?: number | null;
+  drc_profile?: number | null;
+  drc_target_ref?: number | null;
+  comp_profile?: number | null;
+  comp_target_ref?: number | null;
+  prog_ref?: number | null;
+  frame_length?: number | null;
+
+}): FFMpegEncoderOption {
+  return merge({
+    "afterburner": options?.afterburner,
+    "eld_sbr": options?.eld_sbr,
+    "eld_v2": options?.eld_v2,
+    "signaling": options?.signaling,
+    "latm": options?.latm,
+    "header_period": options?.header_period,
+    "vbr": options?.vbr,
+    "drc_profile": options?.drc_profile,
+    "drc_target_ref": options?.drc_target_ref,
+    "comp_profile": options?.comp_profile,
+    "comp_target_ref": options?.comp_target_ref,
+    "prog_ref": options?.prog_ref,
+    "frame_length": options?.frame_length,
+
+  });
+}
+
+
+
+
+
+
+
+/**
+ *
  * @param options.center_mixlev - Center Mix Level (from 0 to 1) (default 0.594604)
  * @param options.surround_mixlev - Surround Mix Level (from 0 to 1) (default 0.5)
  * @param options.mixing_level - Mixing Level (from -1 to 111) (default -1)
@@ -4661,7 +4358,7 @@ export function ac3(options?: {
 
 
 /**
- * ATSC A/52A (AC-3) (codec ac3)
+ * (codec ac3)
  * @param options.center_mixlev - Center Mix Level (from 0 to 1) (default 0.594604)
  * @param options.surround_mixlev - Surround Mix Level (from 0 to 1) (default 0.5)
  * @param options.mixing_level - Mixing Level (from -1 to 111) (default -1)
@@ -4738,7 +4435,7 @@ export function ac3_fixed(options?: {
 
 
 /**
- * SEGA CRI ADX ADPCM
+ *
  */
 export function adpcm_adx(options?: {
 
@@ -4755,7 +4452,7 @@ export function adpcm_adx(options?: {
 
 
 /**
- * ADPCM Argonaut Games
+ *
  * @param options.block_size - set the block size (from 32 to 8192) (default 1024)
  */
 export function adpcm_argo(options?: {
@@ -4775,7 +4472,7 @@ export function adpcm_argo(options?: {
 
 
 /**
- * G.722 ADPCM (codec adpcm_g722)
+ * (codec adpcm_g722)
  */
 export function g722(options?: {
 
@@ -4792,7 +4489,7 @@ export function g722(options?: {
 
 
 /**
- * G.726 ADPCM (codec adpcm_g726)
+ * (codec adpcm_g726)
  * @param options.code_size - Bits per code (from 2 to 5) (default 4)
  */
 export function g726(options?: {
@@ -4812,7 +4509,7 @@ export function g726(options?: {
 
 
 /**
- * G.726 little endian ADPCM ("right-justified") (codec adpcm_g726le)
+ * (codec adpcm_g726le)
  * @param options.code_size - Bits per code (from 2 to 5) (default 4)
  */
 export function g726le(options?: {
@@ -4832,7 +4529,7 @@ export function g726le(options?: {
 
 
 /**
- * ADPCM IMA High Voltage Software ALP
+ *
  * @param options.block_size - set the block size (from 32 to 8192) (default 1024)
  */
 export function adpcm_ima_alp(options?: {
@@ -4852,7 +4549,7 @@ export function adpcm_ima_alp(options?: {
 
 
 /**
- * ADPCM IMA AMV
+ *
  * @param options.block_size - set the block size (from 32 to 8192) (default 1024)
  */
 export function adpcm_ima_amv(options?: {
@@ -4872,7 +4569,7 @@ export function adpcm_ima_amv(options?: {
 
 
 /**
- * ADPCM IMA Ubisoft APM
+ *
  * @param options.block_size - set the block size (from 32 to 8192) (default 1024)
  */
 export function adpcm_ima_apm(options?: {
@@ -4892,7 +4589,7 @@ export function adpcm_ima_apm(options?: {
 
 
 /**
- * ADPCM IMA QuickTime
+ *
  * @param options.block_size - set the block size (from 32 to 8192) (default 1024)
  */
 export function adpcm_ima_qt(options?: {
@@ -4912,7 +4609,7 @@ export function adpcm_ima_qt(options?: {
 
 
 /**
- * ADPCM IMA Simon & Schuster Interactive
+ *
  * @param options.block_size - set the block size (from 32 to 8192) (default 1024)
  */
 export function adpcm_ima_ssi(options?: {
@@ -4932,7 +4629,7 @@ export function adpcm_ima_ssi(options?: {
 
 
 /**
- * ADPCM IMA WAV
+ *
  * @param options.block_size - set the block size (from 32 to 8192) (default 1024)
  */
 export function adpcm_ima_wav(options?: {
@@ -4952,7 +4649,7 @@ export function adpcm_ima_wav(options?: {
 
 
 /**
- * ADPCM IMA Westwood
+ *
  * @param options.block_size - set the block size (from 32 to 8192) (default 1024)
  */
 export function adpcm_ima_ws(options?: {
@@ -4972,7 +4669,7 @@ export function adpcm_ima_ws(options?: {
 
 
 /**
- * ADPCM Microsoft
+ *
  * @param options.block_size - set the block size (from 32 to 8192) (default 1024)
  */
 export function adpcm_ms(options?: {
@@ -4992,7 +4689,7 @@ export function adpcm_ms(options?: {
 
 
 /**
- * ADPCM Shockwave Flash
+ *
  * @param options.block_size - set the block size (from 32 to 8192) (default 1024)
  */
 export function adpcm_swf(options?: {
@@ -5012,7 +4709,7 @@ export function adpcm_swf(options?: {
 
 
 /**
- * ADPCM Yamaha
+ *
  * @param options.block_size - set the block size (from 32 to 8192) (default 1024)
  */
 export function adpcm_yamaha(options?: {
@@ -5032,7 +4729,7 @@ export function adpcm_yamaha(options?: {
 
 
 /**
- * ALAC (Apple Lossless Audio Codec)
+ *
  * @param options.min_prediction_order - (from 1 to 30) (default 4)
  * @param options.max_prediction_order - (from 1 to 30) (default 6)
  */
@@ -5055,7 +4752,7 @@ export function alac(options?: {
 
 
 /**
- * OpenCORE AMR-NB (Adaptive Multi-Rate Narrow-Band) (codec amr_nb)
+ * (codec amr_nb)
  * @param options.dtx - Allow DTX (generate comfort noise) (from 0 to 1) (default 0)
  */
 export function libopencore_amrnb(options?: {
@@ -5075,7 +4772,7 @@ export function libopencore_amrnb(options?: {
 
 
 /**
- * null audio
+ *
  */
 export function anull(options?: {
 
@@ -5092,7 +4789,7 @@ export function anull(options?: {
 
 
 /**
- * aptX (Audio Processing Technology for Bluetooth)
+ *
  */
 export function aptx(options?: {
 
@@ -5109,7 +4806,7 @@ export function aptx(options?: {
 
 
 /**
- * aptX HD (Audio Processing Technology for Bluetooth)
+ *
  */
 export function aptx_hd(options?: {
 
@@ -5126,7 +4823,7 @@ export function aptx_hd(options?: {
 
 
 /**
- * RFC 3389 comfort noise generator
+ *
  */
 export function comfortnoise(options?: {
 
@@ -5143,7 +4840,7 @@ export function comfortnoise(options?: {
 
 
 /**
- * DFPWM1a audio
+ *
  */
 export function dfpwm(options?: {
 
@@ -5160,7 +4857,7 @@ export function dfpwm(options?: {
 
 
 /**
- * DCA (DTS Coherent Acoustics) (codec dts)
+ * (codec dts)
  * @param options.dca_adpcm - Use ADPCM encoding (default false)
  */
 export function dca(options?: {
@@ -5180,7 +4877,7 @@ export function dca(options?: {
 
 
 /**
- * ATSC A/52 E-AC-3
+ *
  * @param options.mixing_level - Mixing Level (from -1 to 111) (default -1)
  * @param options.room_type - Room Type (from -1 to 2) (default -1)
  * @param options.per_frame_metadata - Allow Changing Metadata Per-Frame (default false)
@@ -5251,7 +4948,7 @@ export function eac3(options?: {
 
 
 /**
- * FLAC (Free Lossless Audio Codec)
+ *
  * @param options.lpc_coeff_precision - LPC coefficient precision (from 0 to 15) (default 15)
  * @param options.lpc_type - LPC algorithm (from -1 to 3) (default -1)
  * @param options.lpc_passes - Number of passes to use for Cholesky factorization during LPC analysis (from 1 to INT_MAX) (default 2)
@@ -5295,7 +4992,7 @@ export function flac(options?: {
 
 
 /**
- * G.723.1
+ *
  */
 export function g723_1(options?: {
 
@@ -5312,7 +5009,7 @@ export function g723_1(options?: {
 
 
 /**
- * MLP (Meridian Lossless Packing)
+ *
  * @param options.max_interval - Max number of frames between each new header (from 8 to 128) (default 16)
  * @param options.lpc_coeff_precision - LPC coefficient precision (from 0 to 15) (default 15)
  * @param options.lpc_type - LPC algorithm (from 2 to 3) (default levinson)
@@ -5350,7 +5047,7 @@ export function mlp(options?: {
 
 
 /**
- * MP2 (MPEG audio layer 2)
+ *
  */
 export function mp2(options?: {
 
@@ -5367,7 +5064,7 @@ export function mp2(options?: {
 
 
 /**
- * MP2 fixed point (MPEG audio layer 2) (codec mp2)
+ * (codec mp2)
  */
 export function mp2fixed(options?: {
 
@@ -5384,7 +5081,7 @@ export function mp2fixed(options?: {
 
 
 /**
- * libmp3lame MP3 (MPEG audio layer 3) (codec mp3)
+ * (codec mp3)
  * @param options.reservoir - use bit reservoir (default true)
  * @param options.joint_stereo - use joint stereo (default true)
  * @param options.abr - use ABR (default false)
@@ -5416,7 +5113,7 @@ export function libmp3lame(options?: {
 
 
 /**
- * Nellymoser Asao
+ *
  */
 export function nellymoser(options?: {
 
@@ -5433,7 +5130,7 @@ export function nellymoser(options?: {
 
 
 /**
- * Opus
+ *
  * @param options.opus_delay - Maximum delay in milliseconds (from 2.5 to 360) (default 360)
  * @param options.apply_phase_inv - Apply intensity stereo phase inversion (default true)
  */
@@ -5456,7 +5153,7 @@ export function opus(options?: {
 
 
 /**
- * libopus Opus (codec opus)
+ * (codec opus)
  * @param options.application - Intended application type (from 2048 to 2051) (default audio)
  * @param options.frame_duration - Duration of a frame in milliseconds (from 2.5 to 120) (default 20)
  * @param options.packet_loss - Expected packet loss percentage (from 0 to 100) (default 0)
@@ -5494,7 +5191,7 @@ export function libopus(options?: {
 
 
 /**
- * PCM A-law / G.711 A-law
+ *
  */
 export function pcm_alaw(options?: {
 
@@ -5511,7 +5208,7 @@ export function pcm_alaw(options?: {
 
 
 /**
- * PCM signed 16|20|24-bit big-endian for Blu-ray media
+ *
  */
 export function pcm_bluray(options?: {
 
@@ -5528,7 +5225,7 @@ export function pcm_bluray(options?: {
 
 
 /**
- * PCM signed 16|20|24-bit big-endian for DVD media
+ *
  */
 export function pcm_dvd(options?: {
 
@@ -5545,7 +5242,7 @@ export function pcm_dvd(options?: {
 
 
 /**
- * PCM 32-bit floating point big-endian
+ *
  */
 export function pcm_f32be(options?: {
 
@@ -5562,7 +5259,7 @@ export function pcm_f32be(options?: {
 
 
 /**
- * PCM 32-bit floating point little-endian
+ *
  */
 export function pcm_f32le(options?: {
 
@@ -5579,7 +5276,7 @@ export function pcm_f32le(options?: {
 
 
 /**
- * PCM 64-bit floating point big-endian
+ *
  */
 export function pcm_f64be(options?: {
 
@@ -5596,7 +5293,7 @@ export function pcm_f64be(options?: {
 
 
 /**
- * PCM 64-bit floating point little-endian
+ *
  */
 export function pcm_f64le(options?: {
 
@@ -5613,7 +5310,7 @@ export function pcm_f64le(options?: {
 
 
 /**
- * PCM mu-law / G.711 mu-law
+ *
  */
 export function pcm_mulaw(options?: {
 
@@ -5630,7 +5327,7 @@ export function pcm_mulaw(options?: {
 
 
 /**
- * PCM signed 16-bit big-endian
+ *
  */
 export function pcm_s16be(options?: {
 
@@ -5647,7 +5344,7 @@ export function pcm_s16be(options?: {
 
 
 /**
- * PCM signed 16-bit big-endian planar
+ *
  */
 export function pcm_s16be_planar(options?: {
 
@@ -5664,7 +5361,7 @@ export function pcm_s16be_planar(options?: {
 
 
 /**
- * PCM signed 16-bit little-endian
+ *
  */
 export function pcm_s16le(options?: {
 
@@ -5681,7 +5378,7 @@ export function pcm_s16le(options?: {
 
 
 /**
- * PCM signed 16-bit little-endian planar
+ *
  */
 export function pcm_s16le_planar(options?: {
 
@@ -5698,7 +5395,7 @@ export function pcm_s16le_planar(options?: {
 
 
 /**
- * PCM signed 24-bit big-endian
+ *
  */
 export function pcm_s24be(options?: {
 
@@ -5715,7 +5412,7 @@ export function pcm_s24be(options?: {
 
 
 /**
- * PCM D-Cinema audio signed 24-bit
+ *
  */
 export function pcm_s24daud(options?: {
 
@@ -5732,7 +5429,7 @@ export function pcm_s24daud(options?: {
 
 
 /**
- * PCM signed 24-bit little-endian
+ *
  */
 export function pcm_s24le(options?: {
 
@@ -5749,7 +5446,7 @@ export function pcm_s24le(options?: {
 
 
 /**
- * PCM signed 24-bit little-endian planar
+ *
  */
 export function pcm_s24le_planar(options?: {
 
@@ -5766,7 +5463,7 @@ export function pcm_s24le_planar(options?: {
 
 
 /**
- * PCM signed 32-bit big-endian
+ *
  */
 export function pcm_s32be(options?: {
 
@@ -5783,7 +5480,7 @@ export function pcm_s32be(options?: {
 
 
 /**
- * PCM signed 32-bit little-endian
+ *
  */
 export function pcm_s32le(options?: {
 
@@ -5800,7 +5497,7 @@ export function pcm_s32le(options?: {
 
 
 /**
- * PCM signed 32-bit little-endian planar
+ *
  */
 export function pcm_s32le_planar(options?: {
 
@@ -5817,7 +5514,7 @@ export function pcm_s32le_planar(options?: {
 
 
 /**
- * PCM signed 64-bit big-endian
+ *
  */
 export function pcm_s64be(options?: {
 
@@ -5834,7 +5531,7 @@ export function pcm_s64be(options?: {
 
 
 /**
- * PCM signed 64-bit little-endian
+ *
  */
 export function pcm_s64le(options?: {
 
@@ -5851,7 +5548,7 @@ export function pcm_s64le(options?: {
 
 
 /**
- * PCM signed 8-bit
+ *
  */
 export function pcm_s8(options?: {
 
@@ -5868,7 +5565,7 @@ export function pcm_s8(options?: {
 
 
 /**
- * PCM signed 8-bit planar
+ *
  */
 export function pcm_s8_planar(options?: {
 
@@ -5885,7 +5582,7 @@ export function pcm_s8_planar(options?: {
 
 
 /**
- * PCM unsigned 16-bit big-endian
+ *
  */
 export function pcm_u16be(options?: {
 
@@ -5902,7 +5599,7 @@ export function pcm_u16be(options?: {
 
 
 /**
- * PCM unsigned 16-bit little-endian
+ *
  */
 export function pcm_u16le(options?: {
 
@@ -5919,7 +5616,7 @@ export function pcm_u16le(options?: {
 
 
 /**
- * PCM unsigned 24-bit big-endian
+ *
  */
 export function pcm_u24be(options?: {
 
@@ -5936,7 +5633,7 @@ export function pcm_u24be(options?: {
 
 
 /**
- * PCM unsigned 24-bit little-endian
+ *
  */
 export function pcm_u24le(options?: {
 
@@ -5953,7 +5650,7 @@ export function pcm_u24le(options?: {
 
 
 /**
- * PCM unsigned 32-bit big-endian
+ *
  */
 export function pcm_u32be(options?: {
 
@@ -5970,7 +5667,7 @@ export function pcm_u32be(options?: {
 
 
 /**
- * PCM unsigned 32-bit little-endian
+ *
  */
 export function pcm_u32le(options?: {
 
@@ -5987,7 +5684,7 @@ export function pcm_u32le(options?: {
 
 
 /**
- * PCM unsigned 8-bit
+ *
  */
 export function pcm_u8(options?: {
 
@@ -6004,7 +5701,7 @@ export function pcm_u8(options?: {
 
 
 /**
- * PCM Archimedes VIDC
+ *
  */
 export function pcm_vidc(options?: {
 
@@ -6021,7 +5718,7 @@ export function pcm_vidc(options?: {
 
 
 /**
- * RealAudio 1.0 (14.4K) (codec ra_144)
+ * (codec ra_144)
  */
 export function real_144(options?: {
 
@@ -6038,7 +5735,7 @@ export function real_144(options?: {
 
 
 /**
- * id RoQ DPCM
+ *
  */
 export function roq_dpcm(options?: {
 
@@ -6055,7 +5752,7 @@ export function roq_dpcm(options?: {
 
 
 /**
- * SMPTE 302M
+ *
  */
 export function s302m(options?: {
 
@@ -6072,7 +5769,7 @@ export function s302m(options?: {
 
 
 /**
- * SBC (low-complexity subband codec)
+ *
  * @param options.sbc_delay - set maximum algorithmic latency (default 0.013)
  * @param options.msbc - use mSBC mode (wideband speech mono SBC) (default false)
  */
@@ -6095,7 +5792,7 @@ export function sbc(options?: {
 
 
 /**
- * Sonic
+ *
  */
 export function sonic(options?: {
 
@@ -6112,7 +5809,7 @@ export function sonic(options?: {
 
 
 /**
- * Sonic lossless
+ *
  */
 export function sonicls(options?: {
 
@@ -6129,7 +5826,7 @@ export function sonicls(options?: {
 
 
 /**
- * TrueHD
+ *
  * @param options.max_interval - Max number of frames between each new header (from 8 to 128) (default 16)
  * @param options.lpc_coeff_precision - LPC coefficient precision (from 0 to 15) (default 15)
  * @param options.lpc_type - LPC algorithm (from 2 to 3) (default levinson)
@@ -6167,7 +5864,7 @@ export function truehd(options?: {
 
 
 /**
- * TTA (True Audio)
+ *
  */
 export function tta(options?: {
 
@@ -6184,7 +5881,7 @@ export function tta(options?: {
 
 
 /**
- * Vorbis
+ *
  */
 export function vorbis(options?: {
 
@@ -6201,7 +5898,7 @@ export function vorbis(options?: {
 
 
 /**
- * libvorbis (codec vorbis)
+ * (codec vorbis)
  * @param options.iblock - Sets the impulse block bias (from -15 to 0) (default 0)
  */
 export function libvorbis(options?: {
@@ -6221,7 +5918,7 @@ export function libvorbis(options?: {
 
 
 /**
- * WavPack
+ *
  * @param options.joint_stereo - (default auto)
  * @param options.optimize_mono - (default false)
  */
@@ -6244,7 +5941,7 @@ export function wavpack(options?: {
 
 
 /**
- * Windows Media Audio 1
+ *
  */
 export function wmav1(options?: {
 
@@ -6261,7 +5958,7 @@ export function wmav1(options?: {
 
 
 /**
- * Windows Media Audio 2
+ *
  */
 export function wmav2(options?: {
 
@@ -6278,7 +5975,7 @@ export function wmav2(options?: {
 
 
 /**
- * ASS (Advanced SubStation Alpha) subtitle (codec ass)
+ * (codec ass)
  */
 export function ssa(options?: {
 
@@ -6295,7 +5992,7 @@ export function ssa(options?: {
 
 
 /**
- * ASS (Advanced SubStation Alpha) subtitle
+ *
  */
 export function ass(options?: {
 
@@ -6312,7 +6009,7 @@ export function ass(options?: {
 
 
 /**
- * DVB subtitles (codec dvb_subtitle)
+ * (codec dvb_subtitle)
  */
 export function dvbsub(options?: {
 
@@ -6329,7 +6026,7 @@ export function dvbsub(options?: {
 
 
 /**
- * DVD subtitles (codec dvd_subtitle)
+ * (codec dvd_subtitle)
  * @param options.palette - set the global palette
  * @param options.even_rows_fix - Make number of rows even (workaround for some players) (default false)
  */
@@ -6352,7 +6049,7 @@ export function dvdsub(options?: {
 
 
 /**
- * 3GPP Timed Text subtitle
+ *
  * @param options.height - Frame height, usually video height (from 0 to INT_MAX) (default 0)
  */
 export function mov_text(options?: {
@@ -6372,7 +6069,7 @@ export function mov_text(options?: {
 
 
 /**
- * SubRip subtitle (codec subrip)
+ * (codec subrip)
  */
 export function srt(options?: {
 
@@ -6389,7 +6086,7 @@ export function srt(options?: {
 
 
 /**
- * SubRip subtitle
+ *
  */
 export function subrip(options?: {
 
@@ -6406,7 +6103,7 @@ export function subrip(options?: {
 
 
 /**
- * Raw text subtitle
+ *
  */
 export function text(options?: {
 
@@ -6423,7 +6120,7 @@ export function text(options?: {
 
 
 /**
- * TTML subtitle
+ *
  */
 export function ttml(options?: {
 
@@ -6440,7 +6137,7 @@ export function ttml(options?: {
 
 
 /**
- * WebVTT subtitle
+ *
  */
 export function webvtt(options?: {
 
@@ -6457,7 +6154,7 @@ export function webvtt(options?: {
 
 
 /**
- * DivX subtitles (XSUB)
+ *
  */
 export function xsub(options?: {
 

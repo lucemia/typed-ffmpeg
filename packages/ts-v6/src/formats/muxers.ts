@@ -14,7 +14,7 @@ export type FFMpegMuxerOption = Readonly<Record<string, unknown>>;
 
 
 /**
- * 3GP2 (3GPP2 file format)
+ *
  * @param options.movflags - MOV muxer flags (default 0)
  * @param options.moov_size - maximum moov size so it can be placed at the begin (from 0 to INT_MAX) (default 0)
  * @param options.rtpflags - RTP muxer flags (default 0)
@@ -106,7 +106,7 @@ export function _3g2(options?: {
 
 
 /**
- * 3GP (3GPP file format)
+ *
  * @param options.movflags - MOV muxer flags (default 0)
  * @param options.moov_size - maximum moov size so it can be placed at the begin (from 0 to INT_MAX) (default 0)
  * @param options.rtpflags - RTP muxer flags (default 0)
@@ -198,7 +198,7 @@ export function _3gp(options?: {
 
 
 /**
- * a64 - video for Commodore 64
+ *
  */
 export function a64(options?: {
 
@@ -215,7 +215,7 @@ export function a64(options?: {
 
 
 /**
- * raw AC-3
+ *
  */
 export function ac3(options?: {
 
@@ -232,7 +232,7 @@ export function ac3(options?: {
 
 
 /**
- * raw AC-4
+ *
  * @param options.write_crc - enable checksum (default false)
  */
 export function ac4(options?: {
@@ -252,7 +252,7 @@ export function ac4(options?: {
 
 
 /**
- * ADTS AAC (Advanced Audio Coding)
+ *
  * @param options.write_id3v2 - Enable ID3v2 tag writing (default false)
  * @param options.write_apetag - Enable APE tag writing (default false)
  * @param options.write_mpeg2 - Set MPEG version to MPEG-2 (default false)
@@ -278,7 +278,7 @@ export function adts(options?: {
 
 
 /**
- * CRI ADX
+ *
  */
 export function adx(options?: {
 
@@ -295,7 +295,7 @@ export function adx(options?: {
 
 
 /**
- * Audio IFF
+ *
  * @param options.write_id3v2 - Enable ID3 tags writing. (default false)
  * @param options.id3v2_version - Select ID3v2 version to write. Currently 3 and 4 are supported. (from 3 to 4) (default 4)
  */
@@ -318,7 +318,7 @@ export function aiff(options?: {
 
 
 /**
- * PCM A-law
+ *
  */
 export function alaw(options?: {
 
@@ -335,7 +335,7 @@ export function alaw(options?: {
 
 
 /**
- * LEGO Racers ALP
+ *
  * @param options._type - set file type (from 0 to 2) (default auto)
  */
 export function alp(options?: {
@@ -355,7 +355,24 @@ export function alp(options?: {
 
 
 /**
- * 3GPP AMR
+ *
+ */
+export function alsa(options?: {
+
+}): FFMpegMuxerOption {
+  return merge({
+
+  });
+}
+
+
+
+
+
+
+
+/**
+ *
  */
 export function amr(options?: {
 
@@ -372,7 +389,7 @@ export function amr(options?: {
 
 
 /**
- * AMV
+ *
  */
 export function amv(options?: {
 
@@ -389,7 +406,7 @@ export function amv(options?: {
 
 
 /**
- * Ubisoft Rayman 2 APM
+ *
  */
 export function apm(options?: {
 
@@ -406,7 +423,7 @@ export function apm(options?: {
 
 
 /**
- * Animated Portable Network Graphics
+ *
  * @param options.plays - Number of times to play the output: 0 - infinite loop, 1 - no loop (from 0 to 65535) (default 1)
  * @param options.final_delay - Force delay after the last frame (from 0 to 65535) (default 0/1)
  */
@@ -429,7 +446,7 @@ export function apng(options?: {
 
 
 /**
- * raw aptX (Audio Processing Technology for Bluetooth)
+ *
  */
 export function aptx(options?: {
 
@@ -446,7 +463,7 @@ export function aptx(options?: {
 
 
 /**
- * raw aptX HD (Audio Processing Technology for Bluetooth)
+ *
  */
 export function aptx_hd(options?: {
 
@@ -463,7 +480,7 @@ export function aptx_hd(options?: {
 
 
 /**
- * Argonaut Games ASF
+ *
  * @param options.version_major - override file major version (from 0 to 65535) (default 2)
  * @param options.version_minor - override file minor version (from 0 to 65535) (default 1)
  * @param options.name - embedded file name (max 8 characters)
@@ -489,7 +506,7 @@ export function argo_asf(options?: {
 
 
 /**
- * Argonaut Games CVG
+ *
  * @param options.skip_rate_check - skip sample rate check (default false)
  * @param options.loop - set loop flag (default false)
  * @param options.reverb - set reverb flag (default true)
@@ -515,7 +532,7 @@ export function argo_cvg(options?: {
 
 
 /**
- * ASF (Advanced / Active Streaming Format)
+ *
  * @param options.packet_size - Packet size (from 100 to 65536) (default 3200)
  */
 export function asf(options?: {
@@ -535,7 +552,7 @@ export function asf(options?: {
 
 
 /**
- * ASF (Advanced / Active Streaming Format)
+ *
  * @param options.packet_size - Packet size (from 100 to 65536) (default 3200)
  */
 export function asf_stream(options?: {
@@ -555,7 +572,7 @@ export function asf_stream(options?: {
 
 
 /**
- * SSA (SubStation Alpha) subtitle
+ *
  * @param options.ignore_readorder - write events immediately, even if they're out-of-order (default false)
  */
 export function ass(options?: {
@@ -575,7 +592,7 @@ export function ass(options?: {
 
 
 /**
- * AST (Audio Stream)
+ *
  * @param options.loopstart - Loopstart position in milliseconds. (from -1 to INT_MAX) (default -1)
  * @param options.loopend - Loopend position in milliseconds. (from 0 to INT_MAX) (default 0)
  */
@@ -598,7 +615,7 @@ export function ast(options?: {
 
 
 /**
- * Sun AU
+ *
  */
 export function au(options?: {
 
@@ -615,7 +632,7 @@ export function au(options?: {
 
 
 /**
- * AVI (Audio Video Interleaved)
+ *
  * @param options.reserve_index_space - reserve space (in bytes) at the beginning of the file for each stream index (from 0 to INT_MAX) (default 0)
  * @param options.write_channel_mask - write channel mask into wave format header (default true)
  * @param options.flipped_raw_rgb - Raw RGB bitmaps are stored bottom-up (default false)
@@ -641,7 +658,7 @@ export function avi(options?: {
 
 
 /**
- * AVIF
+ *
  * @param options.movie_timescale - set movie timescale (from 1 to INT_MAX) (default 1000)
  * @param options.loop - Number of times to loop animated AVIF: 0 - infinite loop (from 0 to INT_MAX) (default 0)
  */
@@ -664,7 +681,7 @@ export function avif(options?: {
 
 
 /**
- * SWF (ShockWave Flash) (AVM2)
+ *
  */
 export function avm2(options?: {
 
@@ -681,7 +698,7 @@ export function avm2(options?: {
 
 
 /**
- * raw AVS2-P2/IEEE1857.4 video
+ *
  */
 export function avs2(options?: {
 
@@ -698,7 +715,7 @@ export function avs2(options?: {
 
 
 /**
- * AVS3-P2/IEEE1857.10
+ *
  */
 export function avs3(options?: {
 
@@ -715,7 +732,7 @@ export function avs3(options?: {
 
 
 /**
- * G.729 BIT file format
+ *
  */
 export function bit(options?: {
 
@@ -732,7 +749,7 @@ export function bit(options?: {
 
 
 /**
- * Apple CAF (Core Audio Format)
+ *
  */
 export function caf(options?: {
 
@@ -749,7 +766,7 @@ export function caf(options?: {
 
 
 /**
- * raw Chinese AVS (Audio Video Standard) video
+ *
  */
 export function cavsvideo(options?: {
 
@@ -766,7 +783,7 @@ export function cavsvideo(options?: {
 
 
 /**
- * codec2 .c2 muxer
+ *
  */
 export function codec2(options?: {
 
@@ -783,7 +800,7 @@ export function codec2(options?: {
 
 
 /**
- * raw codec2 muxer
+ *
  */
 export function codec2raw(options?: {
 
@@ -800,7 +817,7 @@ export function codec2raw(options?: {
 
 
 /**
- * CRC testing
+ *
  */
 export function crc(options?: {
 
@@ -817,7 +834,7 @@ export function crc(options?: {
 
 
 /**
- * DASH Muxer
+ *
  * @param options.adaptation_sets - Adaptation sets. Syntax: id=0,streams=0,1,2 id=1,streams=3,4 and so on
  * @param options.window_size - number of segments kept in the manifest (from 0 to INT_MAX) (default 0)
  * @param options.extra_window_size - number of segments kept outside of the manifest before removing from disk (from 0 to INT_MAX) (default 5)
@@ -942,7 +959,7 @@ export function dash(options?: {
 
 
 /**
- * raw data
+ *
  */
 export function data(options?: {
 
@@ -959,7 +976,7 @@ export function data(options?: {
 
 
 /**
- * D-Cinema audio
+ *
  */
 export function daud(options?: {
 
@@ -976,7 +993,7 @@ export function daud(options?: {
 
 
 /**
- * raw DFPWM1a
+ *
  */
 export function dfpwm(options?: {
 
@@ -993,7 +1010,7 @@ export function dfpwm(options?: {
 
 
 /**
- * raw Dirac
+ *
  */
 export function dirac(options?: {
 
@@ -1010,7 +1027,7 @@ export function dirac(options?: {
 
 
 /**
- * raw DNxHD (SMPTE VC-3)
+ *
  */
 export function dnxhd(options?: {
 
@@ -1027,7 +1044,7 @@ export function dnxhd(options?: {
 
 
 /**
- * raw DTS
+ *
  */
 export function dts(options?: {
 
@@ -1044,7 +1061,7 @@ export function dts(options?: {
 
 
 /**
- * DV (Digital Video)
+ *
  */
 export function dv(options?: {
 
@@ -1061,7 +1078,7 @@ export function dv(options?: {
 
 
 /**
- * MPEG-2 PS (DVD VOB)
+ *
  * @param options.muxrate - (from 0 to 1.67772e+09) (default 0)
  * @param options.preload - Initial demux-decode delay in microseconds. (from 0 to INT_MAX) (default 500000)
  */
@@ -1084,7 +1101,7 @@ export function dvd(options?: {
 
 
 /**
- * raw E-AC-3
+ *
  */
 export function eac3(options?: {
 
@@ -1101,7 +1118,7 @@ export function eac3(options?: {
 
 
 /**
- * raw EVC video
+ *
  */
 export function evc(options?: {
 
@@ -1118,7 +1135,7 @@ export function evc(options?: {
 
 
 /**
- * PCM 32-bit floating-point big-endian
+ *
  */
 export function f32be(options?: {
 
@@ -1135,7 +1152,7 @@ export function f32be(options?: {
 
 
 /**
- * PCM 32-bit floating-point little-endian
+ *
  */
 export function f32le(options?: {
 
@@ -1152,7 +1169,7 @@ export function f32le(options?: {
 
 
 /**
- * F4V Adobe Flash Video
+ *
  * @param options.movflags - MOV muxer flags (default 0)
  * @param options.moov_size - maximum moov size so it can be placed at the begin (from 0 to INT_MAX) (default 0)
  * @param options.rtpflags - RTP muxer flags (default 0)
@@ -1244,7 +1261,7 @@ export function f4v(options?: {
 
 
 /**
- * PCM 64-bit floating-point big-endian
+ *
  */
 export function f64be(options?: {
 
@@ -1261,7 +1278,7 @@ export function f64be(options?: {
 
 
 /**
- * PCM 64-bit floating-point little-endian
+ *
  */
 export function f64le(options?: {
 
@@ -1278,7 +1295,7 @@ export function f64le(options?: {
 
 
 /**
- * Linux framebuffer
+ *
  * @param options.xoffset - set x coordinate of top left corner (from INT_MIN to INT_MAX) (default 0)
  * @param options.yoffset - set y coordinate of top left corner (from INT_MIN to INT_MAX) (default 0)
  */
@@ -1301,7 +1318,7 @@ export function fbdev(options?: {
 
 
 /**
- * FFmpeg metadata in text
+ *
  */
 export function ffmetadata(options?: {
 
@@ -1318,7 +1335,7 @@ export function ffmetadata(options?: {
 
 
 /**
- * FIFO queue pseudo-muxer
+ *
  * @param options.fifo_format - Target muxer
  * @param options.queue_size - Size of fifo queue (from 1 to INT_MAX) (default 60)
  * @param options.format_opts - Options to be passed to underlying muxer
@@ -1368,7 +1385,7 @@ export function fifo(options?: {
 
 
 /**
- * Fifo test muxer
+ *
  * @param options.write_header_ret - write_header() return value (from INT_MIN to INT_MAX) (default 0)
  * @param options.write_trailer_ret - write_trailer() return value (from INT_MIN to INT_MAX) (default 0)
  * @param options.print_deinit_summary - print summary when deinitializing muxer (default true)
@@ -1394,7 +1411,7 @@ export function fifo_test(options?: {
 
 
 /**
- * Sega FILM / CPK
+ *
  */
 export function film_cpk(options?: {
 
@@ -1411,7 +1428,7 @@ export function film_cpk(options?: {
 
 
 /**
- * Adobe Filmstrip
+ *
  */
 export function filmstrip(options?: {
 
@@ -1428,7 +1445,7 @@ export function filmstrip(options?: {
 
 
 /**
- * Flexible Image Transport System
+ *
  */
 export function fits(options?: {
 
@@ -1445,7 +1462,7 @@ export function fits(options?: {
 
 
 /**
- * raw FLAC
+ *
  * @param options.write_header - Write the file header (default true)
  */
 export function flac(options?: {
@@ -1465,7 +1482,7 @@ export function flac(options?: {
 
 
 /**
- * FLV (Flash Video)
+ *
  * @param options.flvflags - FLV muxer flags (default 0)
  */
 export function flv(options?: {
@@ -1485,7 +1502,7 @@ export function flv(options?: {
 
 
 /**
- * framecrc testing
+ *
  */
 export function framecrc(options?: {
 
@@ -1502,7 +1519,7 @@ export function framecrc(options?: {
 
 
 /**
- * Per-frame hash testing
+ *
  * @param options.hash - set hash to use (default "sha256")
  * @param options.format_version - file format version (from 1 to 2) (default 2)
  */
@@ -1525,7 +1542,7 @@ export function framehash(options?: {
 
 
 /**
- * Per-frame MD5 testing
+ *
  * @param options.hash - set hash to use (default "md5")
  * @param options.format_version - file format version (from 1 to 2) (default 2)
  */
@@ -1548,7 +1565,7 @@ export function framemd5(options?: {
 
 
 /**
- * raw G.722
+ *
  */
 export function g722(options?: {
 
@@ -1565,7 +1582,7 @@ export function g722(options?: {
 
 
 /**
- * raw G.723.1
+ *
  */
 export function g723_1(options?: {
 
@@ -1582,7 +1599,7 @@ export function g723_1(options?: {
 
 
 /**
- * raw big-endian G.726 ("left-justified")
+ *
  */
 export function g726(options?: {
 
@@ -1599,7 +1616,7 @@ export function g726(options?: {
 
 
 /**
- * raw little-endian G.726 ("right-justified")
+ *
  */
 export function g726le(options?: {
 
@@ -1616,7 +1633,7 @@ export function g726le(options?: {
 
 
 /**
- * CompuServe Graphics Interchange Format (GIF)
+ *
  * @param options.loop - Number of times to loop the output: -1 - no loop, 0 - infinite loop (from -1 to 65535) (default 0)
  * @param options.final_delay - Force delay (in centiseconds) after the last frame (from -1 to 65535) (default -1)
  */
@@ -1639,7 +1656,7 @@ export function gif(options?: {
 
 
 /**
- * raw GSM
+ *
  */
 export function gsm(options?: {
 
@@ -1656,7 +1673,7 @@ export function gsm(options?: {
 
 
 /**
- * GXF (General eXchange Format)
+ *
  */
 export function gxf(options?: {
 
@@ -1673,7 +1690,7 @@ export function gxf(options?: {
 
 
 /**
- * raw H.261
+ *
  */
 export function h261(options?: {
 
@@ -1690,7 +1707,7 @@ export function h261(options?: {
 
 
 /**
- * raw H.263
+ *
  */
 export function h263(options?: {
 
@@ -1707,7 +1724,7 @@ export function h263(options?: {
 
 
 /**
- * raw H.264 video
+ *
  */
 export function h264(options?: {
 
@@ -1724,7 +1741,7 @@ export function h264(options?: {
 
 
 /**
- * Hash testing
+ *
  * @param options.hash - set hash to use (default "sha256")
  */
 export function hash(options?: {
@@ -1744,7 +1761,7 @@ export function hash(options?: {
 
 
 /**
- * HDS Muxer
+ *
  * @param options.window_size - number of fragments kept in the manifest (from 0 to INT_MAX) (default 0)
  * @param options.extra_window_size - number of fragments kept outside of the manifest before removing from disk (from 0 to INT_MAX) (default 5)
  * @param options.min_frag_duration - minimum fragment duration (in microseconds) (from 0 to INT_MAX) (default 10000000)
@@ -1773,7 +1790,7 @@ export function hds(options?: {
 
 
 /**
- * raw HEVC video
+ *
  */
 export function hevc(options?: {
 
@@ -1790,7 +1807,7 @@ export function hevc(options?: {
 
 
 /**
- * Apple HTTP Live Streaming
+ *
  * @param options.start_number - set first number in the sequence (from 0 to I64_MAX) (default 0)
  * @param options.hls_time - set segment length (default 2)
  * @param options.hls_init_time - set segment length at init list (default 0)
@@ -1912,7 +1929,7 @@ export function hls(options?: {
 
 
 /**
- * Microsoft Windows ICO
+ *
  */
 export function ico(options?: {
 
@@ -1929,7 +1946,7 @@ export function ico(options?: {
 
 
 /**
- * iLBC storage
+ *
  */
 export function ilbc(options?: {
 
@@ -1946,7 +1963,7 @@ export function ilbc(options?: {
 
 
 /**
- * image2 sequence
+ *
  * @param options.update - continuously overwrite one file (default false)
  * @param options.start_number - set first number in the sequence (from 0 to INT_MAX) (default 1)
  * @param options.strftime - use strftime for filename (default false)
@@ -1981,7 +1998,7 @@ export function image2(options?: {
 
 
 /**
- * piped image2 sequence
+ *
  */
 export function image2pipe(options?: {
 
@@ -1998,7 +2015,7 @@ export function image2pipe(options?: {
 
 
 /**
- * iPod H.264 MP4 (MPEG-4 Part 14)
+ *
  * @param options.movflags - MOV muxer flags (default 0)
  * @param options.moov_size - maximum moov size so it can be placed at the begin (from 0 to INT_MAX) (default 0)
  * @param options.rtpflags - RTP muxer flags (default 0)
@@ -2090,7 +2107,7 @@ export function ipod(options?: {
 
 
 /**
- * Berkeley/IRCAM/CARL Sound Format
+ *
  */
 export function ircam(options?: {
 
@@ -2107,7 +2124,7 @@ export function ircam(options?: {
 
 
 /**
- * ISMV/ISMA (Smooth Streaming)
+ *
  * @param options.movflags - MOV muxer flags (default 0)
  * @param options.moov_size - maximum moov size so it can be placed at the begin (from 0 to INT_MAX) (default 0)
  * @param options.rtpflags - RTP muxer flags (default 0)
@@ -2199,7 +2216,7 @@ export function ismv(options?: {
 
 
 /**
- * On2 IVF
+ *
  */
 export function ivf(options?: {
 
@@ -2216,7 +2233,7 @@ export function ivf(options?: {
 
 
 /**
- * JACOsub subtitle format
+ *
  */
 export function jacosub(options?: {
 
@@ -2233,7 +2250,7 @@ export function jacosub(options?: {
 
 
 /**
- * Simon & Schuster Interactive VAG
+ *
  */
 export function kvag(options?: {
 
@@ -2250,7 +2267,7 @@ export function kvag(options?: {
 
 
 /**
- * LOAS/LATM
+ *
  * @param options.smc_interval - StreamMuxConfig interval. (from 1 to 65535) (default 20)
  */
 export function latm(options?: {
@@ -2270,7 +2287,7 @@ export function latm(options?: {
 
 
 /**
- * LRC lyrics
+ *
  */
 export function lrc(options?: {
 
@@ -2287,7 +2304,7 @@ export function lrc(options?: {
 
 
 /**
- * raw MPEG-4 video
+ *
  */
 export function m4v(options?: {
 
@@ -2304,7 +2321,7 @@ export function m4v(options?: {
 
 
 /**
- * Matroska
+ *
  * @param options.reserve_index_space - Reserve a given amount of space (in bytes) at the beginning of the file for the index (cues). (from 0 to INT_MAX) (default 0)
  * @param options.cues_to_front - Move Cues (the index) to the front by shifting data if necessary (default false)
  * @param options.cluster_size_limit - Store at most the provided amount of bytes in a cluster.  (from -1 to INT_MAX) (default -1)
@@ -2354,7 +2371,7 @@ export function matroska(options?: {
 
 
 /**
- * MD5 testing
+ *
  * @param options.hash - set hash to use (default "md5")
  */
 export function md5(options?: {
@@ -2374,7 +2391,7 @@ export function md5(options?: {
 
 
 /**
- * MicroDVD subtitle format
+ *
  */
 export function microdvd(options?: {
 
@@ -2391,7 +2408,7 @@ export function microdvd(options?: {
 
 
 /**
- * raw MJPEG video
+ *
  */
 export function mjpeg(options?: {
 
@@ -2408,7 +2425,7 @@ export function mjpeg(options?: {
 
 
 /**
- * extract pts as timecode v2 format, as defined by mkvtoolnix
+ *
  */
 export function mkvtimestamp_v2(options?: {
 
@@ -2425,7 +2442,7 @@ export function mkvtimestamp_v2(options?: {
 
 
 /**
- * raw MLP
+ *
  */
 export function mlp(options?: {
 
@@ -2442,7 +2459,7 @@ export function mlp(options?: {
 
 
 /**
- * Yamaha SMAF
+ *
  */
 export function mmf(options?: {
 
@@ -2459,7 +2476,7 @@ export function mmf(options?: {
 
 
 /**
- * QuickTime / MOV
+ *
  * @param options.movflags - MOV muxer flags (default 0)
  * @param options.moov_size - maximum moov size so it can be placed at the begin (from 0 to INT_MAX) (default 0)
  * @param options.rtpflags - RTP muxer flags (default 0)
@@ -2551,7 +2568,7 @@ export function mov(options?: {
 
 
 /**
- * MP2 (MPEG audio layer 2)
+ *
  */
 export function mp2(options?: {
 
@@ -2568,7 +2585,7 @@ export function mp2(options?: {
 
 
 /**
- * MP3 (MPEG audio layer 3)
+ *
  * @param options.id3v2_version - Select ID3v2 version to write. Currently 3 and 4 are supported. (from 0 to 4) (default 4)
  * @param options.write_id3v1 - Enable ID3v1 writing. ID3v1 tags are written in UTF-8 which may not be supported by most software. (default false)
  * @param options.write_xing - Write the Xing header containing file duration. (default true)
@@ -2594,7 +2611,7 @@ export function mp3(options?: {
 
 
 /**
- * MP4 (MPEG-4 Part 14)
+ *
  * @param options.movflags - MOV muxer flags (default 0)
  * @param options.moov_size - maximum moov size so it can be placed at the begin (from 0 to INT_MAX) (default 0)
  * @param options.rtpflags - RTP muxer flags (default 0)
@@ -2686,7 +2703,7 @@ export function mp4(options?: {
 
 
 /**
- * MPEG-1 Systems / MPEG program stream
+ *
  * @param options.muxrate - (from 0 to 1.67772e+09) (default 0)
  * @param options.preload - Initial demux-decode delay in microseconds. (from 0 to INT_MAX) (default 500000)
  */
@@ -2709,7 +2726,7 @@ export function mpeg(options?: {
 
 
 /**
- * raw MPEG-1 video
+ *
  */
 export function mpeg1video(options?: {
 
@@ -2726,7 +2743,7 @@ export function mpeg1video(options?: {
 
 
 /**
- * raw MPEG-2 video
+ *
  */
 export function mpeg2video(options?: {
 
@@ -2743,7 +2760,7 @@ export function mpeg2video(options?: {
 
 
 /**
- * MPEG-TS (MPEG-2 Transport Stream)
+ *
  * @param options.mpegts_transport_stream_id - Set transport_stream_id field. (from 1 to 65535) (default 1)
  * @param options.mpegts_original_network_id - Set original_network_id field. (from 1 to 65535) (default 65281)
  * @param options.mpegts_service_id - Set service_id field. (from 1 to 65535) (default 1)
@@ -2811,7 +2828,7 @@ export function mpegts(options?: {
 
 
 /**
- * MIME multipart JPEG
+ *
  * @param options.boundary_tag - Boundary tag (default "ffmpeg")
  */
 export function mpjpeg(options?: {
@@ -2831,7 +2848,7 @@ export function mpjpeg(options?: {
 
 
 /**
- * PCM mu-law
+ *
  */
 export function mulaw(options?: {
 
@@ -2848,7 +2865,7 @@ export function mulaw(options?: {
 
 
 /**
- * MXF (Material eXchange Format)
+ *
  * @param options.signal_standard - Force/set Signal Standard (from -1 to 7) (default -1)
  * @param options.store_user_comments - (default true)
  */
@@ -2871,7 +2888,7 @@ export function mxf(options?: {
 
 
 /**
- * MXF (Material eXchange Format) D-10 Mapping
+ *
  * @param options.d10_channelcount - Force/set channelcount in generic sound essence descriptor (from -1 to 8) (default -1)
  * @param options.signal_standard - Force/set Signal Standard (from -1 to 7) (default -1)
  * @param options.store_user_comments - (default false)
@@ -2897,7 +2914,7 @@ export function mxf_d10(options?: {
 
 
 /**
- * MXF (Material eXchange Format) Operational Pattern Atom
+ *
  * @param options.mxf_audio_edit_rate - Audio edit rate for timecode (from 0 to INT_MAX) (default 25/1)
  * @param options.signal_standard - Force/set Signal Standard (from -1 to 7) (default -1)
  * @param options.store_user_comments - (default true)
@@ -2923,7 +2940,7 @@ export function mxf_opatom(options?: {
 
 
 /**
- * raw null video
+ *
  */
 export function _null(options?: {
 
@@ -2940,7 +2957,7 @@ export function _null(options?: {
 
 
 /**
- * NUT
+ *
  * @param options.syncpoints - NUT syncpoint behaviour (default 0)
  * @param options.write_index - Write index (default true)
  */
@@ -2963,7 +2980,7 @@ export function nut(options?: {
 
 
 /**
- * AV1 low overhead OBU
+ *
  */
 export function obu(options?: {
 
@@ -2980,7 +2997,7 @@ export function obu(options?: {
 
 
 /**
- * Ogg Audio
+ *
  * @param options.serial_offset - serial number offset (from 0 to INT_MAX) (default 0)
  * @param options.oggpagesize - Set preferred Ogg page size. (from 0 to 65025) (default 0)
  * @param options.pagesize - preferred page size in bytes (deprecated) (from 0 to 65025) (default 0)
@@ -3009,7 +3026,7 @@ export function oga(options?: {
 
 
 /**
- * Ogg
+ *
  * @param options.serial_offset - serial number offset (from 0 to INT_MAX) (default 0)
  * @param options.oggpagesize - Set preferred Ogg page size. (from 0 to 65025) (default 0)
  * @param options.pagesize - preferred page size in bytes (deprecated) (from 0 to 65025) (default 0)
@@ -3038,7 +3055,7 @@ export function ogg(options?: {
 
 
 /**
- * Ogg Video
+ *
  * @param options.serial_offset - serial number offset (from 0 to INT_MAX) (default 0)
  * @param options.oggpagesize - Set preferred Ogg page size. (from 0 to 65025) (default 0)
  * @param options.pagesize - preferred page size in bytes (deprecated) (from 0 to 65025) (default 0)
@@ -3067,7 +3084,7 @@ export function ogv(options?: {
 
 
 /**
- * Sony OpenMG audio
+ *
  */
 export function oma(options?: {
 
@@ -3084,7 +3101,7 @@ export function oma(options?: {
 
 
 /**
- * Ogg Opus
+ *
  * @param options.serial_offset - serial number offset (from 0 to INT_MAX) (default 0)
  * @param options.oggpagesize - Set preferred Ogg page size. (from 0 to 65025) (default 0)
  * @param options.pagesize - preferred page size in bytes (deprecated) (from 0 to 65025) (default 0)
@@ -3113,7 +3130,7 @@ export function opus(options?: {
 
 
 /**
- * OSS (Open Sound System) playback
+ *
  */
 export function oss(options?: {
 
@@ -3130,7 +3147,7 @@ export function oss(options?: {
 
 
 /**
- * PSP MP4 (MPEG-4 Part 14)
+ *
  * @param options.movflags - MOV muxer flags (default 0)
  * @param options.moov_size - maximum moov size so it can be placed at the begin (from 0 to INT_MAX) (default 0)
  * @param options.rtpflags - RTP muxer flags (default 0)
@@ -3222,7 +3239,7 @@ export function psp(options?: {
 
 
 /**
- * raw video
+ *
  */
 export function rawvideo(options?: {
 
@@ -3239,7 +3256,7 @@ export function rawvideo(options?: {
 
 
 /**
- * RealMedia
+ *
  */
 export function rm(options?: {
 
@@ -3256,7 +3273,7 @@ export function rm(options?: {
 
 
 /**
- * raw id RoQ
+ *
  */
 export function roq(options?: {
 
@@ -3273,7 +3290,7 @@ export function roq(options?: {
 
 
 /**
- * Lego Mindstorms RSO
+ *
  */
 export function rso(options?: {
 
@@ -3290,7 +3307,7 @@ export function rso(options?: {
 
 
 /**
- * RTP output
+ *
  * @param options.rtpflags - RTP muxer flags (default 0)
  * @param options.payload_type - Specify RTP payload type (from -1 to 127) (default -1)
  * @param options.ssrc - Stream identifier (from INT_MIN to INT_MAX) (default 0)
@@ -3322,7 +3339,7 @@ export function rtp(options?: {
 
 
 /**
- * RTP/mpegts output format
+ *
  * @param options.mpegts_muxer_options - set list of options for the MPEG-TS muxer
  * @param options.rtp_muxer_options - set list of options for the RTP muxer
  */
@@ -3345,7 +3362,7 @@ export function rtp_mpegts(options?: {
 
 
 /**
- * RTSP output
+ *
  * @param options.rtpflags - RTP muxer flags (default 0)
  * @param options.rtsp_transport - set RTSP transport protocols (default 0)
  * @param options.min_port - set minimum local UDP port (from 0 to 65535) (default 5000)
@@ -3380,7 +3397,7 @@ export function rtsp(options?: {
 
 
 /**
- * PCM signed 16-bit big-endian
+ *
  */
 export function s16be(options?: {
 
@@ -3397,7 +3414,7 @@ export function s16be(options?: {
 
 
 /**
- * PCM signed 16-bit little-endian
+ *
  */
 export function s16le(options?: {
 
@@ -3414,7 +3431,7 @@ export function s16le(options?: {
 
 
 /**
- * PCM signed 24-bit big-endian
+ *
  */
 export function s24be(options?: {
 
@@ -3431,7 +3448,7 @@ export function s24be(options?: {
 
 
 /**
- * PCM signed 24-bit little-endian
+ *
  */
 export function s24le(options?: {
 
@@ -3448,7 +3465,7 @@ export function s24le(options?: {
 
 
 /**
- * PCM signed 32-bit big-endian
+ *
  */
 export function s32be(options?: {
 
@@ -3465,7 +3482,7 @@ export function s32be(options?: {
 
 
 /**
- * PCM signed 32-bit little-endian
+ *
  */
 export function s32le(options?: {
 
@@ -3482,7 +3499,7 @@ export function s32le(options?: {
 
 
 /**
- * PCM signed 8-bit
+ *
  */
 export function s8(options?: {
 
@@ -3499,7 +3516,7 @@ export function s8(options?: {
 
 
 /**
- * SAP output
+ *
  */
 export function sap(options?: {
 
@@ -3516,7 +3533,7 @@ export function sap(options?: {
 
 
 /**
- * raw SBC
+ *
  */
 export function sbc(options?: {
 
@@ -3533,7 +3550,7 @@ export function sbc(options?: {
 
 
 /**
- * Scenarist Closed Captions
+ *
  */
 export function scc(options?: {
 
@@ -3550,7 +3567,7 @@ export function scc(options?: {
 
 
 /**
- * segment
+ *
  * @param options.reference_stream - set reference stream (default "auto")
  * @param options.segment_format - set container format used for the segments
  * @param options.segment_format_options - set list of options for the container format used for the segments
@@ -3651,7 +3668,7 @@ export function segment(options?: {
 
 
 /**
- * Loki SDL MJPEG
+ *
  */
 export function smjpeg(options?: {
 
@@ -3668,7 +3685,7 @@ export function smjpeg(options?: {
 
 
 /**
- * Smooth Streaming Muxer
+ *
  * @param options.window_size - number of fragments kept in the manifest (from 0 to INT_MAX) (default 0)
  * @param options.extra_window_size - number of fragments kept outside of the manifest before removing from disk (from 0 to INT_MAX) (default 5)
  * @param options.lookahead_count - number of lookahead fragments (from 0 to INT_MAX) (default 2)
@@ -3700,7 +3717,24 @@ export function smoothstreaming(options?: {
 
 
 /**
- * SoX (Sound eXchange) native
+ *
+ */
+export function sndio(options?: {
+
+}): FFMpegMuxerOption {
+  return merge({
+
+  });
+}
+
+
+
+
+
+
+
+/**
+ *
  */
 export function sox(options?: {
 
@@ -3717,7 +3751,7 @@ export function sox(options?: {
 
 
 /**
- * IEC 61937 (used on S/PDIF - IEC958)
+ *
  * @param options.spdif_flags - IEC 61937 encapsulation flags (default 0)
  * @param options.dtshd_rate - mux complete DTS frames in HD mode at the specified IEC958 rate (in Hz, default 0=disabled) (from 0 to 768000) (default 0)
  * @param options.dtshd_fallback_time - min secs to strip HD for after an overflow (-1: till the end, default 60) (from -1 to INT_MAX) (default 60)
@@ -3743,7 +3777,7 @@ export function spdif(options?: {
 
 
 /**
- * Ogg Speex
+ *
  * @param options.serial_offset - serial number offset (from 0 to INT_MAX) (default 0)
  * @param options.oggpagesize - Set preferred Ogg page size. (from 0 to 65025) (default 0)
  * @param options.pagesize - preferred page size in bytes (deprecated) (from 0 to 65025) (default 0)
@@ -3772,7 +3806,7 @@ export function spx(options?: {
 
 
 /**
- * SubRip subtitle
+ *
  */
 export function srt(options?: {
 
@@ -3789,7 +3823,7 @@ export function srt(options?: {
 
 
 /**
- * Per-stream hash testing
+ *
  * @param options.hash - set hash to use (default "sha256")
  */
 export function streamhash(options?: {
@@ -3809,7 +3843,7 @@ export function streamhash(options?: {
 
 
 /**
- * raw HDMV Presentation Graphic Stream subtitles
+ *
  */
 export function sup(options?: {
 
@@ -3826,7 +3860,7 @@ export function sup(options?: {
 
 
 /**
- * MPEG-2 PS (SVCD)
+ *
  * @param options.muxrate - (from 0 to 1.67772e+09) (default 0)
  * @param options.preload - Initial demux-decode delay in microseconds. (from 0 to INT_MAX) (default 500000)
  */
@@ -3849,7 +3883,7 @@ export function svcd(options?: {
 
 
 /**
- * SWF (ShockWave Flash)
+ *
  */
 export function swf(options?: {
 
@@ -3866,7 +3900,7 @@ export function swf(options?: {
 
 
 /**
- * Multiple muxer tee
+ *
  * @param options.use_fifo - Use fifo pseudo-muxer to separate actual muxers from encoder (default false)
  * @param options.fifo_options - fifo pseudo-muxer options
  */
@@ -3889,7 +3923,7 @@ export function tee(options?: {
 
 
 /**
- * raw TrueHD
+ *
  */
 export function truehd(options?: {
 
@@ -3906,7 +3940,7 @@ export function truehd(options?: {
 
 
 /**
- * TTA (True Audio)
+ *
  */
 export function tta(options?: {
 
@@ -3923,7 +3957,7 @@ export function tta(options?: {
 
 
 /**
- * TTML subtitle
+ *
  */
 export function ttml(options?: {
 
@@ -3940,7 +3974,7 @@ export function ttml(options?: {
 
 
 /**
- * PCM unsigned 16-bit big-endian
+ *
  */
 export function u16be(options?: {
 
@@ -3957,7 +3991,7 @@ export function u16be(options?: {
 
 
 /**
- * PCM unsigned 16-bit little-endian
+ *
  */
 export function u16le(options?: {
 
@@ -3974,7 +4008,7 @@ export function u16le(options?: {
 
 
 /**
- * PCM unsigned 24-bit big-endian
+ *
  */
 export function u24be(options?: {
 
@@ -3991,7 +4025,7 @@ export function u24be(options?: {
 
 
 /**
- * PCM unsigned 24-bit little-endian
+ *
  */
 export function u24le(options?: {
 
@@ -4008,7 +4042,7 @@ export function u24le(options?: {
 
 
 /**
- * PCM unsigned 32-bit big-endian
+ *
  */
 export function u32be(options?: {
 
@@ -4025,7 +4059,7 @@ export function u32be(options?: {
 
 
 /**
- * PCM unsigned 32-bit little-endian
+ *
  */
 export function u32le(options?: {
 
@@ -4042,7 +4076,7 @@ export function u32le(options?: {
 
 
 /**
- * PCM unsigned 8-bit
+ *
  */
 export function u8(options?: {
 
@@ -4059,7 +4093,7 @@ export function u8(options?: {
 
 
 /**
- * uncoded framecrc testing
+ *
  */
 export function uncodedframecrc(options?: {
 
@@ -4076,7 +4110,7 @@ export function uncodedframecrc(options?: {
 
 
 /**
- * raw VC-1 video
+ *
  */
 export function vc1(options?: {
 
@@ -4093,7 +4127,7 @@ export function vc1(options?: {
 
 
 /**
- * VC-1 test bitstream
+ *
  */
 export function vc1test(options?: {
 
@@ -4110,7 +4144,7 @@ export function vc1test(options?: {
 
 
 /**
- * MPEG-1 Systems / MPEG program stream (VCD)
+ *
  * @param options.muxrate - (from 0 to 1.67772e+09) (default 0)
  * @param options.preload - Initial demux-decode delay in microseconds. (from 0 to INT_MAX) (default 500000)
  */
@@ -4133,7 +4167,7 @@ export function vcd(options?: {
 
 
 /**
- * PCM Archimedes VIDC
+ *
  */
 export function vidc(options?: {
 
@@ -4150,7 +4184,7 @@ export function vidc(options?: {
 
 
 /**
- * MPEG-2 PS (VOB)
+ *
  * @param options.muxrate - (from 0 to 1.67772e+09) (default 0)
  * @param options.preload - Initial demux-decode delay in microseconds. (from 0 to INT_MAX) (default 500000)
  */
@@ -4173,7 +4207,7 @@ export function vob(options?: {
 
 
 /**
- * Creative Voice
+ *
  */
 export function voc(options?: {
 
@@ -4190,7 +4224,7 @@ export function voc(options?: {
 
 
 /**
- * raw H.266/VVC video
+ *
  */
 export function vvc(options?: {
 
@@ -4207,7 +4241,7 @@ export function vvc(options?: {
 
 
 /**
- * Sony Wave64
+ *
  */
 export function w64(options?: {
 
@@ -4224,7 +4258,7 @@ export function w64(options?: {
 
 
 /**
- * WAV / WAVE (Waveform Audio)
+ *
  * @param options.write_bext - Write BEXT chunk. (default false)
  * @param options.write_peak - Write Peak Envelope chunk. (from 0 to 2) (default off)
  * @param options.rf64 - Use RF64 header rather than RIFF for large files. (from -1 to 1) (default never)
@@ -4259,7 +4293,7 @@ export function wav(options?: {
 
 
 /**
- * WebM
+ *
  * @param options.reserve_index_space - Reserve a given amount of space (in bytes) at the beginning of the file for the index (cues). (from 0 to INT_MAX) (default 0)
  * @param options.cues_to_front - Move Cues (the index) to the front by shifting data if necessary (default false)
  * @param options.cluster_size_limit - Store at most the provided amount of bytes in a cluster.  (from -1 to INT_MAX) (default -1)
@@ -4309,7 +4343,7 @@ export function webm(options?: {
 
 
 /**
- * WebM Chunk Muxer
+ *
  * @param options.chunk_start_index - start index of the chunk (from 0 to INT_MAX) (default 0)
  * @param options.header - filename of the header where the initialization data will be written
  * @param options.audio_chunk_duration - duration of each chunk in milliseconds (from 0 to INT_MAX) (default 5000)
@@ -4338,7 +4372,7 @@ export function webm_chunk(options?: {
 
 
 /**
- * WebM DASH Manifest
+ *
  * @param options.adaptation_sets - Adaptation sets. Syntax: id=0,streams=0,1,2 id=1,streams=3,4 and so on
  * @param options.live - create a live stream manifest (default false)
  * @param options.chunk_start_index - start index of the chunk (from 0 to INT_MAX) (default 0)
@@ -4376,7 +4410,7 @@ export function webm_dash_manifest(options?: {
 
 
 /**
- * WebP
+ *
  * @param options.loop - Number of times to loop the output: 0 - infinite loop (from 0 to 65535) (default 1)
  */
 export function webp(options?: {
@@ -4396,7 +4430,7 @@ export function webp(options?: {
 
 
 /**
- * WebVTT subtitle
+ *
  */
 export function webvtt(options?: {
 
@@ -4413,7 +4447,7 @@ export function webvtt(options?: {
 
 
 /**
- * Westwood Studios audio
+ *
  */
 export function wsaud(options?: {
 
@@ -4430,7 +4464,7 @@ export function wsaud(options?: {
 
 
 /**
- * Windows Television (WTV)
+ *
  */
 export function wtv(options?: {
 
@@ -4447,7 +4481,7 @@ export function wtv(options?: {
 
 
 /**
- * raw WavPack
+ *
  */
 export function wv(options?: {
 
@@ -4464,7 +4498,42 @@ export function wv(options?: {
 
 
 /**
- * YUV4MPEG pipe
+ *
+ * @param options.display_name - set display name
+ * @param options.window_id - set existing window id (from 0 to I64_MAX) (default 0)
+ * @param options.window_size - set window forced size
+ * @param options.window_title - set window title
+ * @param options.window_x - set window x offset (from -2.14748e+09 to INT_MAX) (default 0)
+ * @param options.window_y - set window y offset (from -2.14748e+09 to INT_MAX) (default 0)
+ */
+export function xv(options?: {
+  display_name?: string | null;
+  window_id?: number | null;
+  window_size?: string | null;
+  window_title?: string | null;
+  window_x?: number | null;
+  window_y?: number | null;
+
+}): FFMpegMuxerOption {
+  return merge({
+    "display_name": options?.display_name,
+    "window_id": options?.window_id,
+    "window_size": options?.window_size,
+    "window_title": options?.window_title,
+    "window_x": options?.window_x,
+    "window_y": options?.window_y,
+
+  });
+}
+
+
+
+
+
+
+
+/**
+ *
  */
 export function yuv4mpegpipe(options?: {
 

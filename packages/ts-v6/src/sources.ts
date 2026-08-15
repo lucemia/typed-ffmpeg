@@ -882,10 +882,6 @@ return filterNode;
 
 
 
-
-
-
-
 /**
  * Generate an Audio/Video Sync Test. Generated stream periodically shows flash video frame and emits beep in audio. Useful to inspect A/V sync issues. It accepts the following options:
 
@@ -947,8 +943,6 @@ extraOptions?: Record<string, unknown>;
   );
 return filterNode;
 }
-
-
 
 
 
@@ -1058,10 +1052,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 
-
-
-
-
 /**
  * Buffer video frames, and make them available to the filter chain. This source is mainly intended for a programmatic use, in particular through the interface defined in libavfilter/buffersrc.h. It accepts the following parameters:
 
@@ -1108,8 +1098,6 @@ extraOptions?: Record<string, unknown>;
   );
 return filterNode.video(0) as unknown as VideoStream;
 }
-
-
 
 
 
@@ -1209,8 +1197,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 
-
-
 /**
  * The allrgb source returns frames of size 4096x4096 of all rgb colors. The allyuv source returns frames of size 4096x4096 of all yuv colors. The color source provides an uniformly colored input. The colorchart source provides a colors checker chart. The colorspectrum source provides a color spectrum input. The haldclutsrc source provides an identity Hald CLUT. See also haldclut filter. The nullsrc source returns unprocessed video frames. It is mainly useful to be employed in analysis / debugging tools, or as the source for filters which ignore the input data. The pal75bars source generates a color bars pattern, based on EBU PAL recommendations with 75% color levels. The pal100bars source generates a color bars pattern, based on EBU PAL recommendations with 100% color levels. The rgbtestsrc source generates an RGB test pattern useful for detecting RGB vs BGR issues. You should see a red, green and blue stripe from top to bottom. The smptebars source generates a color bars pattern, based on the SMPTE Engineering Guideline EG 1-1990. The smptehdbars source generates a color bars pattern, based on the SMPTE RP 219-2002. The testsrc source generates a test video pattern, showing a color pattern, a scrolling gradient and a timestamp. This is mainly intended for testing purposes. The testsrc2 source is similar to testsrc, but supports more pixel formats instead of just rgb24. This allows using it as an input for other tests without requiring a format conversion. The yuvtestsrc source generates an YUV test pattern. You should see a y, cb and cr stripe from top to bottom. The sources accept the following parameters:
 
@@ -1248,62 +1234,6 @@ extraOptions?: Record<string, unknown>;
       "rate": options?.rate,
       "duration": options?.duration,
       "sar": options?.sar,
-},
-    options?.extraOptions,
-  ),
-  );
-return filterNode.video(0) as unknown as VideoStream;
-}
-
-
-
-
-
-
-/**
- * Video source that creates a Vulkan frame of a solid color. Useful for benchmarking, or overlaying. It accepts the following parameters:
- *
- * Note: New in FFmpeg 6.0.
- *
- * @param options.color - The color to use. Either a name, or a hexadecimal value. The default value is black.
- * @param options.size - The size of the output frame. Default value is 1920x1080.
- * @param options.rate - The framerate to output at. Default value is 60 frames per second.
- * @param options.duration - The video duration. Default value is -0.000001.
- * @param options.sar - The video signal aspect ratio. Default value is 1/1.
- * @param options.format - The pixel format of the output Vulkan frames. Default value is yuv444p.
- * @param options.out_range - Set the output YCbCr sample range. This allows the autodetected value to be overridden as well as allows forcing a specific value used for the output and encoder. If not specified, the range depends on the pixel format. Possible values: @end table
- * @see https://ffmpeg.org/ffmpeg-filters.html#color_vulkan
- */
-export function color_vulkan(
-
-
-
-  options?: {
-    color?: FFColor;
-    size?: FFImageSize;
-    rate?: FFVideoRate;
-    duration?: FFDuration;
-    sar?: FFRational;
-    format?: FFString;
-    out_range?: FFInt | "full" | "limited" | "jpeg" | "mpeg" | "tv" | "pc";
-extraOptions?: Record<string, unknown>;
-  },
-): VideoStream {
-
-  const inputStreams: FilterableStream[] = [];
-
-  const filterNode = filterNodeFactory(
-    { name: "color_vulkan", typingsInput: [], typingsOutput: ["video"] },
-    inputStreams,
-    merge(
-    {
-      "color": options?.color,
-      "size": options?.size,
-      "rate": options?.rate,
-      "duration": options?.duration,
-      "sar": options?.sar,
-      "format": options?.format,
-      "out_range": options?.out_range,
 },
     options?.extraOptions,
   ),
@@ -1363,8 +1293,6 @@ extraOptions?: Record<string, unknown>;
   );
 return filterNode.video(0) as unknown as VideoStream;
 }
-
-
 
 
 
@@ -1484,8 +1412,6 @@ extraOptions?: Record<string, unknown>;
   );
 return filterNode;
 }
-
-
 
 
 
@@ -1674,12 +1600,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 
-
-
-
-
-
-
 /**
  * Field matching filter for inverse telecine. It is meant to reconstruct the progressive frames from a telecined stream. The filter does not drop duplicated frames, so to achieve a complete inverse telecine fieldmatch needs to be followed by a decimation filter such as decimate in the filtergraph. The separation of the field matching and the decimation is notably motivated by the possibility of inserting a de-interlacing filter fallback between the two. If the source has mixed telecined and real interlaced content, fieldmatch will not be able to match fields for the interlaced parts. But these remaining combed frames will be marked as interlaced, and thus can be de-interlaced by a later filter such as yadif before decimation. In addition to the various configuration options, fieldmatch can take an optional second stream, activated through the ppsrc option. If enabled, the frames reconstruction will be based on the fields and frames from this second stream. This allows the first input to be pre-processed in order to help the various algorithms of the filter, while keeping the output lossless (assuming the fields are matched properly). Typically, a field-aware denoiser, or brightness/contrast adjustments can help. Note that this filter uses the same algorithms as TIVTC/TFM (AviSynth project) and VIVTC/VFM (VapourSynth project). The later is a light clone of TFM from which fieldmatch is based on. While the semantic and usage are very close, some behaviour and options names can differ. The decimate filter currently only works for constant frame rate input. If your input has mixed telecined (30fps) and progressive content with a lower framerate like 24fps use the following filterchain to produce the necessary cfr stream: dejudder,fps=30000/1001,fieldmatch,decimate. The filter accepts the following options:
 
@@ -1770,112 +1690,12 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 
-/**
- * Synthesize a voice utterance using the libflite library. To enable compilation of this filter you need to configure FFmpeg with --enable-libflite. Note that versions of the flite library prior to 2.0 are not thread-safe. The filter accepts the following options:
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.list_voices - If set to 1, list the names of the available voices and exit immediately. Default value is 0.
- * @param options.nb_samples - Set the maximum number of samples per frame. Default value is 512.
- * @param options.text - Set the text to speak.
- * @param options.textfile - Set the filename containing the text to speak.
- * @param options.v - Set the voice to use for the speech synthesis. Default value is kal. See also the list_voices option.
- * @see https://ffmpeg.org/ffmpeg-filters.html#flite
- */
-export function flite(
-
-
-
-  options?: {
-    list_voices?: FFBoolean;
-    nb_samples?: FFInt;
-    text?: FFString;
-    textfile?: FFString;
-    v?: FFString;
-extraOptions?: Record<string, unknown>;
-  },
-): AudioStream {
-
-  const inputStreams: FilterableStream[] = [];
-
-  const filterNode = filterNodeFactory(
-    { name: "flite", typingsInput: [], typingsOutput: ["audio"] },
-    inputStreams,
-    merge(
-    {
-      "list_voices": options?.list_voices,
-      "nb_samples": options?.nb_samples,
-      "text": options?.text,
-      "textfile": options?.textfile,
-      "v": options?.v,
-},
-    options?.extraOptions,
-  ),
-  );
-return filterNode.audio(0) as unknown as AudioStream;
-}
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/**
- * Provide a frei0r source. To enable compilation of this filter you need to install the frei0r header and configure FFmpeg with --enable-frei0r. This source accepts the following parameters:
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.size - The size of the video to generate. For the syntax of this option, check the "Video size" section in the ffmpeg-utils manual.
- * @param options.framerate - The framerate of the generated video. It may be a string of the form num/den or a frame rate abbreviation.
- * @param options.filter_name - The name to the frei0r source to load. For more information regarding frei0r and how to set the parameters, read the frei0r section in the video filters documentation.
- * @see https://ffmpeg.org/ffmpeg-filters.html#frei0r_src
- */
-export function frei0r_src(
-
-
-
-  options?: {
-    size?: FFImageSize;
-    framerate?: FFVideoRate;
-    filter_name?: FFString;
-extraOptions?: Record<string, unknown>;
-  },
-): VideoStream {
-
-  const inputStreams: FilterableStream[] = [];
-
-  const filterNode = filterNodeFactory(
-    { name: "frei0r_src", typingsInput: [], typingsOutput: ["video"] },
-    inputStreams,
-    merge(
-    {
-      "size": options?.size,
-      "framerate": options?.framerate,
-      "filter_name": options?.filter_name,
-},
-    options?.extraOptions,
-  ),
-  );
-return filterNode.video(0) as unknown as VideoStream;
-}
 
 
 
@@ -2153,8 +1973,6 @@ return filterNode.audio(0) as unknown as AudioStream;
 
 
 
-
-
 /**
  * Generate odd-tap Hilbert transform FIR coefficients. The resulting stream can be used with afir filter for phase-shifting the signal by 90 degrees. This is used in many matrix coding schemes and for analytic signal generation. The process is often written as a multiplication by i (or j), the imaginary unit. The filter accepts the following options:
 
@@ -2319,8 +2137,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 
-
-
 /**
  * Temporally interleave frames from several inputs. interleave works with video inputs, ainterleave with audio. These filters read frames from several inputs and send the oldest queued frame to the output. Input streams must have well defined, monotonically increasing frame timestamp values. In order to submit one frame to output, these filters need to enqueue at least one frame for each input, so they cannot work in case one input is not yet terminated and will not receive incoming frames. For example consider the case when one input is a select filter which always drops input frames. The interleave filter will keep reading from that input, but it will never be able to send new frames to output until the input sends an end-of-stream signal. Also, depending on inputs synchronization, the filters will drop frames in case one input receives more frames than the other ones, and the queue is already filled. These filters accept the following options:
 
@@ -2404,60 +2220,6 @@ return filterNode.audio(0) as unknown as AudioStream;
 
 
 
-
-
-
-
-/**
- * Load a LADSPA (Linux Audio Developer's Simple Plugin API) plugin. To enable compilation of this filter you need to configure FFmpeg with --enable-ladspa.
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.file - Specifies the name of LADSPA plugin library to load. If the environment variable LADSPA_PATH is defined, the LADSPA plugin is searched in each one of the directories specified by the colon separated list in LADSPA_PATH, otherwise in the standard LADSPA paths, which are in this order: HOME/.ladspa/lib/, /usr/local/lib/ladspa/, /usr/lib/ladspa/.
- * @param options.plugin - Specifies the plugin within the library. Some libraries contain only one plugin, but others contain many of them. If this is not set filter will list all available plugins within the specified library.
- * @param options.controls - Set the '|' separated list of controls which are zero or more floating point values that determine the behavior of the loaded plugin (for example delay, threshold or gain). Controls need to be defined using the following syntax: c0=value0|c1=value1|c2=value2|..., where valuei is the value set on the i-th control. Alternatively they can be also defined using the following syntax: value0|value1|value2|..., where valuei is the value set on the i-th control. If controls is set to help, all available controls and their valid ranges are printed.
- * @param options.sample_rate - Specify the sample rate, default to 44100. Only used if plugin have zero inputs.
- * @param options.nb_samples - Set the number of samples per channel per each output frame, default is 1024. Only used if plugin have zero inputs.
- * @param options.duration - Set the minimum duration of the sourced audio. See the Time duration section in the ffmpeg-utils(1) manual for the accepted syntax. Note that the resulting duration may be greater than the specified duration, as the generated audio is always cut at the end of a complete frame. If not specified, or the expressed duration is negative, the audio is supposed to be generated forever. Only used if plugin have zero inputs.
- * @param options.latency - Enable latency compensation, by default is disabled. Only used if plugin have inputs.
- * @see https://ffmpeg.org/ffmpeg-filters.html#ladspa
- */
-export function ladspa(
-
-  streams: FilterableStream[],
-
-  options?: {
-    file?: FFString;
-    plugin?: FFString;
-    controls?: FFString;
-    sample_rate?: FFInt;
-    nb_samples?: FFInt;
-    duration?: FFDuration;
-    latency?: FFBoolean;
-extraOptions?: Record<string, unknown>;
-  },
-): AudioStream {
-
-  const inputStreams = streams;
-
-  const filterNode = filterNodeFactory(
-    { name: "ladspa", typingsInput: [], typingsOutput: ["audio"] },
-    inputStreams,
-    merge(
-    {
-      "file": options?.file,
-      "plugin": options?.plugin,
-      "controls": options?.controls,
-      "sample_rate": options?.sample_rate,
-      "nb_samples": options?.nb_samples,
-      "duration": options?.duration,
-      "latency": options?.latency,
-},
-    options?.extraOptions,
-  ),
-  );
-return filterNode.audio(0) as unknown as AudioStream;
-}
 
 
 
@@ -2603,56 +2365,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 
-
-
-
-
-
-
-/**
- * Load a LV2 (LADSPA Version 2) plugin. To enable compilation of this filter you need to configure FFmpeg with --enable-lv2.
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.plugin - Specifies the plugin URI. You may need to escape ':'.
- * @param options.controls - Set the '|' separated list of controls which are zero or more floating point values that determine the behavior of the loaded plugin (for example delay, threshold or gain). If controls is set to help, all available controls and their valid ranges are printed.
- * @param options.sample_rate - Specify the sample rate, default to 44100. Only used if plugin have zero inputs.
- * @param options.nb_samples - Set the number of samples per channel per each output frame, default is 1024. Only used if plugin have zero inputs.
- * @param options.duration - Set the minimum duration of the sourced audio. See the Time duration section in the ffmpeg-utils(1) manual for the accepted syntax. Note that the resulting duration may be greater than the specified duration, as the generated audio is always cut at the end of a complete frame. If not specified, or the expressed duration is negative, the audio is supposed to be generated forever. Only used if plugin have zero inputs.
- * @see https://ffmpeg.org/ffmpeg-filters.html#lv2
- */
-export function lv2(
-
-  streams: FilterableStream[],
-
-  options?: {
-    plugin?: FFString;
-    controls?: FFString;
-    sample_rate?: FFInt;
-    nb_samples?: FFInt;
-    duration?: FFDuration;
-extraOptions?: Record<string, unknown>;
-  },
-): AudioStream {
-
-  const inputStreams = streams;
-
-  const filterNode = filterNodeFactory(
-    { name: "lv2", typingsInput: [], typingsOutput: ["audio"] },
-    inputStreams,
-    merge(
-    {
-      "plugin": options?.plugin,
-      "controls": options?.controls,
-      "sample_rate": options?.sample_rate,
-      "nb_samples": options?.nb_samples,
-      "duration": options?.duration,
-},
-    options?.extraOptions,
-  ),
-  );
-return filterNode.audio(0) as unknown as AudioStream;
-}
 
 
 
@@ -3009,10 +2721,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 
-
-
-
-
 /**
  * The allrgb source returns frames of size 4096x4096 of all rgb colors. The allyuv source returns frames of size 4096x4096 of all yuv colors. The color source provides an uniformly colored input. The colorchart source provides a colors checker chart. The colorspectrum source provides a color spectrum input. The haldclutsrc source provides an identity Hald CLUT. See also haldclut filter. The nullsrc source returns unprocessed video frames. It is mainly useful to be employed in analysis / debugging tools, or as the source for filters which ignore the input data. The pal75bars source generates a color bars pattern, based on EBU PAL recommendations with 75% color levels. The pal100bars source generates a color bars pattern, based on EBU PAL recommendations with 100% color levels. The rgbtestsrc source generates an RGB test pattern useful for detecting RGB vs BGR issues. You should see a red, green and blue stripe from top to bottom. The smptebars source generates a color bars pattern, based on the SMPTE Engineering Guideline EG 1-1990. The smptehdbars source generates a color bars pattern, based on the SMPTE RP 219-2002. The testsrc source generates a test video pattern, showing a color pattern, a scrolling gradient and a timestamp. This is mainly intended for testing purposes. The testsrc2 source is similar to testsrc, but supports more pixel formats instead of just rgb24. This allows using it as an input for other tests without requiring a format conversion. The yuvtestsrc source generates an YUV test pattern. You should see a y, cb and cr stripe from top to bottom. The sources accept the following parameters:
 
@@ -3053,62 +2761,6 @@ extraOptions?: Record<string, unknown>;
   );
 return filterNode.video(0) as unknown as VideoStream;
 }
-
-
-
-
-
-
-/**
- * Generate video using an OpenCL program.
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.source - OpenCL program source file.
- * @param options.kernel - Kernel name in program.
- * @param options.size - Size of frames to generate. This must be set.
- * @param options.format - Pixel format to use for the generated frames. This must be set.
- * @param options.rate - Number of frames generated every second. Default value is '25'.
- * @see https://ffmpeg.org/ffmpeg-filters.html#openclsrc
- */
-export function openclsrc(
-
-
-
-  options?: {
-    source?: FFString;
-    kernel?: FFString;
-    size?: FFImageSize;
-    format?: FFPixFmt;
-    rate?: FFVideoRate;
-extraOptions?: Record<string, unknown>;
-  },
-): VideoStream {
-
-  const inputStreams: FilterableStream[] = [];
-
-  const filterNode = filterNodeFactory(
-    { name: "openclsrc", typingsInput: [], typingsOutput: ["video"] },
-    inputStreams,
-    merge(
-    {
-      "source": options?.source,
-      "kernel": options?.kernel,
-      "size": options?.size,
-      "format": options?.format,
-      "rate": options?.rate,
-},
-    options?.extraOptions,
-  ),
-  );
-return filterNode.video(0) as unknown as VideoStream;
-}
-
-
-
-
-
-
 
 
 
@@ -3289,63 +2941,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 
-/**
- * Filter video using an OpenCL program.
- *
- * Note: Removed in FFmpeg 8.0.
- *
- * @param options.source - OpenCL program source file.
- * @param options.kernel - Kernel name in program.
- * @param options.inputs - Number of inputs to the filter. Defaults to 1.
- * @param options.size - Size of output frames. Defaults to the same as the first input.
- * @see https://ffmpeg.org/ffmpeg-filters.html#program_opencl
- */
-export function program_opencl(
-
-  streams: FilterableStream[],
-
-  options?: {
-    source?: FFString;
-    kernel?: FFString;
-    inputs?: FFInt;
-    size?: FFImageSize;
-    eofAction?: FFString;
-    shortest?: FFBoolean;
-    repeatlast?: FFBoolean;
-extraOptions?: Record<string, unknown>;
-  },
-): VideoStream {
-
-  const inputStreams = streams;
-
-  const filterNode = filterNodeFactory(
-    { name: "program_opencl", typingsInput: [], typingsOutput: ["video"] },
-    inputStreams,
-    merge(
-    {
-      "source": options?.source,
-      "kernel": options?.kernel,
-      "inputs": options?.inputs,
-      "size": options?.size,
-      "eof_action": options?.eofAction,
-      "shortest": options?.shortest,
-      "repeatlast": options?.repeatlast,
-},
-    options?.extraOptions,
-  ),
-  );
-return filterNode.video(0) as unknown as VideoStream;
-}
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -3417,12 +3012,6 @@ extraOptions?: Record<string, unknown>;
   );
 return filterNode.video(0) as unknown as VideoStream;
 }
-
-
-
-
-
-
 
 
 
@@ -3856,10 +3445,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 
-
-
-
-
 /**
  * Select video or audio streams. The filter accepts the following options:
 
@@ -4050,12 +3635,6 @@ return filterNode.video(0) as unknown as VideoStream;
 
 
 
-
-
-
-
-
-
 /**
  * Apply alpha unpremultiply effect to input video stream using first plane of second stream as alpha. Both streams must have same dimensions and same pixel format. The filter accepts the following option:
 
@@ -4092,10 +3671,6 @@ extraOptions?: Record<string, unknown>;
   );
 return filterNode.video(0) as unknown as VideoStream;
 }
-
-
-
-
 
 
 
@@ -4218,10 +3793,6 @@ extraOptions?: Record<string, unknown>;
   );
 return filterNode.video(0) as unknown as VideoStream;
 }
-
-
-
-
 
 
 

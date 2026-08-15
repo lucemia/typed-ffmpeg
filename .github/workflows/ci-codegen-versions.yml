@@ -27,7 +27,7 @@ on:
   workflow_dispatch:
     inputs:
       ffmpeg-version:
-        description: 'FFmpeg major version to generate (5, 6, 7, 8, or all)'
+        description: 'FFmpeg major version to generate (5, 6, 7, 8, 9, or all)'
         required: true
         default: 'all'
         type: choice
@@ -36,6 +36,7 @@ on:
           - '6'
           - '7'
           - '8'
+          - '9'
           - 'all'
       create_pr:
         description: 'Create a PR with the generated bindings against the current branch'
@@ -49,7 +50,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ffmpeg-version: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.ffmpeg-version != 'all') && fromJSON(format('["{0}"]', github.event.inputs.ffmpeg-version)) || fromJSON('["5", "6", "7", "8"]') }}
+        ffmpeg-version: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.ffmpeg-version != 'all') && fromJSON(format('["{0}"]', github.event.inputs.ffmpeg-version)) || fromJSON('["5", "6", "7", "8", "9"]') }}
         # ffmpeg-mm is the major_minor suffix codegen writes into cache/list/
         # (e.g. filters_8_0.json). It must match the image tag: globbing on the
         # major alone matches sibling minors like *_8_1.json and mixes versions
@@ -67,6 +68,9 @@ jobs:
           - ffmpeg-version: '8'
             ffmpeg-image: 'ghcr.io/lucemia/typed-ffmpeg/ffmpeg:8.0'
             ffmpeg-mm: '8_0'
+          - ffmpeg-version: '9'
+            ffmpeg-image: 'ghcr.io/lucemia/typed-ffmpeg/ffmpeg:9.0'
+            ffmpeg-mm: '9_0'
 
     steps:
       - uses: actions/checkout@v7
@@ -222,7 +226,7 @@ jobs:
 
       - name: Apply generated files
         run: |
-          for ver in 5 6 7 8; do
+          for ver in 5 6 7 8 9; do
             bindings_dir="/tmp/artifacts/ffmpeg-v${ver}-bindings"
             cache_dir="/tmp/artifacts/ffmpeg-v${ver}-cache"
             if [ -d "$bindings_dir" ]; then
