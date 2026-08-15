@@ -391,10 +391,33 @@ You can also trigger the publish workflow manually from the Actions tab:
 - **`package`**: select specific packages (e.g. `core`, `v8`) or `all`
 - **`test-pypi`**: publish to TestPyPI first for validation (recommended for major releases)
 
+#### How Codegen Reaches main
+
+Codegen lives in a single workflow, `ci-codegen-versions.yml`.
+
+When a PR changes the generator (templates, parsers, or
+`ffmpeg_core/common/**`), the workflow regenerates the bindings and **commits
+them onto the PR branch**. The generator change and its output therefore merge
+as one commit, and `main` never holds generator code without matching bindings.
+Expect a `chore: regenerate FFmpeg bindings` commit to appear on your branch —
+pull before pushing again.
+
+Two consequences worth knowing:
+
+- The bot pushes with `GITHUB_TOKEN`, which deliberately does not re-trigger
+  workflows, so the PR's other checks still show results from the commit before
+  the generated one. The generate job verifies the new files import, and `main`
+  re-runs everything on merge.
+- Fork PRs cannot be pushed to, so there the workflow fails with the diff and
+  asks you to regenerate locally instead.
+
+Pushes to `main` and manual dispatches still open a PR, since there is no branch
+to commit back to.
+
 #### Adding a New FFmpeg Version (e.g. v9)
 
-Codegen lives in a single workflow, `ci-codegen-versions.yml`. Adding a version
-means extending its matrix — there is no second workflow to keep in sync.
+Adding a version means extending the matrix — there is no second workflow to
+keep in sync.
 
 1. Make sure an FFmpeg image for the version exists. `jrottenberg/ffmpeg` only
    publishes up to 8.0, so newer majors need a build here: add

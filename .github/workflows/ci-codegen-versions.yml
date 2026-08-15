@@ -168,19 +168,38 @@ jobs:
           find packages/v${FFMPEG_MAJOR}/src/ffmpeg/ -name '*.py' -exec wc -l {} + 2>/dev/null | tail -1 >> $GITHUB_STEP_SUMMARY || true
           echo '```' >> $GITHUB_STEP_SUMMARY
 
-  create-pr:
+  # Generated output is applied where the change is, not afterwards. On a PR it
+  # is committed straight to the PR branch so templates and their output merge
+  # atomically; main never holds generator code without matching bindings.
+  # Pushes and manual dispatches still open a PR, since there is no branch to
+  # commit back to.
+  apply:
+    name: Apply generated output
     needs: generate
     if: >-
-      (github.event_name == 'workflow_dispatch' && github.event.inputs.create_pr == 'true') ||
-      github.event_name == 'push'
+      github.event_name == 'pull_request' ||
+      github.event_name == 'push' ||
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.create_pr == 'true')
     runs-on: ubuntu-latest
     permissions:
       contents: write
       pull-requests: write
+    env:
+      # Fork PRs cannot be pushed to with GITHUB_TOKEN.
+      IS_FORK: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository }}
     steps:
-      - uses: actions/checkout@v7
+      - name: Checkout PR branch
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        uses: actions/checkout@v7
         with:
-          ref: ${{ github.ref_name }}
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout (fork PR / push / dispatch)
+        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.repository
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event_name == 'pull_request' && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.ref_name }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Download all generated bindings
@@ -232,8 +251,12 @@ jobs:
       - name: Check for changes
         id: check-changes
         run: |
-          git diff --stat
-          if git diff --quiet; then
+          # Stage first: `git diff` alone only sees tracked files, so a newly
+          # generated module (a new filter, a new format) would be reported as
+          # "no changes" and silently dropped.
+          git add -A
+          git diff --cached --stat
+          if git diff --cached --quiet; then
             echo "has_changes=false" >> $GITHUB_OUTPUT
             echo "No changes detected — bindings are already up to date."
           else
@@ -241,8 +264,44 @@ jobs:
             echo "Changes detected."
           fi
 
+      # PR, same repo: commit the output onto the PR branch so it merges as one
+      # change. Note this push uses GITHUB_TOKEN, which deliberately does not
+      # re-trigger workflows — so the PR's other checks keep the results from
+      # the pre-generation commit. The generate job's own import verification
+      # covers the new files, and main's CI re-runs everything on merge.
+      - name: Commit generated output to PR branch
+        if: >-
+          steps.check-changes.outputs.has_changes == 'true' &&
+          github.event_name == 'pull_request' && env.IS_FORK == 'false'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "chore: regenerate FFmpeg bindings
+
+          Applied automatically by the CI CodeGen workflow so the generator
+          change and its output land in a single merge."
+          git push origin "HEAD:${{ github.head_ref }}"
+
+      # Fork PR: we cannot push to the contributor's branch, so make the
+      # staleness loud instead of silently dropping the output.
+      - name: Report stale generated output (fork PR)
+        if: >-
+          steps.check-changes.outputs.has_changes == 'true' &&
+          github.event_name == 'pull_request' && env.IS_FORK == 'true'
+        run: |
+          echo "::error::Generated output is out of date for this change."
+          echo "This PR is from a fork, so CI cannot commit the regenerated"
+          echo "bindings for you. Regenerate locally and include them:"
+          echo "  python -m scripts.code_gen.cli generate \\"
+          echo "    --outpath packages/vN/src/ffmpeg --ffmpeg-binary \$(which ffmpeg) --rebuild"
+          git diff --stat
+          exit 1
+
       - name: Create PR with updated bindings
-        if: steps.check-changes.outputs.has_changes == 'true'
+        if: >-
+          steps.check-changes.outputs.has_changes == 'true' &&
+          github.event_name != 'pull_request'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
