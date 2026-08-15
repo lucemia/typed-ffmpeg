@@ -477,7 +477,7 @@ def parse_filter_complex(
         chain_input_labels = re.findall(
             r"\[([^\[\]]+)\]", leading_match.group("inputs") or ""
         )
-        rest = filter_chain[len(leading_match.group(0)):]
+        rest = filter_chain[len(leading_match.group(0)) :]
 
         # Extract trailing [label] groups (output labels for this chain)
         trailing_match = re.search(r"(?P<outputs>(\[[^\[\]]+\])*)$", rest)
@@ -563,7 +563,9 @@ def parse_filter_complex(
                 }
             default_kwargs.update(filter_params)
 
-            filter_node = filter_node_factory(filter_def, *input_streams, **default_kwargs)
+            filter_node = filter_node_factory(
+                filter_def, *input_streams, **default_kwargs
+            )
 
             for idx, (output_label, output_typing) in enumerate(
                 zip(current_output_labels, filter_node.output_typings)
@@ -578,9 +580,7 @@ def parse_filter_complex(
                             node=filter_node, index=idx
                         )
                     case _:
-                        raise FFMpegValueError(
-                            f"Unknown stream type: {output_typing}"
-                        )
+                        raise FFMpegValueError(f"Unknown stream type: {output_typing}")
 
             current_input_labels = current_output_labels
 
@@ -664,9 +664,7 @@ def _build_output_stream(
     if not inputs:
         if len([k for k in in_streams if isinstance(in_streams[k], AVStream)]) == 1:
             inputs = [
-                in_streams[k]
-                for k in in_streams
-                if isinstance(in_streams[k], AVStream)
+                in_streams[k] for k in in_streams if isinstance(in_streams[k], AVStream)
             ]
 
     parameters: dict[str, str | bool] = {}
@@ -776,7 +774,9 @@ def parse(cli: str) -> Stream:
     global_params, remaining_tokens = parse_global(tokens, ffmpeg_options)
 
     index = len(remaining_tokens) - 1 - remaining_tokens[::-1].index("-i")
-    input_streams = parse_input(remaining_tokens[: index + 2], ffmpeg_options, av_options)
+    input_streams = parse_input(
+        remaining_tokens[: index + 2], ffmpeg_options, av_options
+    )
     remaining_tokens = remaining_tokens[index + 2 :]
 
     filter_complex_parts: list[str] = []
@@ -835,7 +835,9 @@ def parse(cli: str) -> Stream:
 
     def _label_ready(selector: str) -> bool:
         stripped = selector.strip("[]")
-        label_key = stripped if re.fullmatch(r"dec:\d+", stripped) else stripped.split(":")[0]
+        label_key = (
+            stripped if re.fullmatch(r"dec:\d+", stripped) else stripped.split(":")[0]
+        )
         return label_key in stream_mapping
 
     pending_outputs = list(output_segments)
@@ -849,7 +851,9 @@ def parse(cli: str) -> Stream:
         still_outputs: list[tuple[int, list[str], str]] = []
         for ordinal, opt_tokens, filename in pending_outputs:
             map_opts = [
-                m for m in parse_options(opt_tokens).get("map", []) if isinstance(m, str)
+                m
+                for m in parse_options(opt_tokens).get("map", [])
+                if isinstance(m, str)
             ]
             if all(_label_ready(sel) for sel in map_opts):
                 out_stream = _build_output_stream(

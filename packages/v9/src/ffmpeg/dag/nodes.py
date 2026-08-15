@@ -26,7 +26,6 @@ if TYPE_CHECKING:
     from ..types import String
 
 
-
 logger = logging.getLogger(__name__)
 
 
