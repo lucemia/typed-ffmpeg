@@ -38,7 +38,7 @@ on:
           - '8'
           - 'all'
       create_pr:
-        description: 'Create a PR with the generated bindings against v4'
+        description: 'Create a PR with the generated bindings against the current branch'
         required: false
         default: 'true'
         type: boolean
@@ -50,15 +50,23 @@ jobs:
       fail-fast: false
       matrix:
         ffmpeg-version: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.ffmpeg-version != 'all') && fromJSON(format('["{0}"]', github.event.inputs.ffmpeg-version)) || fromJSON('["5", "6", "7", "8"]') }}
+        # ffmpeg-mm is the major_minor suffix codegen writes into cache/list/
+        # (e.g. filters_8_0.json). It must match the image tag: globbing on the
+        # major alone matches sibling minors like *_8_1.json and mixes versions
+        # into one artifact.
         include:
           - ffmpeg-version: '5'
             ffmpeg-image: 'jrottenberg/ffmpeg:5.1-ubuntu'
+            ffmpeg-mm: '5_1'
           - ffmpeg-version: '6'
             ffmpeg-image: 'jrottenberg/ffmpeg:6.1-ubuntu'
+            ffmpeg-mm: '6_1'
           - ffmpeg-version: '7'
             ffmpeg-image: 'ghcr.io/lucemia/typed-ffmpeg/ffmpeg:7.1'
+            ffmpeg-mm: '7_1'
           - ffmpeg-version: '8'
             ffmpeg-image: 'ghcr.io/lucemia/typed-ffmpeg/ffmpeg:8.0'
+            ffmpeg-mm: '8_0'
 
     steps:
       - uses: actions/checkout@v7
@@ -134,7 +142,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: ffmpeg-v${{ matrix.ffmpeg-version }}-cache
-          path: packages/core/src/ffmpeg_core/common/cache/list/*_${{ matrix.ffmpeg-version }}_*.json
+          path: packages/core/src/ffmpeg_core/common/cache/list/*_${{ matrix.ffmpeg-mm }}.json
           retention-days: 30
 
       - name: Verify generated code imports
@@ -201,6 +209,23 @@ jobs:
               echo "Applying v${ver} cache..."
               mkdir -p "packages/core/src/ffmpeg_core/common/cache/list"
               cp "$cache_dir"/*.json "packages/core/src/ffmpeg_core/common/cache/list/" 2>/dev/null || true
+
+              # packages/core/.../cache/list is NOT shipped (include-package-data
+              # = false), so installed users read this data from the published
+              # ffmpeg-data-vN package instead. Mirror it there or the release
+              # silently keeps whatever was committed by hand.
+              # Suffixed name -> shipped name: filters_8_0.json -> filters.json
+              mm=$(basename "$(ls "$cache_dir"/filters_*.json 2>/dev/null | head -1)" .json | sed 's/^filters_//')
+              data_dir="packages/data-v${ver}/src/ffmpeg_data_v${ver}/cache/list"
+              if [ -n "$mm" ] && [ -d "$data_dir" ]; then
+                echo "  mirroring v${ver} cache (${mm}) -> ${data_dir}"
+                for src in "$cache_dir"/*_"${mm}".json; do
+                  [ -e "$src" ] || continue
+                  cp "$src" "${data_dir}/$(basename "$src" | sed "s/_${mm}\.json\$/.json/")"
+                done
+              else
+                echo "  WARNING: no cache mirror for v${ver} (mm='${mm}', dir='${data_dir}')"
+              fi
             fi
           done
 

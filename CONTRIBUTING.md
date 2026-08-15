@@ -393,11 +393,28 @@ You can also trigger the publish workflow manually from the Actions tab:
 
 #### Adding a New FFmpeg Version (e.g. v9)
 
-1. Add a Docker image entry to `codegen-regenerate.yml`
-2. Run codegen to generate `packages/v9` and `packages/data-v9`
-3. Add the new packages to `scripts/bump-version.py` and the publish workflow
-4. Update the `typed-ffmpeg` meta-package dependency to point to the new version
-5. Bump version and release all packages
+Codegen lives in a single workflow, `ci-codegen-versions.yml`. Adding a version
+means extending its matrix — there is no second workflow to keep in sync.
+
+1. Make sure an FFmpeg image for the version exists. `jrottenberg/ffmpeg` only
+   publishes up to 8.0, so newer majors need a build here: add
+   `docker/ffmpeg-builder/Dockerfile.<X.Y>` and a matrix entry in
+   `build-ffmpeg-images.yml`, then dispatch it to publish
+   `ghcr.io/lucemia/typed-ffmpeg/ffmpeg:<X.Y>`.
+2. Create the `packages/v9` and `packages/data-v9` package skeletons, and add
+   them to the workspace lists in `pyproject.toml` / `pyproject-workspace.toml`.
+   `packages/data-v9/src/ffmpeg_data_v9/cache/list/` must exist, or the cache
+   mirror step skips it with a warning.
+3. Add a matrix entry to `ci-codegen-versions.yml` with `ffmpeg-version`,
+   `ffmpeg-image`, and `ffmpeg-mm`. `ffmpeg-mm` is the `major_minor` suffix
+   codegen writes (e.g. `9_0` for `filters_9_0.json`) and must match the image
+   tag — globbing on the major alone also matches sibling minors.
+4. Dispatch the workflow to generate the bindings and open a PR. Merge it —
+   generated bindings only reach users once that PR lands.
+5. Add the new packages to `scripts/bump-version.py`, `scripts/gen_ref_pages.py`,
+   the publish workflow, and the `ci-monorepo-test` / `ci-ts-test` matrices.
+6. Update the `typed-ffmpeg` meta-package dependency to point to the new version.
+7. Bump version and release all packages.
 
 ## Getting Help
 
