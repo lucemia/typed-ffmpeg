@@ -3,29 +3,12 @@
 FFmpeg encoders.
 """
 
+
+
 from typing import Literal
 
 
-from ..types import (
-    Binary,
-    Boolean,
-    Color,
-    Dictionary,
-    Double,
-    Duration,
-    Flags,
-    Float,
-    Func,
-    Image_size,
-    Int,
-    Int64,
-    Pix_fmt,
-    Rational,
-    Sample_fmt,
-    String,
-    Time,
-    Video_rate,
-)
+from ..types import Binary, Boolean, Color, Dictionary, Double, Duration, Flags, Float, Func, Image_size, Int, Int64, Pix_fmt, Rational, Sample_fmt, String, Time, Video_rate
 
 from ..dag.factory import filter_node_factory
 
@@ -36,16 +19,10 @@ from ..common.schema import FFMpegFilterDef
 from ..options.framesync import FFMpegFrameSyncOption
 from ..options.timeline import FFMpegTimelineOption
 
-from ..options.codec import (
-    FFMpegAVCodecContextEncoderOption,
-    FFMpegAVCodecContextDecoderOption,
-)
+from ..options.codec import FFMpegAVCodecContextEncoderOption, FFMpegAVCodecContextDecoderOption
 
 
-from ..options.format import (
-    FFMpegAVFormatContextEncoderOption,
-    FFMpegAVFormatContextDecoderOption,
-)
+from ..options.format import FFMpegAVFormatContextEncoderOption, FFMpegAVFormatContextDecoderOption
 
 
 from ..streams.av import AVStream
@@ -54,15 +31,7 @@ from ..streams.channel_layout import CHANNEL_LAYOUT
 from .schema import FFMpegEncoderOption, FFMpegDecoderOption
 from ..formats.schema import FFMpegMuxerOption, FFMpegDemuxerOption
 
-from ..dag.nodes import (
-    FilterableStream,
-    FilterNode,
-    OutputStream,
-    OutputNode,
-    InputNode,
-    GlobalNode,
-    GlobalStream,
-)
+from ..dag.nodes import FilterableStream, FilterNode, OutputStream, OutputNode, InputNode, GlobalNode, GlobalStream
 
 
 from ..streams.video import VideoStream
@@ -71,7 +40,12 @@ from ..streams.video import VideoStream
 from ..streams.audio import AudioStream
 
 
-def a64multi() -> FFMpegEncoderOption:
+
+
+
+def a64multi(
+
+) -> FFMpegEncoderOption:
     """
     Multicolor charset for Commodore 64 (codec a64_multi)
 
@@ -79,10 +53,15 @@ def a64multi() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def a64multi5() -> FFMpegEncoderOption:
+
+def a64multi5(
+
+) -> FFMpegEncoderOption:
     """
     Multicolor charset for Commodore 64, extended with 5th color (colram) (codec a64_multi5)
 
@@ -90,10 +69,15 @@ def a64multi5() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def alias_pix() -> FFMpegEncoderOption:
+
+def alias_pix(
+
+) -> FFMpegEncoderOption:
     """
     Alias/Wavefront PIX image
 
@@ -101,48 +85,54 @@ def alias_pix() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
+
 
 
 def amv(
+
     mpv_flags: str | None = None,
+
     luma_elim_threshold: int | None = None,
+
     chroma_elim_threshold: int | None = None,
+
     quantizer_noise_shaping: int | None = None,
+
     error_rate: int | None = None,
+
     qsquish: float | None = None,
+
     rc_qmod_amp: float | None = None,
+
     rc_qmod_freq: int | None = None,
+
     rc_eq: str | None = None,
+
     rc_init_cplx: float | None = None,
+
     rc_buf_aggressivity: float | None = None,
+
     border_mask: float | None = None,
+
     lmin: int | None = None,
+
     lmax: int | None = None,
+
     skip_threshold: int | None = None,
+
     skip_factor: int | None = None,
+
     skip_exp: int | None = None,
-    skip_cmp: int
-    | None
-    | Literal[
-        "sad",
-        "sse",
-        "satd",
-        "dct",
-        "psnr",
-        "bit",
-        "rd",
-        "zero",
-        "vsad",
-        "vsse",
-        "nsse",
-        "dct264",
-        "dctmax",
-        "chroma",
-        "msad",
-    ] = None,
+
+    skip_cmp: int | None| Literal["sad", "sse", "satd", "dct", "psnr", "bit", "rd", "zero", "vsad", "vsse", "nsse", "dct264", "dctmax", "chroma", "msad"] = None,
+
     noise_reduction: int | None = None,
+
     ps: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     AMV Video
@@ -172,38 +162,60 @@ def amv(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "mpv_flags": mpv_flags,
-                "luma_elim_threshold": luma_elim_threshold,
-                "chroma_elim_threshold": chroma_elim_threshold,
-                "quantizer_noise_shaping": quantizer_noise_shaping,
-                "error_rate": error_rate,
-                "qsquish": qsquish,
-                "rc_qmod_amp": rc_qmod_amp,
-                "rc_qmod_freq": rc_qmod_freq,
-                "rc_eq": rc_eq,
-                "rc_init_cplx": rc_init_cplx,
-                "rc_buf_aggressivity": rc_buf_aggressivity,
-                "border_mask": border_mask,
-                "lmin": lmin,
-                "lmax": lmax,
-                "skip_threshold": skip_threshold,
-                "skip_factor": skip_factor,
-                "skip_exp": skip_exp,
-                "skip_cmp": skip_cmp,
-                "noise_reduction": noise_reduction,
-                "ps": ps,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "mpv_flags": mpv_flags,
+
+        "luma_elim_threshold": luma_elim_threshold,
+
+        "chroma_elim_threshold": chroma_elim_threshold,
+
+        "quantizer_noise_shaping": quantizer_noise_shaping,
+
+        "error_rate": error_rate,
+
+        "qsquish": qsquish,
+
+        "rc_qmod_amp": rc_qmod_amp,
+
+        "rc_qmod_freq": rc_qmod_freq,
+
+        "rc_eq": rc_eq,
+
+        "rc_init_cplx": rc_init_cplx,
+
+        "rc_buf_aggressivity": rc_buf_aggressivity,
+
+        "border_mask": border_mask,
+
+        "lmin": lmin,
+
+        "lmax": lmax,
+
+        "skip_threshold": skip_threshold,
+
+        "skip_factor": skip_factor,
+
+        "skip_exp": skip_exp,
+
+        "skip_cmp": skip_cmp,
+
+        "noise_reduction": noise_reduction,
+
+        "ps": ps,
+
+    }))
+
 
 
 def apng(
+
     dpi: int | None = None,
+
     dpm: int | None = None,
-    pred: int | None | Literal["none", "sub", "up", "avg", "paeth", "mixed"] = None,
+
+    pred: int | None| Literal["none", "sub", "up", "avg", "paeth", "mixed"] = None,
+
 ) -> FFMpegEncoderOption:
     """
     APNG (Animated Portable Network Graphics) image
@@ -216,18 +228,21 @@ def apng(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "dpi": dpi,
-                "dpm": dpm,
-                "pred": pred,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "dpi": dpi,
+
+        "dpm": dpm,
+
+        "pred": pred,
+
+    }))
 
 
-def asv1() -> FFMpegEncoderOption:
+
+def asv1(
+
+) -> FFMpegEncoderOption:
     """
     ASUS V1
 
@@ -235,10 +250,15 @@ def asv1() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def asv2() -> FFMpegEncoderOption:
+
+def asv2(
+
+) -> FFMpegEncoderOption:
     """
     ASUS V2
 
@@ -246,16 +266,26 @@ def asv2() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
+
 
 
 def librav1e(
+
     qp: int | None = None,
+
     speed: int | None = None,
+
     tiles: int | None = None,
+
     tile_rows: int | None = None,
+
     tile_columns: int | None = None,
+
     rav1e_params: str | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     librav1e AV1 (codec av1)
@@ -271,106 +301,116 @@ def librav1e(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "qp": qp,
-                "speed": speed,
-                "tiles": tiles,
-                "tile-rows": tile_rows,
-                "tile-columns": tile_columns,
-                "rav1e-params": rav1e_params,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "qp": qp,
+
+        "speed": speed,
+
+        "tiles": tiles,
+
+        "tile-rows": tile_rows,
+
+        "tile-columns": tile_columns,
+
+        "rav1e-params": rav1e_params,
+
+    }))
+
 
 
 def av1_nvenc(
-    preset: int
-    | None
-    | Literal[
-        "default", "slow", "medium", "fast", "p1", "p2", "p3", "p4", "p5", "p6", "p7"
-    ] = None,
-    tune: int | None | Literal["hq", "uhq", "ll", "ull", "lossless"] = None,
-    level: int
-    | None
-    | Literal[
-        "auto",
-        "2",
-        "2.0",
-        "2.1",
-        "2.2",
-        "2.3",
-        "3",
-        "3.0",
-        "3.1",
-        "3.2",
-        "3.3",
-        "4",
-        "4.0",
-        "4.1",
-        "4.2",
-        "4.3",
-        "5",
-        "5.0",
-        "5.1",
-        "5.2",
-        "5.3",
-        "6",
-        "6.0",
-        "6.1",
-        "6.2",
-        "6.3",
-        "7",
-        "7.0",
-        "7.1",
-        "7.2",
-        "7.3",
-    ] = None,
-    tier: int | None | Literal["0", "1"] = None,
-    rc: int | None | Literal["constqp", "vbr", "cbr"] = None,
-    multipass: int | None | Literal["disabled", "qres", "fullres"] = None,
+
+    preset: int | None| Literal["default", "slow", "medium", "fast", "p1", "p2", "p3", "p4", "p5", "p6", "p7"] = None,
+
+    tune: int | None| Literal["hq", "uhq", "ll", "ull", "lossless"] = None,
+
+    level: int | None| Literal["auto", "2", "2.0", "2.1", "2.2", "2.3", "3", "3.0", "3.1", "3.2", "3.3", "4", "4.0", "4.1", "4.2", "4.3", "5", "5.0", "5.1", "5.2", "5.3", "6", "6.0", "6.1", "6.2", "6.3", "7", "7.0", "7.1", "7.2", "7.3"] = None,
+
+    tier: int | None| Literal["0", "1"] = None,
+
+    rc: int | None| Literal["constqp", "vbr", "cbr"] = None,
+
+    multipass: int | None| Literal["disabled", "qres", "fullres"] = None,
+
     highbitdepth: bool | None = None,
+
     tile_rows: int | None = None,
+
     tile_columns: int | None = None,
+
     surfaces: int | None = None,
-    gpu: int | None | Literal["any", "list"] = None,
-    rgb_mode: int | None | Literal["yuv420", "yuv444", "disabled"] = None,
+
+    gpu: int | None| Literal["any", "list"] = None,
+
+    rgb_mode: int | None| Literal["yuv420", "yuv444", "disabled"] = None,
+
     delay: int | None = None,
+
     rc_lookahead: int | None = None,
+
     cq: float | None = None,
+
     init_qpP: int | None = None,
+
     init_qpB: int | None = None,
+
     init_qpI: int | None = None,
+
     qp: int | None = None,
+
     qp_cb_offset: int | None = None,
+
     qp_cr_offset: int | None = None,
+
     qmin: int | None = None,
+
     qmax: int | None = None,
+
     no_scenecut: bool | None = None,
+
     forced_idr: bool | None = None,
+
     b_adapt: bool | None = None,
+
     spatial_aq: bool | None = None,
+
     temporal_aq: bool | None = None,
+
     zerolatency: bool | None = None,
+
     nonref_p: bool | None = None,
+
     strict_gop: bool | None = None,
+
     aq_strength: int | None = None,
+
     weighted_pred: bool | None = None,
-    b_ref_mode: int | None | Literal["disabled", "each", "middle"] = None,
+
+    b_ref_mode: int | None| Literal["disabled", "each", "middle"] = None,
+
     dpb_size: int | None = None,
+
     ldkfs: int | None = None,
+
     intra_refresh: bool | None = None,
+
     timing_info: bool | None = None,
+
     extra_sei: bool | None = None,
+
     a53cc: bool | None = None,
+
     s12m_tc: bool | None = None,
+
     cbr_padding: bool | None = None,
-    tf_level: int | None | Literal["0", "4"] = None,
-    lookahead_level: int | None | Literal["auto", "0", "1", "2", "3"] = None,
-    split_encode_mode: int
-    | None
-    | Literal["disabled", "auto", "forced", "2", "3"] = None,
+
+    tf_level: int | None| Literal["0", "4"] = None,
+
+    lookahead_level: int | None| Literal["auto", "0", "1", "2", "3"] = None,
+
+    split_encode_mode: int | None| Literal["disabled", "auto", "forced", "2", "3"] = None,
+
 ) -> FFMpegEncoderOption:
     """
     NVIDIA NVENC av1 encoder (codec av1)
@@ -425,91 +465,128 @@ def av1_nvenc(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "preset": preset,
-                "tune": tune,
-                "level": level,
-                "tier": tier,
-                "rc": rc,
-                "multipass": multipass,
-                "highbitdepth": highbitdepth,
-                "tile-rows": tile_rows,
-                "tile-columns": tile_columns,
-                "surfaces": surfaces,
-                "gpu": gpu,
-                "rgb_mode": rgb_mode,
-                "delay": delay,
-                "rc-lookahead": rc_lookahead,
-                "cq": cq,
-                "init_qpP": init_qpP,
-                "init_qpB": init_qpB,
-                "init_qpI": init_qpI,
-                "qp": qp,
-                "qp_cb_offset": qp_cb_offset,
-                "qp_cr_offset": qp_cr_offset,
-                "qmin": qmin,
-                "qmax": qmax,
-                "no-scenecut": no_scenecut,
-                "forced-idr": forced_idr,
-                "b_adapt": b_adapt,
-                "spatial-aq": spatial_aq,
-                "temporal-aq": temporal_aq,
-                "zerolatency": zerolatency,
-                "nonref_p": nonref_p,
-                "strict_gop": strict_gop,
-                "aq-strength": aq_strength,
-                "weighted_pred": weighted_pred,
-                "b_ref_mode": b_ref_mode,
-                "dpb_size": dpb_size,
-                "ldkfs": ldkfs,
-                "intra-refresh": intra_refresh,
-                "timing-info": timing_info,
-                "extra_sei": extra_sei,
-                "a53cc": a53cc,
-                "s12m_tc": s12m_tc,
-                "cbr_padding": cbr_padding,
-                "tf_level": tf_level,
-                "lookahead_level": lookahead_level,
-                "split_encode_mode": split_encode_mode,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "preset": preset,
+
+        "tune": tune,
+
+        "level": level,
+
+        "tier": tier,
+
+        "rc": rc,
+
+        "multipass": multipass,
+
+        "highbitdepth": highbitdepth,
+
+        "tile-rows": tile_rows,
+
+        "tile-columns": tile_columns,
+
+        "surfaces": surfaces,
+
+        "gpu": gpu,
+
+        "rgb_mode": rgb_mode,
+
+        "delay": delay,
+
+        "rc-lookahead": rc_lookahead,
+
+        "cq": cq,
+
+        "init_qpP": init_qpP,
+
+        "init_qpB": init_qpB,
+
+        "init_qpI": init_qpI,
+
+        "qp": qp,
+
+        "qp_cb_offset": qp_cb_offset,
+
+        "qp_cr_offset": qp_cr_offset,
+
+        "qmin": qmin,
+
+        "qmax": qmax,
+
+        "no-scenecut": no_scenecut,
+
+        "forced-idr": forced_idr,
+
+        "b_adapt": b_adapt,
+
+        "spatial-aq": spatial_aq,
+
+        "temporal-aq": temporal_aq,
+
+        "zerolatency": zerolatency,
+
+        "nonref_p": nonref_p,
+
+        "strict_gop": strict_gop,
+
+        "aq-strength": aq_strength,
+
+        "weighted_pred": weighted_pred,
+
+        "b_ref_mode": b_ref_mode,
+
+        "dpb_size": dpb_size,
+
+        "ldkfs": ldkfs,
+
+        "intra-refresh": intra_refresh,
+
+        "timing-info": timing_info,
+
+        "extra_sei": extra_sei,
+
+        "a53cc": a53cc,
+
+        "s12m_tc": s12m_tc,
+
+        "cbr_padding": cbr_padding,
+
+        "tf_level": tf_level,
+
+        "lookahead_level": lookahead_level,
+
+        "split_encode_mode": split_encode_mode,
+
+    }))
+
 
 
 def av1_vaapi(
+
     idr_interval: int | None = None,
+
     b_depth: int | None = None,
+
     async_depth: int | None = None,
+
     low_power: bool | None = None,
+
     max_frame_size: int | None = None,
-    rc_mode: int
-    | None
-    | Literal["auto", "CQP", "CBR", "VBR", "ICQ", "QVBR", "AVBR"] = None,
+
+    rc_mode: int | None| Literal["auto", "CQP", "CBR", "VBR", "ICQ", "QVBR", "AVBR"] = None,
+
     blbrc: bool | None = None,
-    profile: int | None | Literal["main", "high", "professional"] = None,
-    tier: int | None | Literal["main", "high"] = None,
-    level: int
-    | None
-    | Literal[
-        "2.0",
-        "2.1",
-        "3.0",
-        "3.1",
-        "4.0",
-        "4.1",
-        "5.0",
-        "5.1",
-        "5.2",
-        "5.3",
-        "6.0",
-        "6.1",
-        "6.2",
-        "6.3",
-    ] = None,
+
+    profile: int | None| Literal["main", "high", "professional"] = None,
+
+    tier: int | None| Literal["main", "high"] = None,
+
+    level: int | None| Literal["2.0", "2.1", "3.0", "3.1", "4.0", "4.1", "5.0", "5.1", "5.2", "5.3", "6.0", "6.1", "6.2", "6.3"] = None,
+
     tiles: str | None = None,
+
     tile_groups: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     AV1 (VAAPI) (codec av1)
@@ -531,27 +608,39 @@ def av1_vaapi(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "idr_interval": idr_interval,
-                "b_depth": b_depth,
-                "async_depth": async_depth,
-                "low_power": low_power,
-                "max_frame_size": max_frame_size,
-                "rc_mode": rc_mode,
-                "blbrc": blbrc,
-                "profile": profile,
-                "tier": tier,
-                "level": level,
-                "tiles": tiles,
-                "tile_groups": tile_groups,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "idr_interval": idr_interval,
+
+        "b_depth": b_depth,
+
+        "async_depth": async_depth,
+
+        "low_power": low_power,
+
+        "max_frame_size": max_frame_size,
+
+        "rc_mode": rc_mode,
+
+        "blbrc": blbrc,
+
+        "profile": profile,
+
+        "tier": tier,
+
+        "level": level,
+
+        "tiles": tiles,
+
+        "tile_groups": tile_groups,
+
+    }))
 
 
-def avrp() -> FFMpegEncoderOption:
+
+def avrp(
+
+) -> FFMpegEncoderOption:
     """
     Avid 1:1 10-bit RGB Packer
 
@@ -559,10 +648,15 @@ def avrp() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def avui() -> FFMpegEncoderOption:
+
+def avui(
+
+) -> FFMpegEncoderOption:
     """
     Avid Meridien Uncompressed
 
@@ -570,10 +664,15 @@ def avui() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def bitpacked() -> FFMpegEncoderOption:
+
+def bitpacked(
+
+) -> FFMpegEncoderOption:
     """
     Bitpacked
 
@@ -581,10 +680,15 @@ def bitpacked() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def bmp() -> FFMpegEncoderOption:
+
+def bmp(
+
+) -> FFMpegEncoderOption:
     """
     BMP (Windows and OS/2 bitmap)
 
@@ -592,27 +696,16 @@ def bmp() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
+
 
 
 def cfhd(
-    quality: int
-    | None
-    | Literal[
-        "film3+",
-        "film3",
-        "film2+",
-        "film2",
-        "film1.5",
-        "film1+",
-        "film1",
-        "high+",
-        "high",
-        "medium+",
-        "medium",
-        "low+",
-        "low",
-    ] = None,
+
+    quality: int | None| Literal["film3+", "film3", "film2+", "film2", "film1.5", "film1+", "film1", "high+", "high", "medium+", "medium", "low+", "low"] = None,
+
 ) -> FFMpegEncoderOption:
     """
     GoPro CineForm HD
@@ -623,21 +716,26 @@ def cfhd(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "quality": quality,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "quality": quality,
+
+    }))
+
 
 
 def cinepak(
+
     max_extra_cb_iterations: int | None = None,
+
     skip_empty_cb: bool | None = None,
+
     max_strips: int | None = None,
+
     min_strips: int | None = None,
+
     strip_number_adaptivity: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     Cinepak
@@ -652,21 +750,26 @@ def cinepak(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "max_extra_cb_iterations": max_extra_cb_iterations,
-                "skip_empty_cb": skip_empty_cb,
-                "max_strips": max_strips,
-                "min_strips": min_strips,
-                "strip_number_adaptivity": strip_number_adaptivity,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "max_extra_cb_iterations": max_extra_cb_iterations,
+
+        "skip_empty_cb": skip_empty_cb,
+
+        "max_strips": max_strips,
+
+        "min_strips": min_strips,
+
+        "strip_number_adaptivity": strip_number_adaptivity,
+
+    }))
+
 
 
 def cljr(
+
     dither_type: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     Cirrus Logic AccuPak
@@ -677,22 +780,28 @@ def cljr(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "dither_type": dither_type,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "dither_type": dither_type,
+
+    }))
+
 
 
 def vc2(
+
     tolerance: float | None = None,
+
     slice_width: int | None = None,
+
     slice_height: int | None = None,
+
     wavelet_depth: int | None = None,
-    wavelet_type: int | None | Literal["9_7", "5_3", "haar", "haar_noshift"] = None,
-    qm: int | None | Literal["default", "color", "flat"] = None,
+
+    wavelet_type: int | None| Literal["9_7", "5_3", "haar", "haar_noshift"] = None,
+
+    qm: int | None| Literal["default", "color", "flat"] = None,
+
 ) -> FFMpegEncoderOption:
     """
     SMPTE VC-2 (codec dirac)
@@ -708,28 +817,32 @@ def vc2(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "tolerance": tolerance,
-                "slice_width": slice_width,
-                "slice_height": slice_height,
-                "wavelet_depth": wavelet_depth,
-                "wavelet_type": wavelet_type,
-                "qm": qm,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "tolerance": tolerance,
+
+        "slice_width": slice_width,
+
+        "slice_height": slice_height,
+
+        "wavelet_depth": wavelet_depth,
+
+        "wavelet_type": wavelet_type,
+
+        "qm": qm,
+
+    }))
+
 
 
 def dnxhd(
+
     nitris_compat: bool | None = None,
+
     ibias: int | None = None,
-    profile: int
-    | None
-    | Literal[
-        "dnxhd", "dnxhr_444", "dnxhr_hqx", "dnxhr_hq", "dnxhr_sq", "dnxhr_lb"
-    ] = None,
+
+    profile: int | None| Literal["dnxhd", "dnxhr_444", "dnxhr_hqx", "dnxhr_hq", "dnxhr_sq", "dnxhr_lb"] = None,
+
 ) -> FFMpegEncoderOption:
     """
     VC3/DNxHD
@@ -742,18 +855,21 @@ def dnxhd(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "nitris_compat": nitris_compat,
-                "ibias": ibias,
-                "profile": profile,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "nitris_compat": nitris_compat,
+
+        "ibias": ibias,
+
+        "profile": profile,
+
+    }))
 
 
-def dpx() -> FFMpegEncoderOption:
+
+def dpx(
+
+) -> FFMpegEncoderOption:
     """
     DPX (Digital Picture Exchange) image
 
@@ -761,11 +877,16 @@ def dpx() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
+
 
 
 def dvvideo(
+
     quant_deadzone: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     DV (Digital Video)
@@ -776,17 +897,18 @@ def dvvideo(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "quant_deadzone": quant_deadzone,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "quant_deadzone": quant_deadzone,
+
+    }))
+
 
 
 def dxv(
-    format: int | None | Literal["dxt1"] = None,
+
+    format: int | None| Literal["dxt1"] = None,
+
 ) -> FFMpegEncoderOption:
     """
     Resolume DXV
@@ -797,19 +919,22 @@ def dxv(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "format": format,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "format": format,
+
+    }))
+
 
 
 def exr(
-    compression: int | None | Literal["none", "rle", "zip1", "zip16"] = None,
-    format: int | None | Literal["half", "float"] = None,
+
+    compression: int | None| Literal["none", "rle", "zip1", "zip16"] = None,
+
+    format: int | None| Literal["half", "float"] = None,
+
     gamma: float | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     OpenEXR image
@@ -822,24 +947,32 @@ def exr(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "compression": compression,
-                "format": format,
-                "gamma": gamma,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "compression": compression,
+
+        "format": format,
+
+        "gamma": gamma,
+
+    }))
+
 
 
 def ffv1(
+
     slicecrc: int | None = None,
-    coder: int | None | Literal["rice", "range_def", "range_tab", "ac"] = None,
+
+    coder: int | None| Literal["rice", "range_def", "range_tab", "ac"] = None,
+
     context: int | None = None,
-    qtable: int | None | Literal["default", "8bit", "greater8bit"] = None,
-    remap_mode: int | None | Literal["auto", "off", "dualrle", "flipdualrle"] = None,
+
+    qtable: int | None| Literal["default", "8bit", "greater8bit"] = None,
+
+    remap_mode: int | None| Literal["auto", "off", "dualrle", "flipdualrle"] = None,
+
     remap_optimizer: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     FFmpeg video codec #1
@@ -855,30 +988,44 @@ def ffv1(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "slicecrc": slicecrc,
-                "coder": coder,
-                "context": context,
-                "qtable": qtable,
-                "remap_mode": remap_mode,
-                "remap_optimizer": remap_optimizer,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "slicecrc": slicecrc,
+
+        "coder": coder,
+
+        "context": context,
+
+        "qtable": qtable,
+
+        "remap_mode": remap_mode,
+
+        "remap_optimizer": remap_optimizer,
+
+    }))
+
 
 
 def ffv1_vulkan(
+
     slicecrc: int | None = None,
+
     context: int | None = None,
-    coder: int | None | Literal["rice", "range_def", "range_tab"] = None,
-    qtable: int | None | Literal["default", "8bit", "greater8bit"] = None,
+
+    coder: int | None| Literal["rice", "range_def", "range_tab"] = None,
+
+    qtable: int | None| Literal["default", "8bit", "greater8bit"] = None,
+
     slices_h: int | None = None,
+
     slices_v: int | None = None,
+
     force_pcm: bool | None = None,
+
     rct_search: bool | None = None,
+
     async_depth: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     FFmpeg video codec #1 (Vulkan) (codec ffv1)
@@ -897,27 +1044,38 @@ def ffv1_vulkan(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "slicecrc": slicecrc,
-                "context": context,
-                "coder": coder,
-                "qtable": qtable,
-                "slices_h": slices_h,
-                "slices_v": slices_v,
-                "force_pcm": force_pcm,
-                "rct_search": rct_search,
-                "async_depth": async_depth,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "slicecrc": slicecrc,
+
+        "context": context,
+
+        "coder": coder,
+
+        "qtable": qtable,
+
+        "slices_h": slices_h,
+
+        "slices_v": slices_v,
+
+        "force_pcm": force_pcm,
+
+        "rct_search": rct_search,
+
+        "async_depth": async_depth,
+
+    }))
+
 
 
 def ffvhuff(
+
     context: int | None = None,
+
     non_deterministic: bool | None = None,
-    pred: int | None | Literal["left", "plane", "median"] = None,
+
+    pred: int | None| Literal["left", "plane", "median"] = None,
+
 ) -> FFMpegEncoderOption:
     """
     Huffyuv FFmpeg variant
@@ -930,18 +1088,21 @@ def ffvhuff(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "context": context,
-                "non_deterministic": non_deterministic,
-                "pred": pred,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "context": context,
+
+        "non_deterministic": non_deterministic,
+
+        "pred": pred,
+
+    }))
 
 
-def fits() -> FFMpegEncoderOption:
+
+def fits(
+
+) -> FFMpegEncoderOption:
     """
     Flexible Image Transport System
 
@@ -949,10 +1110,15 @@ def fits() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def flashsv() -> FFMpegEncoderOption:
+
+def flashsv(
+
+) -> FFMpegEncoderOption:
     """
     Flash Screen Video
 
@@ -960,10 +1126,15 @@ def flashsv() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def flashsv2() -> FFMpegEncoderOption:
+
+def flashsv2(
+
+) -> FFMpegEncoderOption:
     """
     Flash Screen Video Version 2
 
@@ -971,53 +1142,64 @@ def flashsv2() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
+
 
 
 def flv(
+
     mpv_flags: str | None = None,
+
     luma_elim_threshold: int | None = None,
+
     chroma_elim_threshold: int | None = None,
+
     quantizer_noise_shaping: int | None = None,
+
     error_rate: int | None = None,
+
     qsquish: float | None = None,
+
     rc_qmod_amp: float | None = None,
+
     rc_qmod_freq: int | None = None,
+
     rc_eq: str | None = None,
+
     rc_init_cplx: float | None = None,
+
     rc_buf_aggressivity: float | None = None,
+
     border_mask: float | None = None,
+
     lmin: int | None = None,
+
     lmax: int | None = None,
+
     skip_threshold: int | None = None,
+
     skip_factor: int | None = None,
+
     skip_exp: int | None = None,
-    skip_cmp: int
-    | None
-    | Literal[
-        "sad",
-        "sse",
-        "satd",
-        "dct",
-        "psnr",
-        "bit",
-        "rd",
-        "zero",
-        "vsad",
-        "vsse",
-        "nsse",
-        "dct264",
-        "dctmax",
-        "chroma",
-        "msad",
-    ] = None,
+
+    skip_cmp: int | None| Literal["sad", "sse", "satd", "dct", "psnr", "bit", "rd", "zero", "vsad", "vsse", "nsse", "dct264", "dctmax", "chroma", "msad"] = None,
+
     noise_reduction: int | None = None,
+
     ps: int | None = None,
-    motion_est: int | None | Literal["zero", "epzs", "xone"] = None,
+
+    motion_est: int | None| Literal["zero", "epzs", "xone"] = None,
+
     mepc: int | None = None,
+
     mepre: int | None = None,
+
     intra_penalty: int | None = None,
+
     sc_threshold: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     FLV / Sorenson Spark / Sorenson H.263 (Flash Video) (codec flv1)
@@ -1052,43 +1234,70 @@ def flv(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "mpv_flags": mpv_flags,
-                "luma_elim_threshold": luma_elim_threshold,
-                "chroma_elim_threshold": chroma_elim_threshold,
-                "quantizer_noise_shaping": quantizer_noise_shaping,
-                "error_rate": error_rate,
-                "qsquish": qsquish,
-                "rc_qmod_amp": rc_qmod_amp,
-                "rc_qmod_freq": rc_qmod_freq,
-                "rc_eq": rc_eq,
-                "rc_init_cplx": rc_init_cplx,
-                "rc_buf_aggressivity": rc_buf_aggressivity,
-                "border_mask": border_mask,
-                "lmin": lmin,
-                "lmax": lmax,
-                "skip_threshold": skip_threshold,
-                "skip_factor": skip_factor,
-                "skip_exp": skip_exp,
-                "skip_cmp": skip_cmp,
-                "noise_reduction": noise_reduction,
-                "ps": ps,
-                "motion_est": motion_est,
-                "mepc": mepc,
-                "mepre": mepre,
-                "intra_penalty": intra_penalty,
-                "sc_threshold": sc_threshold,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "mpv_flags": mpv_flags,
+
+        "luma_elim_threshold": luma_elim_threshold,
+
+        "chroma_elim_threshold": chroma_elim_threshold,
+
+        "quantizer_noise_shaping": quantizer_noise_shaping,
+
+        "error_rate": error_rate,
+
+        "qsquish": qsquish,
+
+        "rc_qmod_amp": rc_qmod_amp,
+
+        "rc_qmod_freq": rc_qmod_freq,
+
+        "rc_eq": rc_eq,
+
+        "rc_init_cplx": rc_init_cplx,
+
+        "rc_buf_aggressivity": rc_buf_aggressivity,
+
+        "border_mask": border_mask,
+
+        "lmin": lmin,
+
+        "lmax": lmax,
+
+        "skip_threshold": skip_threshold,
+
+        "skip_factor": skip_factor,
+
+        "skip_exp": skip_exp,
+
+        "skip_cmp": skip_cmp,
+
+        "noise_reduction": noise_reduction,
+
+        "ps": ps,
+
+        "motion_est": motion_est,
+
+        "mepc": mepc,
+
+        "mepre": mepre,
+
+        "intra_penalty": intra_penalty,
+
+        "sc_threshold": sc_threshold,
+
+    }))
+
 
 
 def gif(
+
     gifflags: str | None = None,
+
     gifimage: bool | None = None,
+
     global_palette: bool | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     GIF (Graphics Interchange Format)
@@ -1101,61 +1310,70 @@ def gif(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "gifflags": gifflags,
-                "gifimage": gifimage,
-                "global_palette": global_palette,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "gifflags": gifflags,
+
+        "gifimage": gifimage,
+
+        "global_palette": global_palette,
+
+    }))
+
 
 
 def h261(
+
     mpv_flags: str | None = None,
+
     luma_elim_threshold: int | None = None,
+
     chroma_elim_threshold: int | None = None,
+
     quantizer_noise_shaping: int | None = None,
+
     error_rate: int | None = None,
+
     qsquish: float | None = None,
+
     rc_qmod_amp: float | None = None,
+
     rc_qmod_freq: int | None = None,
+
     rc_eq: str | None = None,
+
     rc_init_cplx: float | None = None,
+
     rc_buf_aggressivity: float | None = None,
+
     border_mask: float | None = None,
+
     lmin: int | None = None,
+
     lmax: int | None = None,
+
     skip_threshold: int | None = None,
+
     skip_factor: int | None = None,
+
     skip_exp: int | None = None,
-    skip_cmp: int
-    | None
-    | Literal[
-        "sad",
-        "sse",
-        "satd",
-        "dct",
-        "psnr",
-        "bit",
-        "rd",
-        "zero",
-        "vsad",
-        "vsse",
-        "nsse",
-        "dct264",
-        "dctmax",
-        "chroma",
-        "msad",
-    ] = None,
+
+    skip_cmp: int | None| Literal["sad", "sse", "satd", "dct", "psnr", "bit", "rd", "zero", "vsad", "vsse", "nsse", "dct264", "dctmax", "chroma", "msad"] = None,
+
     noise_reduction: int | None = None,
+
     ps: int | None = None,
-    motion_est: int | None | Literal["zero", "epzs", "xone"] = None,
+
+    motion_est: int | None| Literal["zero", "epzs", "xone"] = None,
+
     mepc: int | None = None,
+
     mepre: int | None = None,
+
     intra_penalty: int | None = None,
+
     sc_threshold: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     H.261
@@ -1190,85 +1408,118 @@ def h261(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "mpv_flags": mpv_flags,
-                "luma_elim_threshold": luma_elim_threshold,
-                "chroma_elim_threshold": chroma_elim_threshold,
-                "quantizer_noise_shaping": quantizer_noise_shaping,
-                "error_rate": error_rate,
-                "qsquish": qsquish,
-                "rc_qmod_amp": rc_qmod_amp,
-                "rc_qmod_freq": rc_qmod_freq,
-                "rc_eq": rc_eq,
-                "rc_init_cplx": rc_init_cplx,
-                "rc_buf_aggressivity": rc_buf_aggressivity,
-                "border_mask": border_mask,
-                "lmin": lmin,
-                "lmax": lmax,
-                "skip_threshold": skip_threshold,
-                "skip_factor": skip_factor,
-                "skip_exp": skip_exp,
-                "skip_cmp": skip_cmp,
-                "noise_reduction": noise_reduction,
-                "ps": ps,
-                "motion_est": motion_est,
-                "mepc": mepc,
-                "mepre": mepre,
-                "intra_penalty": intra_penalty,
-                "sc_threshold": sc_threshold,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "mpv_flags": mpv_flags,
+
+        "luma_elim_threshold": luma_elim_threshold,
+
+        "chroma_elim_threshold": chroma_elim_threshold,
+
+        "quantizer_noise_shaping": quantizer_noise_shaping,
+
+        "error_rate": error_rate,
+
+        "qsquish": qsquish,
+
+        "rc_qmod_amp": rc_qmod_amp,
+
+        "rc_qmod_freq": rc_qmod_freq,
+
+        "rc_eq": rc_eq,
+
+        "rc_init_cplx": rc_init_cplx,
+
+        "rc_buf_aggressivity": rc_buf_aggressivity,
+
+        "border_mask": border_mask,
+
+        "lmin": lmin,
+
+        "lmax": lmax,
+
+        "skip_threshold": skip_threshold,
+
+        "skip_factor": skip_factor,
+
+        "skip_exp": skip_exp,
+
+        "skip_cmp": skip_cmp,
+
+        "noise_reduction": noise_reduction,
+
+        "ps": ps,
+
+        "motion_est": motion_est,
+
+        "mepc": mepc,
+
+        "mepre": mepre,
+
+        "intra_penalty": intra_penalty,
+
+        "sc_threshold": sc_threshold,
+
+    }))
+
 
 
 def h263(
+
     obmc: bool | None = None,
+
     mb_info: int | None = None,
+
     mpv_flags: str | None = None,
+
     luma_elim_threshold: int | None = None,
+
     chroma_elim_threshold: int | None = None,
+
     quantizer_noise_shaping: int | None = None,
+
     error_rate: int | None = None,
+
     qsquish: float | None = None,
+
     rc_qmod_amp: float | None = None,
+
     rc_qmod_freq: int | None = None,
+
     rc_eq: str | None = None,
+
     rc_init_cplx: float | None = None,
+
     rc_buf_aggressivity: float | None = None,
+
     border_mask: float | None = None,
+
     lmin: int | None = None,
+
     lmax: int | None = None,
+
     skip_threshold: int | None = None,
+
     skip_factor: int | None = None,
+
     skip_exp: int | None = None,
-    skip_cmp: int
-    | None
-    | Literal[
-        "sad",
-        "sse",
-        "satd",
-        "dct",
-        "psnr",
-        "bit",
-        "rd",
-        "zero",
-        "vsad",
-        "vsse",
-        "nsse",
-        "dct264",
-        "dctmax",
-        "chroma",
-        "msad",
-    ] = None,
+
+    skip_cmp: int | None| Literal["sad", "sse", "satd", "dct", "psnr", "bit", "rd", "zero", "vsad", "vsse", "nsse", "dct264", "dctmax", "chroma", "msad"] = None,
+
     noise_reduction: int | None = None,
+
     ps: int | None = None,
-    motion_est: int | None | Literal["zero", "epzs", "xone"] = None,
+
+    motion_est: int | None| Literal["zero", "epzs", "xone"] = None,
+
     mepc: int | None = None,
+
     mepre: int | None = None,
+
     intra_penalty: int | None = None,
+
     sc_threshold: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     H.263 / H.263-1996
@@ -1305,44 +1556,72 @@ def h263(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "obmc": obmc,
-                "mb_info": mb_info,
-                "mpv_flags": mpv_flags,
-                "luma_elim_threshold": luma_elim_threshold,
-                "chroma_elim_threshold": chroma_elim_threshold,
-                "quantizer_noise_shaping": quantizer_noise_shaping,
-                "error_rate": error_rate,
-                "qsquish": qsquish,
-                "rc_qmod_amp": rc_qmod_amp,
-                "rc_qmod_freq": rc_qmod_freq,
-                "rc_eq": rc_eq,
-                "rc_init_cplx": rc_init_cplx,
-                "rc_buf_aggressivity": rc_buf_aggressivity,
-                "border_mask": border_mask,
-                "lmin": lmin,
-                "lmax": lmax,
-                "skip_threshold": skip_threshold,
-                "skip_factor": skip_factor,
-                "skip_exp": skip_exp,
-                "skip_cmp": skip_cmp,
-                "noise_reduction": noise_reduction,
-                "ps": ps,
-                "motion_est": motion_est,
-                "mepc": mepc,
-                "mepre": mepre,
-                "intra_penalty": intra_penalty,
-                "sc_threshold": sc_threshold,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "obmc": obmc,
+
+        "mb_info": mb_info,
+
+        "mpv_flags": mpv_flags,
+
+        "luma_elim_threshold": luma_elim_threshold,
+
+        "chroma_elim_threshold": chroma_elim_threshold,
+
+        "quantizer_noise_shaping": quantizer_noise_shaping,
+
+        "error_rate": error_rate,
+
+        "qsquish": qsquish,
+
+        "rc_qmod_amp": rc_qmod_amp,
+
+        "rc_qmod_freq": rc_qmod_freq,
+
+        "rc_eq": rc_eq,
+
+        "rc_init_cplx": rc_init_cplx,
+
+        "rc_buf_aggressivity": rc_buf_aggressivity,
+
+        "border_mask": border_mask,
+
+        "lmin": lmin,
+
+        "lmax": lmax,
+
+        "skip_threshold": skip_threshold,
+
+        "skip_factor": skip_factor,
+
+        "skip_exp": skip_exp,
+
+        "skip_cmp": skip_cmp,
+
+        "noise_reduction": noise_reduction,
+
+        "ps": ps,
+
+        "motion_est": motion_est,
+
+        "mepc": mepc,
+
+        "mepre": mepre,
+
+        "intra_penalty": intra_penalty,
+
+        "sc_threshold": sc_threshold,
+
+    }))
+
 
 
 def h263_v4l2m2m(
+
     num_output_buffers: int | None = None,
+
     num_capture_buffers: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     V4L2 mem2mem H.263 encoder wrapper (codec h263)
@@ -1354,64 +1633,76 @@ def h263_v4l2m2m(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "num_output_buffers": num_output_buffers,
-                "num_capture_buffers": num_capture_buffers,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "num_output_buffers": num_output_buffers,
+
+        "num_capture_buffers": num_capture_buffers,
+
+    }))
+
 
 
 def h263p(
+
     umv: bool | None = None,
+
     aiv: bool | None = None,
+
     obmc: bool | None = None,
+
     structured_slices: bool | None = None,
+
     mpv_flags: str | None = None,
+
     luma_elim_threshold: int | None = None,
+
     chroma_elim_threshold: int | None = None,
+
     quantizer_noise_shaping: int | None = None,
+
     error_rate: int | None = None,
+
     qsquish: float | None = None,
+
     rc_qmod_amp: float | None = None,
+
     rc_qmod_freq: int | None = None,
+
     rc_eq: str | None = None,
+
     rc_init_cplx: float | None = None,
+
     rc_buf_aggressivity: float | None = None,
+
     border_mask: float | None = None,
+
     lmin: int | None = None,
+
     lmax: int | None = None,
+
     skip_threshold: int | None = None,
+
     skip_factor: int | None = None,
+
     skip_exp: int | None = None,
-    skip_cmp: int
-    | None
-    | Literal[
-        "sad",
-        "sse",
-        "satd",
-        "dct",
-        "psnr",
-        "bit",
-        "rd",
-        "zero",
-        "vsad",
-        "vsse",
-        "nsse",
-        "dct264",
-        "dctmax",
-        "chroma",
-        "msad",
-    ] = None,
+
+    skip_cmp: int | None| Literal["sad", "sse", "satd", "dct", "psnr", "bit", "rd", "zero", "vsad", "vsse", "nsse", "dct264", "dctmax", "chroma", "msad"] = None,
+
     noise_reduction: int | None = None,
+
     ps: int | None = None,
-    motion_est: int | None | Literal["zero", "epzs", "xone"] = None,
+
+    motion_est: int | None| Literal["zero", "epzs", "xone"] = None,
+
     mepc: int | None = None,
+
     mepre: int | None = None,
+
     intra_penalty: int | None = None,
+
     sc_threshold: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     H.263+ / H.263-1998 / H.263 version 2
@@ -1450,93 +1741,166 @@ def h263p(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "umv": umv,
-                "aiv": aiv,
-                "obmc": obmc,
-                "structured_slices": structured_slices,
-                "mpv_flags": mpv_flags,
-                "luma_elim_threshold": luma_elim_threshold,
-                "chroma_elim_threshold": chroma_elim_threshold,
-                "quantizer_noise_shaping": quantizer_noise_shaping,
-                "error_rate": error_rate,
-                "qsquish": qsquish,
-                "rc_qmod_amp": rc_qmod_amp,
-                "rc_qmod_freq": rc_qmod_freq,
-                "rc_eq": rc_eq,
-                "rc_init_cplx": rc_init_cplx,
-                "rc_buf_aggressivity": rc_buf_aggressivity,
-                "border_mask": border_mask,
-                "lmin": lmin,
-                "lmax": lmax,
-                "skip_threshold": skip_threshold,
-                "skip_factor": skip_factor,
-                "skip_exp": skip_exp,
-                "skip_cmp": skip_cmp,
-                "noise_reduction": noise_reduction,
-                "ps": ps,
-                "motion_est": motion_est,
-                "mepc": mepc,
-                "mepre": mepre,
-                "intra_penalty": intra_penalty,
-                "sc_threshold": sc_threshold,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "umv": umv,
+
+        "aiv": aiv,
+
+        "obmc": obmc,
+
+        "structured_slices": structured_slices,
+
+        "mpv_flags": mpv_flags,
+
+        "luma_elim_threshold": luma_elim_threshold,
+
+        "chroma_elim_threshold": chroma_elim_threshold,
+
+        "quantizer_noise_shaping": quantizer_noise_shaping,
+
+        "error_rate": error_rate,
+
+        "qsquish": qsquish,
+
+        "rc_qmod_amp": rc_qmod_amp,
+
+        "rc_qmod_freq": rc_qmod_freq,
+
+        "rc_eq": rc_eq,
+
+        "rc_init_cplx": rc_init_cplx,
+
+        "rc_buf_aggressivity": rc_buf_aggressivity,
+
+        "border_mask": border_mask,
+
+        "lmin": lmin,
+
+        "lmax": lmax,
+
+        "skip_threshold": skip_threshold,
+
+        "skip_factor": skip_factor,
+
+        "skip_exp": skip_exp,
+
+        "skip_cmp": skip_cmp,
+
+        "noise_reduction": noise_reduction,
+
+        "ps": ps,
+
+        "motion_est": motion_est,
+
+        "mepc": mepc,
+
+        "mepre": mepre,
+
+        "intra_penalty": intra_penalty,
+
+        "sc_threshold": sc_threshold,
+
+    }))
+
 
 
 def libx264(
+
     preset: str | None = None,
+
     tune: str | None = None,
+
     profile: str | None = None,
+
     fastfirstpass: bool | None = None,
+
     level: str | None = None,
+
     passlogfile: str | None = None,
+
     wpredp: str | None = None,
+
     a53cc: bool | None = None,
+
     x264opts: str | None = None,
+
     crf: float | None = None,
+
     crf_max: float | None = None,
+
     qp: int | None = None,
-    aq_mode: int
-    | None
-    | Literal["none", "variance", "autovariance", "autovariance-biased"] = None,
+
+    aq_mode: int | None| Literal["none", "variance", "autovariance", "autovariance-biased"] = None,
+
     aq_strength: float | None = None,
+
     psy: bool | None = None,
+
     psy_rd: str | None = None,
+
     rc_lookahead: int | None = None,
+
     weightb: bool | None = None,
-    weightp: int | None | Literal["none", "simple", "smart"] = None,
+
+    weightp: int | None| Literal["none", "simple", "smart"] = None,
+
     ssim: bool | None = None,
+
     intra_refresh: bool | None = None,
+
     bluray_compat: bool | None = None,
+
     b_bias: int | None = None,
-    b_pyramid: int | None | Literal["none", "strict", "normal"] = None,
+
+    b_pyramid: int | None| Literal["none", "strict", "normal"] = None,
+
     mixed_refs: bool | None = None,
+
     _8x8dct: bool | None = None,
+
     fast_pskip: bool | None = None,
+
     aud: bool | None = None,
+
     mbtree: bool | None = None,
+
     deblock: str | None = None,
+
     cplxblur: float | None = None,
+
     partitions: str | None = None,
-    direct_pred: int | None | Literal["none", "spatial", "temporal", "auto"] = None,
+
+    direct_pred: int | None| Literal["none", "spatial", "temporal", "auto"] = None,
+
     slice_max_size: int | None = None,
+
     stats: str | None = None,
-    nal_hrd: int | None | Literal["none", "vbr", "cbr"] = None,
+
+    nal_hrd: int | None| Literal["none", "vbr", "cbr"] = None,
+
     avcintra_class: int | None = None,
-    me_method: int | None | Literal["dia", "hex", "umh", "esa", "tesa"] = None,
+
+    me_method: int | None| Literal["dia", "hex", "umh", "esa", "tesa"] = None,
+
     forced_idr: bool | None = None,
-    coder: int | None | Literal["default", "cavlc", "cabac", "vlc", "ac"] = None,
+
+    coder: int | None| Literal["default", "cavlc", "cabac", "vlc", "ac"] = None,
+
     b_strategy: int | None = None,
+
     chromaoffset: int | None = None,
+
     sc_threshold: int | None = None,
+
     noise_reduction: int | None = None,
+
     udu_sei: bool | None = None,
+
     x264_params: str | None = None,
+
     mb_info: bool | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     libx264 H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10 (codec h264)
@@ -1593,111 +1957,202 @@ def libx264(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "preset": preset,
-                "tune": tune,
-                "profile": profile,
-                "fastfirstpass": fastfirstpass,
-                "level": level,
-                "passlogfile": passlogfile,
-                "wpredp": wpredp,
-                "a53cc": a53cc,
-                "x264opts": x264opts,
-                "crf": crf,
-                "crf_max": crf_max,
-                "qp": qp,
-                "aq-mode": aq_mode,
-                "aq-strength": aq_strength,
-                "psy": psy,
-                "psy-rd": psy_rd,
-                "rc-lookahead": rc_lookahead,
-                "weightb": weightb,
-                "weightp": weightp,
-                "ssim": ssim,
-                "intra-refresh": intra_refresh,
-                "bluray-compat": bluray_compat,
-                "b-bias": b_bias,
-                "b-pyramid": b_pyramid,
-                "mixed-refs": mixed_refs,
-                "8x8dct": _8x8dct,
-                "fast-pskip": fast_pskip,
-                "aud": aud,
-                "mbtree": mbtree,
-                "deblock": deblock,
-                "cplxblur": cplxblur,
-                "partitions": partitions,
-                "direct-pred": direct_pred,
-                "slice-max-size": slice_max_size,
-                "stats": stats,
-                "nal-hrd": nal_hrd,
-                "avcintra-class": avcintra_class,
-                "me_method": me_method,
-                "forced-idr": forced_idr,
-                "coder": coder,
-                "b_strategy": b_strategy,
-                "chromaoffset": chromaoffset,
-                "sc_threshold": sc_threshold,
-                "noise_reduction": noise_reduction,
-                "udu_sei": udu_sei,
-                "x264-params": x264_params,
-                "mb_info": mb_info,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "preset": preset,
+
+        "tune": tune,
+
+        "profile": profile,
+
+        "fastfirstpass": fastfirstpass,
+
+        "level": level,
+
+        "passlogfile": passlogfile,
+
+        "wpredp": wpredp,
+
+        "a53cc": a53cc,
+
+        "x264opts": x264opts,
+
+        "crf": crf,
+
+        "crf_max": crf_max,
+
+        "qp": qp,
+
+        "aq-mode": aq_mode,
+
+        "aq-strength": aq_strength,
+
+        "psy": psy,
+
+        "psy-rd": psy_rd,
+
+        "rc-lookahead": rc_lookahead,
+
+        "weightb": weightb,
+
+        "weightp": weightp,
+
+        "ssim": ssim,
+
+        "intra-refresh": intra_refresh,
+
+        "bluray-compat": bluray_compat,
+
+        "b-bias": b_bias,
+
+        "b-pyramid": b_pyramid,
+
+        "mixed-refs": mixed_refs,
+
+        "8x8dct": _8x8dct,
+
+        "fast-pskip": fast_pskip,
+
+        "aud": aud,
+
+        "mbtree": mbtree,
+
+        "deblock": deblock,
+
+        "cplxblur": cplxblur,
+
+        "partitions": partitions,
+
+        "direct-pred": direct_pred,
+
+        "slice-max-size": slice_max_size,
+
+        "stats": stats,
+
+        "nal-hrd": nal_hrd,
+
+        "avcintra-class": avcintra_class,
+
+        "me_method": me_method,
+
+        "forced-idr": forced_idr,
+
+        "coder": coder,
+
+        "b_strategy": b_strategy,
+
+        "chromaoffset": chromaoffset,
+
+        "sc_threshold": sc_threshold,
+
+        "noise_reduction": noise_reduction,
+
+        "udu_sei": udu_sei,
+
+        "x264-params": x264_params,
+
+        "mb_info": mb_info,
+
+    }))
+
 
 
 def libx264rgb(
+
     preset: str | None = None,
+
     tune: str | None = None,
+
     profile: str | None = None,
+
     fastfirstpass: bool | None = None,
+
     level: str | None = None,
+
     passlogfile: str | None = None,
+
     wpredp: str | None = None,
+
     a53cc: bool | None = None,
+
     x264opts: str | None = None,
+
     crf: float | None = None,
+
     crf_max: float | None = None,
+
     qp: int | None = None,
-    aq_mode: int
-    | None
-    | Literal["none", "variance", "autovariance", "autovariance-biased"] = None,
+
+    aq_mode: int | None| Literal["none", "variance", "autovariance", "autovariance-biased"] = None,
+
     aq_strength: float | None = None,
+
     psy: bool | None = None,
+
     psy_rd: str | None = None,
+
     rc_lookahead: int | None = None,
+
     weightb: bool | None = None,
-    weightp: int | None | Literal["none", "simple", "smart"] = None,
+
+    weightp: int | None| Literal["none", "simple", "smart"] = None,
+
     ssim: bool | None = None,
+
     intra_refresh: bool | None = None,
+
     bluray_compat: bool | None = None,
+
     b_bias: int | None = None,
-    b_pyramid: int | None | Literal["none", "strict", "normal"] = None,
+
+    b_pyramid: int | None| Literal["none", "strict", "normal"] = None,
+
     mixed_refs: bool | None = None,
+
     _8x8dct: bool | None = None,
+
     fast_pskip: bool | None = None,
+
     aud: bool | None = None,
+
     mbtree: bool | None = None,
+
     deblock: str | None = None,
+
     cplxblur: float | None = None,
+
     partitions: str | None = None,
-    direct_pred: int | None | Literal["none", "spatial", "temporal", "auto"] = None,
+
+    direct_pred: int | None| Literal["none", "spatial", "temporal", "auto"] = None,
+
     slice_max_size: int | None = None,
+
     stats: str | None = None,
-    nal_hrd: int | None | Literal["none", "vbr", "cbr"] = None,
+
+    nal_hrd: int | None| Literal["none", "vbr", "cbr"] = None,
+
     avcintra_class: int | None = None,
-    me_method: int | None | Literal["dia", "hex", "umh", "esa", "tesa"] = None,
+
+    me_method: int | None| Literal["dia", "hex", "umh", "esa", "tesa"] = None,
+
     forced_idr: bool | None = None,
-    coder: int | None | Literal["default", "cavlc", "cabac", "vlc", "ac"] = None,
+
+    coder: int | None| Literal["default", "cavlc", "cabac", "vlc", "ac"] = None,
+
     b_strategy: int | None = None,
+
     chromaoffset: int | None = None,
+
     sc_threshold: int | None = None,
+
     noise_reduction: int | None = None,
+
     udu_sei: bool | None = None,
+
     x264_params: str | None = None,
+
     mb_info: bool | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     libx264 H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10 RGB (codec h264)
@@ -1754,181 +2209,208 @@ def libx264rgb(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "preset": preset,
-                "tune": tune,
-                "profile": profile,
-                "fastfirstpass": fastfirstpass,
-                "level": level,
-                "passlogfile": passlogfile,
-                "wpredp": wpredp,
-                "a53cc": a53cc,
-                "x264opts": x264opts,
-                "crf": crf,
-                "crf_max": crf_max,
-                "qp": qp,
-                "aq-mode": aq_mode,
-                "aq-strength": aq_strength,
-                "psy": psy,
-                "psy-rd": psy_rd,
-                "rc-lookahead": rc_lookahead,
-                "weightb": weightb,
-                "weightp": weightp,
-                "ssim": ssim,
-                "intra-refresh": intra_refresh,
-                "bluray-compat": bluray_compat,
-                "b-bias": b_bias,
-                "b-pyramid": b_pyramid,
-                "mixed-refs": mixed_refs,
-                "8x8dct": _8x8dct,
-                "fast-pskip": fast_pskip,
-                "aud": aud,
-                "mbtree": mbtree,
-                "deblock": deblock,
-                "cplxblur": cplxblur,
-                "partitions": partitions,
-                "direct-pred": direct_pred,
-                "slice-max-size": slice_max_size,
-                "stats": stats,
-                "nal-hrd": nal_hrd,
-                "avcintra-class": avcintra_class,
-                "me_method": me_method,
-                "forced-idr": forced_idr,
-                "coder": coder,
-                "b_strategy": b_strategy,
-                "chromaoffset": chromaoffset,
-                "sc_threshold": sc_threshold,
-                "noise_reduction": noise_reduction,
-                "udu_sei": udu_sei,
-                "x264-params": x264_params,
-                "mb_info": mb_info,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "preset": preset,
+
+        "tune": tune,
+
+        "profile": profile,
+
+        "fastfirstpass": fastfirstpass,
+
+        "level": level,
+
+        "passlogfile": passlogfile,
+
+        "wpredp": wpredp,
+
+        "a53cc": a53cc,
+
+        "x264opts": x264opts,
+
+        "crf": crf,
+
+        "crf_max": crf_max,
+
+        "qp": qp,
+
+        "aq-mode": aq_mode,
+
+        "aq-strength": aq_strength,
+
+        "psy": psy,
+
+        "psy-rd": psy_rd,
+
+        "rc-lookahead": rc_lookahead,
+
+        "weightb": weightb,
+
+        "weightp": weightp,
+
+        "ssim": ssim,
+
+        "intra-refresh": intra_refresh,
+
+        "bluray-compat": bluray_compat,
+
+        "b-bias": b_bias,
+
+        "b-pyramid": b_pyramid,
+
+        "mixed-refs": mixed_refs,
+
+        "8x8dct": _8x8dct,
+
+        "fast-pskip": fast_pskip,
+
+        "aud": aud,
+
+        "mbtree": mbtree,
+
+        "deblock": deblock,
+
+        "cplxblur": cplxblur,
+
+        "partitions": partitions,
+
+        "direct-pred": direct_pred,
+
+        "slice-max-size": slice_max_size,
+
+        "stats": stats,
+
+        "nal-hrd": nal_hrd,
+
+        "avcintra-class": avcintra_class,
+
+        "me_method": me_method,
+
+        "forced-idr": forced_idr,
+
+        "coder": coder,
+
+        "b_strategy": b_strategy,
+
+        "chromaoffset": chromaoffset,
+
+        "sc_threshold": sc_threshold,
+
+        "noise_reduction": noise_reduction,
+
+        "udu_sei": udu_sei,
+
+        "x264-params": x264_params,
+
+        "mb_info": mb_info,
+
+    }))
+
 
 
 def h264_nvenc(
-    preset: int
-    | None
-    | Literal[
-        "default",
-        "slow",
-        "medium",
-        "fast",
-        "hp",
-        "hq",
-        "bd",
-        "ll",
-        "llhq",
-        "llhp",
-        "lossless",
-        "losslesshp",
-        "p1",
-        "p2",
-        "p3",
-        "p4",
-        "p5",
-        "p6",
-        "p7",
-    ] = None,
-    tune: int | None | Literal["hq", "ll", "ull", "lossless"] = None,
-    profile: int
-    | None
-    | Literal["baseline", "main", "high", "high10", "high422", "high444p"] = None,
-    level: int
-    | None
-    | Literal[
-        "auto",
-        "1",
-        "1.0",
-        "1b",
-        "1.0b",
-        "1.1",
-        "1.2",
-        "1.3",
-        "2",
-        "2.0",
-        "2.1",
-        "2.2",
-        "3",
-        "3.0",
-        "3.1",
-        "3.2",
-        "4",
-        "4.0",
-        "4.1",
-        "4.2",
-        "5",
-        "5.0",
-        "5.1",
-        "5.2",
-        "6.0",
-        "6.1",
-        "6.2",
-    ] = None,
-    rc: int
-    | None
-    | Literal[
-        "constqp",
-        "vbr",
-        "cbr",
-        "vbr_minqp",
-        "ll_2pass_quality",
-        "ll_2pass_size",
-        "vbr_2pass",
-        "cbr_ld_hq",
-        "cbr_hq",
-        "vbr_hq",
-    ] = None,
+
+    preset: int | None| Literal["default", "slow", "medium", "fast", "hp", "hq", "bd", "ll", "llhq", "llhp", "lossless", "losslesshp", "p1", "p2", "p3", "p4", "p5", "p6", "p7"] = None,
+
+    tune: int | None| Literal["hq", "ll", "ull", "lossless"] = None,
+
+    profile: int | None| Literal["baseline", "main", "high", "high10", "high422", "high444p"] = None,
+
+    level: int | None| Literal["auto", "1", "1.0", "1b", "1.0b", "1.1", "1.2", "1.3", "2", "2.0", "2.1", "2.2", "3", "3.0", "3.1", "3.2", "4", "4.0", "4.1", "4.2", "5", "5.0", "5.1", "5.2", "6.0", "6.1", "6.2"] = None,
+
+    rc: int | None| Literal["constqp", "vbr", "cbr", "vbr_minqp", "ll_2pass_quality", "ll_2pass_size", "vbr_2pass", "cbr_ld_hq", "cbr_hq", "vbr_hq"] = None,
+
     rc_lookahead: int | None = None,
+
     surfaces: int | None = None,
+
     cbr: bool | None = None,
+
     _2pass: bool | None = None,
-    gpu: int | None | Literal["any", "list"] = None,
-    rgb_mode: int | None | Literal["yuv420", "yuv444", "disabled"] = None,
+
+    gpu: int | None| Literal["any", "list"] = None,
+
+    rgb_mode: int | None| Literal["yuv420", "yuv444", "disabled"] = None,
+
     delay: int | None = None,
+
     no_scenecut: bool | None = None,
+
     forced_idr: bool | None = None,
+
     b_adapt: bool | None = None,
+
     spatial_aq: bool | None = None,
+
     temporal_aq: bool | None = None,
+
     zerolatency: bool | None = None,
+
     nonref_p: bool | None = None,
+
     strict_gop: bool | None = None,
+
     aq_strength: int | None = None,
+
     cq: float | None = None,
+
     aud: bool | None = None,
+
     bluray_compat: bool | None = None,
+
     init_qpP: int | None = None,
+
     init_qpB: int | None = None,
+
     init_qpI: int | None = None,
+
     qp: int | None = None,
+
     qp_cb_offset: int | None = None,
+
     qp_cr_offset: int | None = None,
+
     qmin: int | None = None,
+
     qmax: int | None = None,
+
     weighted_pred: int | None = None,
-    coder: int
-    | None
-    | Literal["default", "auto", "cabac", "cavlc", "ac", "vlc"] = None,
-    b_ref_mode: int | None | Literal["disabled", "each", "middle"] = None,
+
+    coder: int | None| Literal["default", "auto", "cabac", "cavlc", "ac", "vlc"] = None,
+
+    b_ref_mode: int | None| Literal["disabled", "each", "middle"] = None,
+
     a53cc: bool | None = None,
+
     s12m_tc: bool | None = None,
+
     dpb_size: int | None = None,
-    multipass: int | None | Literal["disabled", "qres", "fullres"] = None,
+
+    multipass: int | None| Literal["disabled", "qres", "fullres"] = None,
+
     highbitdepth: bool | None = None,
+
     ldkfs: int | None = None,
+
     extra_sei: bool | None = None,
+
     udu_sei: bool | None = None,
+
     intra_refresh: bool | None = None,
+
     single_slice_intra_refresh: bool | None = None,
+
     max_slice_size: int | None = None,
+
     constrained_encoding: bool | None = None,
+
     cbr_padding: bool | None = None,
-    tf_level: int | None | Literal["0", "4"] = None,
-    lookahead_level: int | None | Literal["auto", "0", "1", "2", "3"] = None,
+
+    tf_level: int | None| Literal["0", "4"] = None,
+
+    lookahead_level: int | None| Literal["auto", "0", "1", "2", "3"] = None,
+
 ) -> FFMpegEncoderOption:
     """
     NVIDIA NVENC H.264 encoder (codec h264)
@@ -1988,67 +2470,118 @@ def h264_nvenc(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "preset": preset,
-                "tune": tune,
-                "profile": profile,
-                "level": level,
-                "rc": rc,
-                "rc-lookahead": rc_lookahead,
-                "surfaces": surfaces,
-                "cbr": cbr,
-                "2pass": _2pass,
-                "gpu": gpu,
-                "rgb_mode": rgb_mode,
-                "delay": delay,
-                "no-scenecut": no_scenecut,
-                "forced-idr": forced_idr,
-                "b_adapt": b_adapt,
-                "spatial-aq": spatial_aq,
-                "temporal-aq": temporal_aq,
-                "zerolatency": zerolatency,
-                "nonref_p": nonref_p,
-                "strict_gop": strict_gop,
-                "aq-strength": aq_strength,
-                "cq": cq,
-                "aud": aud,
-                "bluray-compat": bluray_compat,
-                "init_qpP": init_qpP,
-                "init_qpB": init_qpB,
-                "init_qpI": init_qpI,
-                "qp": qp,
-                "qp_cb_offset": qp_cb_offset,
-                "qp_cr_offset": qp_cr_offset,
-                "qmin": qmin,
-                "qmax": qmax,
-                "weighted_pred": weighted_pred,
-                "coder": coder,
-                "b_ref_mode": b_ref_mode,
-                "a53cc": a53cc,
-                "s12m_tc": s12m_tc,
-                "dpb_size": dpb_size,
-                "multipass": multipass,
-                "highbitdepth": highbitdepth,
-                "ldkfs": ldkfs,
-                "extra_sei": extra_sei,
-                "udu_sei": udu_sei,
-                "intra-refresh": intra_refresh,
-                "single-slice-intra-refresh": single_slice_intra_refresh,
-                "max_slice_size": max_slice_size,
-                "constrained-encoding": constrained_encoding,
-                "cbr_padding": cbr_padding,
-                "tf_level": tf_level,
-                "lookahead_level": lookahead_level,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "preset": preset,
+
+        "tune": tune,
+
+        "profile": profile,
+
+        "level": level,
+
+        "rc": rc,
+
+        "rc-lookahead": rc_lookahead,
+
+        "surfaces": surfaces,
+
+        "cbr": cbr,
+
+        "2pass": _2pass,
+
+        "gpu": gpu,
+
+        "rgb_mode": rgb_mode,
+
+        "delay": delay,
+
+        "no-scenecut": no_scenecut,
+
+        "forced-idr": forced_idr,
+
+        "b_adapt": b_adapt,
+
+        "spatial-aq": spatial_aq,
+
+        "temporal-aq": temporal_aq,
+
+        "zerolatency": zerolatency,
+
+        "nonref_p": nonref_p,
+
+        "strict_gop": strict_gop,
+
+        "aq-strength": aq_strength,
+
+        "cq": cq,
+
+        "aud": aud,
+
+        "bluray-compat": bluray_compat,
+
+        "init_qpP": init_qpP,
+
+        "init_qpB": init_qpB,
+
+        "init_qpI": init_qpI,
+
+        "qp": qp,
+
+        "qp_cb_offset": qp_cb_offset,
+
+        "qp_cr_offset": qp_cr_offset,
+
+        "qmin": qmin,
+
+        "qmax": qmax,
+
+        "weighted_pred": weighted_pred,
+
+        "coder": coder,
+
+        "b_ref_mode": b_ref_mode,
+
+        "a53cc": a53cc,
+
+        "s12m_tc": s12m_tc,
+
+        "dpb_size": dpb_size,
+
+        "multipass": multipass,
+
+        "highbitdepth": highbitdepth,
+
+        "ldkfs": ldkfs,
+
+        "extra_sei": extra_sei,
+
+        "udu_sei": udu_sei,
+
+        "intra-refresh": intra_refresh,
+
+        "single-slice-intra-refresh": single_slice_intra_refresh,
+
+        "max_slice_size": max_slice_size,
+
+        "constrained-encoding": constrained_encoding,
+
+        "cbr_padding": cbr_padding,
+
+        "tf_level": tf_level,
+
+        "lookahead_level": lookahead_level,
+
+    }))
+
 
 
 def h264_v4l2m2m(
+
     num_output_buffers: int | None = None,
+
     num_capture_buffers: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     V4L2 mem2mem H.264 encoder wrapper (codec h264)
@@ -2060,57 +2593,46 @@ def h264_v4l2m2m(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "num_output_buffers": num_output_buffers,
-                "num_capture_buffers": num_capture_buffers,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "num_output_buffers": num_output_buffers,
+
+        "num_capture_buffers": num_capture_buffers,
+
+    }))
+
 
 
 def h264_vaapi(
+
     idr_interval: int | None = None,
+
     b_depth: int | None = None,
+
     async_depth: int | None = None,
+
     low_power: bool | None = None,
+
     max_frame_size: int | None = None,
-    rc_mode: int
-    | None
-    | Literal["auto", "CQP", "CBR", "VBR", "ICQ", "QVBR", "AVBR"] = None,
+
+    rc_mode: int | None| Literal["auto", "CQP", "CBR", "VBR", "ICQ", "QVBR", "AVBR"] = None,
+
     blbrc: bool | None = None,
+
     qp: int | None = None,
+
     quality: int | None = None,
-    coder: int | None | Literal["cavlc", "cabac", "vlc", "ac"] = None,
+
+    coder: int | None| Literal["cavlc", "cabac", "vlc", "ac"] = None,
+
     aud: bool | None = None,
+
     sei: str | None = None,
-    profile: int
-    | None
-    | Literal["constrained_baseline", "main", "high", "high10"] = None,
-    level: int
-    | None
-    | Literal[
-        "1",
-        "1.1",
-        "1.2",
-        "1.3",
-        "2",
-        "2.1",
-        "2.2",
-        "3",
-        "3.1",
-        "3.2",
-        "4",
-        "4.1",
-        "4.2",
-        "5",
-        "5.1",
-        "5.2",
-        "6",
-        "6.1",
-        "6.2",
-    ] = None,
+
+    profile: int | None| Literal["constrained_baseline", "main", "high", "high10"] = None,
+
+    level: int | None| Literal["1", "1.1", "1.2", "1.3", "2", "2.1", "2.2", "3", "3.1", "3.2", "4", "4.1", "4.2", "5", "5.1", "5.2", "6", "6.1", "6.2"] = None,
+
 ) -> FFMpegEncoderOption:
     """
     H.264/AVC (VAAPI) (codec h264)
@@ -2134,66 +2656,68 @@ def h264_vaapi(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "idr_interval": idr_interval,
-                "b_depth": b_depth,
-                "async_depth": async_depth,
-                "low_power": low_power,
-                "max_frame_size": max_frame_size,
-                "rc_mode": rc_mode,
-                "blbrc": blbrc,
-                "qp": qp,
-                "quality": quality,
-                "coder": coder,
-                "aud": aud,
-                "sei": sei,
-                "profile": profile,
-                "level": level,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "idr_interval": idr_interval,
+
+        "b_depth": b_depth,
+
+        "async_depth": async_depth,
+
+        "low_power": low_power,
+
+        "max_frame_size": max_frame_size,
+
+        "rc_mode": rc_mode,
+
+        "blbrc": blbrc,
+
+        "qp": qp,
+
+        "quality": quality,
+
+        "coder": coder,
+
+        "aud": aud,
+
+        "sei": sei,
+
+        "profile": profile,
+
+        "level": level,
+
+    }))
+
 
 
 def h264_vulkan(
+
     idr_interval: int | None = None,
+
     b_depth: int | None = None,
+
     async_depth: int | None = None,
+
     qp: int | None = None,
+
     quality: int | None = None,
-    rc_mode: int | None | Literal["auto", "driver", "cqp", "cbr", "vbr"] = None,
-    tune: int | None | Literal["default", "hq", "ll", "ull", "lossless"] = None,
+
+    rc_mode: int | None| Literal["auto", "driver", "cqp", "cbr", "vbr"] = None,
+
+    tune: int | None| Literal["default", "hq", "ll", "ull", "lossless"] = None,
+
     usage: str | None = None,
+
     content: str | None = None,
-    profile: int
-    | None
-    | Literal["constrained_baseline", "main", "high", "high444p"] = None,
-    level: int
-    | None
-    | Literal[
-        "1",
-        "1.1",
-        "1.2",
-        "1.3",
-        "2",
-        "2.1",
-        "2.2",
-        "3",
-        "3.1",
-        "3.2",
-        "4",
-        "4.1",
-        "4.2",
-        "5",
-        "5.1",
-        "5.2",
-        "6",
-        "6.1",
-        "6.2",
-    ] = None,
-    coder: int | None | Literal["cabac", "vlc"] = None,
+
+    profile: int | None| Literal["constrained_baseline", "main", "high", "high444p"] = None,
+
+    level: int | None| Literal["1", "1.1", "1.2", "1.3", "2", "2.1", "2.2", "3", "3.1", "3.2", "4", "4.1", "4.2", "5", "5.1", "5.2", "6", "6.1", "6.2"] = None,
+
+    coder: int | None| Literal["cabac", "vlc"] = None,
+
     units: str | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     H.264/AVC (Vulkan) (codec h264)
@@ -2216,31 +2740,46 @@ def h264_vulkan(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "idr_interval": idr_interval,
-                "b_depth": b_depth,
-                "async_depth": async_depth,
-                "qp": qp,
-                "quality": quality,
-                "rc_mode": rc_mode,
-                "tune": tune,
-                "usage": usage,
-                "content": content,
-                "profile": profile,
-                "level": level,
-                "coder": coder,
-                "units": units,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "idr_interval": idr_interval,
+
+        "b_depth": b_depth,
+
+        "async_depth": async_depth,
+
+        "qp": qp,
+
+        "quality": quality,
+
+        "rc_mode": rc_mode,
+
+        "tune": tune,
+
+        "usage": usage,
+
+        "content": content,
+
+        "profile": profile,
+
+        "level": level,
+
+        "coder": coder,
+
+        "units": units,
+
+    }))
+
 
 
 def hap(
-    format: int | None | Literal["hap", "hap_alpha", "hap_q"] = None,
+
+    format: int | None| Literal["hap", "hap_alpha", "hap_q"] = None,
+
     chunks: int | None = None,
-    compressor: int | None | Literal["none", "snappy"] = None,
+
+    compressor: int | None| Literal["none", "snappy"] = None,
+
 ) -> FFMpegEncoderOption:
     """
     Vidvox Hap
@@ -2253,18 +2792,21 @@ def hap(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "format": format,
-                "chunks": chunks,
-                "compressor": compressor,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "format": format,
+
+        "chunks": chunks,
+
+        "compressor": compressor,
+
+    }))
 
 
-def hdr() -> FFMpegEncoderOption:
+
+def hdr(
+
+) -> FFMpegEncoderOption:
     """
     HDR (Radiance RGBE format) image
 
@@ -2272,20 +2814,34 @@ def hdr() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
+
 
 
 def libx265(
+
     crf: float | None = None,
+
     qp: int | None = None,
+
     forced_idr: bool | None = None,
+
     preset: str | None = None,
+
     tune: str | None = None,
+
     profile: str | None = None,
+
     udu_sei: bool | None = None,
+
     a53cc: bool | None = None,
+
     x265_params: str | None = None,
-    dolbyvision: bool | None | Literal["auto"] = None,
+
+    dolbyvision: bool | None| Literal["auto"] = None,
+
 ) -> FFMpegEncoderOption:
     """
     libx265 H.265 / HEVC (codec hevc)
@@ -2305,136 +2861,136 @@ def libx265(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "crf": crf,
-                "qp": qp,
-                "forced-idr": forced_idr,
-                "preset": preset,
-                "tune": tune,
-                "profile": profile,
-                "udu_sei": udu_sei,
-                "a53cc": a53cc,
-                "x265-params": x265_params,
-                "dolbyvision": dolbyvision,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "crf": crf,
+
+        "qp": qp,
+
+        "forced-idr": forced_idr,
+
+        "preset": preset,
+
+        "tune": tune,
+
+        "profile": profile,
+
+        "udu_sei": udu_sei,
+
+        "a53cc": a53cc,
+
+        "x265-params": x265_params,
+
+        "dolbyvision": dolbyvision,
+
+    }))
+
 
 
 def hevc_nvenc(
-    preset: int
-    | None
-    | Literal[
-        "default",
-        "slow",
-        "medium",
-        "fast",
-        "hp",
-        "hq",
-        "bd",
-        "ll",
-        "llhq",
-        "llhp",
-        "lossless",
-        "losslesshp",
-        "p1",
-        "p2",
-        "p3",
-        "p4",
-        "p5",
-        "p6",
-        "p7",
-    ] = None,
-    tune: int | None | Literal["hq", "uhq", "ll", "ull", "lossless"] = None,
-    profile: int | None | Literal["main", "main10", "rext", "mv"] = None,
-    level: int
-    | None
-    | Literal[
-        "auto",
-        "1",
-        "1.0",
-        "2",
-        "2.0",
-        "2.1",
-        "3",
-        "3.0",
-        "3.1",
-        "4",
-        "4.0",
-        "4.1",
-        "5",
-        "5.0",
-        "5.1",
-        "5.2",
-        "6",
-        "6.0",
-        "6.1",
-        "6.2",
-    ] = None,
-    tier: int | None | Literal["main", "high"] = None,
-    rc: int
-    | None
-    | Literal[
-        "constqp",
-        "vbr",
-        "cbr",
-        "vbr_minqp",
-        "ll_2pass_quality",
-        "ll_2pass_size",
-        "vbr_2pass",
-        "cbr_ld_hq",
-        "cbr_hq",
-        "vbr_hq",
-    ] = None,
+
+    preset: int | None| Literal["default", "slow", "medium", "fast", "hp", "hq", "bd", "ll", "llhq", "llhp", "lossless", "losslesshp", "p1", "p2", "p3", "p4", "p5", "p6", "p7"] = None,
+
+    tune: int | None| Literal["hq", "uhq", "ll", "ull", "lossless"] = None,
+
+    profile: int | None| Literal["main", "main10", "rext", "mv"] = None,
+
+    level: int | None| Literal["auto", "1", "1.0", "2", "2.0", "2.1", "3", "3.0", "3.1", "4", "4.0", "4.1", "5", "5.0", "5.1", "5.2", "6", "6.0", "6.1", "6.2"] = None,
+
+    tier: int | None| Literal["main", "high"] = None,
+
+    rc: int | None| Literal["constqp", "vbr", "cbr", "vbr_minqp", "ll_2pass_quality", "ll_2pass_size", "vbr_2pass", "cbr_ld_hq", "cbr_hq", "vbr_hq"] = None,
+
     rc_lookahead: int | None = None,
+
     surfaces: int | None = None,
+
     cbr: bool | None = None,
+
     _2pass: bool | None = None,
-    gpu: int | None | Literal["any", "list"] = None,
-    rgb_mode: int | None | Literal["yuv420", "yuv444", "disabled"] = None,
+
+    gpu: int | None| Literal["any", "list"] = None,
+
+    rgb_mode: int | None| Literal["yuv420", "yuv444", "disabled"] = None,
+
     delay: int | None = None,
+
     no_scenecut: bool | None = None,
+
     forced_idr: bool | None = None,
+
     spatial_aq: bool | None = None,
+
     temporal_aq: bool | None = None,
+
     zerolatency: bool | None = None,
+
     nonref_p: bool | None = None,
+
     strict_gop: bool | None = None,
+
     aq_strength: int | None = None,
+
     cq: float | None = None,
+
     aud: bool | None = None,
+
     bluray_compat: bool | None = None,
+
     init_qpP: int | None = None,
+
     init_qpB: int | None = None,
+
     init_qpI: int | None = None,
+
     qp: int | None = None,
+
     qp_cb_offset: int | None = None,
+
     qp_cr_offset: int | None = None,
+
     qmin: int | None = None,
+
     qmax: int | None = None,
+
     weighted_pred: int | None = None,
-    b_ref_mode: int | None | Literal["disabled", "each", "middle"] = None,
+
+    b_ref_mode: int | None| Literal["disabled", "each", "middle"] = None,
+
     a53cc: bool | None = None,
+
     s12m_tc: bool | None = None,
+
     dpb_size: int | None = None,
-    multipass: int | None | Literal["disabled", "qres", "fullres"] = None,
+
+    multipass: int | None| Literal["disabled", "qres", "fullres"] = None,
+
     highbitdepth: bool | None = None,
+
     ldkfs: int | None = None,
+
     extra_sei: bool | None = None,
+
     udu_sei: bool | None = None,
+
     intra_refresh: bool | None = None,
+
     single_slice_intra_refresh: bool | None = None,
+
     max_slice_size: int | None = None,
+
     constrained_encoding: bool | None = None,
+
     cbr_padding: bool | None = None,
-    tf_level: int | None | Literal["0", "4"] = None,
-    lookahead_level: int | None | Literal["auto", "0", "1", "2", "3"] = None,
+
+    tf_level: int | None| Literal["0", "4"] = None,
+
+    lookahead_level: int | None| Literal["auto", "0", "1", "2", "3"] = None,
+
     unidir_b: bool | None = None,
-    split_encode_mode: int
-    | None
-    | Literal["disabled", "auto", "forced", "2", "3"] = None,
+
+    split_encode_mode: int | None| Literal["disabled", "auto", "forced", "2", "3"] = None,
+
 ) -> FFMpegEncoderOption:
     """
     NVIDIA NVENC hevc encoder (codec hevc)
@@ -2495,68 +3051,120 @@ def hevc_nvenc(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "preset": preset,
-                "tune": tune,
-                "profile": profile,
-                "level": level,
-                "tier": tier,
-                "rc": rc,
-                "rc-lookahead": rc_lookahead,
-                "surfaces": surfaces,
-                "cbr": cbr,
-                "2pass": _2pass,
-                "gpu": gpu,
-                "rgb_mode": rgb_mode,
-                "delay": delay,
-                "no-scenecut": no_scenecut,
-                "forced-idr": forced_idr,
-                "spatial_aq": spatial_aq,
-                "temporal_aq": temporal_aq,
-                "zerolatency": zerolatency,
-                "nonref_p": nonref_p,
-                "strict_gop": strict_gop,
-                "aq-strength": aq_strength,
-                "cq": cq,
-                "aud": aud,
-                "bluray-compat": bluray_compat,
-                "init_qpP": init_qpP,
-                "init_qpB": init_qpB,
-                "init_qpI": init_qpI,
-                "qp": qp,
-                "qp_cb_offset": qp_cb_offset,
-                "qp_cr_offset": qp_cr_offset,
-                "qmin": qmin,
-                "qmax": qmax,
-                "weighted_pred": weighted_pred,
-                "b_ref_mode": b_ref_mode,
-                "a53cc": a53cc,
-                "s12m_tc": s12m_tc,
-                "dpb_size": dpb_size,
-                "multipass": multipass,
-                "highbitdepth": highbitdepth,
-                "ldkfs": ldkfs,
-                "extra_sei": extra_sei,
-                "udu_sei": udu_sei,
-                "intra-refresh": intra_refresh,
-                "single-slice-intra-refresh": single_slice_intra_refresh,
-                "max_slice_size": max_slice_size,
-                "constrained-encoding": constrained_encoding,
-                "cbr_padding": cbr_padding,
-                "tf_level": tf_level,
-                "lookahead_level": lookahead_level,
-                "unidir_b": unidir_b,
-                "split_encode_mode": split_encode_mode,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "preset": preset,
+
+        "tune": tune,
+
+        "profile": profile,
+
+        "level": level,
+
+        "tier": tier,
+
+        "rc": rc,
+
+        "rc-lookahead": rc_lookahead,
+
+        "surfaces": surfaces,
+
+        "cbr": cbr,
+
+        "2pass": _2pass,
+
+        "gpu": gpu,
+
+        "rgb_mode": rgb_mode,
+
+        "delay": delay,
+
+        "no-scenecut": no_scenecut,
+
+        "forced-idr": forced_idr,
+
+        "spatial_aq": spatial_aq,
+
+        "temporal_aq": temporal_aq,
+
+        "zerolatency": zerolatency,
+
+        "nonref_p": nonref_p,
+
+        "strict_gop": strict_gop,
+
+        "aq-strength": aq_strength,
+
+        "cq": cq,
+
+        "aud": aud,
+
+        "bluray-compat": bluray_compat,
+
+        "init_qpP": init_qpP,
+
+        "init_qpB": init_qpB,
+
+        "init_qpI": init_qpI,
+
+        "qp": qp,
+
+        "qp_cb_offset": qp_cb_offset,
+
+        "qp_cr_offset": qp_cr_offset,
+
+        "qmin": qmin,
+
+        "qmax": qmax,
+
+        "weighted_pred": weighted_pred,
+
+        "b_ref_mode": b_ref_mode,
+
+        "a53cc": a53cc,
+
+        "s12m_tc": s12m_tc,
+
+        "dpb_size": dpb_size,
+
+        "multipass": multipass,
+
+        "highbitdepth": highbitdepth,
+
+        "ldkfs": ldkfs,
+
+        "extra_sei": extra_sei,
+
+        "udu_sei": udu_sei,
+
+        "intra-refresh": intra_refresh,
+
+        "single-slice-intra-refresh": single_slice_intra_refresh,
+
+        "max_slice_size": max_slice_size,
+
+        "constrained-encoding": constrained_encoding,
+
+        "cbr_padding": cbr_padding,
+
+        "tf_level": tf_level,
+
+        "lookahead_level": lookahead_level,
+
+        "unidir_b": unidir_b,
+
+        "split_encode_mode": split_encode_mode,
+
+    }))
+
 
 
 def hevc_v4l2m2m(
+
     num_output_buffers: int | None = None,
+
     num_capture_buffers: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     V4L2 mem2mem HEVC encoder wrapper (codec hevc)
@@ -2568,37 +3176,46 @@ def hevc_v4l2m2m(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "num_output_buffers": num_output_buffers,
-                "num_capture_buffers": num_capture_buffers,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "num_output_buffers": num_output_buffers,
+
+        "num_capture_buffers": num_capture_buffers,
+
+    }))
+
 
 
 def hevc_vaapi(
+
     idr_interval: int | None = None,
+
     b_depth: int | None = None,
+
     async_depth: int | None = None,
+
     low_power: bool | None = None,
+
     max_frame_size: int | None = None,
-    rc_mode: int
-    | None
-    | Literal["auto", "CQP", "CBR", "VBR", "ICQ", "QVBR", "AVBR"] = None,
+
+    rc_mode: int | None| Literal["auto", "CQP", "CBR", "VBR", "ICQ", "QVBR", "AVBR"] = None,
+
     blbrc: bool | None = None,
+
     qp: int | None = None,
+
     aud: bool | None = None,
-    profile: int | None | Literal["main", "main10", "rext"] = None,
-    tier: int | None | Literal["main", "high"] = None,
-    level: int
-    | None
-    | Literal[
-        "1", "2", "2.1", "3", "3.1", "4", "4.1", "5", "5.1", "5.2", "6", "6.1", "6.2"
-    ] = None,
+
+    profile: int | None| Literal["main", "main10", "rext"] = None,
+
+    tier: int | None| Literal["main", "high"] = None,
+
+    level: int | None| Literal["1", "2", "2.1", "3", "3.1", "4", "4.1", "5", "5.1", "5.2", "6", "6.1", "6.2"] = None,
+
     sei: str | None = None,
+
     tiles: str | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     H.265/HEVC (VAAPI) (codec hevc)
@@ -2622,46 +3239,68 @@ def hevc_vaapi(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "idr_interval": idr_interval,
-                "b_depth": b_depth,
-                "async_depth": async_depth,
-                "low_power": low_power,
-                "max_frame_size": max_frame_size,
-                "rc_mode": rc_mode,
-                "blbrc": blbrc,
-                "qp": qp,
-                "aud": aud,
-                "profile": profile,
-                "tier": tier,
-                "level": level,
-                "sei": sei,
-                "tiles": tiles,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "idr_interval": idr_interval,
+
+        "b_depth": b_depth,
+
+        "async_depth": async_depth,
+
+        "low_power": low_power,
+
+        "max_frame_size": max_frame_size,
+
+        "rc_mode": rc_mode,
+
+        "blbrc": blbrc,
+
+        "qp": qp,
+
+        "aud": aud,
+
+        "profile": profile,
+
+        "tier": tier,
+
+        "level": level,
+
+        "sei": sei,
+
+        "tiles": tiles,
+
+    }))
+
 
 
 def hevc_vulkan(
+
     idr_interval: int | None = None,
+
     b_depth: int | None = None,
+
     async_depth: int | None = None,
+
     qp: int | None = None,
+
     quality: int | None = None,
-    rc_mode: int | None | Literal["auto", "driver", "cqp", "cbr", "vbr"] = None,
-    tune: int | None | Literal["default", "hq", "ll", "ull", "lossless"] = None,
+
+    rc_mode: int | None| Literal["auto", "driver", "cqp", "cbr", "vbr"] = None,
+
+    tune: int | None| Literal["default", "hq", "ll", "ull", "lossless"] = None,
+
     usage: str | None = None,
+
     content: str | None = None,
-    profile: int | None | Literal["main", "main10", "rext"] = None,
-    tier: int | None | Literal["main", "high"] = None,
-    level: int
-    | None
-    | Literal[
-        "1", "2", "2.1", "3", "3.1", "4", "4.1", "5", "5.1", "5.2", "6", "6.1", "6.2"
-    ] = None,
+
+    profile: int | None| Literal["main", "main10", "rext"] = None,
+
+    tier: int | None| Literal["main", "high"] = None,
+
+    level: int | None| Literal["1", "2", "2.1", "3", "3.1", "4", "4.1", "5", "5.1", "5.2", "6", "6.1", "6.2"] = None,
+
     units: str | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     H.265/HEVC (Vulkan) (codec hevc)
@@ -2684,30 +3323,44 @@ def hevc_vulkan(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "idr_interval": idr_interval,
-                "b_depth": b_depth,
-                "async_depth": async_depth,
-                "qp": qp,
-                "quality": quality,
-                "rc_mode": rc_mode,
-                "tune": tune,
-                "usage": usage,
-                "content": content,
-                "profile": profile,
-                "tier": tier,
-                "level": level,
-                "units": units,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "idr_interval": idr_interval,
+
+        "b_depth": b_depth,
+
+        "async_depth": async_depth,
+
+        "qp": qp,
+
+        "quality": quality,
+
+        "rc_mode": rc_mode,
+
+        "tune": tune,
+
+        "usage": usage,
+
+        "content": content,
+
+        "profile": profile,
+
+        "tier": tier,
+
+        "level": level,
+
+        "units": units,
+
+    }))
+
 
 
 def huffyuv(
+
     non_deterministic: bool | None = None,
-    pred: int | None | Literal["left", "plane", "median"] = None,
+
+    pred: int | None| Literal["left", "plane", "median"] = None,
+
 ) -> FFMpegEncoderOption:
     """
     Huffyuv / HuffYUV
@@ -2719,25 +3372,34 @@ def huffyuv(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "non_deterministic": non_deterministic,
-                "pred": pred,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "non_deterministic": non_deterministic,
+
+        "pred": pred,
+
+    }))
+
 
 
 def jpeg2000(
-    format: int | None | Literal["j2k", "jp2"] = None,
+
+    format: int | None| Literal["j2k", "jp2"] = None,
+
     tile_width: int | None = None,
+
     tile_height: int | None = None,
-    pred: int | None | Literal["dwt97int", "dwt53"] = None,
+
+    pred: int | None| Literal["dwt97int", "dwt53"] = None,
+
     sop: int | None = None,
+
     eph: int | None = None,
-    prog: int | None | Literal["lrcp", "rlcp", "rpcl", "pcrl", "cprl"] = None,
+
+    prog: int | None| Literal["lrcp", "rlcp", "rpcl", "pcrl", "cprl"] = None,
+
     layer_rates: str | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     JPEG 2000
@@ -2755,31 +3417,46 @@ def jpeg2000(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "format": format,
-                "tile_width": tile_width,
-                "tile_height": tile_height,
-                "pred": pred,
-                "sop": sop,
-                "eph": eph,
-                "prog": prog,
-                "layer_rates": layer_rates,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "format": format,
+
+        "tile_width": tile_width,
+
+        "tile_height": tile_height,
+
+        "pred": pred,
+
+        "sop": sop,
+
+        "eph": eph,
+
+        "prog": prog,
+
+        "layer_rates": layer_rates,
+
+    }))
+
 
 
 def libopenjpeg(
-    format: int | None | Literal["j2k", "jp2"] = None,
-    profile: int | None | Literal["jpeg2000", "cinema2k", "cinema4k"] = None,
-    cinema_mode: int | None | Literal["off", "2k_24", "2k_48", "4k_24"] = None,
-    prog_order: int | None | Literal["lrcp", "rlcp", "rpcl", "pcrl", "cprl"] = None,
+
+    format: int | None| Literal["j2k", "jp2"] = None,
+
+    profile: int | None| Literal["jpeg2000", "cinema2k", "cinema4k"] = None,
+
+    cinema_mode: int | None| Literal["off", "2k_24", "2k_48", "4k_24"] = None,
+
+    prog_order: int | None| Literal["lrcp", "rlcp", "rpcl", "pcrl", "cprl"] = None,
+
     numresolution: int | None = None,
+
     irreversible: int | None = None,
+
     disto_alloc: int | None = None,
+
     fixed_quality: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     OpenJPEG JPEG 2000 (codec jpeg2000)
@@ -2797,24 +3474,32 @@ def libopenjpeg(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "format": format,
-                "profile": profile,
-                "cinema_mode": cinema_mode,
-                "prog_order": prog_order,
-                "numresolution": numresolution,
-                "irreversible": irreversible,
-                "disto_alloc": disto_alloc,
-                "fixed_quality": fixed_quality,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "format": format,
+
+        "profile": profile,
+
+        "cinema_mode": cinema_mode,
+
+        "prog_order": prog_order,
+
+        "numresolution": numresolution,
+
+        "irreversible": irreversible,
+
+        "disto_alloc": disto_alloc,
+
+        "fixed_quality": fixed_quality,
+
+    }))
+
 
 
 def jpegls(
-    pred: int | None | Literal["left", "plane", "median"] = None,
+
+    pred: int | None| Literal["left", "plane", "median"] = None,
+
 ) -> FFMpegEncoderOption:
     """
     JPEG-LS
@@ -2825,20 +3510,24 @@ def jpegls(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "pred": pred,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "pred": pred,
+
+    }))
+
 
 
 def libjxl(
+
     effort: int | None = None,
+
     distance: float | None = None,
+
     modular: int | None = None,
+
     xyb: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     libjxl JPEG XL (codec jpegxl)
@@ -2852,23 +3541,30 @@ def libjxl(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "effort": effort,
-                "distance": distance,
-                "modular": modular,
-                "xyb": xyb,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "effort": effort,
+
+        "distance": distance,
+
+        "modular": modular,
+
+        "xyb": xyb,
+
+    }))
+
 
 
 def libjxl_anim(
+
     effort: int | None = None,
+
     distance: float | None = None,
+
     modular: int | None = None,
+
     xyb: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     libjxl JPEG XL animated (codec jpegxl_anim)
@@ -2882,20 +3578,24 @@ def libjxl_anim(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "effort": effort,
-                "distance": distance,
-                "modular": modular,
-                "xyb": xyb,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "effort": effort,
+
+        "distance": distance,
+
+        "modular": modular,
+
+        "xyb": xyb,
+
+    }))
+
 
 
 def ljpeg(
-    pred: int | None | Literal["left", "plane", "median"] = None,
+
+    pred: int | None| Literal["left", "plane", "median"] = None,
+
 ) -> FFMpegEncoderOption:
     """
     Lossless JPEG
@@ -2906,17 +3606,18 @@ def ljpeg(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "pred": pred,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "pred": pred,
+
+    }))
+
 
 
 def magicyuv(
-    pred: int | None | Literal["left", "gradient", "median"] = None,
+
+    pred: int | None| Literal["left", "gradient", "median"] = None,
+
 ) -> FFMpegEncoderOption:
     """
     MagicYUV video
@@ -2927,56 +3628,60 @@ def magicyuv(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "pred": pred,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "pred": pred,
+
+    }))
+
 
 
 def mjpeg(
-    huffman: int | None | Literal["default", "optimal"] = None,
+
+    huffman: int | None| Literal["default", "optimal"] = None,
+
     force_duplicated_matrix: bool | None = None,
+
     mpv_flags: str | None = None,
+
     luma_elim_threshold: int | None = None,
+
     chroma_elim_threshold: int | None = None,
+
     quantizer_noise_shaping: int | None = None,
+
     error_rate: int | None = None,
+
     qsquish: float | None = None,
+
     rc_qmod_amp: float | None = None,
+
     rc_qmod_freq: int | None = None,
+
     rc_eq: str | None = None,
+
     rc_init_cplx: float | None = None,
+
     rc_buf_aggressivity: float | None = None,
+
     border_mask: float | None = None,
+
     lmin: int | None = None,
+
     lmax: int | None = None,
+
     skip_threshold: int | None = None,
+
     skip_factor: int | None = None,
+
     skip_exp: int | None = None,
-    skip_cmp: int
-    | None
-    | Literal[
-        "sad",
-        "sse",
-        "satd",
-        "dct",
-        "psnr",
-        "bit",
-        "rd",
-        "zero",
-        "vsad",
-        "vsse",
-        "nsse",
-        "dct264",
-        "dctmax",
-        "chroma",
-        "msad",
-    ] = None,
+
+    skip_cmp: int | None| Literal["sad", "sse", "satd", "dct", "psnr", "bit", "rd", "zero", "vsad", "vsse", "nsse", "dct264", "dctmax", "chroma", "msad"] = None,
+
     noise_reduction: int | None = None,
+
     ps: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     MJPEG (Motion JPEG)
@@ -3008,44 +3713,72 @@ def mjpeg(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "huffman": huffman,
-                "force_duplicated_matrix": force_duplicated_matrix,
-                "mpv_flags": mpv_flags,
-                "luma_elim_threshold": luma_elim_threshold,
-                "chroma_elim_threshold": chroma_elim_threshold,
-                "quantizer_noise_shaping": quantizer_noise_shaping,
-                "error_rate": error_rate,
-                "qsquish": qsquish,
-                "rc_qmod_amp": rc_qmod_amp,
-                "rc_qmod_freq": rc_qmod_freq,
-                "rc_eq": rc_eq,
-                "rc_init_cplx": rc_init_cplx,
-                "rc_buf_aggressivity": rc_buf_aggressivity,
-                "border_mask": border_mask,
-                "lmin": lmin,
-                "lmax": lmax,
-                "skip_threshold": skip_threshold,
-                "skip_factor": skip_factor,
-                "skip_exp": skip_exp,
-                "skip_cmp": skip_cmp,
-                "noise_reduction": noise_reduction,
-                "ps": ps,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "huffman": huffman,
+
+        "force_duplicated_matrix": force_duplicated_matrix,
+
+        "mpv_flags": mpv_flags,
+
+        "luma_elim_threshold": luma_elim_threshold,
+
+        "chroma_elim_threshold": chroma_elim_threshold,
+
+        "quantizer_noise_shaping": quantizer_noise_shaping,
+
+        "error_rate": error_rate,
+
+        "qsquish": qsquish,
+
+        "rc_qmod_amp": rc_qmod_amp,
+
+        "rc_qmod_freq": rc_qmod_freq,
+
+        "rc_eq": rc_eq,
+
+        "rc_init_cplx": rc_init_cplx,
+
+        "rc_buf_aggressivity": rc_buf_aggressivity,
+
+        "border_mask": border_mask,
+
+        "lmin": lmin,
+
+        "lmax": lmax,
+
+        "skip_threshold": skip_threshold,
+
+        "skip_factor": skip_factor,
+
+        "skip_exp": skip_exp,
+
+        "skip_cmp": skip_cmp,
+
+        "noise_reduction": noise_reduction,
+
+        "ps": ps,
+
+    }))
+
 
 
 def mjpeg_vaapi(
+
     idr_interval: int | None = None,
+
     b_depth: int | None = None,
+
     async_depth: int | None = None,
+
     low_power: bool | None = None,
+
     max_frame_size: int | None = None,
+
     jfif: bool | None = None,
+
     huffman: bool | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     MJPEG (VAAPI) (codec mjpeg)
@@ -3062,72 +3795,92 @@ def mjpeg_vaapi(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "idr_interval": idr_interval,
-                "b_depth": b_depth,
-                "async_depth": async_depth,
-                "low_power": low_power,
-                "max_frame_size": max_frame_size,
-                "jfif": jfif,
-                "huffman": huffman,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "idr_interval": idr_interval,
+
+        "b_depth": b_depth,
+
+        "async_depth": async_depth,
+
+        "low_power": low_power,
+
+        "max_frame_size": max_frame_size,
+
+        "jfif": jfif,
+
+        "huffman": huffman,
+
+    }))
+
 
 
 def mpeg1video(
+
     gop_timecode: str | None = None,
+
     drop_frame_timecode: bool | None = None,
+
     scan_offset: bool | None = None,
+
     timecode_frame_start: int | None = None,
+
     b_strategy: int | None = None,
+
     b_sensitivity: int | None = None,
+
     brd_scale: int | None = None,
+
     mpv_flags: str | None = None,
+
     luma_elim_threshold: int | None = None,
+
     chroma_elim_threshold: int | None = None,
+
     quantizer_noise_shaping: int | None = None,
+
     error_rate: int | None = None,
+
     qsquish: float | None = None,
+
     rc_qmod_amp: float | None = None,
+
     rc_qmod_freq: int | None = None,
+
     rc_eq: str | None = None,
+
     rc_init_cplx: float | None = None,
+
     rc_buf_aggressivity: float | None = None,
+
     border_mask: float | None = None,
+
     lmin: int | None = None,
+
     lmax: int | None = None,
+
     skip_threshold: int | None = None,
+
     skip_factor: int | None = None,
+
     skip_exp: int | None = None,
-    skip_cmp: int
-    | None
-    | Literal[
-        "sad",
-        "sse",
-        "satd",
-        "dct",
-        "psnr",
-        "bit",
-        "rd",
-        "zero",
-        "vsad",
-        "vsse",
-        "nsse",
-        "dct264",
-        "dctmax",
-        "chroma",
-        "msad",
-    ] = None,
+
+    skip_cmp: int | None| Literal["sad", "sse", "satd", "dct", "psnr", "bit", "rd", "zero", "vsad", "vsse", "nsse", "dct264", "dctmax", "chroma", "msad"] = None,
+
     noise_reduction: int | None = None,
+
     ps: int | None = None,
-    motion_est: int | None | Literal["zero", "epzs", "xone"] = None,
+
+    motion_est: int | None| Literal["zero", "epzs", "xone"] = None,
+
     mepc: int | None = None,
+
     mepre: int | None = None,
+
     intra_penalty: int | None = None,
+
     sc_threshold: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     MPEG-1 video
@@ -3169,105 +3922,154 @@ def mpeg1video(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "gop_timecode": gop_timecode,
-                "drop_frame_timecode": drop_frame_timecode,
-                "scan_offset": scan_offset,
-                "timecode_frame_start": timecode_frame_start,
-                "b_strategy": b_strategy,
-                "b_sensitivity": b_sensitivity,
-                "brd_scale": brd_scale,
-                "mpv_flags": mpv_flags,
-                "luma_elim_threshold": luma_elim_threshold,
-                "chroma_elim_threshold": chroma_elim_threshold,
-                "quantizer_noise_shaping": quantizer_noise_shaping,
-                "error_rate": error_rate,
-                "qsquish": qsquish,
-                "rc_qmod_amp": rc_qmod_amp,
-                "rc_qmod_freq": rc_qmod_freq,
-                "rc_eq": rc_eq,
-                "rc_init_cplx": rc_init_cplx,
-                "rc_buf_aggressivity": rc_buf_aggressivity,
-                "border_mask": border_mask,
-                "lmin": lmin,
-                "lmax": lmax,
-                "skip_threshold": skip_threshold,
-                "skip_factor": skip_factor,
-                "skip_exp": skip_exp,
-                "skip_cmp": skip_cmp,
-                "noise_reduction": noise_reduction,
-                "ps": ps,
-                "motion_est": motion_est,
-                "mepc": mepc,
-                "mepre": mepre,
-                "intra_penalty": intra_penalty,
-                "sc_threshold": sc_threshold,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "gop_timecode": gop_timecode,
+
+        "drop_frame_timecode": drop_frame_timecode,
+
+        "scan_offset": scan_offset,
+
+        "timecode_frame_start": timecode_frame_start,
+
+        "b_strategy": b_strategy,
+
+        "b_sensitivity": b_sensitivity,
+
+        "brd_scale": brd_scale,
+
+        "mpv_flags": mpv_flags,
+
+        "luma_elim_threshold": luma_elim_threshold,
+
+        "chroma_elim_threshold": chroma_elim_threshold,
+
+        "quantizer_noise_shaping": quantizer_noise_shaping,
+
+        "error_rate": error_rate,
+
+        "qsquish": qsquish,
+
+        "rc_qmod_amp": rc_qmod_amp,
+
+        "rc_qmod_freq": rc_qmod_freq,
+
+        "rc_eq": rc_eq,
+
+        "rc_init_cplx": rc_init_cplx,
+
+        "rc_buf_aggressivity": rc_buf_aggressivity,
+
+        "border_mask": border_mask,
+
+        "lmin": lmin,
+
+        "lmax": lmax,
+
+        "skip_threshold": skip_threshold,
+
+        "skip_factor": skip_factor,
+
+        "skip_exp": skip_exp,
+
+        "skip_cmp": skip_cmp,
+
+        "noise_reduction": noise_reduction,
+
+        "ps": ps,
+
+        "motion_est": motion_est,
+
+        "mepc": mepc,
+
+        "mepre": mepre,
+
+        "intra_penalty": intra_penalty,
+
+        "sc_threshold": sc_threshold,
+
+    }))
+
 
 
 def mpeg2video(
+
     gop_timecode: str | None = None,
+
     drop_frame_timecode: bool | None = None,
+
     scan_offset: bool | None = None,
+
     timecode_frame_start: int | None = None,
+
     b_strategy: int | None = None,
+
     b_sensitivity: int | None = None,
+
     brd_scale: int | None = None,
+
     intra_vlc: bool | None = None,
+
     non_linear_quant: bool | None = None,
+
     alternate_scan: bool | None = None,
+
     a53cc: bool | None = None,
-    seq_disp_ext: int | None | Literal["auto", "never", "always"] = None,
-    video_format: int
-    | None
-    | Literal["component", "pal", "ntsc", "secam", "mac", "unspecified"] = None,
+
+    seq_disp_ext: int | None| Literal["auto", "never", "always"] = None,
+
+    video_format: int | None| Literal["component", "pal", "ntsc", "secam", "mac", "unspecified"] = None,
+
     mpv_flags: str | None = None,
+
     luma_elim_threshold: int | None = None,
+
     chroma_elim_threshold: int | None = None,
+
     quantizer_noise_shaping: int | None = None,
+
     error_rate: int | None = None,
+
     qsquish: float | None = None,
+
     rc_qmod_amp: float | None = None,
+
     rc_qmod_freq: int | None = None,
+
     rc_eq: str | None = None,
+
     rc_init_cplx: float | None = None,
+
     rc_buf_aggressivity: float | None = None,
+
     border_mask: float | None = None,
+
     lmin: int | None = None,
+
     lmax: int | None = None,
+
     skip_threshold: int | None = None,
+
     skip_factor: int | None = None,
+
     skip_exp: int | None = None,
-    skip_cmp: int
-    | None
-    | Literal[
-        "sad",
-        "sse",
-        "satd",
-        "dct",
-        "psnr",
-        "bit",
-        "rd",
-        "zero",
-        "vsad",
-        "vsse",
-        "nsse",
-        "dct264",
-        "dctmax",
-        "chroma",
-        "msad",
-    ] = None,
+
+    skip_cmp: int | None| Literal["sad", "sse", "satd", "dct", "psnr", "bit", "rd", "zero", "vsad", "vsse", "nsse", "dct264", "dctmax", "chroma", "msad"] = None,
+
     noise_reduction: int | None = None,
+
     ps: int | None = None,
-    motion_est: int | None | Literal["zero", "epzs", "xone"] = None,
+
+    motion_est: int | None| Literal["zero", "epzs", "xone"] = None,
+
     mepc: int | None = None,
+
     mepre: int | None = None,
+
     intra_penalty: int | None = None,
+
     sc_threshold: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     MPEG-2 video
@@ -3315,64 +4117,108 @@ def mpeg2video(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "gop_timecode": gop_timecode,
-                "drop_frame_timecode": drop_frame_timecode,
-                "scan_offset": scan_offset,
-                "timecode_frame_start": timecode_frame_start,
-                "b_strategy": b_strategy,
-                "b_sensitivity": b_sensitivity,
-                "brd_scale": brd_scale,
-                "intra_vlc": intra_vlc,
-                "non_linear_quant": non_linear_quant,
-                "alternate_scan": alternate_scan,
-                "a53cc": a53cc,
-                "seq_disp_ext": seq_disp_ext,
-                "video_format": video_format,
-                "mpv_flags": mpv_flags,
-                "luma_elim_threshold": luma_elim_threshold,
-                "chroma_elim_threshold": chroma_elim_threshold,
-                "quantizer_noise_shaping": quantizer_noise_shaping,
-                "error_rate": error_rate,
-                "qsquish": qsquish,
-                "rc_qmod_amp": rc_qmod_amp,
-                "rc_qmod_freq": rc_qmod_freq,
-                "rc_eq": rc_eq,
-                "rc_init_cplx": rc_init_cplx,
-                "rc_buf_aggressivity": rc_buf_aggressivity,
-                "border_mask": border_mask,
-                "lmin": lmin,
-                "lmax": lmax,
-                "skip_threshold": skip_threshold,
-                "skip_factor": skip_factor,
-                "skip_exp": skip_exp,
-                "skip_cmp": skip_cmp,
-                "noise_reduction": noise_reduction,
-                "ps": ps,
-                "motion_est": motion_est,
-                "mepc": mepc,
-                "mepre": mepre,
-                "intra_penalty": intra_penalty,
-                "sc_threshold": sc_threshold,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "gop_timecode": gop_timecode,
+
+        "drop_frame_timecode": drop_frame_timecode,
+
+        "scan_offset": scan_offset,
+
+        "timecode_frame_start": timecode_frame_start,
+
+        "b_strategy": b_strategy,
+
+        "b_sensitivity": b_sensitivity,
+
+        "brd_scale": brd_scale,
+
+        "intra_vlc": intra_vlc,
+
+        "non_linear_quant": non_linear_quant,
+
+        "alternate_scan": alternate_scan,
+
+        "a53cc": a53cc,
+
+        "seq_disp_ext": seq_disp_ext,
+
+        "video_format": video_format,
+
+        "mpv_flags": mpv_flags,
+
+        "luma_elim_threshold": luma_elim_threshold,
+
+        "chroma_elim_threshold": chroma_elim_threshold,
+
+        "quantizer_noise_shaping": quantizer_noise_shaping,
+
+        "error_rate": error_rate,
+
+        "qsquish": qsquish,
+
+        "rc_qmod_amp": rc_qmod_amp,
+
+        "rc_qmod_freq": rc_qmod_freq,
+
+        "rc_eq": rc_eq,
+
+        "rc_init_cplx": rc_init_cplx,
+
+        "rc_buf_aggressivity": rc_buf_aggressivity,
+
+        "border_mask": border_mask,
+
+        "lmin": lmin,
+
+        "lmax": lmax,
+
+        "skip_threshold": skip_threshold,
+
+        "skip_factor": skip_factor,
+
+        "skip_exp": skip_exp,
+
+        "skip_cmp": skip_cmp,
+
+        "noise_reduction": noise_reduction,
+
+        "ps": ps,
+
+        "motion_est": motion_est,
+
+        "mepc": mepc,
+
+        "mepre": mepre,
+
+        "intra_penalty": intra_penalty,
+
+        "sc_threshold": sc_threshold,
+
+    }))
+
 
 
 def mpeg2_vaapi(
+
     idr_interval: int | None = None,
+
     b_depth: int | None = None,
+
     async_depth: int | None = None,
+
     low_power: bool | None = None,
+
     max_frame_size: int | None = None,
-    rc_mode: int
-    | None
-    | Literal["auto", "CQP", "CBR", "VBR", "ICQ", "QVBR", "AVBR"] = None,
+
+    rc_mode: int | None| Literal["auto", "CQP", "CBR", "VBR", "ICQ", "QVBR", "AVBR"] = None,
+
     blbrc: bool | None = None,
-    profile: int | None | Literal["simple", "main"] = None,
-    level: int | None | Literal["low", "main", "high_1440", "high"] = None,
+
+    profile: int | None| Literal["simple", "main"] = None,
+
+    level: int | None| Literal["low", "main", "high_1440", "high"] = None,
+
 ) -> FFMpegEncoderOption:
     """
     MPEG-2 (VAAPI) (codec mpeg2video)
@@ -3391,73 +4237,94 @@ def mpeg2_vaapi(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "idr_interval": idr_interval,
-                "b_depth": b_depth,
-                "async_depth": async_depth,
-                "low_power": low_power,
-                "max_frame_size": max_frame_size,
-                "rc_mode": rc_mode,
-                "blbrc": blbrc,
-                "profile": profile,
-                "level": level,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "idr_interval": idr_interval,
+
+        "b_depth": b_depth,
+
+        "async_depth": async_depth,
+
+        "low_power": low_power,
+
+        "max_frame_size": max_frame_size,
+
+        "rc_mode": rc_mode,
+
+        "blbrc": blbrc,
+
+        "profile": profile,
+
+        "level": level,
+
+    }))
+
 
 
 def mpeg4(
+
     data_partitioning: bool | None = None,
+
     alternate_scan: bool | None = None,
+
     mpeg_quant: int | None = None,
+
     b_strategy: int | None = None,
+
     b_sensitivity: int | None = None,
+
     brd_scale: int | None = None,
+
     mpv_flags: str | None = None,
+
     luma_elim_threshold: int | None = None,
+
     chroma_elim_threshold: int | None = None,
+
     quantizer_noise_shaping: int | None = None,
+
     error_rate: int | None = None,
+
     qsquish: float | None = None,
+
     rc_qmod_amp: float | None = None,
+
     rc_qmod_freq: int | None = None,
+
     rc_eq: str | None = None,
+
     rc_init_cplx: float | None = None,
+
     rc_buf_aggressivity: float | None = None,
+
     border_mask: float | None = None,
+
     lmin: int | None = None,
+
     lmax: int | None = None,
+
     skip_threshold: int | None = None,
+
     skip_factor: int | None = None,
+
     skip_exp: int | None = None,
-    skip_cmp: int
-    | None
-    | Literal[
-        "sad",
-        "sse",
-        "satd",
-        "dct",
-        "psnr",
-        "bit",
-        "rd",
-        "zero",
-        "vsad",
-        "vsse",
-        "nsse",
-        "dct264",
-        "dctmax",
-        "chroma",
-        "msad",
-    ] = None,
+
+    skip_cmp: int | None| Literal["sad", "sse", "satd", "dct", "psnr", "bit", "rd", "zero", "vsad", "vsse", "nsse", "dct264", "dctmax", "chroma", "msad"] = None,
+
     noise_reduction: int | None = None,
+
     ps: int | None = None,
-    motion_est: int | None | Literal["zero", "epzs", "xone"] = None,
+
+    motion_est: int | None| Literal["zero", "epzs", "xone"] = None,
+
     mepc: int | None = None,
+
     mepre: int | None = None,
+
     intra_penalty: int | None = None,
+
     sc_threshold: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     MPEG-4 part 2
@@ -3498,53 +4365,90 @@ def mpeg4(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "data_partitioning": data_partitioning,
-                "alternate_scan": alternate_scan,
-                "mpeg_quant": mpeg_quant,
-                "b_strategy": b_strategy,
-                "b_sensitivity": b_sensitivity,
-                "brd_scale": brd_scale,
-                "mpv_flags": mpv_flags,
-                "luma_elim_threshold": luma_elim_threshold,
-                "chroma_elim_threshold": chroma_elim_threshold,
-                "quantizer_noise_shaping": quantizer_noise_shaping,
-                "error_rate": error_rate,
-                "qsquish": qsquish,
-                "rc_qmod_amp": rc_qmod_amp,
-                "rc_qmod_freq": rc_qmod_freq,
-                "rc_eq": rc_eq,
-                "rc_init_cplx": rc_init_cplx,
-                "rc_buf_aggressivity": rc_buf_aggressivity,
-                "border_mask": border_mask,
-                "lmin": lmin,
-                "lmax": lmax,
-                "skip_threshold": skip_threshold,
-                "skip_factor": skip_factor,
-                "skip_exp": skip_exp,
-                "skip_cmp": skip_cmp,
-                "noise_reduction": noise_reduction,
-                "ps": ps,
-                "motion_est": motion_est,
-                "mepc": mepc,
-                "mepre": mepre,
-                "intra_penalty": intra_penalty,
-                "sc_threshold": sc_threshold,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "data_partitioning": data_partitioning,
+
+        "alternate_scan": alternate_scan,
+
+        "mpeg_quant": mpeg_quant,
+
+        "b_strategy": b_strategy,
+
+        "b_sensitivity": b_sensitivity,
+
+        "brd_scale": brd_scale,
+
+        "mpv_flags": mpv_flags,
+
+        "luma_elim_threshold": luma_elim_threshold,
+
+        "chroma_elim_threshold": chroma_elim_threshold,
+
+        "quantizer_noise_shaping": quantizer_noise_shaping,
+
+        "error_rate": error_rate,
+
+        "qsquish": qsquish,
+
+        "rc_qmod_amp": rc_qmod_amp,
+
+        "rc_qmod_freq": rc_qmod_freq,
+
+        "rc_eq": rc_eq,
+
+        "rc_init_cplx": rc_init_cplx,
+
+        "rc_buf_aggressivity": rc_buf_aggressivity,
+
+        "border_mask": border_mask,
+
+        "lmin": lmin,
+
+        "lmax": lmax,
+
+        "skip_threshold": skip_threshold,
+
+        "skip_factor": skip_factor,
+
+        "skip_exp": skip_exp,
+
+        "skip_cmp": skip_cmp,
+
+        "noise_reduction": noise_reduction,
+
+        "ps": ps,
+
+        "motion_est": motion_est,
+
+        "mepc": mepc,
+
+        "mepre": mepre,
+
+        "intra_penalty": intra_penalty,
+
+        "sc_threshold": sc_threshold,
+
+    }))
+
 
 
 def libxvid(
+
     lumi_aq: int | None = None,
+
     variance_aq: int | None = None,
-    ssim: int | None | Literal["off", "avg", "frame"] = None,
+
+    ssim: int | None| Literal["off", "avg", "frame"] = None,
+
     ssim_acc: int | None = None,
+
     gmc: int | None = None,
+
     me_quality: int | None = None,
+
     mpeg_quant: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     libxvidcore MPEG-4 part 2 (codec mpeg4)
@@ -3561,24 +4465,32 @@ def libxvid(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "lumi_aq": lumi_aq,
-                "variance_aq": variance_aq,
-                "ssim": ssim,
-                "ssim_acc": ssim_acc,
-                "gmc": gmc,
-                "me_quality": me_quality,
-                "mpeg_quant": mpeg_quant,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "lumi_aq": lumi_aq,
+
+        "variance_aq": variance_aq,
+
+        "ssim": ssim,
+
+        "ssim_acc": ssim_acc,
+
+        "gmc": gmc,
+
+        "me_quality": me_quality,
+
+        "mpeg_quant": mpeg_quant,
+
+    }))
+
 
 
 def mpeg4_v4l2m2m(
+
     num_output_buffers: int | None = None,
+
     num_capture_buffers: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     V4L2 mem2mem MPEG4 encoder wrapper (codec mpeg4)
@@ -3590,60 +4502,68 @@ def mpeg4_v4l2m2m(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "num_output_buffers": num_output_buffers,
-                "num_capture_buffers": num_capture_buffers,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "num_output_buffers": num_output_buffers,
+
+        "num_capture_buffers": num_capture_buffers,
+
+    }))
+
 
 
 def msmpeg4v2(
+
     mpv_flags: str | None = None,
+
     luma_elim_threshold: int | None = None,
+
     chroma_elim_threshold: int | None = None,
+
     quantizer_noise_shaping: int | None = None,
+
     error_rate: int | None = None,
+
     qsquish: float | None = None,
+
     rc_qmod_amp: float | None = None,
+
     rc_qmod_freq: int | None = None,
+
     rc_eq: str | None = None,
+
     rc_init_cplx: float | None = None,
+
     rc_buf_aggressivity: float | None = None,
+
     border_mask: float | None = None,
+
     lmin: int | None = None,
+
     lmax: int | None = None,
+
     skip_threshold: int | None = None,
+
     skip_factor: int | None = None,
+
     skip_exp: int | None = None,
-    skip_cmp: int
-    | None
-    | Literal[
-        "sad",
-        "sse",
-        "satd",
-        "dct",
-        "psnr",
-        "bit",
-        "rd",
-        "zero",
-        "vsad",
-        "vsse",
-        "nsse",
-        "dct264",
-        "dctmax",
-        "chroma",
-        "msad",
-    ] = None,
+
+    skip_cmp: int | None| Literal["sad", "sse", "satd", "dct", "psnr", "bit", "rd", "zero", "vsad", "vsse", "nsse", "dct264", "dctmax", "chroma", "msad"] = None,
+
     noise_reduction: int | None = None,
+
     ps: int | None = None,
-    motion_est: int | None | Literal["zero", "epzs", "xone"] = None,
+
+    motion_est: int | None| Literal["zero", "epzs", "xone"] = None,
+
     mepc: int | None = None,
+
     mepre: int | None = None,
+
     intra_penalty: int | None = None,
+
     sc_threshold: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     MPEG-4 part 2 Microsoft variant version 2
@@ -3678,83 +4598,114 @@ def msmpeg4v2(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "mpv_flags": mpv_flags,
-                "luma_elim_threshold": luma_elim_threshold,
-                "chroma_elim_threshold": chroma_elim_threshold,
-                "quantizer_noise_shaping": quantizer_noise_shaping,
-                "error_rate": error_rate,
-                "qsquish": qsquish,
-                "rc_qmod_amp": rc_qmod_amp,
-                "rc_qmod_freq": rc_qmod_freq,
-                "rc_eq": rc_eq,
-                "rc_init_cplx": rc_init_cplx,
-                "rc_buf_aggressivity": rc_buf_aggressivity,
-                "border_mask": border_mask,
-                "lmin": lmin,
-                "lmax": lmax,
-                "skip_threshold": skip_threshold,
-                "skip_factor": skip_factor,
-                "skip_exp": skip_exp,
-                "skip_cmp": skip_cmp,
-                "noise_reduction": noise_reduction,
-                "ps": ps,
-                "motion_est": motion_est,
-                "mepc": mepc,
-                "mepre": mepre,
-                "intra_penalty": intra_penalty,
-                "sc_threshold": sc_threshold,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "mpv_flags": mpv_flags,
+
+        "luma_elim_threshold": luma_elim_threshold,
+
+        "chroma_elim_threshold": chroma_elim_threshold,
+
+        "quantizer_noise_shaping": quantizer_noise_shaping,
+
+        "error_rate": error_rate,
+
+        "qsquish": qsquish,
+
+        "rc_qmod_amp": rc_qmod_amp,
+
+        "rc_qmod_freq": rc_qmod_freq,
+
+        "rc_eq": rc_eq,
+
+        "rc_init_cplx": rc_init_cplx,
+
+        "rc_buf_aggressivity": rc_buf_aggressivity,
+
+        "border_mask": border_mask,
+
+        "lmin": lmin,
+
+        "lmax": lmax,
+
+        "skip_threshold": skip_threshold,
+
+        "skip_factor": skip_factor,
+
+        "skip_exp": skip_exp,
+
+        "skip_cmp": skip_cmp,
+
+        "noise_reduction": noise_reduction,
+
+        "ps": ps,
+
+        "motion_est": motion_est,
+
+        "mepc": mepc,
+
+        "mepre": mepre,
+
+        "intra_penalty": intra_penalty,
+
+        "sc_threshold": sc_threshold,
+
+    }))
+
 
 
 def msmpeg4(
+
     mpv_flags: str | None = None,
+
     luma_elim_threshold: int | None = None,
+
     chroma_elim_threshold: int | None = None,
+
     quantizer_noise_shaping: int | None = None,
+
     error_rate: int | None = None,
+
     qsquish: float | None = None,
+
     rc_qmod_amp: float | None = None,
+
     rc_qmod_freq: int | None = None,
+
     rc_eq: str | None = None,
+
     rc_init_cplx: float | None = None,
+
     rc_buf_aggressivity: float | None = None,
+
     border_mask: float | None = None,
+
     lmin: int | None = None,
+
     lmax: int | None = None,
+
     skip_threshold: int | None = None,
+
     skip_factor: int | None = None,
+
     skip_exp: int | None = None,
-    skip_cmp: int
-    | None
-    | Literal[
-        "sad",
-        "sse",
-        "satd",
-        "dct",
-        "psnr",
-        "bit",
-        "rd",
-        "zero",
-        "vsad",
-        "vsse",
-        "nsse",
-        "dct264",
-        "dctmax",
-        "chroma",
-        "msad",
-    ] = None,
+
+    skip_cmp: int | None| Literal["sad", "sse", "satd", "dct", "psnr", "bit", "rd", "zero", "vsad", "vsse", "nsse", "dct264", "dctmax", "chroma", "msad"] = None,
+
     noise_reduction: int | None = None,
+
     ps: int | None = None,
-    motion_est: int | None | Literal["zero", "epzs", "xone"] = None,
+
+    motion_est: int | None| Literal["zero", "epzs", "xone"] = None,
+
     mepc: int | None = None,
+
     mepre: int | None = None,
+
     intra_penalty: int | None = None,
+
     sc_threshold: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     MPEG-4 part 2 Microsoft variant version 3 (codec msmpeg4v3)
@@ -3789,40 +4740,65 @@ def msmpeg4(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "mpv_flags": mpv_flags,
-                "luma_elim_threshold": luma_elim_threshold,
-                "chroma_elim_threshold": chroma_elim_threshold,
-                "quantizer_noise_shaping": quantizer_noise_shaping,
-                "error_rate": error_rate,
-                "qsquish": qsquish,
-                "rc_qmod_amp": rc_qmod_amp,
-                "rc_qmod_freq": rc_qmod_freq,
-                "rc_eq": rc_eq,
-                "rc_init_cplx": rc_init_cplx,
-                "rc_buf_aggressivity": rc_buf_aggressivity,
-                "border_mask": border_mask,
-                "lmin": lmin,
-                "lmax": lmax,
-                "skip_threshold": skip_threshold,
-                "skip_factor": skip_factor,
-                "skip_exp": skip_exp,
-                "skip_cmp": skip_cmp,
-                "noise_reduction": noise_reduction,
-                "ps": ps,
-                "motion_est": motion_est,
-                "mepc": mepc,
-                "mepre": mepre,
-                "intra_penalty": intra_penalty,
-                "sc_threshold": sc_threshold,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "mpv_flags": mpv_flags,
+
+        "luma_elim_threshold": luma_elim_threshold,
+
+        "chroma_elim_threshold": chroma_elim_threshold,
+
+        "quantizer_noise_shaping": quantizer_noise_shaping,
+
+        "error_rate": error_rate,
+
+        "qsquish": qsquish,
+
+        "rc_qmod_amp": rc_qmod_amp,
+
+        "rc_qmod_freq": rc_qmod_freq,
+
+        "rc_eq": rc_eq,
+
+        "rc_init_cplx": rc_init_cplx,
+
+        "rc_buf_aggressivity": rc_buf_aggressivity,
+
+        "border_mask": border_mask,
+
+        "lmin": lmin,
+
+        "lmax": lmax,
+
+        "skip_threshold": skip_threshold,
+
+        "skip_factor": skip_factor,
+
+        "skip_exp": skip_exp,
+
+        "skip_cmp": skip_cmp,
+
+        "noise_reduction": noise_reduction,
+
+        "ps": ps,
+
+        "motion_est": motion_est,
+
+        "mepc": mepc,
+
+        "mepre": mepre,
+
+        "intra_penalty": intra_penalty,
+
+        "sc_threshold": sc_threshold,
+
+    }))
 
 
-def msrle() -> FFMpegEncoderOption:
+
+def msrle(
+
+) -> FFMpegEncoderOption:
     """
     Microsoft RLE
 
@@ -3830,10 +4806,15 @@ def msrle() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def msvideo1() -> FFMpegEncoderOption:
+
+def msvideo1(
+
+) -> FFMpegEncoderOption:
     """
     Microsoft Video-1
 
@@ -3841,10 +4822,15 @@ def msvideo1() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pam() -> FFMpegEncoderOption:
+
+def pam(
+
+) -> FFMpegEncoderOption:
     """
     PAM (Portable AnyMap) image
 
@@ -3852,10 +4838,15 @@ def pam() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pbm() -> FFMpegEncoderOption:
+
+def pbm(
+
+) -> FFMpegEncoderOption:
     """
     PBM (Portable BitMap) image
 
@@ -3863,10 +4854,15 @@ def pbm() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pcx() -> FFMpegEncoderOption:
+
+def pcx(
+
+) -> FFMpegEncoderOption:
     """
     PC Paintbrush PCX image
 
@@ -3874,10 +4870,15 @@ def pcx() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pfm() -> FFMpegEncoderOption:
+
+def pfm(
+
+) -> FFMpegEncoderOption:
     """
     PFM (Portable FloatMap) image
 
@@ -3885,10 +4886,15 @@ def pfm() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pgm() -> FFMpegEncoderOption:
+
+def pgm(
+
+) -> FFMpegEncoderOption:
     """
     PGM (Portable GrayMap) image
 
@@ -3896,10 +4902,15 @@ def pgm() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pgmyuv() -> FFMpegEncoderOption:
+
+def pgmyuv(
+
+) -> FFMpegEncoderOption:
     """
     PGMYUV (Portable GrayMap YUV) image
 
@@ -3907,10 +4918,15 @@ def pgmyuv() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def phm() -> FFMpegEncoderOption:
+
+def phm(
+
+) -> FFMpegEncoderOption:
     """
     PHM (Portable HalfFloatMap) image
 
@@ -3918,13 +4934,20 @@ def phm() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
+
 
 
 def png(
+
     dpi: int | None = None,
+
     dpm: int | None = None,
-    pred: int | None | Literal["none", "sub", "up", "avg", "paeth", "mixed"] = None,
+
+    pred: int | None| Literal["none", "sub", "up", "avg", "paeth", "mixed"] = None,
+
 ) -> FFMpegEncoderOption:
     """
     PNG (Portable Network Graphics) image
@@ -3937,18 +4960,21 @@ def png(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "dpi": dpi,
-                "dpm": dpm,
-                "pred": pred,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "dpi": dpi,
+
+        "dpm": dpm,
+
+        "pred": pred,
+
+    }))
 
 
-def ppm() -> FFMpegEncoderOption:
+
+def ppm(
+
+) -> FFMpegEncoderOption:
     """
     PPM (Portable PixelMap) image
 
@@ -3956,11 +4982,16 @@ def ppm() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
+
 
 
 def prores(
+
     vendor: str | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     Apple ProRes
@@ -3971,17 +5002,18 @@ def prores(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "vendor": vendor,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "vendor": vendor,
+
+    }))
+
 
 
 def prores_aw(
+
     vendor: str | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     Apple ProRes (codec prores)
@@ -3992,26 +5024,28 @@ def prores_aw(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "vendor": vendor,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "vendor": vendor,
+
+    }))
+
 
 
 def prores_ks(
+
     mbs_per_slice: int | None = None,
-    profile: int
-    | None
-    | Literal["auto", "proxy", "lt", "standard", "hq", "4444", "4444xq"] = None,
+
+    profile: int | None| Literal["auto", "proxy", "lt", "standard", "hq", "4444", "4444xq"] = None,
+
     vendor: str | None = None,
+
     bits_per_mb: int | None = None,
-    quant_mat: int
-    | None
-    | Literal["auto", "proxy", "lt", "standard", "hq", "default"] = None,
+
+    quant_mat: int | None| Literal["auto", "proxy", "lt", "standard", "hq", "default"] = None,
+
     alpha_bits: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     Apple ProRes (iCodec Pro) (codec prores)
@@ -4027,21 +5061,27 @@ def prores_ks(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "mbs_per_slice": mbs_per_slice,
-                "profile": profile,
-                "vendor": vendor,
-                "bits_per_mb": bits_per_mb,
-                "quant_mat": quant_mat,
-                "alpha_bits": alpha_bits,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "mbs_per_slice": mbs_per_slice,
+
+        "profile": profile,
+
+        "vendor": vendor,
+
+        "bits_per_mb": bits_per_mb,
+
+        "quant_mat": quant_mat,
+
+        "alpha_bits": alpha_bits,
+
+    }))
 
 
-def qoi() -> FFMpegEncoderOption:
+
+def qoi(
+
+) -> FFMpegEncoderOption:
     """
     QOI (Quite OK Image format) image
 
@@ -4049,10 +5089,15 @@ def qoi() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def qtrle() -> FFMpegEncoderOption:
+
+def qtrle(
+
+) -> FFMpegEncoderOption:
     """
     QuickTime Animation (RLE) video
 
@@ -4060,10 +5105,15 @@ def qtrle() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def r10k() -> FFMpegEncoderOption:
+
+def r10k(
+
+) -> FFMpegEncoderOption:
     """
     AJA Kona 10-bit RGB Codec
 
@@ -4071,10 +5121,15 @@ def r10k() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def r210() -> FFMpegEncoderOption:
+
+def r210(
+
+) -> FFMpegEncoderOption:
     """
     Uncompressed RGB 10-bit
 
@@ -4082,10 +5137,15 @@ def r210() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def rawvideo() -> FFMpegEncoderOption:
+
+def rawvideo(
+
+) -> FFMpegEncoderOption:
     """
     raw video
 
@@ -4093,11 +5153,16 @@ def rawvideo() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
+
 
 
 def roqvideo(
+
     quake3_compat: bool | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     id RoQ video (codec roq)
@@ -4108,19 +5173,22 @@ def roqvideo(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "quake3_compat": quake3_compat,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "quake3_compat": quake3_compat,
+
+    }))
+
 
 
 def rpza(
+
     skip_frame_thresh: int | None = None,
+
     continue_one_color_thresh: int | None = None,
+
     sixteen_color_thresh: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     QuickTime video (RPZA)
@@ -4133,61 +5201,70 @@ def rpza(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "skip_frame_thresh": skip_frame_thresh,
-                "continue_one_color_thresh": continue_one_color_thresh,
-                "sixteen_color_thresh": sixteen_color_thresh,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "skip_frame_thresh": skip_frame_thresh,
+
+        "continue_one_color_thresh": continue_one_color_thresh,
+
+        "sixteen_color_thresh": sixteen_color_thresh,
+
+    }))
+
 
 
 def rv10(
+
     mpv_flags: str | None = None,
+
     luma_elim_threshold: int | None = None,
+
     chroma_elim_threshold: int | None = None,
+
     quantizer_noise_shaping: int | None = None,
+
     error_rate: int | None = None,
+
     qsquish: float | None = None,
+
     rc_qmod_amp: float | None = None,
+
     rc_qmod_freq: int | None = None,
+
     rc_eq: str | None = None,
+
     rc_init_cplx: float | None = None,
+
     rc_buf_aggressivity: float | None = None,
+
     border_mask: float | None = None,
+
     lmin: int | None = None,
+
     lmax: int | None = None,
+
     skip_threshold: int | None = None,
+
     skip_factor: int | None = None,
+
     skip_exp: int | None = None,
-    skip_cmp: int
-    | None
-    | Literal[
-        "sad",
-        "sse",
-        "satd",
-        "dct",
-        "psnr",
-        "bit",
-        "rd",
-        "zero",
-        "vsad",
-        "vsse",
-        "nsse",
-        "dct264",
-        "dctmax",
-        "chroma",
-        "msad",
-    ] = None,
+
+    skip_cmp: int | None| Literal["sad", "sse", "satd", "dct", "psnr", "bit", "rd", "zero", "vsad", "vsse", "nsse", "dct264", "dctmax", "chroma", "msad"] = None,
+
     noise_reduction: int | None = None,
+
     ps: int | None = None,
-    motion_est: int | None | Literal["zero", "epzs", "xone"] = None,
+
+    motion_est: int | None| Literal["zero", "epzs", "xone"] = None,
+
     mepc: int | None = None,
+
     mepre: int | None = None,
+
     intra_penalty: int | None = None,
+
     sc_threshold: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     RealVideo 1.0
@@ -4222,83 +5299,114 @@ def rv10(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "mpv_flags": mpv_flags,
-                "luma_elim_threshold": luma_elim_threshold,
-                "chroma_elim_threshold": chroma_elim_threshold,
-                "quantizer_noise_shaping": quantizer_noise_shaping,
-                "error_rate": error_rate,
-                "qsquish": qsquish,
-                "rc_qmod_amp": rc_qmod_amp,
-                "rc_qmod_freq": rc_qmod_freq,
-                "rc_eq": rc_eq,
-                "rc_init_cplx": rc_init_cplx,
-                "rc_buf_aggressivity": rc_buf_aggressivity,
-                "border_mask": border_mask,
-                "lmin": lmin,
-                "lmax": lmax,
-                "skip_threshold": skip_threshold,
-                "skip_factor": skip_factor,
-                "skip_exp": skip_exp,
-                "skip_cmp": skip_cmp,
-                "noise_reduction": noise_reduction,
-                "ps": ps,
-                "motion_est": motion_est,
-                "mepc": mepc,
-                "mepre": mepre,
-                "intra_penalty": intra_penalty,
-                "sc_threshold": sc_threshold,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "mpv_flags": mpv_flags,
+
+        "luma_elim_threshold": luma_elim_threshold,
+
+        "chroma_elim_threshold": chroma_elim_threshold,
+
+        "quantizer_noise_shaping": quantizer_noise_shaping,
+
+        "error_rate": error_rate,
+
+        "qsquish": qsquish,
+
+        "rc_qmod_amp": rc_qmod_amp,
+
+        "rc_qmod_freq": rc_qmod_freq,
+
+        "rc_eq": rc_eq,
+
+        "rc_init_cplx": rc_init_cplx,
+
+        "rc_buf_aggressivity": rc_buf_aggressivity,
+
+        "border_mask": border_mask,
+
+        "lmin": lmin,
+
+        "lmax": lmax,
+
+        "skip_threshold": skip_threshold,
+
+        "skip_factor": skip_factor,
+
+        "skip_exp": skip_exp,
+
+        "skip_cmp": skip_cmp,
+
+        "noise_reduction": noise_reduction,
+
+        "ps": ps,
+
+        "motion_est": motion_est,
+
+        "mepc": mepc,
+
+        "mepre": mepre,
+
+        "intra_penalty": intra_penalty,
+
+        "sc_threshold": sc_threshold,
+
+    }))
+
 
 
 def rv20(
+
     mpv_flags: str | None = None,
+
     luma_elim_threshold: int | None = None,
+
     chroma_elim_threshold: int | None = None,
+
     quantizer_noise_shaping: int | None = None,
+
     error_rate: int | None = None,
+
     qsquish: float | None = None,
+
     rc_qmod_amp: float | None = None,
+
     rc_qmod_freq: int | None = None,
+
     rc_eq: str | None = None,
+
     rc_init_cplx: float | None = None,
+
     rc_buf_aggressivity: float | None = None,
+
     border_mask: float | None = None,
+
     lmin: int | None = None,
+
     lmax: int | None = None,
+
     skip_threshold: int | None = None,
+
     skip_factor: int | None = None,
+
     skip_exp: int | None = None,
-    skip_cmp: int
-    | None
-    | Literal[
-        "sad",
-        "sse",
-        "satd",
-        "dct",
-        "psnr",
-        "bit",
-        "rd",
-        "zero",
-        "vsad",
-        "vsse",
-        "nsse",
-        "dct264",
-        "dctmax",
-        "chroma",
-        "msad",
-    ] = None,
+
+    skip_cmp: int | None| Literal["sad", "sse", "satd", "dct", "psnr", "bit", "rd", "zero", "vsad", "vsse", "nsse", "dct264", "dctmax", "chroma", "msad"] = None,
+
     noise_reduction: int | None = None,
+
     ps: int | None = None,
-    motion_est: int | None | Literal["zero", "epzs", "xone"] = None,
+
+    motion_est: int | None| Literal["zero", "epzs", "xone"] = None,
+
     mepc: int | None = None,
+
     mepre: int | None = None,
+
     intra_penalty: int | None = None,
+
     sc_threshold: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     RealVideo 2.0
@@ -4333,41 +5441,66 @@ def rv20(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "mpv_flags": mpv_flags,
-                "luma_elim_threshold": luma_elim_threshold,
-                "chroma_elim_threshold": chroma_elim_threshold,
-                "quantizer_noise_shaping": quantizer_noise_shaping,
-                "error_rate": error_rate,
-                "qsquish": qsquish,
-                "rc_qmod_amp": rc_qmod_amp,
-                "rc_qmod_freq": rc_qmod_freq,
-                "rc_eq": rc_eq,
-                "rc_init_cplx": rc_init_cplx,
-                "rc_buf_aggressivity": rc_buf_aggressivity,
-                "border_mask": border_mask,
-                "lmin": lmin,
-                "lmax": lmax,
-                "skip_threshold": skip_threshold,
-                "skip_factor": skip_factor,
-                "skip_exp": skip_exp,
-                "skip_cmp": skip_cmp,
-                "noise_reduction": noise_reduction,
-                "ps": ps,
-                "motion_est": motion_est,
-                "mepc": mepc,
-                "mepre": mepre,
-                "intra_penalty": intra_penalty,
-                "sc_threshold": sc_threshold,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "mpv_flags": mpv_flags,
+
+        "luma_elim_threshold": luma_elim_threshold,
+
+        "chroma_elim_threshold": chroma_elim_threshold,
+
+        "quantizer_noise_shaping": quantizer_noise_shaping,
+
+        "error_rate": error_rate,
+
+        "qsquish": qsquish,
+
+        "rc_qmod_amp": rc_qmod_amp,
+
+        "rc_qmod_freq": rc_qmod_freq,
+
+        "rc_eq": rc_eq,
+
+        "rc_init_cplx": rc_init_cplx,
+
+        "rc_buf_aggressivity": rc_buf_aggressivity,
+
+        "border_mask": border_mask,
+
+        "lmin": lmin,
+
+        "lmax": lmax,
+
+        "skip_threshold": skip_threshold,
+
+        "skip_factor": skip_factor,
+
+        "skip_exp": skip_exp,
+
+        "skip_cmp": skip_cmp,
+
+        "noise_reduction": noise_reduction,
+
+        "ps": ps,
+
+        "motion_est": motion_est,
+
+        "mepc": mepc,
+
+        "mepre": mepre,
+
+        "intra_penalty": intra_penalty,
+
+        "sc_threshold": sc_threshold,
+
+    }))
+
 
 
 def sgi(
+
     rle: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     SGI image
@@ -4378,16 +5511,17 @@ def sgi(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "rle": rle,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "rle": rle,
+
+    }))
 
 
-def smc() -> FFMpegEncoderOption:
+
+def smc(
+
+) -> FFMpegEncoderOption:
     """
     QuickTime Graphics (SMC)
 
@@ -4395,18 +5529,30 @@ def smc() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
+
 
 
 def snow(
-    motion_est: int | None | Literal["zero", "epzs", "xone", "iter"] = None,
+
+    motion_est: int | None| Literal["zero", "epzs", "xone", "iter"] = None,
+
     memc_only: bool | None = None,
+
     no_bitstream: bool | None = None,
+
     intra_penalty: int | None = None,
+
     iterative_dia_size: int | None = None,
+
     sc_threshold: int | None = None,
-    pred: int | None | Literal["dwt97", "dwt53"] = None,
+
+    pred: int | None| Literal["dwt97", "dwt53"] = None,
+
     rc_eq: str | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     Snow
@@ -4424,66 +5570,80 @@ def snow(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "motion_est": motion_est,
-                "memc_only": memc_only,
-                "no_bitstream": no_bitstream,
-                "intra_penalty": intra_penalty,
-                "iterative_dia_size": iterative_dia_size,
-                "sc_threshold": sc_threshold,
-                "pred": pred,
-                "rc_eq": rc_eq,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "motion_est": motion_est,
+
+        "memc_only": memc_only,
+
+        "no_bitstream": no_bitstream,
+
+        "intra_penalty": intra_penalty,
+
+        "iterative_dia_size": iterative_dia_size,
+
+        "sc_threshold": sc_threshold,
+
+        "pred": pred,
+
+        "rc_eq": rc_eq,
+
+    }))
+
 
 
 def speedhq(
+
     mpv_flags: str | None = None,
+
     luma_elim_threshold: int | None = None,
+
     chroma_elim_threshold: int | None = None,
+
     quantizer_noise_shaping: int | None = None,
+
     error_rate: int | None = None,
+
     qsquish: float | None = None,
+
     rc_qmod_amp: float | None = None,
+
     rc_qmod_freq: int | None = None,
+
     rc_eq: str | None = None,
+
     rc_init_cplx: float | None = None,
+
     rc_buf_aggressivity: float | None = None,
+
     border_mask: float | None = None,
+
     lmin: int | None = None,
+
     lmax: int | None = None,
+
     skip_threshold: int | None = None,
+
     skip_factor: int | None = None,
+
     skip_exp: int | None = None,
-    skip_cmp: int
-    | None
-    | Literal[
-        "sad",
-        "sse",
-        "satd",
-        "dct",
-        "psnr",
-        "bit",
-        "rd",
-        "zero",
-        "vsad",
-        "vsse",
-        "nsse",
-        "dct264",
-        "dctmax",
-        "chroma",
-        "msad",
-    ] = None,
+
+    skip_cmp: int | None| Literal["sad", "sse", "satd", "dct", "psnr", "bit", "rd", "zero", "vsad", "vsse", "nsse", "dct264", "dctmax", "chroma", "msad"] = None,
+
     noise_reduction: int | None = None,
+
     ps: int | None = None,
-    motion_est: int | None | Literal["zero", "epzs", "xone"] = None,
+
+    motion_est: int | None| Literal["zero", "epzs", "xone"] = None,
+
     mepc: int | None = None,
+
     mepre: int | None = None,
+
     intra_penalty: int | None = None,
+
     sc_threshold: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     NewTek SpeedHQ
@@ -4518,41 +5678,66 @@ def speedhq(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "mpv_flags": mpv_flags,
-                "luma_elim_threshold": luma_elim_threshold,
-                "chroma_elim_threshold": chroma_elim_threshold,
-                "quantizer_noise_shaping": quantizer_noise_shaping,
-                "error_rate": error_rate,
-                "qsquish": qsquish,
-                "rc_qmod_amp": rc_qmod_amp,
-                "rc_qmod_freq": rc_qmod_freq,
-                "rc_eq": rc_eq,
-                "rc_init_cplx": rc_init_cplx,
-                "rc_buf_aggressivity": rc_buf_aggressivity,
-                "border_mask": border_mask,
-                "lmin": lmin,
-                "lmax": lmax,
-                "skip_threshold": skip_threshold,
-                "skip_factor": skip_factor,
-                "skip_exp": skip_exp,
-                "skip_cmp": skip_cmp,
-                "noise_reduction": noise_reduction,
-                "ps": ps,
-                "motion_est": motion_est,
-                "mepc": mepc,
-                "mepre": mepre,
-                "intra_penalty": intra_penalty,
-                "sc_threshold": sc_threshold,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "mpv_flags": mpv_flags,
+
+        "luma_elim_threshold": luma_elim_threshold,
+
+        "chroma_elim_threshold": chroma_elim_threshold,
+
+        "quantizer_noise_shaping": quantizer_noise_shaping,
+
+        "error_rate": error_rate,
+
+        "qsquish": qsquish,
+
+        "rc_qmod_amp": rc_qmod_amp,
+
+        "rc_qmod_freq": rc_qmod_freq,
+
+        "rc_eq": rc_eq,
+
+        "rc_init_cplx": rc_init_cplx,
+
+        "rc_buf_aggressivity": rc_buf_aggressivity,
+
+        "border_mask": border_mask,
+
+        "lmin": lmin,
+
+        "lmax": lmax,
+
+        "skip_threshold": skip_threshold,
+
+        "skip_factor": skip_factor,
+
+        "skip_exp": skip_exp,
+
+        "skip_cmp": skip_cmp,
+
+        "noise_reduction": noise_reduction,
+
+        "ps": ps,
+
+        "motion_est": motion_est,
+
+        "mepc": mepc,
+
+        "mepre": mepre,
+
+        "intra_penalty": intra_penalty,
+
+        "sc_threshold": sc_threshold,
+
+    }))
+
 
 
 def sunrast(
+
     rle: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     Sun Rasterfile image
@@ -4563,17 +5748,18 @@ def sunrast(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "rle": rle,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "rle": rle,
+
+    }))
+
 
 
 def svq1(
-    motion_est: int | None | Literal["zero", "epzs", "xone"] = None,
+
+    motion_est: int | None| Literal["zero", "epzs", "xone"] = None,
+
 ) -> FFMpegEncoderOption:
     """
     Sorenson Vector Quantizer 1 / Sorenson Video 1 / SVQ1
@@ -4584,17 +5770,18 @@ def svq1(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "motion-est": motion_est,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "motion-est": motion_est,
+
+    }))
+
 
 
 def targa(
+
     rle: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     Truevision Targa image
@@ -4605,17 +5792,18 @@ def targa(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "rle": rle,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "rle": rle,
+
+    }))
+
 
 
 def libtheora(
+
     speed_level: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     libtheora Theora (codec theora)
@@ -4626,18 +5814,20 @@ def libtheora(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "speed_level": speed_level,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "speed_level": speed_level,
+
+    }))
+
 
 
 def tiff(
+
     dpi: int | None = None,
-    compression_algo: int | None | Literal["packbits", "raw", "lzw", "deflate"] = None,
+
+    compression_algo: int | None| Literal["packbits", "raw", "lzw", "deflate"] = None,
+
 ) -> FFMpegEncoderOption:
     """
     TIFF image
@@ -4649,18 +5839,20 @@ def tiff(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "dpi": dpi,
-                "compression_algo": compression_algo,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "dpi": dpi,
+
+        "compression_algo": compression_algo,
+
+    }))
+
 
 
 def utvideo(
-    pred: int | None | Literal["none", "left", "median"] = None,
+
+    pred: int | None| Literal["none", "left", "median"] = None,
+
 ) -> FFMpegEncoderOption:
     """
     Ut Video
@@ -4671,16 +5863,17 @@ def utvideo(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "pred": pred,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "pred": pred,
+
+    }))
 
 
-def v210() -> FFMpegEncoderOption:
+
+def v210(
+
+) -> FFMpegEncoderOption:
     """
     Uncompressed 4:2:2 10-bit
 
@@ -4688,10 +5881,15 @@ def v210() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def v308() -> FFMpegEncoderOption:
+
+def v308(
+
+) -> FFMpegEncoderOption:
     """
     Uncompressed packed 4:4:4
 
@@ -4699,10 +5897,15 @@ def v308() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def v408() -> FFMpegEncoderOption:
+
+def v408(
+
+) -> FFMpegEncoderOption:
     """
     Uncompressed packed QT 4:4:4:4
 
@@ -4710,10 +5913,15 @@ def v408() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def v410() -> FFMpegEncoderOption:
+
+def v410(
+
+) -> FFMpegEncoderOption:
     """
     Uncompressed 4:4:4 10-bit
 
@@ -4721,11 +5929,16 @@ def v410() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
+
 
 
 def vbn(
-    format: int | None | Literal["raw", "dxt1", "dxt5"] = None,
+
+    format: int | None| Literal["raw", "dxt1", "dxt5"] = None,
+
 ) -> FFMpegEncoderOption:
     """
     Vizrt Binary Image
@@ -4736,16 +5949,17 @@ def vbn(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "format": format,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "format": format,
+
+    }))
 
 
-def vnull() -> FFMpegEncoderOption:
+
+def vnull(
+
+) -> FFMpegEncoderOption:
     """
     null video
 
@@ -4753,34 +5967,62 @@ def vnull() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
+
 
 
 def libvpx(
+
     lag_in_frames: int | None = None,
+
     arnr_maxframes: int | None = None,
+
     arnr_strength: int | None = None,
-    arnr_type: int | None | Literal["backward", "forward", "centered"] = None,
-    tune: int | None | Literal["psnr", "ssim"] = None,
-    deadline: int | None | Literal["best", "good", "realtime"] = None,
+
+    arnr_type: int | None| Literal["backward", "forward", "centered"] = None,
+
+    tune: int | None| Literal["psnr", "ssim"] = None,
+
+    deadline: int | None| Literal["best", "good", "realtime"] = None,
+
     error_resilient: str | None = None,
+
     max_intra_rate: int | None = None,
+
     crf: int | None = None,
+
     static_thresh: int | None = None,
+
     drop_threshold: int | None = None,
+
     noise_sensitivity: int | None = None,
+
     undershoot_pct: int | None = None,
+
     overshoot_pct: int | None = None,
+
     ts_parameters: str | None = None,
+
     auto_alt_ref: int | None = None,
+
     cpu_used: int | None = None,
+
     screen_content_mode: int | None = None,
+
     speed: int | None = None,
-    quality: int | None | Literal["best", "good", "realtime"] = None,
+
+    quality: int | None| Literal["best", "good", "realtime"] = None,
+
     vp8flags: str | None = None,
+
     arnr_max_frames: int | None = None,
+
     rc_lookahead: int | None = None,
+
     sharpness: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     libvpx VP8 (codec vp8)
@@ -4814,41 +6056,66 @@ def libvpx(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "lag-in-frames": lag_in_frames,
-                "arnr-maxframes": arnr_maxframes,
-                "arnr-strength": arnr_strength,
-                "arnr-type": arnr_type,
-                "tune": tune,
-                "deadline": deadline,
-                "error-resilient": error_resilient,
-                "max-intra-rate": max_intra_rate,
-                "crf": crf,
-                "static-thresh": static_thresh,
-                "drop-threshold": drop_threshold,
-                "noise-sensitivity": noise_sensitivity,
-                "undershoot-pct": undershoot_pct,
-                "overshoot-pct": overshoot_pct,
-                "ts-parameters": ts_parameters,
-                "auto-alt-ref": auto_alt_ref,
-                "cpu-used": cpu_used,
-                "screen-content-mode": screen_content_mode,
-                "speed": speed,
-                "quality": quality,
-                "vp8flags": vp8flags,
-                "arnr_max_frames": arnr_max_frames,
-                "rc_lookahead": rc_lookahead,
-                "sharpness": sharpness,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "lag-in-frames": lag_in_frames,
+
+        "arnr-maxframes": arnr_maxframes,
+
+        "arnr-strength": arnr_strength,
+
+        "arnr-type": arnr_type,
+
+        "tune": tune,
+
+        "deadline": deadline,
+
+        "error-resilient": error_resilient,
+
+        "max-intra-rate": max_intra_rate,
+
+        "crf": crf,
+
+        "static-thresh": static_thresh,
+
+        "drop-threshold": drop_threshold,
+
+        "noise-sensitivity": noise_sensitivity,
+
+        "undershoot-pct": undershoot_pct,
+
+        "overshoot-pct": overshoot_pct,
+
+        "ts-parameters": ts_parameters,
+
+        "auto-alt-ref": auto_alt_ref,
+
+        "cpu-used": cpu_used,
+
+        "screen-content-mode": screen_content_mode,
+
+        "speed": speed,
+
+        "quality": quality,
+
+        "vp8flags": vp8flags,
+
+        "arnr_max_frames": arnr_max_frames,
+
+        "rc_lookahead": rc_lookahead,
+
+        "sharpness": sharpness,
+
+    }))
+
 
 
 def vp8_v4l2m2m(
+
     num_output_buffers: int | None = None,
+
     num_capture_buffers: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     V4L2 mem2mem VP8 encoder wrapper (codec vp8)
@@ -4860,28 +6127,36 @@ def vp8_v4l2m2m(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "num_output_buffers": num_output_buffers,
-                "num_capture_buffers": num_capture_buffers,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "num_output_buffers": num_output_buffers,
+
+        "num_capture_buffers": num_capture_buffers,
+
+    }))
+
 
 
 def vp8_vaapi(
+
     idr_interval: int | None = None,
+
     b_depth: int | None = None,
+
     async_depth: int | None = None,
+
     low_power: bool | None = None,
+
     max_frame_size: int | None = None,
-    rc_mode: int
-    | None
-    | Literal["auto", "CQP", "CBR", "VBR", "ICQ", "QVBR", "AVBR"] = None,
+
+    rc_mode: int | None| Literal["auto", "CQP", "CBR", "VBR", "ICQ", "QVBR", "AVBR"] = None,
+
     blbrc: bool | None = None,
+
     loop_filter_level: int | None = None,
+
     loop_filter_sharpness: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     VP8 (VAAPI) (codec vp8)
@@ -4900,35 +6175,50 @@ def vp8_vaapi(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "idr_interval": idr_interval,
-                "b_depth": b_depth,
-                "async_depth": async_depth,
-                "low_power": low_power,
-                "max_frame_size": max_frame_size,
-                "rc_mode": rc_mode,
-                "blbrc": blbrc,
-                "loop_filter_level": loop_filter_level,
-                "loop_filter_sharpness": loop_filter_sharpness,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "idr_interval": idr_interval,
+
+        "b_depth": b_depth,
+
+        "async_depth": async_depth,
+
+        "low_power": low_power,
+
+        "max_frame_size": max_frame_size,
+
+        "rc_mode": rc_mode,
+
+        "blbrc": blbrc,
+
+        "loop_filter_level": loop_filter_level,
+
+        "loop_filter_sharpness": loop_filter_sharpness,
+
+    }))
+
 
 
 def vp9_vaapi(
+
     idr_interval: int | None = None,
+
     b_depth: int | None = None,
+
     async_depth: int | None = None,
+
     low_power: bool | None = None,
+
     max_frame_size: int | None = None,
-    rc_mode: int
-    | None
-    | Literal["auto", "CQP", "CBR", "VBR", "ICQ", "QVBR", "AVBR"] = None,
+
+    rc_mode: int | None| Literal["auto", "CQP", "CBR", "VBR", "ICQ", "QVBR", "AVBR"] = None,
+
     blbrc: bool | None = None,
+
     loop_filter_level: int | None = None,
+
     loop_filter_sharpness: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     VP9 (VAAPI) (codec vp9)
@@ -4947,24 +6237,33 @@ def vp9_vaapi(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "idr_interval": idr_interval,
-                "b_depth": b_depth,
-                "async_depth": async_depth,
-                "low_power": low_power,
-                "max_frame_size": max_frame_size,
-                "rc_mode": rc_mode,
-                "blbrc": blbrc,
-                "loop_filter_level": loop_filter_level,
-                "loop_filter_sharpness": loop_filter_sharpness,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "idr_interval": idr_interval,
+
+        "b_depth": b_depth,
+
+        "async_depth": async_depth,
+
+        "low_power": low_power,
+
+        "max_frame_size": max_frame_size,
+
+        "rc_mode": rc_mode,
+
+        "blbrc": blbrc,
+
+        "loop_filter_level": loop_filter_level,
+
+        "loop_filter_sharpness": loop_filter_sharpness,
+
+    }))
 
 
-def wbmp() -> FFMpegEncoderOption:
+
+def wbmp(
+
+) -> FFMpegEncoderOption:
     """
     WBMP (Wireless Application Protocol Bitmap) image
 
@@ -4972,17 +6271,24 @@ def wbmp() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
+
 
 
 def libwebp_anim(
+
     lossless: int | None = None,
-    preset: int
-    | None
-    | Literal["none", "default", "picture", "photo", "drawing", "icon", "text"] = None,
+
+    preset: int | None| Literal["none", "default", "picture", "photo", "drawing", "icon", "text"] = None,
+
     cr_threshold: int | None = None,
+
     cr_size: int | None = None,
+
     quality: float | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     libwebp WebP image (codec webp)
@@ -4997,27 +6303,34 @@ def libwebp_anim(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "lossless": lossless,
-                "preset": preset,
-                "cr_threshold": cr_threshold,
-                "cr_size": cr_size,
-                "quality": quality,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "lossless": lossless,
+
+        "preset": preset,
+
+        "cr_threshold": cr_threshold,
+
+        "cr_size": cr_size,
+
+        "quality": quality,
+
+    }))
+
 
 
 def libwebp(
+
     lossless: int | None = None,
-    preset: int
-    | None
-    | Literal["none", "default", "picture", "photo", "drawing", "icon", "text"] = None,
+
+    preset: int | None| Literal["none", "default", "picture", "photo", "drawing", "icon", "text"] = None,
+
     cr_threshold: int | None = None,
+
     cr_size: int | None = None,
+
     quality: float | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     libwebp WebP image (codec webp)
@@ -5032,63 +6345,74 @@ def libwebp(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "lossless": lossless,
-                "preset": preset,
-                "cr_threshold": cr_threshold,
-                "cr_size": cr_size,
-                "quality": quality,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "lossless": lossless,
+
+        "preset": preset,
+
+        "cr_threshold": cr_threshold,
+
+        "cr_size": cr_size,
+
+        "quality": quality,
+
+    }))
+
 
 
 def wmv1(
+
     mpv_flags: str | None = None,
+
     luma_elim_threshold: int | None = None,
+
     chroma_elim_threshold: int | None = None,
+
     quantizer_noise_shaping: int | None = None,
+
     error_rate: int | None = None,
+
     qsquish: float | None = None,
+
     rc_qmod_amp: float | None = None,
+
     rc_qmod_freq: int | None = None,
+
     rc_eq: str | None = None,
+
     rc_init_cplx: float | None = None,
+
     rc_buf_aggressivity: float | None = None,
+
     border_mask: float | None = None,
+
     lmin: int | None = None,
+
     lmax: int | None = None,
+
     skip_threshold: int | None = None,
+
     skip_factor: int | None = None,
+
     skip_exp: int | None = None,
-    skip_cmp: int
-    | None
-    | Literal[
-        "sad",
-        "sse",
-        "satd",
-        "dct",
-        "psnr",
-        "bit",
-        "rd",
-        "zero",
-        "vsad",
-        "vsse",
-        "nsse",
-        "dct264",
-        "dctmax",
-        "chroma",
-        "msad",
-    ] = None,
+
+    skip_cmp: int | None| Literal["sad", "sse", "satd", "dct", "psnr", "bit", "rd", "zero", "vsad", "vsse", "nsse", "dct264", "dctmax", "chroma", "msad"] = None,
+
     noise_reduction: int | None = None,
+
     ps: int | None = None,
-    motion_est: int | None | Literal["zero", "epzs", "xone"] = None,
+
+    motion_est: int | None| Literal["zero", "epzs", "xone"] = None,
+
     mepc: int | None = None,
+
     mepre: int | None = None,
+
     intra_penalty: int | None = None,
+
     sc_threshold: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     Windows Media Video 7
@@ -5123,83 +6447,114 @@ def wmv1(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "mpv_flags": mpv_flags,
-                "luma_elim_threshold": luma_elim_threshold,
-                "chroma_elim_threshold": chroma_elim_threshold,
-                "quantizer_noise_shaping": quantizer_noise_shaping,
-                "error_rate": error_rate,
-                "qsquish": qsquish,
-                "rc_qmod_amp": rc_qmod_amp,
-                "rc_qmod_freq": rc_qmod_freq,
-                "rc_eq": rc_eq,
-                "rc_init_cplx": rc_init_cplx,
-                "rc_buf_aggressivity": rc_buf_aggressivity,
-                "border_mask": border_mask,
-                "lmin": lmin,
-                "lmax": lmax,
-                "skip_threshold": skip_threshold,
-                "skip_factor": skip_factor,
-                "skip_exp": skip_exp,
-                "skip_cmp": skip_cmp,
-                "noise_reduction": noise_reduction,
-                "ps": ps,
-                "motion_est": motion_est,
-                "mepc": mepc,
-                "mepre": mepre,
-                "intra_penalty": intra_penalty,
-                "sc_threshold": sc_threshold,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "mpv_flags": mpv_flags,
+
+        "luma_elim_threshold": luma_elim_threshold,
+
+        "chroma_elim_threshold": chroma_elim_threshold,
+
+        "quantizer_noise_shaping": quantizer_noise_shaping,
+
+        "error_rate": error_rate,
+
+        "qsquish": qsquish,
+
+        "rc_qmod_amp": rc_qmod_amp,
+
+        "rc_qmod_freq": rc_qmod_freq,
+
+        "rc_eq": rc_eq,
+
+        "rc_init_cplx": rc_init_cplx,
+
+        "rc_buf_aggressivity": rc_buf_aggressivity,
+
+        "border_mask": border_mask,
+
+        "lmin": lmin,
+
+        "lmax": lmax,
+
+        "skip_threshold": skip_threshold,
+
+        "skip_factor": skip_factor,
+
+        "skip_exp": skip_exp,
+
+        "skip_cmp": skip_cmp,
+
+        "noise_reduction": noise_reduction,
+
+        "ps": ps,
+
+        "motion_est": motion_est,
+
+        "mepc": mepc,
+
+        "mepre": mepre,
+
+        "intra_penalty": intra_penalty,
+
+        "sc_threshold": sc_threshold,
+
+    }))
+
 
 
 def wmv2(
+
     mpv_flags: str | None = None,
+
     luma_elim_threshold: int | None = None,
+
     chroma_elim_threshold: int | None = None,
+
     quantizer_noise_shaping: int | None = None,
+
     error_rate: int | None = None,
+
     qsquish: float | None = None,
+
     rc_qmod_amp: float | None = None,
+
     rc_qmod_freq: int | None = None,
+
     rc_eq: str | None = None,
+
     rc_init_cplx: float | None = None,
+
     rc_buf_aggressivity: float | None = None,
+
     border_mask: float | None = None,
+
     lmin: int | None = None,
+
     lmax: int | None = None,
+
     skip_threshold: int | None = None,
+
     skip_factor: int | None = None,
+
     skip_exp: int | None = None,
-    skip_cmp: int
-    | None
-    | Literal[
-        "sad",
-        "sse",
-        "satd",
-        "dct",
-        "psnr",
-        "bit",
-        "rd",
-        "zero",
-        "vsad",
-        "vsse",
-        "nsse",
-        "dct264",
-        "dctmax",
-        "chroma",
-        "msad",
-    ] = None,
+
+    skip_cmp: int | None| Literal["sad", "sse", "satd", "dct", "psnr", "bit", "rd", "zero", "vsad", "vsse", "nsse", "dct264", "dctmax", "chroma", "msad"] = None,
+
     noise_reduction: int | None = None,
+
     ps: int | None = None,
-    motion_est: int | None | Literal["zero", "epzs", "xone"] = None,
+
+    motion_est: int | None| Literal["zero", "epzs", "xone"] = None,
+
     mepc: int | None = None,
+
     mepre: int | None = None,
+
     intra_penalty: int | None = None,
+
     sc_threshold: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     Windows Media Video 8
@@ -5234,40 +6589,65 @@ def wmv2(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "mpv_flags": mpv_flags,
-                "luma_elim_threshold": luma_elim_threshold,
-                "chroma_elim_threshold": chroma_elim_threshold,
-                "quantizer_noise_shaping": quantizer_noise_shaping,
-                "error_rate": error_rate,
-                "qsquish": qsquish,
-                "rc_qmod_amp": rc_qmod_amp,
-                "rc_qmod_freq": rc_qmod_freq,
-                "rc_eq": rc_eq,
-                "rc_init_cplx": rc_init_cplx,
-                "rc_buf_aggressivity": rc_buf_aggressivity,
-                "border_mask": border_mask,
-                "lmin": lmin,
-                "lmax": lmax,
-                "skip_threshold": skip_threshold,
-                "skip_factor": skip_factor,
-                "skip_exp": skip_exp,
-                "skip_cmp": skip_cmp,
-                "noise_reduction": noise_reduction,
-                "ps": ps,
-                "motion_est": motion_est,
-                "mepc": mepc,
-                "mepre": mepre,
-                "intra_penalty": intra_penalty,
-                "sc_threshold": sc_threshold,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "mpv_flags": mpv_flags,
+
+        "luma_elim_threshold": luma_elim_threshold,
+
+        "chroma_elim_threshold": chroma_elim_threshold,
+
+        "quantizer_noise_shaping": quantizer_noise_shaping,
+
+        "error_rate": error_rate,
+
+        "qsquish": qsquish,
+
+        "rc_qmod_amp": rc_qmod_amp,
+
+        "rc_qmod_freq": rc_qmod_freq,
+
+        "rc_eq": rc_eq,
+
+        "rc_init_cplx": rc_init_cplx,
+
+        "rc_buf_aggressivity": rc_buf_aggressivity,
+
+        "border_mask": border_mask,
+
+        "lmin": lmin,
+
+        "lmax": lmax,
+
+        "skip_threshold": skip_threshold,
+
+        "skip_factor": skip_factor,
+
+        "skip_exp": skip_exp,
+
+        "skip_cmp": skip_cmp,
+
+        "noise_reduction": noise_reduction,
+
+        "ps": ps,
+
+        "motion_est": motion_est,
+
+        "mepc": mepc,
+
+        "mepre": mepre,
+
+        "intra_penalty": intra_penalty,
+
+        "sc_threshold": sc_threshold,
+
+    }))
 
 
-def wrapped_avframe() -> FFMpegEncoderOption:
+
+def wrapped_avframe(
+
+) -> FFMpegEncoderOption:
     """
     AVFrame to AVPacket passthrough
 
@@ -5275,10 +6655,15 @@ def wrapped_avframe() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def xbm() -> FFMpegEncoderOption:
+
+def xbm(
+
+) -> FFMpegEncoderOption:
     """
     XBM (X BitMap) image
 
@@ -5286,10 +6671,15 @@ def xbm() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def xface() -> FFMpegEncoderOption:
+
+def xface(
+
+) -> FFMpegEncoderOption:
     """
     X-face image
 
@@ -5297,10 +6687,15 @@ def xface() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def xwd() -> FFMpegEncoderOption:
+
+def xwd(
+
+) -> FFMpegEncoderOption:
     """
     XWD (X Window Dump) image
 
@@ -5308,10 +6703,15 @@ def xwd() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def y41p() -> FFMpegEncoderOption:
+
+def y41p(
+
+) -> FFMpegEncoderOption:
     """
     Uncompressed YUV 4:1:1 12-bit
 
@@ -5319,10 +6719,15 @@ def y41p() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def yuv4() -> FFMpegEncoderOption:
+
+def yuv4(
+
+) -> FFMpegEncoderOption:
     """
     Uncompressed packed 4:2:0
 
@@ -5330,10 +6735,15 @@ def yuv4() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def zlib() -> FFMpegEncoderOption:
+
+def zlib(
+
+) -> FFMpegEncoderOption:
     """
     LCL (LossLess Codec Library) ZLIB
 
@@ -5341,10 +6751,15 @@ def zlib() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def zmbv() -> FFMpegEncoderOption:
+
+def zmbv(
+
+) -> FFMpegEncoderOption:
     """
     Zip Motion Blocks Video
 
@@ -5352,16 +6767,26 @@ def zmbv() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
+
 
 
 def aac(
-    aac_coder: int | None | Literal["twoloop", "fast"] = None,
+
+    aac_coder: int | None| Literal["twoloop", "fast"] = None,
+
     aac_ms: bool | None = None,
+
     aac_is: bool | None = None,
+
     aac_pns: bool | None = None,
+
     aac_tns: bool | None = None,
+
     aac_pce: bool | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     AAC (Advanced Audio Coding)
@@ -5377,36 +6802,52 @@ def aac(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "aac_coder": aac_coder,
-                "aac_ms": aac_ms,
-                "aac_is": aac_is,
-                "aac_pns": aac_pns,
-                "aac_tns": aac_tns,
-                "aac_pce": aac_pce,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "aac_coder": aac_coder,
+
+        "aac_ms": aac_ms,
+
+        "aac_is": aac_is,
+
+        "aac_pns": aac_pns,
+
+        "aac_tns": aac_tns,
+
+        "aac_pce": aac_pce,
+
+    }))
+
 
 
 def libfdk_aac(
+
     afterburner: int | None = None,
+
     eld_sbr: int | None = None,
+
     eld_v2: int | None = None,
-    signaling: int
-    | None
-    | Literal["default", "implicit", "explicit_sbr", "explicit_hierarchical"] = None,
+
+    signaling: int | None| Literal["default", "implicit", "explicit_sbr", "explicit_hierarchical"] = None,
+
     latm: int | None = None,
+
     header_period: int | None = None,
+
     vbr: int | None = None,
+
     drc_profile: int | None = None,
+
     drc_target_ref: int | None = None,
+
     comp_profile: int | None = None,
+
     comp_target_ref: int | None = None,
+
     prog_ref: int | None = None,
+
     frame_length: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     Fraunhofer FDK AAC (codec aac)
@@ -5429,48 +6870,80 @@ def libfdk_aac(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "afterburner": afterburner,
-                "eld_sbr": eld_sbr,
-                "eld_v2": eld_v2,
-                "signaling": signaling,
-                "latm": latm,
-                "header_period": header_period,
-                "vbr": vbr,
-                "drc_profile": drc_profile,
-                "drc_target_ref": drc_target_ref,
-                "comp_profile": comp_profile,
-                "comp_target_ref": comp_target_ref,
-                "prog_ref": prog_ref,
-                "frame_length": frame_length,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "afterburner": afterburner,
+
+        "eld_sbr": eld_sbr,
+
+        "eld_v2": eld_v2,
+
+        "signaling": signaling,
+
+        "latm": latm,
+
+        "header_period": header_period,
+
+        "vbr": vbr,
+
+        "drc_profile": drc_profile,
+
+        "drc_target_ref": drc_target_ref,
+
+        "comp_profile": comp_profile,
+
+        "comp_target_ref": comp_target_ref,
+
+        "prog_ref": prog_ref,
+
+        "frame_length": frame_length,
+
+    }))
+
 
 
 def ac3(
+
     center_mixlev: float | None = None,
+
     surround_mixlev: float | None = None,
+
     mixing_level: int | None = None,
-    room_type: int | None | Literal["notindicated", "large", "small"] = None,
+
+    room_type: int | None| Literal["notindicated", "large", "small"] = None,
+
     per_frame_metadata: bool | None = None,
+
     copyright: int | None = None,
+
     dialnorm: int | None = None,
-    dsur_mode: int | None | Literal["notindicated", "on", "off"] = None,
+
+    dsur_mode: int | None| Literal["notindicated", "on", "off"] = None,
+
     original: int | None = None,
-    dmix_mode: int | None | Literal["notindicated", "ltrt", "loro", "dplii"] = None,
+
+    dmix_mode: int | None| Literal["notindicated", "ltrt", "loro", "dplii"] = None,
+
     ltrt_cmixlev: float | None = None,
+
     ltrt_surmixlev: float | None = None,
+
     loro_cmixlev: float | None = None,
+
     loro_surmixlev: float | None = None,
-    dsurex_mode: int | None | Literal["notindicated", "on", "off", "dpliiz"] = None,
-    dheadphone_mode: int | None | Literal["notindicated", "on", "off"] = None,
-    ad_conv_type: int | None | Literal["standard", "hdcd"] = None,
+
+    dsurex_mode: int | None| Literal["notindicated", "on", "off", "dpliiz"] = None,
+
+    dheadphone_mode: int | None| Literal["notindicated", "on", "off"] = None,
+
+    ad_conv_type: int | None| Literal["standard", "hdcd"] = None,
+
     stereo_rematrixing: bool | None = None,
-    channel_coupling: int | None | Literal["auto"] = None,
-    cpl_start_band: int | None | Literal["auto"] = None,
+
+    channel_coupling: int | None| Literal["auto"] = None,
+
+    cpl_start_band: int | None| Literal["auto"] = None,
+
 ) -> FFMpegEncoderOption:
     """
     ATSC A/52A (AC-3)
@@ -5500,55 +6973,94 @@ def ac3(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "center_mixlev": center_mixlev,
-                "surround_mixlev": surround_mixlev,
-                "mixing_level": mixing_level,
-                "room_type": room_type,
-                "per_frame_metadata": per_frame_metadata,
-                "copyright": copyright,
-                "dialnorm": dialnorm,
-                "dsur_mode": dsur_mode,
-                "original": original,
-                "dmix_mode": dmix_mode,
-                "ltrt_cmixlev": ltrt_cmixlev,
-                "ltrt_surmixlev": ltrt_surmixlev,
-                "loro_cmixlev": loro_cmixlev,
-                "loro_surmixlev": loro_surmixlev,
-                "dsurex_mode": dsurex_mode,
-                "dheadphone_mode": dheadphone_mode,
-                "ad_conv_type": ad_conv_type,
-                "stereo_rematrixing": stereo_rematrixing,
-                "channel_coupling": channel_coupling,
-                "cpl_start_band": cpl_start_band,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "center_mixlev": center_mixlev,
+
+        "surround_mixlev": surround_mixlev,
+
+        "mixing_level": mixing_level,
+
+        "room_type": room_type,
+
+        "per_frame_metadata": per_frame_metadata,
+
+        "copyright": copyright,
+
+        "dialnorm": dialnorm,
+
+        "dsur_mode": dsur_mode,
+
+        "original": original,
+
+        "dmix_mode": dmix_mode,
+
+        "ltrt_cmixlev": ltrt_cmixlev,
+
+        "ltrt_surmixlev": ltrt_surmixlev,
+
+        "loro_cmixlev": loro_cmixlev,
+
+        "loro_surmixlev": loro_surmixlev,
+
+        "dsurex_mode": dsurex_mode,
+
+        "dheadphone_mode": dheadphone_mode,
+
+        "ad_conv_type": ad_conv_type,
+
+        "stereo_rematrixing": stereo_rematrixing,
+
+        "channel_coupling": channel_coupling,
+
+        "cpl_start_band": cpl_start_band,
+
+    }))
+
 
 
 def ac3_fixed(
+
     center_mixlev: float | None = None,
+
     surround_mixlev: float | None = None,
+
     mixing_level: int | None = None,
-    room_type: int | None | Literal["notindicated", "large", "small"] = None,
+
+    room_type: int | None| Literal["notindicated", "large", "small"] = None,
+
     per_frame_metadata: bool | None = None,
+
     copyright: int | None = None,
+
     dialnorm: int | None = None,
-    dsur_mode: int | None | Literal["notindicated", "on", "off"] = None,
+
+    dsur_mode: int | None| Literal["notindicated", "on", "off"] = None,
+
     original: int | None = None,
-    dmix_mode: int | None | Literal["notindicated", "ltrt", "loro", "dplii"] = None,
+
+    dmix_mode: int | None| Literal["notindicated", "ltrt", "loro", "dplii"] = None,
+
     ltrt_cmixlev: float | None = None,
+
     ltrt_surmixlev: float | None = None,
+
     loro_cmixlev: float | None = None,
+
     loro_surmixlev: float | None = None,
-    dsurex_mode: int | None | Literal["notindicated", "on", "off", "dpliiz"] = None,
-    dheadphone_mode: int | None | Literal["notindicated", "on", "off"] = None,
-    ad_conv_type: int | None | Literal["standard", "hdcd"] = None,
+
+    dsurex_mode: int | None| Literal["notindicated", "on", "off", "dpliiz"] = None,
+
+    dheadphone_mode: int | None| Literal["notindicated", "on", "off"] = None,
+
+    ad_conv_type: int | None| Literal["standard", "hdcd"] = None,
+
     stereo_rematrixing: bool | None = None,
-    channel_coupling: int | None | Literal["auto"] = None,
-    cpl_start_band: int | None | Literal["auto"] = None,
+
+    channel_coupling: int | None| Literal["auto"] = None,
+
+    cpl_start_band: int | None| Literal["auto"] = None,
+
 ) -> FFMpegEncoderOption:
     """
     ATSC A/52A (AC-3) (codec ac3)
@@ -5578,35 +7090,55 @@ def ac3_fixed(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "center_mixlev": center_mixlev,
-                "surround_mixlev": surround_mixlev,
-                "mixing_level": mixing_level,
-                "room_type": room_type,
-                "per_frame_metadata": per_frame_metadata,
-                "copyright": copyright,
-                "dialnorm": dialnorm,
-                "dsur_mode": dsur_mode,
-                "original": original,
-                "dmix_mode": dmix_mode,
-                "ltrt_cmixlev": ltrt_cmixlev,
-                "ltrt_surmixlev": ltrt_surmixlev,
-                "loro_cmixlev": loro_cmixlev,
-                "loro_surmixlev": loro_surmixlev,
-                "dsurex_mode": dsurex_mode,
-                "dheadphone_mode": dheadphone_mode,
-                "ad_conv_type": ad_conv_type,
-                "stereo_rematrixing": stereo_rematrixing,
-                "channel_coupling": channel_coupling,
-                "cpl_start_band": cpl_start_band,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "center_mixlev": center_mixlev,
+
+        "surround_mixlev": surround_mixlev,
+
+        "mixing_level": mixing_level,
+
+        "room_type": room_type,
+
+        "per_frame_metadata": per_frame_metadata,
+
+        "copyright": copyright,
+
+        "dialnorm": dialnorm,
+
+        "dsur_mode": dsur_mode,
+
+        "original": original,
+
+        "dmix_mode": dmix_mode,
+
+        "ltrt_cmixlev": ltrt_cmixlev,
+
+        "ltrt_surmixlev": ltrt_surmixlev,
+
+        "loro_cmixlev": loro_cmixlev,
+
+        "loro_surmixlev": loro_surmixlev,
+
+        "dsurex_mode": dsurex_mode,
+
+        "dheadphone_mode": dheadphone_mode,
+
+        "ad_conv_type": ad_conv_type,
+
+        "stereo_rematrixing": stereo_rematrixing,
+
+        "channel_coupling": channel_coupling,
+
+        "cpl_start_band": cpl_start_band,
+
+    }))
 
 
-def adpcm_adx() -> FFMpegEncoderOption:
+
+def adpcm_adx(
+
+) -> FFMpegEncoderOption:
     """
     SEGA CRI ADX ADPCM
 
@@ -5614,11 +7146,16 @@ def adpcm_adx() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
+
 
 
 def adpcm_argo(
+
     block_size: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     ADPCM Argonaut Games
@@ -5629,16 +7166,17 @@ def adpcm_argo(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "block_size": block_size,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "block_size": block_size,
+
+    }))
 
 
-def g722() -> FFMpegEncoderOption:
+
+def g722(
+
+) -> FFMpegEncoderOption:
     """
     G.722 ADPCM (codec adpcm_g722)
 
@@ -5646,11 +7184,16 @@ def g722() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
+
 
 
 def g726(
+
     code_size: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     G.726 ADPCM (codec adpcm_g726)
@@ -5661,17 +7204,18 @@ def g726(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "code_size": code_size,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "code_size": code_size,
+
+    }))
+
 
 
 def g726le(
+
     code_size: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     G.726 little endian ADPCM ("right-justified") (codec adpcm_g726le)
@@ -5682,17 +7226,18 @@ def g726le(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "code_size": code_size,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "code_size": code_size,
+
+    }))
+
 
 
 def adpcm_ima_alp(
+
     block_size: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     ADPCM IMA High Voltage Software ALP
@@ -5703,17 +7248,18 @@ def adpcm_ima_alp(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "block_size": block_size,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "block_size": block_size,
+
+    }))
+
 
 
 def adpcm_ima_amv(
+
     block_size: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     ADPCM IMA AMV
@@ -5724,17 +7270,18 @@ def adpcm_ima_amv(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "block_size": block_size,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "block_size": block_size,
+
+    }))
+
 
 
 def adpcm_ima_apm(
+
     block_size: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     ADPCM IMA Ubisoft APM
@@ -5745,17 +7292,18 @@ def adpcm_ima_apm(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "block_size": block_size,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "block_size": block_size,
+
+    }))
+
 
 
 def adpcm_ima_qt(
+
     block_size: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     ADPCM IMA QuickTime
@@ -5766,17 +7314,18 @@ def adpcm_ima_qt(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "block_size": block_size,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "block_size": block_size,
+
+    }))
+
 
 
 def adpcm_ima_ssi(
+
     block_size: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     ADPCM IMA Simon & Schuster Interactive
@@ -5787,17 +7336,18 @@ def adpcm_ima_ssi(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "block_size": block_size,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "block_size": block_size,
+
+    }))
+
 
 
 def adpcm_ima_wav(
+
     block_size: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     ADPCM IMA WAV
@@ -5808,17 +7358,18 @@ def adpcm_ima_wav(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "block_size": block_size,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "block_size": block_size,
+
+    }))
+
 
 
 def adpcm_ima_ws(
+
     block_size: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     ADPCM IMA Westwood
@@ -5829,17 +7380,18 @@ def adpcm_ima_ws(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "block_size": block_size,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "block_size": block_size,
+
+    }))
+
 
 
 def adpcm_ms(
+
     block_size: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     ADPCM Microsoft
@@ -5850,17 +7402,18 @@ def adpcm_ms(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "block_size": block_size,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "block_size": block_size,
+
+    }))
+
 
 
 def adpcm_swf(
+
     block_size: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     ADPCM Shockwave Flash
@@ -5871,17 +7424,18 @@ def adpcm_swf(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "block_size": block_size,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "block_size": block_size,
+
+    }))
+
 
 
 def adpcm_yamaha(
+
     block_size: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     ADPCM Yamaha
@@ -5892,18 +7446,20 @@ def adpcm_yamaha(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "block_size": block_size,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "block_size": block_size,
+
+    }))
+
 
 
 def alac(
+
     min_prediction_order: int | None = None,
+
     max_prediction_order: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     ALAC (Apple Lossless Audio Codec)
@@ -5915,18 +7471,20 @@ def alac(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "min_prediction_order": min_prediction_order,
-                "max_prediction_order": max_prediction_order,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "min_prediction_order": min_prediction_order,
+
+        "max_prediction_order": max_prediction_order,
+
+    }))
+
 
 
 def libopencore_amrnb(
+
     dtx: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     OpenCORE AMR-NB (Adaptive Multi-Rate Narrow-Band) (codec amr_nb)
@@ -5937,16 +7495,17 @@ def libopencore_amrnb(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "dtx": dtx,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "dtx": dtx,
+
+    }))
 
 
-def anull() -> FFMpegEncoderOption:
+
+def anull(
+
+) -> FFMpegEncoderOption:
     """
     null audio
 
@@ -5954,10 +7513,15 @@ def anull() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def aptx() -> FFMpegEncoderOption:
+
+def aptx(
+
+) -> FFMpegEncoderOption:
     """
     aptX (Audio Processing Technology for Bluetooth)
 
@@ -5965,10 +7529,15 @@ def aptx() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def aptx_hd() -> FFMpegEncoderOption:
+
+def aptx_hd(
+
+) -> FFMpegEncoderOption:
     """
     aptX HD (Audio Processing Technology for Bluetooth)
 
@@ -5976,15 +7545,16 @@ def aptx_hd() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
+
 
 
 def libcodec2(
-    mode: int
-    | None
-    | Literal[
-        "3200", "2400", "1600", "1400", "1300", "1200", "700", "700B", "700C"
-    ] = None,
+
+    mode: int | None| Literal["3200", "2400", "1600", "1400", "1300", "1200", "700", "700B", "700C"] = None,
+
 ) -> FFMpegEncoderOption:
     """
     codec2 encoder using libcodec2 (codec codec2)
@@ -5995,16 +7565,17 @@ def libcodec2(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "mode": mode,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "mode": mode,
+
+    }))
 
 
-def comfortnoise() -> FFMpegEncoderOption:
+
+def comfortnoise(
+
+) -> FFMpegEncoderOption:
     """
     RFC 3389 comfort noise generator
 
@@ -6012,10 +7583,15 @@ def comfortnoise() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def dfpwm() -> FFMpegEncoderOption:
+
+def dfpwm(
+
+) -> FFMpegEncoderOption:
     """
     DFPWM1a audio
 
@@ -6023,11 +7599,16 @@ def dfpwm() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
+
 
 
 def dca(
+
     dca_adpcm: bool | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     DCA (DTS Coherent Acoustics) (codec dts)
@@ -6038,34 +7619,52 @@ def dca(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "dca_adpcm": dca_adpcm,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "dca_adpcm": dca_adpcm,
+
+    }))
+
 
 
 def eac3(
+
     mixing_level: int | None = None,
-    room_type: int | None | Literal["notindicated", "large", "small"] = None,
+
+    room_type: int | None| Literal["notindicated", "large", "small"] = None,
+
     per_frame_metadata: bool | None = None,
+
     copyright: int | None = None,
+
     dialnorm: int | None = None,
-    dsur_mode: int | None | Literal["notindicated", "on", "off"] = None,
+
+    dsur_mode: int | None| Literal["notindicated", "on", "off"] = None,
+
     original: int | None = None,
-    dmix_mode: int | None | Literal["notindicated", "ltrt", "loro", "dplii"] = None,
+
+    dmix_mode: int | None| Literal["notindicated", "ltrt", "loro", "dplii"] = None,
+
     ltrt_cmixlev: float | None = None,
+
     ltrt_surmixlev: float | None = None,
+
     loro_cmixlev: float | None = None,
+
     loro_surmixlev: float | None = None,
-    dsurex_mode: int | None | Literal["notindicated", "on", "off", "dpliiz"] = None,
-    dheadphone_mode: int | None | Literal["notindicated", "on", "off"] = None,
-    ad_conv_type: int | None | Literal["standard", "hdcd"] = None,
+
+    dsurex_mode: int | None| Literal["notindicated", "on", "off", "dpliiz"] = None,
+
+    dheadphone_mode: int | None| Literal["notindicated", "on", "off"] = None,
+
+    ad_conv_type: int | None| Literal["standard", "hdcd"] = None,
+
     stereo_rematrixing: bool | None = None,
-    channel_coupling: int | None | Literal["auto"] = None,
-    cpl_start_band: int | None | Literal["auto"] = None,
+
+    channel_coupling: int | None| Literal["auto"] = None,
+
+    cpl_start_band: int | None| Literal["auto"] = None,
+
 ) -> FFMpegEncoderOption:
     """
     ATSC A/52 E-AC-3
@@ -6093,46 +7692,68 @@ def eac3(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "mixing_level": mixing_level,
-                "room_type": room_type,
-                "per_frame_metadata": per_frame_metadata,
-                "copyright": copyright,
-                "dialnorm": dialnorm,
-                "dsur_mode": dsur_mode,
-                "original": original,
-                "dmix_mode": dmix_mode,
-                "ltrt_cmixlev": ltrt_cmixlev,
-                "ltrt_surmixlev": ltrt_surmixlev,
-                "loro_cmixlev": loro_cmixlev,
-                "loro_surmixlev": loro_surmixlev,
-                "dsurex_mode": dsurex_mode,
-                "dheadphone_mode": dheadphone_mode,
-                "ad_conv_type": ad_conv_type,
-                "stereo_rematrixing": stereo_rematrixing,
-                "channel_coupling": channel_coupling,
-                "cpl_start_band": cpl_start_band,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "mixing_level": mixing_level,
+
+        "room_type": room_type,
+
+        "per_frame_metadata": per_frame_metadata,
+
+        "copyright": copyright,
+
+        "dialnorm": dialnorm,
+
+        "dsur_mode": dsur_mode,
+
+        "original": original,
+
+        "dmix_mode": dmix_mode,
+
+        "ltrt_cmixlev": ltrt_cmixlev,
+
+        "ltrt_surmixlev": ltrt_surmixlev,
+
+        "loro_cmixlev": loro_cmixlev,
+
+        "loro_surmixlev": loro_surmixlev,
+
+        "dsurex_mode": dsurex_mode,
+
+        "dheadphone_mode": dheadphone_mode,
+
+        "ad_conv_type": ad_conv_type,
+
+        "stereo_rematrixing": stereo_rematrixing,
+
+        "channel_coupling": channel_coupling,
+
+        "cpl_start_band": cpl_start_band,
+
+    }))
+
 
 
 def flac(
+
     lpc_coeff_precision: int | None = None,
-    lpc_type: int | None | Literal["none", "fixed", "levinson", "cholesky"] = None,
+
+    lpc_type: int | None| Literal["none", "fixed", "levinson", "cholesky"] = None,
+
     lpc_passes: int | None = None,
+
     min_partition_order: int | None = None,
-    prediction_order_method: int
-    | None
-    | Literal["estimation", "2level", "4level", "8level", "search", "log"] = None,
-    ch_mode: int
-    | None
-    | Literal["auto", "indep", "left_side", "right_side", "mid_side"] = None,
+
+    prediction_order_method: int | None| Literal["estimation", "2level", "4level", "8level", "search", "log"] = None,
+
+    ch_mode: int | None| Literal["auto", "indep", "left_side", "right_side", "mid_side"] = None,
+
     exact_rice_parameters: bool | None = None,
+
     multi_dim_quant: bool | None = None,
+
     min_prediction_order: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     FLAC (Free Lossless Audio Codec)
@@ -6151,24 +7772,33 @@ def flac(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "lpc_coeff_precision": lpc_coeff_precision,
-                "lpc_type": lpc_type,
-                "lpc_passes": lpc_passes,
-                "min_partition_order": min_partition_order,
-                "prediction_order_method": prediction_order_method,
-                "ch_mode": ch_mode,
-                "exact_rice_parameters": exact_rice_parameters,
-                "multi_dim_quant": multi_dim_quant,
-                "min_prediction_order": min_prediction_order,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "lpc_coeff_precision": lpc_coeff_precision,
+
+        "lpc_type": lpc_type,
+
+        "lpc_passes": lpc_passes,
+
+        "min_partition_order": min_partition_order,
+
+        "prediction_order_method": prediction_order_method,
+
+        "ch_mode": ch_mode,
+
+        "exact_rice_parameters": exact_rice_parameters,
+
+        "multi_dim_quant": multi_dim_quant,
+
+        "min_prediction_order": min_prediction_order,
+
+    }))
 
 
-def g723_1() -> FFMpegEncoderOption:
+
+def g723_1(
+
+) -> FFMpegEncoderOption:
     """
     G.723.1
 
@@ -6176,10 +7806,15 @@ def g723_1() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def libgsm() -> FFMpegEncoderOption:
+
+def libgsm(
+
+) -> FFMpegEncoderOption:
     """
     libgsm GSM (codec gsm)
 
@@ -6187,10 +7822,15 @@ def libgsm() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def libgsm_ms() -> FFMpegEncoderOption:
+
+def libgsm_ms(
+
+) -> FFMpegEncoderOption:
     """
     libgsm GSM Microsoft variant (codec gsm_ms)
 
@@ -6198,17 +7838,28 @@ def libgsm_ms() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
+
 
 
 def mlp(
+
     max_interval: int | None = None,
+
     lpc_coeff_precision: int | None = None,
-    lpc_type: int | None | Literal["levinson", "cholesky"] = None,
+
+    lpc_type: int | None| Literal["levinson", "cholesky"] = None,
+
     lpc_passes: int | None = None,
+
     codebook_search: int | None = None,
-    prediction_order: int | None | Literal["estimation", "search"] = None,
+
+    prediction_order: int | None| Literal["estimation", "search"] = None,
+
     rematrix_precision: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     MLP (Meridian Lossless Packing)
@@ -6225,22 +7876,29 @@ def mlp(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "max_interval": max_interval,
-                "lpc_coeff_precision": lpc_coeff_precision,
-                "lpc_type": lpc_type,
-                "lpc_passes": lpc_passes,
-                "codebook_search": codebook_search,
-                "prediction_order": prediction_order,
-                "rematrix_precision": rematrix_precision,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "max_interval": max_interval,
+
+        "lpc_coeff_precision": lpc_coeff_precision,
+
+        "lpc_type": lpc_type,
+
+        "lpc_passes": lpc_passes,
+
+        "codebook_search": codebook_search,
+
+        "prediction_order": prediction_order,
+
+        "rematrix_precision": rematrix_precision,
+
+    }))
 
 
-def mp2() -> FFMpegEncoderOption:
+
+def mp2(
+
+) -> FFMpegEncoderOption:
     """
     MP2 (MPEG audio layer 2)
 
@@ -6248,10 +7906,15 @@ def mp2() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def mp2fixed() -> FFMpegEncoderOption:
+
+def mp2fixed(
+
+) -> FFMpegEncoderOption:
     """
     MP2 fixed point (MPEG audio layer 2) (codec mp2)
 
@@ -6259,19 +7922,28 @@ def mp2fixed() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
+
 
 
 def libtwolame(
-    mode: int
-    | None
-    | Literal["auto", "stereo", "joint_stereo", "dual_channel", "mono"] = None,
+
+    mode: int | None| Literal["auto", "stereo", "joint_stereo", "dual_channel", "mono"] = None,
+
     psymodel: int | None = None,
+
     energy_levels: int | None = None,
+
     error_protection: int | None = None,
+
     copyright: int | None = None,
+
     original: int | None = None,
+
     verbosity: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     libtwolame MP2 (MPEG audio layer 2) (codec mp2)
@@ -6288,27 +7960,38 @@ def libtwolame(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "mode": mode,
-                "psymodel": psymodel,
-                "energy_levels": energy_levels,
-                "error_protection": error_protection,
-                "copyright": copyright,
-                "original": original,
-                "verbosity": verbosity,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "mode": mode,
+
+        "psymodel": psymodel,
+
+        "energy_levels": energy_levels,
+
+        "error_protection": error_protection,
+
+        "copyright": copyright,
+
+        "original": original,
+
+        "verbosity": verbosity,
+
+    }))
+
 
 
 def libmp3lame(
+
     reservoir: bool | None = None,
+
     joint_stereo: bool | None = None,
+
     abr: bool | None = None,
+
     copyright: bool | None = None,
+
     original: bool | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     libmp3lame MP3 (MPEG audio layer 3) (codec mp3)
@@ -6323,20 +8006,25 @@ def libmp3lame(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "reservoir": reservoir,
-                "joint_stereo": joint_stereo,
-                "abr": abr,
-                "copyright": copyright,
-                "original": original,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "reservoir": reservoir,
+
+        "joint_stereo": joint_stereo,
+
+        "abr": abr,
+
+        "copyright": copyright,
+
+        "original": original,
+
+    }))
 
 
-def libshine() -> FFMpegEncoderOption:
+
+def libshine(
+
+) -> FFMpegEncoderOption:
     """
     libshine MP3 (MPEG audio layer 3) (codec mp3)
 
@@ -6344,10 +8032,15 @@ def libshine() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def nellymoser() -> FFMpegEncoderOption:
+
+def nellymoser(
+
+) -> FFMpegEncoderOption:
     """
     Nellymoser Asao
 
@@ -6355,12 +8048,18 @@ def nellymoser() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
+
 
 
 def opus(
+
     opus_delay: float | None = None,
+
     apply_phase_inv: bool | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     Opus
@@ -6372,24 +8071,32 @@ def opus(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "opus_delay": opus_delay,
-                "apply_phase_inv": apply_phase_inv,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "opus_delay": opus_delay,
+
+        "apply_phase_inv": apply_phase_inv,
+
+    }))
+
 
 
 def libopus(
-    application: int | None | Literal["voip", "audio", "lowdelay"] = None,
+
+    application: int | None| Literal["voip", "audio", "lowdelay"] = None,
+
     frame_duration: float | None = None,
+
     packet_loss: int | None = None,
+
     fec: bool | None = None,
-    vbr: int | None | Literal["off", "on", "constrained"] = None,
+
+    vbr: int | None| Literal["off", "on", "constrained"] = None,
+
     mapping_family: int | None = None,
+
     apply_phase_inv: bool | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     libopus Opus (codec opus)
@@ -6406,22 +8113,29 @@ def libopus(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "application": application,
-                "frame_duration": frame_duration,
-                "packet_loss": packet_loss,
-                "fec": fec,
-                "vbr": vbr,
-                "mapping_family": mapping_family,
-                "apply_phase_inv": apply_phase_inv,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "application": application,
+
+        "frame_duration": frame_duration,
+
+        "packet_loss": packet_loss,
+
+        "fec": fec,
+
+        "vbr": vbr,
+
+        "mapping_family": mapping_family,
+
+        "apply_phase_inv": apply_phase_inv,
+
+    }))
 
 
-def pcm_alaw() -> FFMpegEncoderOption:
+
+def pcm_alaw(
+
+) -> FFMpegEncoderOption:
     """
     PCM A-law / G.711 A-law
 
@@ -6429,10 +8143,15 @@ def pcm_alaw() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pcm_bluray() -> FFMpegEncoderOption:
+
+def pcm_bluray(
+
+) -> FFMpegEncoderOption:
     """
     PCM signed 16|20|24-bit big-endian for Blu-ray media
 
@@ -6440,10 +8159,15 @@ def pcm_bluray() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pcm_dvd() -> FFMpegEncoderOption:
+
+def pcm_dvd(
+
+) -> FFMpegEncoderOption:
     """
     PCM signed 16|20|24-bit big-endian for DVD media
 
@@ -6451,10 +8175,15 @@ def pcm_dvd() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pcm_f32be() -> FFMpegEncoderOption:
+
+def pcm_f32be(
+
+) -> FFMpegEncoderOption:
     """
     PCM 32-bit floating point big-endian
 
@@ -6462,10 +8191,15 @@ def pcm_f32be() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pcm_f32le() -> FFMpegEncoderOption:
+
+def pcm_f32le(
+
+) -> FFMpegEncoderOption:
     """
     PCM 32-bit floating point little-endian
 
@@ -6473,10 +8207,15 @@ def pcm_f32le() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pcm_f64be() -> FFMpegEncoderOption:
+
+def pcm_f64be(
+
+) -> FFMpegEncoderOption:
     """
     PCM 64-bit floating point big-endian
 
@@ -6484,10 +8223,15 @@ def pcm_f64be() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pcm_f64le() -> FFMpegEncoderOption:
+
+def pcm_f64le(
+
+) -> FFMpegEncoderOption:
     """
     PCM 64-bit floating point little-endian
 
@@ -6495,10 +8239,15 @@ def pcm_f64le() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pcm_mulaw() -> FFMpegEncoderOption:
+
+def pcm_mulaw(
+
+) -> FFMpegEncoderOption:
     """
     PCM mu-law / G.711 mu-law
 
@@ -6506,10 +8255,15 @@ def pcm_mulaw() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pcm_s16be() -> FFMpegEncoderOption:
+
+def pcm_s16be(
+
+) -> FFMpegEncoderOption:
     """
     PCM signed 16-bit big-endian
 
@@ -6517,10 +8271,15 @@ def pcm_s16be() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pcm_s16be_planar() -> FFMpegEncoderOption:
+
+def pcm_s16be_planar(
+
+) -> FFMpegEncoderOption:
     """
     PCM signed 16-bit big-endian planar
 
@@ -6528,10 +8287,15 @@ def pcm_s16be_planar() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pcm_s16le() -> FFMpegEncoderOption:
+
+def pcm_s16le(
+
+) -> FFMpegEncoderOption:
     """
     PCM signed 16-bit little-endian
 
@@ -6539,10 +8303,15 @@ def pcm_s16le() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pcm_s16le_planar() -> FFMpegEncoderOption:
+
+def pcm_s16le_planar(
+
+) -> FFMpegEncoderOption:
     """
     PCM signed 16-bit little-endian planar
 
@@ -6550,10 +8319,15 @@ def pcm_s16le_planar() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pcm_s24be() -> FFMpegEncoderOption:
+
+def pcm_s24be(
+
+) -> FFMpegEncoderOption:
     """
     PCM signed 24-bit big-endian
 
@@ -6561,10 +8335,15 @@ def pcm_s24be() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pcm_s24daud() -> FFMpegEncoderOption:
+
+def pcm_s24daud(
+
+) -> FFMpegEncoderOption:
     """
     PCM D-Cinema audio signed 24-bit
 
@@ -6572,10 +8351,15 @@ def pcm_s24daud() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pcm_s24le() -> FFMpegEncoderOption:
+
+def pcm_s24le(
+
+) -> FFMpegEncoderOption:
     """
     PCM signed 24-bit little-endian
 
@@ -6583,10 +8367,15 @@ def pcm_s24le() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pcm_s24le_planar() -> FFMpegEncoderOption:
+
+def pcm_s24le_planar(
+
+) -> FFMpegEncoderOption:
     """
     PCM signed 24-bit little-endian planar
 
@@ -6594,10 +8383,15 @@ def pcm_s24le_planar() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pcm_s32be() -> FFMpegEncoderOption:
+
+def pcm_s32be(
+
+) -> FFMpegEncoderOption:
     """
     PCM signed 32-bit big-endian
 
@@ -6605,10 +8399,15 @@ def pcm_s32be() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pcm_s32le() -> FFMpegEncoderOption:
+
+def pcm_s32le(
+
+) -> FFMpegEncoderOption:
     """
     PCM signed 32-bit little-endian
 
@@ -6616,10 +8415,15 @@ def pcm_s32le() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pcm_s32le_planar() -> FFMpegEncoderOption:
+
+def pcm_s32le_planar(
+
+) -> FFMpegEncoderOption:
     """
     PCM signed 32-bit little-endian planar
 
@@ -6627,10 +8431,15 @@ def pcm_s32le_planar() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pcm_s64be() -> FFMpegEncoderOption:
+
+def pcm_s64be(
+
+) -> FFMpegEncoderOption:
     """
     PCM signed 64-bit big-endian
 
@@ -6638,10 +8447,15 @@ def pcm_s64be() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pcm_s64le() -> FFMpegEncoderOption:
+
+def pcm_s64le(
+
+) -> FFMpegEncoderOption:
     """
     PCM signed 64-bit little-endian
 
@@ -6649,10 +8463,15 @@ def pcm_s64le() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pcm_s8() -> FFMpegEncoderOption:
+
+def pcm_s8(
+
+) -> FFMpegEncoderOption:
     """
     PCM signed 8-bit
 
@@ -6660,10 +8479,15 @@ def pcm_s8() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pcm_s8_planar() -> FFMpegEncoderOption:
+
+def pcm_s8_planar(
+
+) -> FFMpegEncoderOption:
     """
     PCM signed 8-bit planar
 
@@ -6671,10 +8495,15 @@ def pcm_s8_planar() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pcm_u16be() -> FFMpegEncoderOption:
+
+def pcm_u16be(
+
+) -> FFMpegEncoderOption:
     """
     PCM unsigned 16-bit big-endian
 
@@ -6682,10 +8511,15 @@ def pcm_u16be() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pcm_u16le() -> FFMpegEncoderOption:
+
+def pcm_u16le(
+
+) -> FFMpegEncoderOption:
     """
     PCM unsigned 16-bit little-endian
 
@@ -6693,10 +8527,15 @@ def pcm_u16le() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pcm_u24be() -> FFMpegEncoderOption:
+
+def pcm_u24be(
+
+) -> FFMpegEncoderOption:
     """
     PCM unsigned 24-bit big-endian
 
@@ -6704,10 +8543,15 @@ def pcm_u24be() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pcm_u24le() -> FFMpegEncoderOption:
+
+def pcm_u24le(
+
+) -> FFMpegEncoderOption:
     """
     PCM unsigned 24-bit little-endian
 
@@ -6715,10 +8559,15 @@ def pcm_u24le() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pcm_u32be() -> FFMpegEncoderOption:
+
+def pcm_u32be(
+
+) -> FFMpegEncoderOption:
     """
     PCM unsigned 32-bit big-endian
 
@@ -6726,10 +8575,15 @@ def pcm_u32be() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pcm_u32le() -> FFMpegEncoderOption:
+
+def pcm_u32le(
+
+) -> FFMpegEncoderOption:
     """
     PCM unsigned 32-bit little-endian
 
@@ -6737,10 +8591,15 @@ def pcm_u32le() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pcm_u8() -> FFMpegEncoderOption:
+
+def pcm_u8(
+
+) -> FFMpegEncoderOption:
     """
     PCM unsigned 8-bit
 
@@ -6748,10 +8607,15 @@ def pcm_u8() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def pcm_vidc() -> FFMpegEncoderOption:
+
+def pcm_vidc(
+
+) -> FFMpegEncoderOption:
     """
     PCM Archimedes VIDC
 
@@ -6759,10 +8623,15 @@ def pcm_vidc() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def real_144() -> FFMpegEncoderOption:
+
+def real_144(
+
+) -> FFMpegEncoderOption:
     """
     RealAudio 1.0 (14.4K) (codec ra_144)
 
@@ -6770,10 +8639,15 @@ def real_144() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def roq_dpcm() -> FFMpegEncoderOption:
+
+def roq_dpcm(
+
+) -> FFMpegEncoderOption:
     """
     id RoQ DPCM
 
@@ -6781,10 +8655,15 @@ def roq_dpcm() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def s302m() -> FFMpegEncoderOption:
+
+def s302m(
+
+) -> FFMpegEncoderOption:
     """
     SMPTE 302M
 
@@ -6792,12 +8671,18 @@ def s302m() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
+
 
 
 def sbc(
+
     sbc_delay: str | None = None,
+
     msbc: bool | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     SBC (low-complexity subband codec)
@@ -6809,22 +8694,28 @@ def sbc(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "sbc_delay": sbc_delay,
-                "msbc": msbc,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "sbc_delay": sbc_delay,
+
+        "msbc": msbc,
+
+    }))
+
 
 
 def libspeex(
+
     abr: int | None = None,
+
     cbr_quality: int | None = None,
+
     frames_per_packet: int | None = None,
+
     vad: int | None = None,
+
     dtx: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     libspeex Speex (codec speex)
@@ -6839,27 +8730,38 @@ def libspeex(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "abr": abr,
-                "cbr_quality": cbr_quality,
-                "frames_per_packet": frames_per_packet,
-                "vad": vad,
-                "dtx": dtx,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "abr": abr,
+
+        "cbr_quality": cbr_quality,
+
+        "frames_per_packet": frames_per_packet,
+
+        "vad": vad,
+
+        "dtx": dtx,
+
+    }))
+
 
 
 def truehd(
+
     max_interval: int | None = None,
+
     lpc_coeff_precision: int | None = None,
-    lpc_type: int | None | Literal["levinson", "cholesky"] = None,
+
+    lpc_type: int | None| Literal["levinson", "cholesky"] = None,
+
     lpc_passes: int | None = None,
+
     codebook_search: int | None = None,
-    prediction_order: int | None | Literal["estimation", "search"] = None,
+
+    prediction_order: int | None| Literal["estimation", "search"] = None,
+
     rematrix_precision: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     TrueHD
@@ -6876,22 +8778,29 @@ def truehd(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "max_interval": max_interval,
-                "lpc_coeff_precision": lpc_coeff_precision,
-                "lpc_type": lpc_type,
-                "lpc_passes": lpc_passes,
-                "codebook_search": codebook_search,
-                "prediction_order": prediction_order,
-                "rematrix_precision": rematrix_precision,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "max_interval": max_interval,
+
+        "lpc_coeff_precision": lpc_coeff_precision,
+
+        "lpc_type": lpc_type,
+
+        "lpc_passes": lpc_passes,
+
+        "codebook_search": codebook_search,
+
+        "prediction_order": prediction_order,
+
+        "rematrix_precision": rematrix_precision,
+
+    }))
 
 
-def tta() -> FFMpegEncoderOption:
+
+def tta(
+
+) -> FFMpegEncoderOption:
     """
     TTA (True Audio)
 
@@ -6899,10 +8808,15 @@ def tta() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def vorbis() -> FFMpegEncoderOption:
+
+def vorbis(
+
+) -> FFMpegEncoderOption:
     """
     Vorbis
 
@@ -6910,11 +8824,16 @@ def vorbis() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
+
 
 
 def libvorbis(
+
     iblock: float | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     libvorbis (codec vorbis)
@@ -6925,18 +8844,20 @@ def libvorbis(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "iblock": iblock,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "iblock": iblock,
+
+    }))
+
 
 
 def wavpack(
+
     joint_stereo: bool | None = None,
+
     optimize_mono: bool | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     WavPack
@@ -6948,17 +8869,19 @@ def wavpack(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "joint_stereo": joint_stereo,
-                "optimize_mono": optimize_mono,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "joint_stereo": joint_stereo,
+
+        "optimize_mono": optimize_mono,
+
+    }))
 
 
-def wmav1() -> FFMpegEncoderOption:
+
+def wmav1(
+
+) -> FFMpegEncoderOption:
     """
     Windows Media Audio 1
 
@@ -6966,10 +8889,15 @@ def wmav1() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def wmav2() -> FFMpegEncoderOption:
+
+def wmav2(
+
+) -> FFMpegEncoderOption:
     """
     Windows Media Audio 2
 
@@ -6977,10 +8905,15 @@ def wmav2() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def ssa() -> FFMpegEncoderOption:
+
+def ssa(
+
+) -> FFMpegEncoderOption:
     """
     ASS (Advanced SubStation Alpha) subtitle (codec ass)
 
@@ -6988,10 +8921,15 @@ def ssa() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def ass() -> FFMpegEncoderOption:
+
+def ass(
+
+) -> FFMpegEncoderOption:
     """
     ASS (Advanced SubStation Alpha) subtitle
 
@@ -6999,11 +8937,16 @@ def ass() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
+
 
 
 def dvbsub(
+
     min_bpp: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     DVB subtitles (codec dvb_subtitle)
@@ -7014,18 +8957,20 @@ def dvbsub(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "min_bpp": min_bpp,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "min_bpp": min_bpp,
+
+    }))
+
 
 
 def dvdsub(
+
     palette: str | None = None,
+
     even_rows_fix: bool | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     DVD subtitles (codec dvd_subtitle)
@@ -7037,18 +8982,20 @@ def dvdsub(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "palette": palette,
-                "even_rows_fix": even_rows_fix,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "palette": palette,
+
+        "even_rows_fix": even_rows_fix,
+
+    }))
+
 
 
 def mov_text(
+
     height: int | None = None,
+
 ) -> FFMpegEncoderOption:
     """
     3GPP Timed Text subtitle
@@ -7059,16 +9006,17 @@ def mov_text(
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(
-        merge(
-            {
-                "height": height,
-            }
-        )
-    )
+    return FFMpegEncoderOption(merge({
+
+        "height": height,
+
+    }))
 
 
-def srt() -> FFMpegEncoderOption:
+
+def srt(
+
+) -> FFMpegEncoderOption:
     """
     SubRip subtitle (codec subrip)
 
@@ -7076,10 +9024,15 @@ def srt() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def subrip() -> FFMpegEncoderOption:
+
+def subrip(
+
+) -> FFMpegEncoderOption:
     """
     SubRip subtitle
 
@@ -7087,10 +9040,15 @@ def subrip() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def text() -> FFMpegEncoderOption:
+
+def text(
+
+) -> FFMpegEncoderOption:
     """
     Raw text subtitle
 
@@ -7098,10 +9056,15 @@ def text() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def ttml() -> FFMpegEncoderOption:
+
+def ttml(
+
+) -> FFMpegEncoderOption:
     """
     TTML subtitle
 
@@ -7109,10 +9072,15 @@ def ttml() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def webvtt() -> FFMpegEncoderOption:
+
+def webvtt(
+
+) -> FFMpegEncoderOption:
     """
     WebVTT subtitle
 
@@ -7120,10 +9088,15 @@ def webvtt() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
 
 
-def xsub() -> FFMpegEncoderOption:
+
+def xsub(
+
+) -> FFMpegEncoderOption:
     """
     DivX subtitles (XSUB)
 
@@ -7131,4 +9104,1074 @@ def xsub() -> FFMpegEncoderOption:
     Returns:
         the set codec options
     """
-    return FFMpegEncoderOption(merge({}))
+    return FFMpegEncoderOption(merge({
+
+    }))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

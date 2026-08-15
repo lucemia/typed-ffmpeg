@@ -1491,13 +1491,6 @@
   },
   {
     "__class__": "FFMpegMuxer",
-    "description": "audiotoolbox    AudioToolbox output device",
-    "flags": "E",
-    "name": "d",
-    "options": []
-  },
-  {
-    "__class__": "FFMpegMuxer",
     "description": "AVI (Audio Video Interleaved)",
     "flags": "E",
     "name": "avi",
@@ -2790,6 +2783,13 @@
     "description": "PCM 64-bit floating-point little-endian",
     "flags": "E",
     "name": "f64le",
+    "options": []
+  },
+  {
+    "__class__": "FFMpegMuxer",
+    "description": "fbdev           Linux framebuffer",
+    "flags": "E",
+    "name": "d",
     "options": []
   },
   {
@@ -7268,7 +7268,7 @@
         "__class__": "FFMpegAVOption",
         "choices": [],
         "default": "0",
-        "flags": "E.........P",
+        "flags": "E..........",
         "help": "Set preferred Ogg page size. (from 0 to 65025) (default 0)",
         "max": "65025",
         "min": "0",
@@ -7280,8 +7280,8 @@
         "__class__": "FFMpegAVOption",
         "choices": [],
         "default": "0",
-        "flags": "E.........P",
-        "help": "preferred page size in bytes (from 0 to 65025) (default 0)",
+        "flags": "E..........",
+        "help": "preferred page size in bytes (deprecated) (from 0 to 65025) (default 0)",
         "max": "65025",
         "min": "0",
         "name": "pagesize",
@@ -7324,7 +7324,7 @@
         "__class__": "FFMpegAVOption",
         "choices": [],
         "default": "0",
-        "flags": "E.........P",
+        "flags": "E..........",
         "help": "Set preferred Ogg page size. (from 0 to 65025) (default 0)",
         "max": "65025",
         "min": "0",
@@ -7336,8 +7336,8 @@
         "__class__": "FFMpegAVOption",
         "choices": [],
         "default": "0",
-        "flags": "E.........P",
-        "help": "preferred page size in bytes (from 0 to 65025) (default 0)",
+        "flags": "E..........",
+        "help": "preferred page size in bytes (deprecated) (from 0 to 65025) (default 0)",
         "max": "65025",
         "min": "0",
         "name": "pagesize",
@@ -7380,7 +7380,7 @@
         "__class__": "FFMpegAVOption",
         "choices": [],
         "default": "0",
-        "flags": "E.........P",
+        "flags": "E..........",
         "help": "Set preferred Ogg page size. (from 0 to 65025) (default 0)",
         "max": "65025",
         "min": "0",
@@ -7392,8 +7392,8 @@
         "__class__": "FFMpegAVOption",
         "choices": [],
         "default": "0",
-        "flags": "E.........P",
-        "help": "preferred page size in bytes (from 0 to 65025) (default 0)",
+        "flags": "E..........",
+        "help": "preferred page size in bytes (deprecated) (from 0 to 65025) (default 0)",
         "max": "65025",
         "min": "0",
         "name": "pagesize",
@@ -7443,7 +7443,7 @@
         "__class__": "FFMpegAVOption",
         "choices": [],
         "default": "0",
-        "flags": "E.........P",
+        "flags": "E..........",
         "help": "Set preferred Ogg page size. (from 0 to 65025) (default 0)",
         "max": "65025",
         "min": "0",
@@ -7455,8 +7455,8 @@
         "__class__": "FFMpegAVOption",
         "choices": [],
         "default": "0",
-        "flags": "E.........P",
-        "help": "preferred page size in bytes (from 0 to 65025) (default 0)",
+        "flags": "E..........",
+        "help": "preferred page size in bytes (deprecated) (from 0 to 65025) (default 0)",
         "max": "65025",
         "min": "0",
         "name": "pagesize",
@@ -7476,6 +7476,13 @@
         "type": "int64"
       }
     ]
+  },
+  {
+    "__class__": "FFMpegMuxer",
+    "description": "oss             OSS (Open Sound System) playback",
+    "flags": "E",
+    "name": "d",
+    "options": []
   },
   {
     "__class__": "FFMpegMuxer",
@@ -8111,12 +8118,12 @@
         "choices": [],
         "default": "0",
         "flags": "E..........",
-        "help": "Stream identifier (from 0 to UINT32_MAX) (default 0)",
-        "max": "UINT32_MAX",
-        "min": "0",
+        "help": "Stream identifier (from INT_MIN to INT_MAX) (default 0)",
+        "max": "INT_MAX",
+        "min": "INT_MIN",
         "name": "ssrc",
         "section": "RTP muxer AVOptions:",
-        "type": "unsigned"
+        "type": "int"
       },
       {
         "__class__": "FFMpegAVOption",
@@ -8320,14 +8327,14 @@
       {
         "__class__": "FFMpegAVOption",
         "choices": [],
-        "default": "false",
+        "default": "0",
         "flags": "ED.........",
-        "help": "Verify the peer certificate (default false)",
-        "max": null,
-        "min": null,
+        "help": "Verify the peer certificate (from 0 to 1) (default 0)",
+        "max": "1",
+        "min": "0",
         "name": "tls_verify",
         "section": "RTSP muxer AVOptions:",
-        "type": "boolean"
+        "type": "int"
       },
       {
         "__class__": "FFMpegAVOption",
@@ -8995,7 +9002,7 @@
         "__class__": "FFMpegAVOption",
         "choices": [],
         "default": "0",
-        "flags": "E.........P",
+        "flags": "E..........",
         "help": "Set preferred Ogg page size. (from 0 to 65025) (default 0)",
         "max": "65025",
         "min": "0",
@@ -9007,8 +9014,8 @@
         "__class__": "FFMpegAVOption",
         "choices": [],
         "default": "0",
-        "flags": "E.........P",
-        "help": "preferred page size in bytes (from 0 to 65025) (default 0)",
+        "flags": "E..........",
+        "help": "preferred page size in bytes (deprecated) (from 0 to 65025) (default 0)",
         "max": "65025",
         "min": "0",
         "name": "pagesize",
@@ -9262,6 +9269,13 @@
     "description": "PCM Archimedes VIDC",
     "flags": "E",
     "name": "vidc",
+    "options": []
+  },
+  {
+    "__class__": "FFMpegMuxer",
+    "description": "video4linux2,v4l2 Video4Linux2 output device",
+    "flags": "E",
+    "name": "d",
     "options": []
   },
   {
@@ -9811,50 +9825,6 @@
       {
         "__class__": "FFMpegAVOption",
         "choices": [],
-        "default": "-1",
-        "flags": "E..........",
-        "help": "The buffer size, in bytes, of underlying protocol (from -1 to INT_MAX) (default -1)",
-        "max": "INT_MAX",
-        "min": "-1",
-        "name": "ts_buffer_size",
-        "section": "WHIP muxer AVOptions:",
-        "type": "int"
-      },
-      {
-        "__class__": "FFMpegAVOption",
-        "choices": [
-          {
-            "__class__": "FFMpegOptionChoice",
-            "flags": "E..........",
-            "help": "Set dtls role as active",
-            "name": "dtls_active",
-            "value": "dtls_active"
-          }
-        ],
-        "default": "0",
-        "flags": "E..........",
-        "help": "Set flags affecting WHIP connection behavior (default 0)",
-        "max": null,
-        "min": null,
-        "name": "whip_flags",
-        "section": "WHIP muxer AVOptions:",
-        "type": "flags"
-      },
-      {
-        "__class__": "FFMpegAVOption",
-        "choices": [],
-        "default": "512",
-        "flags": "E..........",
-        "help": "The number of RTP history items to store (from 64 to 2048) (default 512)",
-        "max": "2048",
-        "min": "64",
-        "name": "rtp_history",
-        "section": "WHIP muxer AVOptions:",
-        "type": "int"
-      },
-      {
-        "__class__": "FFMpegAVOption",
-        "choices": [],
         "default": null,
         "flags": "E..........",
         "help": "The optional Bearer token for WHIP Authorization",
@@ -10090,20 +10060,7 @@
     "description": "CRI ADX",
     "flags": "D",
     "name": "adx",
-    "options": [
-      {
-        "__class__": "FFMpegAVOption",
-        "choices": [],
-        "default": "1024",
-        "flags": ".D.........",
-        "help": "(from 1 to INT_MAX) (default 1024)",
-        "max": "INT_MAX",
-        "min": "1",
-        "name": "raw_packet_size",
-        "section": "generic raw demuxer AVOptions:",
-        "type": "int"
-      }
-    ]
+    "options": []
   },
   {
     "__class__": "FFMpegDemuxer",
@@ -10174,6 +10131,13 @@
       {
         "__class__": "FFMpegAVOption",
         "choices": [
+          {
+            "__class__": "FFMpegOptionChoice",
+            "flags": ".D.........",
+            "help": "select glob/sequence pattern type",
+            "name": "glob_sequence",
+            "value": "0"
+          },
           {
             "__class__": "FFMpegOptionChoice",
             "flags": ".D.........",
@@ -10667,13 +10631,6 @@
   },
   {
     "__class__": "FFMpegDemuxer",
-    "description": "avfoundation    AVFoundation input device",
-    "flags": "D",
-    "name": "d",
-    "options": []
-  },
-  {
-    "__class__": "FFMpegDemuxer",
     "description": "AVI (Audio Video Interleaved)",
     "flags": "D",
     "name": "avi",
@@ -10867,12 +10824,12 @@
         "choices": [],
         "default": "yuv420p",
         "flags": ".D.........",
-        "help": "set pixel format (default yuv420p)",
+        "help": "set pixel format (default \"yuv420p\")",
         "max": null,
         "min": null,
         "name": "pixel_format",
         "section": "bitpacked demuxer AVOptions:",
-        "type": "pix_fmt"
+        "type": "string"
       },
       {
         "__class__": "FFMpegAVOption",
@@ -11011,6 +10968,13 @@
       {
         "__class__": "FFMpegAVOption",
         "choices": [
+          {
+            "__class__": "FFMpegOptionChoice",
+            "flags": ".D.........",
+            "help": "select glob/sequence pattern type",
+            "name": "glob_sequence",
+            "value": "0"
+          },
           {
             "__class__": "FFMpegOptionChoice",
             "flags": ".D.........",
@@ -12150,6 +12114,13 @@
   },
   {
     "__class__": "FFMpegDemuxer",
+    "description": "fbdev           Linux framebuffer",
+    "flags": "D",
+    "name": "d",
+    "options": []
+  },
+  {
+    "__class__": "FFMpegDemuxer",
     "description": "FFmpeg metadata in text",
     "flags": "D",
     "name": "ffmetadata",
@@ -13040,13 +13011,6 @@
   },
   {
     "__class__": "FFMpegDemuxer",
-    "description": "HXVF/HXVS IP camera format",
-    "flags": "D",
-    "name": "hxvs",
-    "options": []
-  },
-  {
-    "__class__": "FFMpegDemuxer",
     "description": "Raw Immersive Audio Model and Formats",
     "flags": "D",
     "name": "iamf",
@@ -13140,6 +13104,13 @@
       {
         "__class__": "FFMpegAVOption",
         "choices": [
+          {
+            "__class__": "FFMpegOptionChoice",
+            "flags": ".D.........",
+            "help": "select glob/sequence pattern type",
+            "name": "glob_sequence",
+            "value": "0"
+          },
           {
             "__class__": "FFMpegOptionChoice",
             "flags": ".D.........",
@@ -13741,77 +13712,16 @@
   },
   {
     "__class__": "FFMpegDemuxer",
-    "description": "piped jpegxs sequence",
-    "flags": "D",
-    "name": "jpegxs_pipe",
-    "options": [
-      {
-        "__class__": "FFMpegAVOption",
-        "choices": [],
-        "default": "0",
-        "flags": ".D.........",
-        "help": "force frame size in bytes (from 0 to INT_MAX) (default 0)",
-        "max": "INT_MAX",
-        "min": "0",
-        "name": "frame_size",
-        "section": "imagepipe demuxer AVOptions:",
-        "type": "int"
-      },
-      {
-        "__class__": "FFMpegAVOption",
-        "choices": [],
-        "default": "25",
-        "flags": ".D.........",
-        "help": "set the video framerate (default \"25\")",
-        "max": null,
-        "min": null,
-        "name": "framerate",
-        "section": "imagepipe demuxer AVOptions:",
-        "type": "video_rate"
-      },
-      {
-        "__class__": "FFMpegAVOption",
-        "choices": [],
-        "default": null,
-        "flags": ".D.........",
-        "help": "set video pixel format",
-        "max": null,
-        "min": null,
-        "name": "pixel_format",
-        "section": "imagepipe demuxer AVOptions:",
-        "type": "string"
-      },
-      {
-        "__class__": "FFMpegAVOption",
-        "choices": [],
-        "default": null,
-        "flags": ".D.........",
-        "help": "set video size",
-        "max": null,
-        "min": null,
-        "name": "video_size",
-        "section": "imagepipe demuxer AVOptions:",
-        "type": "image_size"
-      },
-      {
-        "__class__": "FFMpegAVOption",
-        "choices": [],
-        "default": "false",
-        "flags": ".D.........",
-        "help": "force loop over input file sequence (default false)",
-        "max": null,
-        "min": null,
-        "name": "loop",
-        "section": "imagepipe demuxer AVOptions:",
-        "type": "boolean"
-      }
-    ]
-  },
-  {
-    "__class__": "FFMpegDemuxer",
     "description": "Bitmap Brothers JV",
     "flags": "D",
     "name": "jv",
+    "options": []
+  },
+  {
+    "__class__": "FFMpegDemuxer",
+    "description": "kmsgrab         KMS screen capture",
+    "flags": "D",
+    "name": "d",
     "options": []
   },
   {
@@ -14619,6 +14529,13 @@
         "type": "int"
       }
     ]
+  },
+  {
+    "__class__": "FFMpegDemuxer",
+    "description": "oss             OSS (Open Sound System) capture",
+    "flags": "D",
+    "name": "d",
+    "options": []
   },
   {
     "__class__": "FFMpegDemuxer",
@@ -15726,26 +15643,14 @@
       {
         "__class__": "FFMpegAVOption",
         "choices": [],
-        "default": null,
-        "flags": ".D.........",
-        "help": "frame line size in bytes",
-        "max": null,
-        "min": null,
-        "name": "stride",
-        "section": "rawvideo demuxer AVOptions:",
-        "type": "int"
-      },
-      {
-        "__class__": "FFMpegAVOption",
-        "choices": [],
         "default": "yuv420p",
         "flags": ".D.........",
-        "help": "set pixel format (default yuv420p)",
+        "help": "set pixel format (default \"yuv420p\")",
         "max": null,
         "min": null,
         "name": "pixel_format",
         "section": "rawvideo demuxer AVOptions:",
-        "type": "pix_fmt"
+        "type": "string"
       },
       {
         "__class__": "FFMpegAVOption",
@@ -16183,9 +16088,9 @@
       {
         "__class__": "FFMpegAVOption",
         "choices": [],
-        "default": "Lavf62.12.100",
+        "default": "Lavf62.3.100",
         "flags": ".D.........",
-        "help": "override User-Agent header (default \"Lavf62.12.100\")",
+        "help": "override User-Agent header (default \"Lavf62.3.100\")",
         "max": null,
         "min": null,
         "name": "user_agent",
@@ -16207,14 +16112,14 @@
       {
         "__class__": "FFMpegAVOption",
         "choices": [],
-        "default": "false",
+        "default": "0",
         "flags": "ED.........",
-        "help": "Verify the peer certificate (default false)",
-        "max": null,
-        "min": null,
+        "help": "Verify the peer certificate (from 0 to 1) (default 0)",
+        "max": "1",
+        "min": "0",
         "name": "tls_verify",
         "section": "RTSP demuxer AVOptions:",
-        "type": "boolean"
+        "type": "int"
       },
       {
         "__class__": "FFMpegAVOption",
@@ -17776,6 +17681,13 @@
   },
   {
     "__class__": "FFMpegDemuxer",
+    "description": "video4linux2,v4l2 Video4Linux2 device grab",
+    "flags": "D",
+    "name": "d",
+    "options": []
+  },
+  {
+    "__class__": "FFMpegDemuxer",
     "description": "Vividas VIV",
     "flags": "D",
     "name": "vividas",
@@ -18150,6 +18062,13 @@
     "description": "Psion 3 audio",
     "flags": "D",
     "name": "wve",
+    "options": []
+  },
+  {
+    "__class__": "FFMpegDemuxer",
+    "description": "x11grab         X11 screen capture, using XCB",
+    "flags": "D",
+    "name": "d",
     "options": []
   },
   {
