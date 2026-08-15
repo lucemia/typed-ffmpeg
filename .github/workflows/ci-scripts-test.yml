@@ -8,10 +8,14 @@ on:
     branches: [main]
     paths:
       - 'src/scripts/**'
+      - 'pyproject.toml'
+      - 'uv.lock'
   pull_request:
     branches: [main]
     paths:
       - 'src/scripts/**'
+      - 'pyproject.toml'
+      - 'uv.lock'
 
 jobs:
   test:

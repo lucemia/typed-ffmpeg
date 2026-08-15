@@ -65,7 +65,13 @@ graph = ["graphviz"]
 
 [tool.uv]
 sources = { ffmpeg-core = { workspace = true }, ffmpeg-data-v5 = { workspace = true }, ffmpeg-data-v6 = { workspace = true }, ffmpeg-data-v7 = { workspace = true }, ffmpeg-data-v8 = { workspace = true } }
-dev-dependencies = [
+
+# PEP 735 dependency group. Must NOT be moved back to the legacy
+# `[tool.uv] dev-dependencies`: uv merges both into the same `dev` group, and
+# Dependabot writes bumps here, so having both makes the group contradict
+# itself (`ruff==0.16.2` and `ruff==0.12.2`) and every uv update job fails.
+[dependency-groups]
+dev = [
     # Development tools
     "ty",
     "devtools",
