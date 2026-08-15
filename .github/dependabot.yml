@@ -15,6 +15,13 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    ignore:
+      # packages/playground lints with typescript-eslint, whose 8.x peer range
+      # caps TypeScript at <6.1.0. Bumping TypeScript to 7.x here makes every
+      # `npm install` in the workspace fail with ERESOLVE. Drop this once
+      # typescript-eslint ships TypeScript 7 support.
+      - dependency-name: "typescript"
+        versions: [">=7"]
   - package-ecosystem: "npm"
     directory: "/packages/ts-core"
     schedule:
