@@ -207,7 +207,9 @@ out/
 # Vite
 .vite/
 output.mp4
-ffmpeg/
+# Root-level FFmpeg source checkout only — must stay anchored, otherwise it
+# also matches the generated bindings in packages/v*/src/ffmpeg/.
+/ffmpeg/
 .claude/settings.local.json
 .claude/memory/
 docs/_stubs/
