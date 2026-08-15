@@ -1747,14 +1747,14 @@ wheels = [
 
 [[package]]
 name = "pytest-datadir"
-version = "1.7.2"
+version = "1.8.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pytest" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/2f/16/7701db071caf7d8f7226b76323de40a09d2a391c7d064cda072d45a87c7b/pytest_datadir-1.7.2.tar.gz", hash = "sha256:15f5228a35d0a3205e4968e75d3b9cca91762424e1eafc21eb637d380a48443e", size = 11265, upload-time = "2025-06-06T11:24:18.075Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/b4/46/db060b291999ca048edd06d6fa9ee95945d088edc38b1172c59eeb46ec45/pytest_datadir-1.8.0.tar.gz", hash = "sha256:7a15faed76cebe87cc91941dd1920a9a38eba56a09c11e9ddf1434d28a0f78eb", size = 11848, upload-time = "2025-07-30T13:52:12.518Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d3/61/a06f3406852534e186413c75f544c90251db00fd8eb9625ee3ac239499f3/pytest_datadir-1.7.2-py3-none-any.whl", hash = "sha256:8392ba0e9eaf37030e663dcd91cc5123dec99c44300f0c5eac44f35f13f0e086", size = 6273, upload-time = "2025-06-06T11:24:16.388Z" },
+    { url = "https://files.pythonhosted.org/packages/8f/7a/33895863aec26ac3bb5068a73583f935680d6ab6af2a9567d409430c3ee1/pytest_datadir-1.8.0-py3-none-any.whl", hash = "sha256:5c677bc097d907ac71ca418109adc3abe34cf0bddfe6cf78aecfbabd96a15cf0", size = 6512, upload-time = "2025-07-30T13:52:11.525Z" },
 ]
 
 [[package]]
@@ -2578,7 +2578,7 @@ dev = [
     { name = "pymdown-extensions", specifier = ">=10.7" },
     { name = "pytest-asyncio", specifier = ">=0.23.0" },
     { name = "pytest-cov", specifier = ">=4.1,<7.0" },
-    { name = "pytest-datadir", specifier = ">=1.5.0" },
+    { name = "pytest-datadir", specifier = ">=1.8.0" },
     { name = "pytest-recording", specifier = ">=0.13.1" },
     { name = "ruff", specifier = "==0.12.2" },
     { name = "syrupy", specifier = ">=4.6.0" },
