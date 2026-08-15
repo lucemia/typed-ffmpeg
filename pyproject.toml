@@ -100,7 +100,9 @@ dev = [
     "markdown-callouts>=0.4.0",
     "mkdocs-material>=9.5.9",
     "mkdocstrings>=1.0.6,<1.1",
-    "mkdocstrings-python>=1.8.0",
+    # Capped: 2.x removed the `order` option mkdocs.yml uses, and the
+    # unbounded constraint let it in and broke the docs build.
+    "mkdocstrings-python>=1.8.0,<2.0",
     "pymdown-extensions>=10.7",
     "mkdocs-gen-files",
     "mkdocs-literate-nav",

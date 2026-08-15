@@ -2637,7 +2637,7 @@ dev = [
     { name = "mkdocs-material", specifier = ">=9.5.9" },
     { name = "mkdocs-section-index" },
     { name = "mkdocstrings", specifier = ">=1.0.6,<1.1" },
-    { name = "mkdocstrings-python", specifier = ">=1.8.0" },
+    { name = "mkdocstrings-python", specifier = ">=1.8.0,<2.0" },
     { name = "mknotebooks" },
     { name = "prek", specifier = ">=0.4.13" },
     { name = "pymdown-extensions", specifier = ">=10.7" },
