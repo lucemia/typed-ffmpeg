@@ -166,7 +166,14 @@ jobs:
           python -m venv .venv
           source .venv/bin/activate
           pip install -e packages/core
-          pip install -e packages/v8
+          # Follow whichever major packages/latest points at, rather than
+          # hardcoding one: with v8 pinned here the meta-package could be
+          # re-pointed and this job would still pass against the old bindings.
+          LATEST_MAJOR=$(grep -oE 'typed-ffmpeg-v[0-9]+' packages/latest/pyproject.toml | head -1 | sed 's/typed-ffmpeg-//')
+          echo "packages/latest points at ${LATEST_MAJOR}"
+          test -n "$LATEST_MAJOR" || { echo "::error::could not read latest's target major"; exit 1; }
+          echo "LATEST_MAJOR=$LATEST_MAJOR" >> "$GITHUB_ENV"
+          pip install -e "packages/${LATEST_MAJOR}"
           python -c "
           import ffmpeg
           inp = ffmpeg.input('test.mp4')
@@ -178,7 +185,7 @@ jobs:
         run: |
           source .venv/bin/activate
           # Latest is a pure meta-package (no source code). Install non-editable
-          # with --no-deps since v8 is already installed as editable.
+          # with --no-deps since the target bindings are already editable.
           pip install --no-deps packages/latest
           python -c "
           import ffmpeg
@@ -192,7 +199,13 @@ jobs:
           assert hasattr(ffmpeg, 'get_codecs'), 'missing ffmpeg.get_codecs'
           inp = ffmpeg.input('test.mp4')
           out = inp.hflip().output(filename='out.mp4')
-          print('✅ typed-ffmpeg meta-package OK')
+          # hasattr checks pass against any major, so assert the meta-package
+          # actually resolved to the one it declares.
+          import os
+          expected = os.environ['LATEST_MAJOR'].lstrip('v')
+          actual = ffmpeg.__version__.split('.')[0]
+          assert actual == expected, f'latest resolved to v{actual}, expected v{expected}'
+          print(f'✅ typed-ffmpeg meta-package OK (v{actual})')
           "
 
       - name: Test packages are buildable
