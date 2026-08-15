@@ -254,6 +254,20 @@ jobs:
             fi
           done
 
+      # Raw generator output is not formatted, but prek's hooks cover
+      # ^(src/|packages/), so committing it unformatted produces an enormous
+      # diff that is ~99% churn (40,848 differing lines in one file vs 228
+      # after ruff format) and gets rewritten by the next local prek run.
+      # Must run BEFORE change detection, so a formatting-only delta does not
+      # register as a real change.
+      - name: Format generated files
+        run: |
+          pip install uv
+          # Hooks rewrite files in place, so the first pass exits non-zero by
+          # design; the second pass verifies everything is clean.
+          uvx prek run --all-files || true
+          uvx prek run --all-files
+
       - name: Check for changes
         id: check-changes
         run: |
