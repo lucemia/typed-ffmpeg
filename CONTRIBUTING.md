@@ -404,10 +404,12 @@ pull before pushing again.
 
 Two consequences worth knowing:
 
-- The bot pushes with `GITHUB_TOKEN`, which deliberately does not re-trigger
-  workflows, so the PR's other checks still show results from the commit before
-  the generated one. The generate job verifies the new files import, and `main`
-  re-runs everything on merge.
+- **This needs a `CODEGEN_PAT` repository secret** (a PAT or GitHub App token
+  with `repo` scope). Pushes authenticated with the default `GITHUB_TOKEN`
+  deliberately do not start workflow runs, and check runs are bound to a commit
+  SHA — so without the PAT the bot's commit lands with *zero* checks and the PR
+  can never satisfy the required `CI Status` gate. The workflow falls back to
+  `GITHUB_TOKEN` and emits a warning if the secret is missing.
 - Fork PRs cannot be pushed to, so there the workflow fails with the diff and
   asks you to regenerate locally instead.
 
