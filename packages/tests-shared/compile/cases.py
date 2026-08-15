@@ -100,7 +100,8 @@ def global_args() -> Stream:
 def global_args_2() -> Stream:
     input1 = input("input1.mp4")
     graph = (
-        input1.video.output(filename="tmp.mp4")
+        input1.video
+        .output(filename="tmp.mp4")
         .global_args(loglevel="info")
         .global_args(loglevel="warning")
     )

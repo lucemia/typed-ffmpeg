@@ -67,7 +67,8 @@ def test_view_with_filter_chain() -> None:
         import graphviz  # type: ignore # noqa: F401
 
         output = (
-            ffmpeg.input("input.mp4")
+            ffmpeg
+            .input("input.mp4")
             .video.scale(w=1280, h=720)
             .fps(fps=30)
             .output(filename="output.mp4")

@@ -29,8 +29,6 @@ class Default(str):
 
     """
 
-    ...
-
 
 class Auto(Default):
     """
@@ -84,6 +82,6 @@ class FFMpegOptionGroup(dict[str, Any]):
 __all__ = [
     "Auto",
     "Default",
-    "StreamType",
     "FFMpegOptionGroup",
+    "StreamType",
 ]
