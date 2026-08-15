@@ -10,12 +10,16 @@ on:
       - 'src/scripts/**'
       - 'docs/**'
       - 'mkdocs.yml'
+      - 'pyproject.toml'
+      - 'uv.lock'
   pull_request:
     branches: [main]
     paths:
       - 'src/scripts/**'
       - 'docs/**'
       - 'mkdocs.yml'
+      - 'pyproject.toml'
+      - 'uv.lock'
 
 jobs:
   docs:

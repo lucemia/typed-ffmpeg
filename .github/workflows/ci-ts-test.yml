@@ -8,6 +8,8 @@ on:
     branches: [main]
     paths:
       - 'packages/ts-*/**'
+      - 'packages/playground/**'
+      - 'package.json'
       - 'src/scripts/code_gen/templates_ts/**'
       - 'src/scripts/code_gen/gen.py'
       - 'src/scripts/code_gen/cli.py'
@@ -16,6 +18,8 @@ on:
     branches: [main]
     paths:
       - 'packages/ts-*/**'
+      - 'packages/playground/**'
+      - 'package.json'
       - 'src/scripts/code_gen/templates_ts/**'
       - 'src/scripts/code_gen/gen.py'
       - 'src/scripts/code_gen/cli.py'
