@@ -99,7 +99,7 @@ dev = [
     "mkdocs",
     "markdown-callouts>=0.4.0",
     "mkdocs-material>=9.5.9",
-    "mkdocstrings>=0.24,<0.30",
+    "mkdocstrings>=1.0.6,<1.1",
     "mkdocstrings-python>=1.8.0",
     "pymdown-extensions>=10.7",
     "mkdocs-gen-files",
