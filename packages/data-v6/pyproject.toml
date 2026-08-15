@@ -1,6 +1,6 @@
 [project]
 name = "ffmpeg-data-v6"
-version = "4.3"
+version = "4.4"
 description = "Cache data files for typed-ffmpeg-v6 (FFmpeg 6.x)"
 authors = [
     {name = "lucemia", email = "lucemia@gmail.com"}
