@@ -38,7 +38,7 @@ on:
           - '8'
           - 'all'
       create_pr:
-        description: 'Create a PR with the generated bindings against v4'
+        description: 'Create a PR with the generated bindings against the current branch'
         required: false
         default: 'true'
         type: boolean
@@ -50,15 +50,23 @@ jobs:
       fail-fast: false
       matrix:
         ffmpeg-version: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.ffmpeg-version != 'all') && fromJSON(format('["{0}"]', github.event.inputs.ffmpeg-version)) || fromJSON('["5", "6", "7", "8"]') }}
+        # ffmpeg-mm is the major_minor suffix codegen writes into cache/list/
+        # (e.g. filters_8_0.json). It must match the image tag: globbing on the
+        # major alone matches sibling minors like *_8_1.json and mixes versions
+        # into one artifact.
         include:
           - ffmpeg-version: '5'
             ffmpeg-image: 'jrottenberg/ffmpeg:5.1-ubuntu'
+            ffmpeg-mm: '5_1'
           - ffmpeg-version: '6'
             ffmpeg-image: 'jrottenberg/ffmpeg:6.1-ubuntu'
+            ffmpeg-mm: '6_1'
           - ffmpeg-version: '7'
             ffmpeg-image: 'ghcr.io/lucemia/typed-ffmpeg/ffmpeg:7.1'
+            ffmpeg-mm: '7_1'
           - ffmpeg-version: '8'
             ffmpeg-image: 'ghcr.io/lucemia/typed-ffmpeg/ffmpeg:8.0'
+            ffmpeg-mm: '8_0'
 
     steps:
       - uses: actions/checkout@v7
@@ -134,7 +142,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: ffmpeg-v${{ matrix.ffmpeg-version }}-cache
-          path: packages/core/src/ffmpeg_core/common/cache/list/*_${{ matrix.ffmpeg-version }}_*.json
+          path: packages/core/src/ffmpeg_core/common/cache/list/*_${{ matrix.ffmpeg-mm }}.json
           retention-days: 30
 
       - name: Verify generated code imports
@@ -160,19 +168,44 @@ jobs:
           find packages/v${FFMPEG_MAJOR}/src/ffmpeg/ -name '*.py' -exec wc -l {} + 2>/dev/null | tail -1 >> $GITHUB_STEP_SUMMARY || true
           echo '```' >> $GITHUB_STEP_SUMMARY
 
-  create-pr:
+  # Generated output is applied where the change is, not afterwards. On a PR it
+  # is committed straight to the PR branch so templates and their output merge
+  # atomically; main never holds generator code without matching bindings.
+  # Pushes and manual dispatches still open a PR, since there is no branch to
+  # commit back to.
+  apply:
+    name: Apply generated output
     needs: generate
     if: >-
-      (github.event_name == 'workflow_dispatch' && github.event.inputs.create_pr == 'true') ||
-      github.event_name == 'push'
+      github.event_name == 'pull_request' ||
+      github.event_name == 'push' ||
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.create_pr == 'true')
     runs-on: ubuntu-latest
     permissions:
       contents: write
       pull-requests: write
+    env:
+      # Fork PRs cannot be pushed to with GITHUB_TOKEN.
+      IS_FORK: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository }}
     steps:
-      - uses: actions/checkout@v7
+      - name: Checkout PR branch
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        uses: actions/checkout@v7
         with:
-          ref: ${{ github.ref_name }}
+          ref: ${{ github.head_ref }}
+          # CODEGEN_PAT (a PAT or GitHub App token with `repo` scope) is what
+          # makes the bot's commit re-trigger CI. Pushes authenticated with
+          # GITHUB_TOKEN deliberately do not start workflow runs, and because
+          # check runs are bound to a commit SHA, the new head would carry zero
+          # checks — leaving the PR permanently short of the required
+          # `CI Status` gate. Falls back to GITHUB_TOKEN with a warning.
+          token: ${{ secrets.CODEGEN_PAT || secrets.GITHUB_TOKEN }}
+
+      - name: Checkout (fork PR / push / dispatch)
+        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.repository
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event_name == 'pull_request' && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.ref_name }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Download all generated bindings
@@ -201,14 +234,49 @@ jobs:
               echo "Applying v${ver} cache..."
               mkdir -p "packages/core/src/ffmpeg_core/common/cache/list"
               cp "$cache_dir"/*.json "packages/core/src/ffmpeg_core/common/cache/list/" 2>/dev/null || true
+
+              # packages/core/.../cache/list is NOT shipped (include-package-data
+              # = false), so installed users read this data from the published
+              # ffmpeg-data-vN package instead. Mirror it there or the release
+              # silently keeps whatever was committed by hand.
+              # Suffixed name -> shipped name: filters_8_0.json -> filters.json
+              mm=$(basename "$(ls "$cache_dir"/filters_*.json 2>/dev/null | head -1)" .json | sed 's/^filters_//')
+              data_dir="packages/data-v${ver}/src/ffmpeg_data_v${ver}/cache/list"
+              if [ -n "$mm" ] && [ -d "$data_dir" ]; then
+                echo "  mirroring v${ver} cache (${mm}) -> ${data_dir}"
+                for src in "$cache_dir"/*_"${mm}".json; do
+                  [ -e "$src" ] || continue
+                  cp "$src" "${data_dir}/$(basename "$src" | sed "s/_${mm}\.json\$/.json/")"
+                done
+              else
+                echo "  WARNING: no cache mirror for v${ver} (mm='${mm}', dir='${data_dir}')"
+              fi
             fi
           done
+
+      # Raw generator output is not formatted, but prek's hooks cover
+      # ^(src/|packages/), so committing it unformatted produces an enormous
+      # diff that is ~99% churn (40,848 differing lines in one file vs 228
+      # after ruff format) and gets rewritten by the next local prek run.
+      # Must run BEFORE change detection, so a formatting-only delta does not
+      # register as a real change.
+      - name: Format generated files
+        run: |
+          pip install uv
+          # Hooks rewrite files in place, so the first pass exits non-zero by
+          # design; the second pass verifies everything is clean.
+          uvx prek run --all-files || true
+          uvx prek run --all-files
 
       - name: Check for changes
         id: check-changes
         run: |
-          git diff --stat
-          if git diff --quiet; then
+          # Stage first: `git diff` alone only sees tracked files, so a newly
+          # generated module (a new filter, a new format) would be reported as
+          # "no changes" and silently dropped.
+          git add -A
+          git diff --cached --stat
+          if git diff --cached --quiet; then
             echo "has_changes=false" >> $GITHUB_OUTPUT
             echo "No changes detected — bindings are already up to date."
           else
@@ -216,8 +284,48 @@ jobs:
             echo "Changes detected."
           fi
 
+      # PR, same repo: commit the output onto the PR branch so it merges as one
+      # change.
+      - name: Commit generated output to PR branch
+        if: >-
+          steps.check-changes.outputs.has_changes == 'true' &&
+          github.event_name == 'pull_request' && env.IS_FORK == 'false'
+        run: |
+          if [ -z "${{ secrets.CODEGEN_PAT }}" ]; then
+            echo "::warning::CODEGEN_PAT is not set, so this commit is pushed with"
+            echo "::warning::GITHUB_TOKEN and will NOT re-trigger CI. Check runs are"
+            echo "::warning::bound to a commit SHA, so the new head will report zero"
+            echo "::warning::checks and cannot satisfy the required CI Status gate."
+            echo "::warning::Add a CODEGEN_PAT secret (repo scope) to fix this."
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "chore: regenerate FFmpeg bindings
+
+          Applied automatically by the CI CodeGen workflow so the generator
+          change and its output land in a single merge."
+          git push origin "HEAD:${{ github.head_ref }}"
+
+      # Fork PR: we cannot push to the contributor's branch, so make the
+      # staleness loud instead of silently dropping the output.
+      - name: Report stale generated output (fork PR)
+        if: >-
+          steps.check-changes.outputs.has_changes == 'true' &&
+          github.event_name == 'pull_request' && env.IS_FORK == 'true'
+        run: |
+          echo "::error::Generated output is out of date for this change."
+          echo "This PR is from a fork, so CI cannot commit the regenerated"
+          echo "bindings for you. Regenerate locally and include them:"
+          echo "  python -m scripts.code_gen.cli generate \\"
+          echo "    --outpath packages/vN/src/ffmpeg --ffmpeg-binary \$(which ffmpeg) --rebuild"
+          git diff --stat
+          exit 1
+
       - name: Create PR with updated bindings
-        if: steps.check-changes.outputs.has_changes == 'true'
+        if: >-
+          steps.check-changes.outputs.has_changes == 'true' &&
+          github.event_name != 'pull_request'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"

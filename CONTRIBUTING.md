@@ -391,13 +391,55 @@ You can also trigger the publish workflow manually from the Actions tab:
 - **`package`**: select specific packages (e.g. `core`, `v8`) or `all`
 - **`test-pypi`**: publish to TestPyPI first for validation (recommended for major releases)
 
+#### How Codegen Reaches main
+
+Codegen lives in a single workflow, `ci-codegen-versions.yml`.
+
+When a PR changes the generator (templates, parsers, or
+`ffmpeg_core/common/**`), the workflow regenerates the bindings and **commits
+them onto the PR branch**. The generator change and its output therefore merge
+as one commit, and `main` never holds generator code without matching bindings.
+Expect a `chore: regenerate FFmpeg bindings` commit to appear on your branch —
+pull before pushing again.
+
+Two consequences worth knowing:
+
+- **This needs a `CODEGEN_PAT` repository secret** (a PAT or GitHub App token
+  with `repo` scope). Pushes authenticated with the default `GITHUB_TOKEN`
+  deliberately do not start workflow runs, and check runs are bound to a commit
+  SHA — so without the PAT the bot's commit lands with *zero* checks and the PR
+  can never satisfy the required `CI Status` gate. The workflow falls back to
+  `GITHUB_TOKEN` and emits a warning if the secret is missing.
+- Fork PRs cannot be pushed to, so there the workflow fails with the diff and
+  asks you to regenerate locally instead.
+
+Pushes to `main` and manual dispatches still open a PR, since there is no branch
+to commit back to.
+
 #### Adding a New FFmpeg Version (e.g. v9)
 
-1. Add a Docker image entry to `codegen-regenerate.yml`
-2. Run codegen to generate `packages/v9` and `packages/data-v9`
-3. Add the new packages to `scripts/bump-version.py` and the publish workflow
-4. Update the `typed-ffmpeg` meta-package dependency to point to the new version
-5. Bump version and release all packages
+Adding a version means extending the matrix — there is no second workflow to
+keep in sync.
+
+1. Make sure an FFmpeg image for the version exists. `jrottenberg/ffmpeg` only
+   publishes up to 8.0, so newer majors need a build here: add
+   `docker/ffmpeg-builder/Dockerfile.<X.Y>` and a matrix entry in
+   `build-ffmpeg-images.yml`, then dispatch it to publish
+   `ghcr.io/lucemia/typed-ffmpeg/ffmpeg:<X.Y>`.
+2. Create the `packages/v9` and `packages/data-v9` package skeletons, and add
+   them to the workspace lists in `pyproject.toml` / `pyproject-workspace.toml`.
+   `packages/data-v9/src/ffmpeg_data_v9/cache/list/` must exist, or the cache
+   mirror step skips it with a warning.
+3. Add a matrix entry to `ci-codegen-versions.yml` with `ffmpeg-version`,
+   `ffmpeg-image`, and `ffmpeg-mm`. `ffmpeg-mm` is the `major_minor` suffix
+   codegen writes (e.g. `9_0` for `filters_9_0.json`) and must match the image
+   tag — globbing on the major alone also matches sibling minors.
+4. Dispatch the workflow to generate the bindings and open a PR. Merge it —
+   generated bindings only reach users once that PR lands.
+5. Add the new packages to `scripts/bump-version.py`, `scripts/gen_ref_pages.py`,
+   the publish workflow, and the `ci-monorepo-test` / `ci-ts-test` matrices.
+6. Update the `typed-ffmpeg` meta-package dependency to point to the new version.
+7. Bump version and release all packages.
 
 ## Getting Help
 

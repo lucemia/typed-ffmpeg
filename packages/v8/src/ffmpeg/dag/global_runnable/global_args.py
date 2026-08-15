@@ -96,6 +96,7 @@ class GlobalArgs(ABC):
         vstats: Func = None,
         vstats_file: Func = None,
         vstats_version: Int = None,
+        vaapi_device: Func = None,
         init_hw_device: Func = None,
         filter_hw_device: Func = None,
         adrift_threshold: Func = None,
@@ -151,6 +152,7 @@ class GlobalArgs(ABC):
             vstats: dump video coding statistics to file
             vstats_file: dump video coding statistics to file
             vstats_version: Version of the vstats format to use.
+            vaapi_device: set VAAPI hardware device (DirectX adapter index, DRM path or X11 display name)
             init_hw_device: initialise hardware device
             filter_hw_device: set hardware device used when filtering
             adrift_threshold: deprecated, does nothing
@@ -209,6 +211,7 @@ class GlobalArgs(ABC):
                     "vstats": vstats,
                     "vstats_file": vstats_file,
                     "vstats_version": vstats_version,
+                    "vaapi_device": vaapi_device,
                     "init_hw_device": init_hw_device,
                     "filter_hw_device": filter_hw_device,
                     "adrift_threshold": adrift_threshold,

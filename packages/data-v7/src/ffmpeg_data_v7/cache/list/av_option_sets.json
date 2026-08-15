@@ -5829,6 +5829,79 @@
   },
   {
     "__class__": "FFMpegAVOption",
+    "choices": [
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "E..V.......",
+        "help": "Hap 1 (DXT1 textures)",
+        "name": "hap",
+        "value": "11"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "E..V.......",
+        "help": "Hap Alpha (DXT5 textures)",
+        "name": "hap_alpha",
+        "value": "14"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "E..V.......",
+        "help": "Hap Q (DXT5-YCoCg textures)",
+        "name": "hap_q",
+        "value": "15"
+      }
+    ],
+    "default": "hap",
+    "flags": "E..V.......",
+    "help": "(from 11 to 15) (default hap)",
+    "max": "15",
+    "min": "11",
+    "name": "format",
+    "section": "Hap encoder AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "1",
+    "flags": "E..V.......",
+    "help": "chunk count (from 1 to 64) (default 1)",
+    "max": "64",
+    "min": "1",
+    "name": "chunks",
+    "section": "Hap encoder AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "E..V.......",
+        "help": "None",
+        "name": "none",
+        "value": "160"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "E..V.......",
+        "help": "Snappy",
+        "name": "snappy",
+        "value": "176"
+      }
+    ],
+    "default": "snappy",
+    "flags": "E..V.......",
+    "help": "second-stage compressor (from 160 to 176) (default snappy)",
+    "max": "176",
+    "min": "160",
+    "name": "compressor",
+    "section": "Hap encoder AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
     "choices": [],
     "default": "false",
     "flags": "E..V.......",
@@ -11203,6 +11276,315 @@
   },
   {
     "__class__": "FFMpegAVOption",
+    "choices": [
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "E...A......",
+        "help": "3200",
+        "name": "3200",
+        "value": "0"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "E...A......",
+        "help": "2400",
+        "name": "2400",
+        "value": "1"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "E...A......",
+        "help": "1600",
+        "name": "1600",
+        "value": "2"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "E...A......",
+        "help": "1400",
+        "name": "1400",
+        "value": "3"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "E...A......",
+        "help": "1300",
+        "name": "1300",
+        "value": "4"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "E...A......",
+        "help": "1200",
+        "name": "1200",
+        "value": "5"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "E...A......",
+        "help": "700",
+        "name": "700",
+        "value": "6"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "E...A......",
+        "help": "700B",
+        "name": "700B",
+        "value": "7"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "E...A......",
+        "help": "700C",
+        "name": "700C",
+        "value": "8"
+      }
+    ],
+    "default": "1300",
+    "flags": "E...A......",
+    "help": "codec2 mode (from 0 to 8) (default 1300)",
+    "max": "8",
+    "min": "0",
+    "name": "mode",
+    "section": "libcodec2 encoder AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "1",
+    "flags": "E...A......",
+    "help": "Afterburner (improved quality) (from 0 to 1) (default 1)",
+    "max": "1",
+    "min": "0",
+    "name": "afterburner",
+    "section": "libfdk_aac AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "0",
+    "flags": "E...A......",
+    "help": "Enable SBR for ELD (for SBR in other configurations, use the -profile parameter) (from 0 to 1) (default 0)",
+    "max": "1",
+    "min": "0",
+    "name": "eld_sbr",
+    "section": "libfdk_aac AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "0",
+    "flags": "E...A......",
+    "help": "Enable ELDv2 (LD-MPS extension for ELD stereo signals) (from 0 to 1) (default 0)",
+    "max": "1",
+    "min": "0",
+    "name": "eld_v2",
+    "section": "libfdk_aac AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "E...A......",
+        "help": "Choose signaling implicitly (explicit hierarchical by default, implicit if global header is disabled)",
+        "name": "default",
+        "value": "-1"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "E...A......",
+        "help": "Implicit backwards compatible signaling",
+        "name": "implicit",
+        "value": "0"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "E...A......",
+        "help": "Explicit SBR, implicit PS signaling",
+        "name": "explicit_sbr",
+        "value": "1"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "E...A......",
+        "help": "Explicit hierarchical signaling",
+        "name": "explicit_hierarchical",
+        "value": "2"
+      }
+    ],
+    "default": "default",
+    "flags": "E...A......",
+    "help": "SBR/PS signaling style (from -1 to 2) (default default)",
+    "max": "2",
+    "min": "-1",
+    "name": "signaling",
+    "section": "libfdk_aac AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "0",
+    "flags": "E...A......",
+    "help": "Output LATM/LOAS encapsulated data (from 0 to 1) (default 0)",
+    "max": "1",
+    "min": "0",
+    "name": "latm",
+    "section": "libfdk_aac AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "0",
+    "flags": "E...A......",
+    "help": "StreamMuxConfig and PCE repetition period (in frames) (from 0 to 65535) (default 0)",
+    "max": "65535",
+    "min": "0",
+    "name": "header_period",
+    "section": "libfdk_aac AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "0",
+    "flags": "E...A......",
+    "help": "VBR mode (1-5) (from 0 to 5) (default 0)",
+    "max": "5",
+    "min": "0",
+    "name": "vbr",
+    "section": "libfdk_aac AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "0",
+    "flags": "E...A......",
+    "help": "The desired compression profile for AAC DRC (from 0 to 256) (default 0)",
+    "max": "256",
+    "min": "0",
+    "name": "drc_profile",
+    "section": "libfdk_aac AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "0",
+    "flags": "E...A......",
+    "help": "Expected target reference level at decoder side in dB (for clipping prevention/limiter) (from -31.75 to 0) (default 0)",
+    "max": "0",
+    "min": "-31.75",
+    "name": "drc_target_ref",
+    "section": "libfdk_aac AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "0",
+    "flags": "E...A......",
+    "help": "The desired compression profile for AAC DRC (from 0 to 256) (default 0)",
+    "max": "256",
+    "min": "0",
+    "name": "comp_profile",
+    "section": "libfdk_aac AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "0",
+    "flags": "E...A......",
+    "help": "Expected target reference level at decoder side in dB (for clipping prevention/limiter) (from -31.75 to 0) (default 0)",
+    "max": "0",
+    "min": "-31.75",
+    "name": "comp_target_ref",
+    "section": "libfdk_aac AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "0",
+    "flags": "E...A......",
+    "help": "The program reference level or dialog level in dB (from -31.75 to 0) (default 0)",
+    "max": "0",
+    "min": "-31.75",
+    "name": "prog_ref",
+    "section": "libfdk_aac AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "-1",
+    "flags": "E...A......",
+    "help": "The desired frame length (from -1 to 1024) (default -1)",
+    "max": "1024",
+    "min": "-1",
+    "name": "frame_length",
+    "section": "libfdk_aac AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "7",
+    "flags": "E..V.......",
+    "help": "Encoding effort (from 1 to 9) (default 7)",
+    "max": "9",
+    "min": "1",
+    "name": "effort",
+    "section": "libjxl AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "-1",
+    "flags": "E..V.......",
+    "help": "Maximum Butteraugli distance (quality setting, lower = better, zero = lossless, default 1.0) (from -1 to 15) (default -1)",
+    "max": "15",
+    "min": "-1",
+    "name": "distance",
+    "section": "libjxl AVOptions:",
+    "type": "float"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "0",
+    "flags": "E..V.......",
+    "help": "Force modular mode (from 0 to 1) (default 0)",
+    "max": "1",
+    "min": "0",
+    "name": "modular",
+    "section": "libjxl AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "1",
+    "flags": "E..V.......",
+    "help": "Use XYB-encoding for lossy images (from 0 to 1) (default 1)",
+    "max": "1",
+    "min": "0",
+    "name": "xyb",
+    "section": "libjxl AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
     "choices": [],
     "default": "true",
     "flags": "E...A......",
@@ -11598,6 +11980,258 @@
     "name": "apply_phase_inv",
     "section": "libopus AVOptions:",
     "type": "boolean"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "-1",
+    "flags": "E..V.......",
+    "help": "use constant quantizer mode (from -1 to 255) (default -1)",
+    "max": "255",
+    "min": "-1",
+    "name": "qp",
+    "section": "librav1e AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "-1",
+    "flags": "E..V.......",
+    "help": "what speed preset to use (from -1 to 10) (default -1)",
+    "max": "10",
+    "min": "-1",
+    "name": "speed",
+    "section": "librav1e AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "0",
+    "flags": "E..V.......",
+    "help": "number of tiles encode with (from -1 to I64_MAX) (default 0)",
+    "max": "I64_MAX",
+    "min": "-1",
+    "name": "tiles",
+    "section": "librav1e AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "0",
+    "flags": "E..V.......",
+    "help": "number of tiles rows to encode with (from -1 to I64_MAX) (default 0)",
+    "max": "I64_MAX",
+    "min": "-1",
+    "name": "tile-rows",
+    "section": "librav1e AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "0",
+    "flags": "E..V.......",
+    "help": "number of tiles columns to encode with (from -1 to I64_MAX) (default 0)",
+    "max": "I64_MAX",
+    "min": "-1",
+    "name": "tile-columns",
+    "section": "librav1e AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": null,
+    "flags": "E..V.......",
+    "help": "set the rav1e configuration using a :-separated list of key=value parameters",
+    "max": null,
+    "min": null,
+    "name": "rav1e-params",
+    "section": "librav1e AVOptions:",
+    "type": "dictionary"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "0",
+    "flags": "E...A......",
+    "help": "Use average bit rate (from 0 to 1) (default 0)",
+    "max": "1",
+    "min": "0",
+    "name": "abr",
+    "section": "libspeex AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "8",
+    "flags": "E...A......",
+    "help": "Set quality value (0 to 10) for CBR (from 0 to 10) (default 8)",
+    "max": "10",
+    "min": "0",
+    "name": "cbr_quality",
+    "section": "libspeex AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "1",
+    "flags": "E...A......",
+    "help": "Number of frames to encode in each packet (from 1 to 8) (default 1)",
+    "max": "8",
+    "min": "1",
+    "name": "frames_per_packet",
+    "section": "libspeex AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "0",
+    "flags": "E...A......",
+    "help": "Voice Activity Detection (from 0 to 1) (default 0)",
+    "max": "1",
+    "min": "0",
+    "name": "vad",
+    "section": "libspeex AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "0",
+    "flags": "E...A......",
+    "help": "Discontinuous Transmission (from 0 to 1) (default 0)",
+    "max": "1",
+    "min": "0",
+    "name": "dtx",
+    "section": "libspeex AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "E...A......",
+        "help": "",
+        "name": "auto",
+        "value": "-1"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "E...A......",
+        "help": "",
+        "name": "stereo",
+        "value": "0"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "E...A......",
+        "help": "",
+        "name": "joint_stereo",
+        "value": "1"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "E...A......",
+        "help": "",
+        "name": "dual_channel",
+        "value": "2"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "E...A......",
+        "help": "",
+        "name": "mono",
+        "value": "3"
+      }
+    ],
+    "default": "auto",
+    "flags": "E...A......",
+    "help": "Mpeg Mode (from -1 to 3) (default auto)",
+    "max": "3",
+    "min": "-1",
+    "name": "mode",
+    "section": "libtwolame encoder AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "3",
+    "flags": "E...A......",
+    "help": "Psychoacoustic Model (from -1 to 4) (default 3)",
+    "max": "4",
+    "min": "-1",
+    "name": "psymodel",
+    "section": "libtwolame encoder AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "0",
+    "flags": "E...A......",
+    "help": "enable energy levels (from 0 to 1) (default 0)",
+    "max": "1",
+    "min": "0",
+    "name": "energy_levels",
+    "section": "libtwolame encoder AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "0",
+    "flags": "E...A......",
+    "help": "enable CRC error protection (from 0 to 1) (default 0)",
+    "max": "1",
+    "min": "0",
+    "name": "error_protection",
+    "section": "libtwolame encoder AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "0",
+    "flags": "E...A......",
+    "help": "set MPEG Audio Copyright flag (from 0 to 1) (default 0)",
+    "max": "1",
+    "min": "0",
+    "name": "copyright",
+    "section": "libtwolame encoder AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "0",
+    "flags": "E...A......",
+    "help": "set MPEG Audio Original flag (from 0 to 1) (default 0)",
+    "max": "1",
+    "min": "0",
+    "name": "original",
+    "section": "libtwolame encoder AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "0",
+    "flags": "E...A......",
+    "help": "set library optput level (0-10) (from 0 to 10) (default 0)",
+    "max": "10",
+    "min": "0",
+    "name": "verbosity",
+    "section": "libtwolame encoder AVOptions:",
+    "type": "int"
   },
   {
     "__class__": "FFMpegAVOption",
@@ -21940,6 +22574,136 @@
   },
   {
     "__class__": "FFMpegAVOption",
+    "choices": [
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": ".D..A......",
+        "help": "Spectral muting",
+        "name": "spectral",
+        "value": "0"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": ".D..A......",
+        "help": "Noise Substitution",
+        "name": "noise",
+        "value": "1"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": ".D..A......",
+        "help": "Energy Interpolation",
+        "name": "energy",
+        "value": "2"
+      }
+    ],
+    "default": "noise",
+    "flags": ".D..A......",
+    "help": "Error concealment method (from 0 to 2) (default noise)",
+    "max": "2",
+    "min": "0",
+    "name": "conceal",
+    "section": "libfdk-aac decoder AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "-1",
+    "flags": ".D..A......",
+    "help": "Dynamic Range Control: boost, where [0] is none and [127] is max boost (from -1 to 127) (default -1)",
+    "max": "127",
+    "min": "-1",
+    "name": "drc_boost",
+    "section": "libfdk-aac decoder AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "-1",
+    "flags": ".D..A......",
+    "help": "Dynamic Range Control: attenuation factor, where [0] is none and [127] is max compression (from -1 to 127) (default -1)",
+    "max": "127",
+    "min": "-1",
+    "name": "drc_cut",
+    "section": "libfdk-aac decoder AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "-1",
+    "flags": ".D..A......",
+    "help": "Dynamic Range Control: reference level, quantized to 0.25dB steps where [0] is 0dB and [127] is -31.75dB, -1 for auto, and -2 for disabled (from -2 to 127) (default -1)",
+    "max": "127",
+    "min": "-2",
+    "name": "drc_level",
+    "section": "libfdk-aac decoder AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "-1",
+    "flags": ".D..A......",
+    "help": "Dynamic Range Control: heavy compression, where [1] is on (RF mode) and [0] is off (from -1 to 1) (default -1)",
+    "max": "1",
+    "min": "-1",
+    "name": "drc_heavy",
+    "section": "libfdk-aac decoder AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "auto",
+    "flags": ".D..A......",
+    "help": "Signal level limiting (default auto)",
+    "max": null,
+    "min": null,
+    "name": "level_limit",
+    "section": "libfdk-aac decoder AVOptions:",
+    "type": "boolean"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "-1",
+    "flags": ".D..A......",
+    "help": "Dynamic Range Control: effect type, where e.g. [0] is none and [6] is general (from -1 to 8) (default -1)",
+    "max": "8",
+    "min": "-1",
+    "name": "drc_effect",
+    "section": "libfdk-aac decoder AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "-1",
+    "flags": ".D..A......",
+    "help": "Dynamic Range Control: album mode, where [0] is off and [1] is on (from -1 to 1) (default -1)",
+    "max": "1",
+    "min": "-1",
+    "name": "album_mode",
+    "section": "libfdk-aac decoder AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": null,
+    "flags": ".D..A......",
+    "help": "Request a specific channel layout from the decoder",
+    "max": null,
+    "min": null,
+    "name": "downmix",
+    "section": "libfdk-aac decoder AVOptions:",
+    "type": "channel_layout"
+  },
+  {
+    "__class__": "FFMpegAVOption",
     "choices": [],
     "default": "true",
     "flags": ".D..A......",
@@ -21948,6 +22712,42 @@
     "min": null,
     "name": "apply_phase_inv",
     "section": "libopusdec AVOptions:",
+    "type": "boolean"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "0",
+    "flags": ".D.V.......",
+    "help": "Width to render to (0 for default) (from 0 to INT_MAX) (default 0)",
+    "max": "INT_MAX",
+    "min": "0",
+    "name": "width",
+    "section": "Librsvg AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "0",
+    "flags": ".D.V.......",
+    "help": "Height to render to (0 for default) (from 0 to INT_MAX) (default 0)",
+    "max": "INT_MAX",
+    "min": "0",
+    "name": "height",
+    "section": "Librsvg AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "true",
+    "flags": ".D.V.......",
+    "help": "Keep aspect ratio with custom width/height (default true)",
+    "max": null,
+    "min": null,
+    "name": "keep_ar",
+    "section": "Librsvg AVOptions:",
     "type": "boolean"
   },
   {
@@ -23740,6 +24540,42 @@
     "name": "rw_timeout",
     "section": "URLContext AVOptions:",
     "type": "int64"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "-1",
+    "flags": ".D.........",
+    "help": "(from -1 to 99999) (default -1)",
+    "max": "99999",
+    "min": "-1",
+    "name": "playlist",
+    "section": "bluray AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "0",
+    "flags": ".D.........",
+    "help": "(from 0 to 254) (default 0)",
+    "max": "254",
+    "min": "0",
+    "name": "angle",
+    "section": "bluray AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "1",
+    "flags": ".D.........",
+    "help": "(from 1 to 65534) (default 1)",
+    "max": "65534",
+    "min": "1",
+    "name": "chapter",
+    "section": "bluray AVOptions:",
+    "type": "int"
   },
   {
     "__class__": "FFMpegAVOption",
@@ -52193,6 +53029,42 @@
   {
     "__class__": "FFMpegAVOption",
     "choices": [],
+    "default": "0.1",
+    "flags": "..FV.......",
+    "help": "set spatial sigma (from 0.1 to 512) (default 0.1)",
+    "max": "512",
+    "min": "0.1",
+    "name": "sigmaS",
+    "section": "cudabilateral AVOptions:",
+    "type": "float"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "0.1",
+    "flags": "..FV.......",
+    "help": "set range sigma (from 0.1 to 512) (default 0.1)",
+    "max": "512",
+    "min": "0.1",
+    "name": "sigmaR",
+    "section": "cudabilateral AVOptions:",
+    "type": "float"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "1",
+    "flags": "..FV.......",
+    "help": "set neighbours window_size (from 1 to 255) (default 1)",
+    "max": "255",
+    "min": "1",
+    "name": "window_size",
+    "section": "cudabilateral AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
     "default": "1",
     "flags": "..FV.......",
     "help": "set bit plane to use for measuring noise (from 1 to 16) (default 1)",
@@ -54649,6 +55521,108 @@
     "max": "3",
     "min": "0",
     "name": "mode",
+    "section": "bwdif_cuda AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "..FV.......",
+        "help": "assume top field first",
+        "name": "tff",
+        "value": "0"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "..FV.......",
+        "help": "assume bottom field first",
+        "name": "bff",
+        "value": "1"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "..FV.......",
+        "help": "auto detect parity",
+        "name": "auto",
+        "value": "-1"
+      }
+    ],
+    "default": "auto",
+    "flags": "..FV.......",
+    "help": "specify the assumed picture field parity (from -1 to 1) (default auto)",
+    "max": "1",
+    "min": "-1",
+    "name": "parity",
+    "section": "bwdif_cuda AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "..FV.......",
+        "help": "deinterlace all frames",
+        "name": "all",
+        "value": "0"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "..FV.......",
+        "help": "only deinterlace frames marked as interlaced",
+        "name": "interlaced",
+        "value": "1"
+      }
+    ],
+    "default": "all",
+    "flags": "..FV.......",
+    "help": "specify which frames to deinterlace (from 0 to 1) (default all)",
+    "max": "1",
+    "min": "0",
+    "name": "deint",
+    "section": "bwdif_cuda AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "..FV.......",
+        "help": "send one frame for each frame",
+        "name": "send_frame",
+        "value": "0"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "..FV.......",
+        "help": "send one frame for each field",
+        "name": "send_field",
+        "value": "1"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "..FV.......",
+        "help": "send one frame for each frame, but skip spatial interlacing check",
+        "name": "send_frame_nospatial",
+        "value": "2"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "..FV.......",
+        "help": "send one frame for each field, but skip spatial interlacing check",
+        "name": "send_field_nospatial",
+        "value": "3"
+      }
+    ],
+    "default": "send_frame",
+    "flags": "..FV.......",
+    "help": "specify the interlacing mode (from 0 to 3) (default send_frame)",
+    "max": "3",
+    "min": "0",
+    "name": "mode",
     "section": "bwdif_vulkan AVOptions:",
     "type": "int"
   },
@@ -54855,6 +55829,54 @@
     "min": null,
     "name": "yuv",
     "section": "chromakey AVOptions:",
+    "type": "boolean"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "black",
+    "flags": "..FV.......",
+    "help": "set the chromakey key color (default \"black\")",
+    "max": null,
+    "min": null,
+    "name": "color",
+    "section": "cudachromakey AVOptions:",
+    "type": "color"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "0.01",
+    "flags": "..FV.......",
+    "help": "set the chromakey similarity value (from 0.01 to 1) (default 0.01)",
+    "max": "1",
+    "min": "0.01",
+    "name": "similarity",
+    "section": "cudachromakey AVOptions:",
+    "type": "float"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "0",
+    "flags": "..FV.......",
+    "help": "set the chromakey key blend value (from 0 to 1) (default 0)",
+    "max": "1",
+    "min": "0",
+    "name": "blend",
+    "section": "cudachromakey AVOptions:",
+    "type": "float"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "false",
+    "flags": "..FV.......",
+    "help": "color parameter is in yuv instead of rgb (default false)",
+    "max": null,
+    "min": null,
+    "name": "yuv",
+    "section": "cudachromakey AVOptions:",
     "type": "boolean"
   },
   {
@@ -57646,6 +58668,47 @@
     "min": "0",
     "name": "itrc",
     "section": "colorspace AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "..FV.......",
+        "help": "Limited range",
+        "name": "tv",
+        "value": "1"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "..FV.......",
+        "help": "Limited range",
+        "name": "mpeg",
+        "value": "1"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "..FV.......",
+        "help": "Full range",
+        "name": "pc",
+        "value": "2"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "..FV.......",
+        "help": "Full range",
+        "name": "jpeg",
+        "value": "2"
+      }
+    ],
+    "default": "0",
+    "flags": "..FV.......",
+    "help": "Output video range (from 0 to 2) (default 0)",
+    "max": "2",
+    "min": "0",
+    "name": "range",
+    "section": "colorspace_cuda AVOptions:",
     "type": "int"
   },
   {
@@ -68638,6 +69701,115 @@
   {
     "__class__": "FFMpegAVOption",
     "choices": [],
+    "default": "0",
+    "flags": "..FV.......",
+    "help": "set the x expression of overlay (default \"0\")",
+    "max": null,
+    "min": null,
+    "name": "x",
+    "section": "overlay_cuda AVOptions:",
+    "type": "string"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "0",
+    "flags": "..FV.......",
+    "help": "set the y expression of overlay (default \"0\")",
+    "max": null,
+    "min": null,
+    "name": "y",
+    "section": "overlay_cuda AVOptions:",
+    "type": "string"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "..FV.......",
+        "help": "Repeat the previous frame.",
+        "name": "repeat",
+        "value": "0"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "..FV.......",
+        "help": "End both streams.",
+        "name": "endall",
+        "value": "1"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "..FV.......",
+        "help": "Pass through the main input.",
+        "name": "pass",
+        "value": "2"
+      }
+    ],
+    "default": "repeat",
+    "flags": "..FV.......",
+    "help": "Action to take when encountering EOF from secondary input  (from 0 to 2) (default repeat)",
+    "max": "2",
+    "min": "0",
+    "name": "eof_action",
+    "section": "overlay_cuda AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "..FV.......",
+        "help": "eval expressions once during initialization",
+        "name": "init",
+        "value": "0"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "..FV.......",
+        "help": "eval expressions per-frame",
+        "name": "frame",
+        "value": "1"
+      }
+    ],
+    "default": "frame",
+    "flags": "..FV.......",
+    "help": "specify when to evaluate expressions (from 0 to 1) (default frame)",
+    "max": "1",
+    "min": "0",
+    "name": "eval",
+    "section": "overlay_cuda AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "false",
+    "flags": "..FV.......",
+    "help": "force termination when the shortest input terminates (default false)",
+    "max": null,
+    "min": null,
+    "name": "shortest",
+    "section": "overlay_cuda AVOptions:",
+    "type": "boolean"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "true",
+    "flags": "..FV.......",
+    "help": "repeat overlay of the last overlay frame (default true)",
+    "max": null,
+    "min": null,
+    "name": "repeatlast",
+    "section": "overlay_cuda AVOptions:",
+    "type": "boolean"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
     "default": "8",
     "flags": "..FV.......",
     "help": "set depth (from 8 to 16) (default 8)",
@@ -71265,6 +72437,153 @@
     "min": "0",
     "name": "eval",
     "section": "scale AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "iw",
+    "flags": "..FV.......",
+    "help": "Output video width (default \"iw\")",
+    "max": null,
+    "min": null,
+    "name": "w",
+    "section": "cudascale AVOptions:",
+    "type": "string"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "ih",
+    "flags": "..FV.......",
+    "help": "Output video height (default \"ih\")",
+    "max": null,
+    "min": null,
+    "name": "h",
+    "section": "cudascale AVOptions:",
+    "type": "string"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "..FV.......",
+        "help": "nearest neighbour",
+        "name": "nearest",
+        "value": "1"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "..FV.......",
+        "help": "bilinear",
+        "name": "bilinear",
+        "value": "2"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "..FV.......",
+        "help": "bicubic",
+        "name": "bicubic",
+        "value": "3"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "..FV.......",
+        "help": "lanczos",
+        "name": "lanczos",
+        "value": "4"
+      }
+    ],
+    "default": "0",
+    "flags": "..FV.......",
+    "help": "Interpolation algorithm used for resizing (from 0 to 4) (default 0)",
+    "max": "4",
+    "min": "0",
+    "name": "interp_algo",
+    "section": "cudascale AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "none",
+    "flags": "..FV.......",
+    "help": "Output video pixel format (default none)",
+    "max": null,
+    "min": null,
+    "name": "format",
+    "section": "cudascale AVOptions:",
+    "type": "pix_fmt"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "true",
+    "flags": "..FV.......",
+    "help": "Do not process frames at all if parameters match (default true)",
+    "max": null,
+    "min": null,
+    "name": "passthrough",
+    "section": "cudascale AVOptions:",
+    "type": "boolean"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "999999",
+    "flags": "..FV.......",
+    "help": "Algorithm-Specific parameter (from -FLT_MAX to FLT_MAX) (default 999999)",
+    "max": "FLT_MAX",
+    "min": "-FLT_MAX",
+    "name": "param",
+    "section": "cudascale AVOptions:",
+    "type": "float"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "..FV.......",
+        "help": "",
+        "name": "disable",
+        "value": "0"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "..FV.......",
+        "help": "",
+        "name": "decrease",
+        "value": "1"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "..FV.......",
+        "help": "",
+        "name": "increase",
+        "value": "2"
+      }
+    ],
+    "default": "disable",
+    "flags": "..FV.......",
+    "help": "decrease or increase w/h if necessary to keep the original AR (from 0 to 2) (default disable)",
+    "max": "2",
+    "min": "0",
+    "name": "force_original_aspect_ratio",
+    "section": "cudascale AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
+    "default": "1",
+    "flags": "..FV.......",
+    "help": "enforce that the output resolution is divisible by a defined integer when force_original_aspect_ratio is used (from 1 to 256) (default 1)",
+    "max": "256",
+    "min": "1",
+    "name": "force_divisible_by",
+    "section": "cudascale AVOptions:",
     "type": "int"
   },
   {
@@ -77204,6 +78523,18 @@
   {
     "__class__": "FFMpegAVOption",
     "choices": [],
+    "default": "100",
+    "flags": "..FV.......",
+    "help": "set the frames batch size (from 2 to INT_MAX) (default 100)",
+    "max": "INT_MAX",
+    "min": "2",
+    "name": "n",
+    "section": "thumbnail_cuda AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [],
     "default": "6x5",
     "flags": "..FV.......",
     "help": "set grid size (default \"6x5\")",
@@ -82328,6 +83659,108 @@
     "min": "0",
     "name": "deint",
     "section": "yadif AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "..FV.......",
+        "help": "send one frame for each frame",
+        "name": "send_frame",
+        "value": "0"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "..FV.......",
+        "help": "send one frame for each field",
+        "name": "send_field",
+        "value": "1"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "..FV.......",
+        "help": "send one frame for each frame, but skip spatial interlacing check",
+        "name": "send_frame_nospatial",
+        "value": "2"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "..FV.......",
+        "help": "send one frame for each field, but skip spatial interlacing check",
+        "name": "send_field_nospatial",
+        "value": "3"
+      }
+    ],
+    "default": "send_frame",
+    "flags": "..FV.......",
+    "help": "specify the interlacing mode (from 0 to 3) (default send_frame)",
+    "max": "3",
+    "min": "0",
+    "name": "mode",
+    "section": "yadif_cuda AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "..FV.......",
+        "help": "assume top field first",
+        "name": "tff",
+        "value": "0"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "..FV.......",
+        "help": "assume bottom field first",
+        "name": "bff",
+        "value": "1"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "..FV.......",
+        "help": "auto detect parity",
+        "name": "auto",
+        "value": "-1"
+      }
+    ],
+    "default": "auto",
+    "flags": "..FV.......",
+    "help": "specify the assumed picture field parity (from -1 to 1) (default auto)",
+    "max": "1",
+    "min": "-1",
+    "name": "parity",
+    "section": "yadif_cuda AVOptions:",
+    "type": "int"
+  },
+  {
+    "__class__": "FFMpegAVOption",
+    "choices": [
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "..FV.......",
+        "help": "deinterlace all frames",
+        "name": "all",
+        "value": "0"
+      },
+      {
+        "__class__": "FFMpegOptionChoice",
+        "flags": "..FV.......",
+        "help": "only deinterlace frames marked as interlaced",
+        "name": "interlaced",
+        "value": "1"
+      }
+    ],
+    "default": "all",
+    "flags": "..FV.......",
+    "help": "specify which frames to deinterlace (from 0 to 1) (default all)",
+    "max": "1",
+    "min": "0",
+    "name": "deint",
+    "section": "yadif_cuda AVOptions:",
     "type": "int"
   },
   {

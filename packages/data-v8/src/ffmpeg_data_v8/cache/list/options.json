@@ -13,18 +13,6 @@
   },
   {
     "__class__": "FFMpegOption",
-    "argname": null,
-    "canon": null,
-    "flags": 2,
-    "help": "show license",
-    "name": "license",
-    "type": {
-      "__class__": "FFMpegOptionType",
-      "value": "OPT_TYPE_FUNC"
-    }
-  },
-  {
-    "__class__": "FFMpegOption",
     "argname": "topic",
     "canon": null,
     "flags": 2,
@@ -363,7 +351,7 @@
     "__class__": "FFMpegOption",
     "argname": "device",
     "canon": null,
-    "flags": 6,
+    "flags": 7,
     "help": "list sources of the input device",
     "name": "sources",
     "type": {
@@ -375,7 +363,7 @@
     "__class__": "FFMpegOption",
     "argname": "device",
     "canon": null,
-    "flags": 6,
+    "flags": 7,
     "help": "list sinks of the output device",
     "name": "sinks",
     "type": {
@@ -2277,6 +2265,18 @@
     "type": {
       "__class__": "FFMpegOptionType",
       "value": "OPT_TYPE_BOOL"
+    }
+  },
+  {
+    "__class__": "FFMpegOption",
+    "argname": "device",
+    "canon": null,
+    "flags": 5,
+    "help": "set VAAPI hardware device (DirectX adapter index, DRM path or X11 display name)",
+    "name": "vaapi_device",
+    "type": {
+      "__class__": "FFMpegOptionType",
+      "value": "OPT_TYPE_FUNC"
     }
   },
   {
