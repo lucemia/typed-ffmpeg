@@ -16,6 +16,7 @@ on:
         options:
           - '7.1'
           - '8.0'
+          - '9.0'
           - 'all'
 
 permissions:
@@ -28,12 +29,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ffmpeg-version: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.ffmpeg-version != 'all') && fromJSON(format('["{0}"]', github.event.inputs.ffmpeg-version)) || fromJSON('["7.1", "8.0"]') }}
+        ffmpeg-version: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.ffmpeg-version != 'all') && fromJSON(format('["{0}"]', github.event.inputs.ffmpeg-version)) || fromJSON('["7.1", "8.0", "9.0"]') }}
         include:
           - ffmpeg-version: '7.1'
             ffmpeg-source-version: '7.1.1'
           - ffmpeg-version: '8.0'
             ffmpeg-source-version: '8.0'
+          # 9.0.x latest patch built as tag 9.0, as 7.1 builds 7.1.1.
+          - ffmpeg-version: '9.0'
+            ffmpeg-source-version: '9.0.1'
 
     steps:
       - uses: actions/checkout@v7
