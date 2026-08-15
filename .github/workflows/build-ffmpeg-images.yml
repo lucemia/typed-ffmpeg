@@ -16,6 +16,7 @@ on:
         options:
           - '7.1'
           - '8.0'
+          - '9.0'
           - 'all'
 
 permissions:
@@ -28,12 +29,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ffmpeg-version: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.ffmpeg-version != 'all') && fromJSON(format('["{0}"]', github.event.inputs.ffmpeg-version)) || fromJSON('["7.1", "8.0"]') }}
-        include:
-          - ffmpeg-version: '7.1'
-            ffmpeg-source-version: '7.1.1'
-          - ffmpeg-version: '8.0'
-            ffmpeg-source-version: '8.0'
+        ffmpeg-version: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.ffmpeg-version != 'all') && fromJSON(format('["{0}"]', github.event.inputs.ffmpeg-version)) || fromJSON('["7.1", "8.0", "9.0"]') }}
 
     steps:
       - uses: actions/checkout@v7
@@ -48,6 +44,22 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
 
+      # The source version was carried in `matrix.include`, but an include entry
+      # whose key does not match the active combination is appended as an extra
+      # job rather than merged — so dispatching one version still built all of
+      # them. Resolving it here keeps the matrix to exactly what was asked for.
+      - name: Resolve FFmpeg source version
+        id: src
+        run: |
+          case "${{ matrix.ffmpeg-version }}" in
+            7.1) v=7.1.1 ;;
+            8.0) v=8.0   ;;
+            9.0) v=9.0.1 ;;
+            *)   echo "::error::No source version mapped for ${{ matrix.ffmpeg-version }}"; exit 1 ;;
+          esac
+          echo "Building FFmpeg $v as tag ${{ matrix.ffmpeg-version }}"
+          echo "version=$v" >> "$GITHUB_OUTPUT"
+
       - name: Build and push FFmpeg ${{ matrix.ffmpeg-version }}
         uses: docker/build-push-action@v7
         with:
@@ -56,7 +68,7 @@ jobs:
           push: true
           platforms: linux/amd64
           build-args: |
-            FFMPEG_SOURCE_VERSION=${{ matrix.ffmpeg-source-version }}
+            FFMPEG_SOURCE_VERSION=${{ steps.src.outputs.version }}
           tags: |
             ghcr.io/${{ github.repository }}/ffmpeg:${{ matrix.ffmpeg-version }}
           cache-from: type=registry,ref=ghcr.io/${{ github.repository }}/ffmpeg:${{ matrix.ffmpeg-version }}-cache

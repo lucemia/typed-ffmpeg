@@ -9,6 +9,7 @@ import typer
 
 from ffmpeg_core.common.cache import cache_path, save
 
+from ..net import with_retry
 from .helpers import parse_filter_document
 from .parse_texi import parse_texi_sections
 from .schema import FilterDocument
@@ -37,8 +38,8 @@ def download_ffmpeg_filter_documents() -> Path:
 
     typer.echo("Downloading filter documents...")
     url = "https://ffmpeg.org/ffmpeg-filters.html"
-    response = urllib.request.urlopen(url)
-    data = response.read()
+    # ffmpeg.org resets connections often enough to fail a whole codegen run.
+    data = with_retry(lambda: urllib.request.urlopen(url).read())
     text = data.decode("utf-8")
 
     with filter_path.open("w") as ofile:

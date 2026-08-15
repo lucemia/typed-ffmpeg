@@ -17,6 +17,7 @@ import urllib.request
 
 from ffmpeg_core.common.cache import get_cache_path
 
+from ..net import with_retry
 from ..parse_help.utils import get_ffmpeg_version
 
 DEFAULT_FFMPEG_RELEASE_BASE_URL = "https://ffmpeg.org/releases"
@@ -35,7 +36,9 @@ def _download_release_archive(version: str) -> pathlib.Path:
     archive_path = cache_root / f"ffmpeg-{version}.tar.xz"
     if archive_path.exists():
         return archive_path
-    urllib.request.urlretrieve(_release_archive_url(version), archive_path)
+    with_retry(
+        lambda: urllib.request.urlretrieve(_release_archive_url(version), archive_path)
+    )
     return archive_path
 
 
