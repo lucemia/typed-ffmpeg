@@ -8,7 +8,7 @@ Modern Python FFmpeg wrappers with comprehensive typing.
 pip install typed-ffmpeg
 ```
 
-This meta-package installs the latest version of typed-ffmpeg (currently v8).
+This meta-package installs the latest version of typed-ffmpeg (currently v9).
 
 ## Usage
 

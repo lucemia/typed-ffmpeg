@@ -157,7 +157,8 @@ to the matching package:
 
 ```bash
 pip install typed-ffmpeg-v7   # keeps access to scale_vaapi, drawtext, etc.
-pip install typed-ffmpeg-v8   # latest, macOS VideoToolbox codecs included
+pip install typed-ffmpeg-v8   # FFmpeg 8.x
+pip install typed-ffmpeg-v9   # latest
 ```
 
 See [Package Architecture](v4-packages.md) for full installation instructions.

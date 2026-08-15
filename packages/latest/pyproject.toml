@@ -30,15 +30,15 @@ classifiers = [
     "Topic :: Multimedia :: Sound/Audio",
 ]
 
-# Meta-package: no source code, just depends on typed-ffmpeg-v8
+# Meta-package: no source code, just depends on typed-ffmpeg-v9
 # which provides `import ffmpeg` directly.
 dependencies = [
-    "typed-ffmpeg-v8>=4.3,<5.0",
+    "typed-ffmpeg-v9>=4.3,<5.0",
 ]
 
 [tool.uv.sources]
-typed-ffmpeg-v8 = { workspace = true }
-ffmpeg-data-v8 = { workspace = true }
+typed-ffmpeg-v9 = { workspace = true }
+ffmpeg-data-v9 = { workspace = true }
 
 [project.optional-dependencies]
 dev = [
@@ -46,7 +46,7 @@ dev = [
     "pytest-cov>=7.1.0",
     "ruff==0.16.2",
 ]
-parse = ["ffmpeg-data-v8"]
+parse = ["ffmpeg-data-v9"]
 
 [build-system]
 requires = ["setuptools>=84.0.0"]

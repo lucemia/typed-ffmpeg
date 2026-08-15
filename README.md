@@ -43,11 +43,12 @@ typed-ffmpeg v4 ships separate PyPI packages for each FFmpeg major version. Inst
 
 | Package | FFmpeg version | Description |
 |---------|----------------|-------------|
-| `typed-ffmpeg` | Latest (v8) | Recommended for most users |
+| `typed-ffmpeg` | Latest (v9) | Recommended for most users |
 | `typed-ffmpeg-v5` | FFmpeg 5.x | Bindings for FFmpeg 5 |
 | `typed-ffmpeg-v6` | FFmpeg 6.x | Bindings for FFmpeg 6 |
 | `typed-ffmpeg-v7` | FFmpeg 7.x | Bindings for FFmpeg 7 |
 | `typed-ffmpeg-v8` | FFmpeg 8.x | Bindings for FFmpeg 8 |
+| `typed-ffmpeg-v9` | FFmpeg 9.x | Bindings for FFmpeg 9 |
 | `ffmpeg-core` | — | Shared runtime (auto-installed) |
 
 All packages expose the same `ffmpeg` namespace, so your code works identically regardless of which package you install.
@@ -87,6 +88,7 @@ pip install typed-ffmpeg-v5   # FFmpeg 5.x
 pip install typed-ffmpeg-v6   # FFmpeg 6.x
 pip install typed-ffmpeg-v7   # FFmpeg 7.x
 pip install typed-ffmpeg-v8   # FFmpeg 8.x
+pip install typed-ffmpeg-v9   # FFmpeg 9.x
 ```
 
 With optional extras:
@@ -112,9 +114,10 @@ TypeScript bindings are available as npm packages for each FFmpeg major version:
 | `@typed-ffmpeg/v6` | FFmpeg 6.x | Bindings for FFmpeg 6 |
 | `@typed-ffmpeg/v7` | FFmpeg 7.x | Bindings for FFmpeg 7 |
 | `@typed-ffmpeg/v8` | FFmpeg 8.x | Bindings for FFmpeg 8 |
+| `@typed-ffmpeg/v9` | FFmpeg 9.x | Bindings for FFmpeg 9 |
 
 ```bash
-npm install @typed-ffmpeg/core @typed-ffmpeg/v8   # latest FFmpeg bindings
+npm install @typed-ffmpeg/core @typed-ffmpeg/v9   # latest FFmpeg bindings
 ```
 
 ```typescript

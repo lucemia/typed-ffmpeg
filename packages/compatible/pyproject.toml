@@ -34,7 +34,7 @@ classifiers = [
 # as `typed_ffmpeg` so it doesn't conflict with ffmpeg-python's
 # `ffmpeg` module.
 dependencies = [
-    "typed-ffmpeg-v8>=4.3,<5.0",
+    "typed-ffmpeg-v9>=4.3,<5.0",
 ]
 
 [build-system]

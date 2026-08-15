@@ -6,17 +6,18 @@ typed-ffmpeg v4 is a monorepo that publishes separate PyPI packages for each FFm
 
 | PyPI Package | FFmpeg Version | Install |
 |---|---|---|
-| `typed-ffmpeg` | Latest (v8) | `pip install typed-ffmpeg` |
+| `typed-ffmpeg` | Latest (v9) | `pip install typed-ffmpeg` |
 | `typed-ffmpeg-v5` | FFmpeg 5.x | `pip install typed-ffmpeg-v5` |
 | `typed-ffmpeg-v6` | FFmpeg 6.x | `pip install typed-ffmpeg-v6` |
 | `typed-ffmpeg-v7` | FFmpeg 7.x | `pip install typed-ffmpeg-v7` |
 | `typed-ffmpeg-v8` | FFmpeg 8.x | `pip install typed-ffmpeg-v8` |
+| `typed-ffmpeg-v9` | FFmpeg 9.x | `pip install typed-ffmpeg-v9` |
 | `ffmpeg-core` | (runtime, auto-installed) | — |
-| `ffmpeg-data-v5`..`v8` | (cache data, optional) | `pip install typed-ffmpeg-vN[parse]` |
+| `ffmpeg-data-v5`..`v9` | (cache data, optional) | `pip install typed-ffmpeg-vN[parse]` |
 
 ## Which Package Should I Install?
 
-**For most users:** `pip install typed-ffmpeg` — this installs the latest bindings (currently v8) and receives updates automatically.
+**For most users:** `pip install typed-ffmpeg` — this installs the latest bindings (currently v9) and receives updates automatically.
 
 **For production deployments:** install the package that matches your system's FFmpeg version so the typed bindings match exactly what FFmpeg accepts.
 
@@ -35,7 +36,7 @@ pip install typed-ffmpeg-v6
 
 ```
 typed-ffmpeg (meta)
-    └── typed-ffmpeg-v8
+    └── typed-ffmpeg-v9
             └── ffmpeg-core
 
 typed-ffmpeg-v5 ──┐
@@ -66,11 +67,13 @@ typed-ffmpeg/          # monorepo root
 │   ├── data-v6/       # ffmpeg-data-v6: cache data for FFmpeg 6.x
 │   ├── data-v7/       # ffmpeg-data-v7: cache data for FFmpeg 7.x
 │   ├── data-v8/       # ffmpeg-data-v8: cache data for FFmpeg 8.x
+│   ├── data-v9/       # ffmpeg-data-v9: cache data for FFmpeg 9.x
 │   ├── v5/            # typed-ffmpeg-v5
 │   ├── v6/            # typed-ffmpeg-v6
 │   ├── v7/            # typed-ffmpeg-v7
 │   ├── v8/            # typed-ffmpeg-v8
-│   └── latest/        # typed-ffmpeg (meta, re-exports v8)
+│   ├── v9/            # typed-ffmpeg-v9
+│   └── latest/        # typed-ffmpeg (meta, re-exports v9)
 ├── docs/
 └── scripts/           # code generation tools
 ```

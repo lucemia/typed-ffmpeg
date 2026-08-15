@@ -9,7 +9,7 @@ Install this package instead of ``typed-ffmpeg`` when you also have
     ffmpeg.input("in.mp4").hflip().output(filename="out.mp4").run()
 """
 
-# Re-export everything from the v8 bindings
+# Re-export everything from the v9 bindings
 from ffmpeg import *  # noqa: F401, F403
 from ffmpeg import __all__ as _all  # noqa: F401
 
