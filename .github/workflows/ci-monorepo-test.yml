@@ -122,6 +122,10 @@ jobs:
           python -m venv .venv
           source .venv/bin/activate
           pip install -e packages/core
+          # Install the workspace data package explicitly. pip does not honour
+          # uv's workspace sources, so `[parse]` would resolve ffmpeg-data-vN
+          # from PyPI — unpublished for a new major, and stale for the rest.
+          pip install -e "packages/data-${{ matrix.ffmpeg-version }}"
           pip install -e "packages/${{ matrix.ffmpeg-version }}[dev,parse]"
           pytest packages/tests-shared -v -k "not test_view" \
             --cov=ffmpeg \
