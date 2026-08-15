@@ -10,7 +10,10 @@ import ffmpeg
 from ffmpeg.exceptions import FFMpegTypeError, FFMpegValueError
 
 FFMPEG_VERSION = f"v{ffmpeg.__version__.split('.')[0]}"
-SUPPORTS_LOOPBACK = FFMPEG_VERSION in ("v7", "v8")
+# Compare rather than enumerate: an ("v7", "v8") membership test silently
+# skips every future major, so v9 would have reported "loopback decoders
+# require FFmpeg >= 7.0" while running against FFmpeg 9.
+SUPPORTS_LOOPBACK = int(ffmpeg.__version__.split(".")[0]) >= 7
 
 requires_loopback = pytest.mark.skipif(
     not SUPPORTS_LOOPBACK, reason="loopback decoders require FFmpeg >= 7.0"
