@@ -1,6 +1,6 @@
 [project]
 name = "ffmpeg-core"
-version = "4.3"
+version = "4.4"
 description = "Core runtime for typed-ffmpeg (DAG, compilation, IR layer)"
 authors = [
     {name = "lucemia", email = "lucemia@gmail.com"}

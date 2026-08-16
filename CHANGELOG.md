@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [4.4] - 2026-08-16
+
+### Added
+
+- **FFmpeg 9 support** — `typed-ffmpeg-v9`, `ffmpeg-data-v9` and `@typed-ffmpeg/v9`, generated from FFmpeg 9.0.1. Adds `premultiply_dynamic`, `transpose_cuda` and `v360_vulkan`; no filters were removed relative to v8
+- `docker/ffmpeg-builder/Dockerfile.9.0`, since `jrottenberg/ffmpeg` publishes no 9.x image
+
+### Changed
+
+- **`typed-ffmpeg` now resolves to `typed-ffmpeg-v9`** instead of v8. `typed-ffmpeg-compatible` follows, so both entry points stay on the same FFmpeg major
+- Codegen consolidated into a single workflow. `codegen-regenerate.yml` and `regen-bindings.yml` are removed; the former had never succeeded in 100 runs
+- Generated bindings are now committed onto the pull request that changes the generator, so `main` never holds generator code without matching output
+
+### Fixed
+
+- **Published cache data was four months stale.** `ffmpeg-data-v*` was written once in April and no workflow refreshed it; regenerated cache now reaches the published packages
+- `ffmpeg-data-v8` contained a mix of 8.0 and 8.1 data, and `ts-v8` was generated from 8.1 while the Python bindings came from 8.0
+- Codegen retries transient network failures; a single reset previously failed an entire run
+- Dependabot's uv updates, which had failed on every run since the manifests moved to a deprecated uv field
+- The large-filtergraph recursion fix from 4.0 finally reaches v5, v6 and v7 — only v8 had been regenerated at the time
+- `mkdocstrings-python` capped below 2.0, which removed an option the docs config uses
+
 ## [4.0.0] - 2026-04-07
 
 ### Added

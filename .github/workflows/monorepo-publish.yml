@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       package:
-        description: 'Package to publish (core, data-v5..v8, v5..v8, latest, compatible, all)'
+        description: 'Package to publish (core, data-v5..v9, v5..v9, latest, compatible, all)'
         required: true
         default: 'all'
       test-pypi:
@@ -45,7 +45,7 @@ jobs:
           echo "Release tag: $TAG — expected package version: $EXPECTED"
 
           FAIL=0
-          for pkg in core data-v5 data-v6 data-v7 data-v8 v5 v6 v7 v8 latest compatible; do
+          for pkg in core data-v5 data-v6 data-v7 data-v8 data-v9 v5 v6 v7 v8 v9 latest compatible; do
             PKG_VER=$(grep '^version = ' packages/$pkg/pyproject.toml | cut -d'"' -f2)
             if [ "$PKG_VER" != "$EXPECTED" ]; then
               echo "❌ packages/$pkg: $PKG_VER != $EXPECTED"
@@ -72,7 +72,7 @@ jobs:
           fi
           
           if [ "$PKG" = "all" ]; then
-            echo "packages=core data-v5 data-v6 data-v7 data-v8 v5 v6 v7 v8 latest compatible" >> $GITHUB_OUTPUT
+            echo "packages=core data-v5 data-v6 data-v7 data-v8 data-v9 v5 v6 v7 v8 v9 latest compatible" >> $GITHUB_OUTPUT
           else
             echo "packages=$PKG" >> $GITHUB_OUTPUT
           fi
@@ -116,7 +116,7 @@ jobs:
         if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && github.event.inputs.test-pypi == 'false')
         run: |
           # Publish in order: core first, then version packages, then latest
-          PUBLISH_ORDER="core data-v5 data-v6 data-v7 data-v8 v5 v6 v7 v8 latest compatible"
+          PUBLISH_ORDER="core data-v5 data-v6 data-v7 data-v8 data-v9 v5 v6 v7 v8 v9 latest compatible"
 
           for pkg in $PUBLISH_ORDER; do
             if echo "${{ steps.packages.outputs.packages }}" | grep -q "$pkg"; then
