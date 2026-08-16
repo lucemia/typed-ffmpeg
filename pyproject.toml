@@ -90,7 +90,7 @@ dev = [
     "pytest-cov>=7.1.0,<8.0",
     "pytest-datadir>=1.8.0",
     "pytest-recording>=0.13.1",
-    "pytest-asyncio>=0.23.0",
+    "pytest-asyncio>=1.4.0",
     "syrupy>=4.6.0",
     
     # Documentation
