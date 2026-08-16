@@ -24,8 +24,8 @@ A registry of classes that have been loaded, and can be deserialized.
 
 
 def serializable(
-    cls: type[Serializable] | type[Enum],
-) -> type[Serializable] | type[Enum]:
+    cls: type[Serializable | Enum],
+) -> type[Serializable | Enum]:
     """
     Register a class with the serialization system.
 
@@ -53,7 +53,7 @@ class Serializable:
         serializable(cls)
 
 
-def load_class(name: str) -> type[Serializable] | type[Enum]:
+def load_class(name: str) -> type[Serializable | Enum]:
     """
     Load a class from its name.
 
@@ -143,15 +143,14 @@ def object_hook(obj: Any) -> Any:
         ```
 
     """
-    if isinstance(obj, dict):
-        if obj.get("__class__"):
-            cls = load_class(obj.pop("__class__"))
+    if isinstance(obj, dict) and obj.get("__class__"):
+        cls = load_class(obj.pop("__class__"))
 
-            if is_dataclass(cls):
-                # NOTE: in our application, the dataclass is always frozen
-                return cls(**{k: frozen(v) for k, v in obj.items()})
+        if is_dataclass(cls):
+            # NOTE: in our application, the dataclass is always frozen
+            return cls(**{k: frozen(v) for k, v in obj.items()})
 
-            return cls(**dict(obj.items()))
+        return cls(**dict(obj.items()))
 
     return obj
 

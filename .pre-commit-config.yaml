@@ -30,8 +30,11 @@ repos:
         exclude: '__snapshots__/|.eslintrc.json|tsconfig.*\.json'
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    # Ruff version - keep in sync with pyproject.toml and uv.lock
-    rev: v0.12.2
+    # Ruff version - keep in sync with pyproject.toml and uv.lock.
+    # Dependabot's `pre-commit` ecosystem (see .github/dependabot.yml) bumps
+    # this; before it was configured, uv bumped pyproject and this pin silently
+    # drifted, so formatting ran on a different ruff than the project declared.
+    rev: v0.16.2
     hooks:
       # Run the formatter (includes generated bindings).
       - id: ruff-format

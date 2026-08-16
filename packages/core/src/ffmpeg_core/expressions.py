@@ -624,7 +624,7 @@ def pow(x: Any, y: Any) -> Expression:
     return Expression(f"pow({x},{y})")
 
 
-def print(t: Any, l: Any | None = None) -> Expression:  # noqa: E741
+def print(t: Any, l: Any | None = None) -> Expression:
     """
     Print the value of expression t with loglevel l. If l is not specified then a default log level is used. Return the value of the expression printed.
 

@@ -147,7 +147,7 @@ class FFMpegAVOption(FFMpegOption):
     @property
     def code_gen_type(self) -> str:
         """
-        Get the code generation type for this option.
+        The code generation type for this option.
 
         Returns:
             The type string for code generation.

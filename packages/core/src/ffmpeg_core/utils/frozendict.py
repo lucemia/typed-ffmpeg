@@ -80,7 +80,7 @@ class FrozenDict(Mapping[K, V], Generic[K, V]):
         """
         return f"FrozenDict({self._data})"
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: object) -> bool:
         """
         Compare this FrozenDict with another object for equality.
 

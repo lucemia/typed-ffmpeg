@@ -62,6 +62,10 @@ updates:
       interval: "weekly"
     ignore:
       - dependency-name: "@typed-ffmpeg/*"
+  - package-ecosystem: "pre-commit"
+    directory: "/"
+    schedule:
+      interval: "weekly"
   - package-ecosystem: "github-actions"
     directory: "/" # Typically GitHub Actions workflows are located in .github/workflows
     schedule:

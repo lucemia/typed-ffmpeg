@@ -10,7 +10,7 @@ from collections.abc import Iterable
 from typing import Any
 
 
-def escape(text: str | int | float, chars: str = "\\'=:") -> str:
+def escape(text: str | float, chars: str = "\\'=:") -> str:
     r"""
     Escape special characters in a string for use in FFmpeg commands.
 

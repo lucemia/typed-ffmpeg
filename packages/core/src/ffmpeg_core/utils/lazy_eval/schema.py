@@ -292,7 +292,9 @@ class LazyValue(ABC):
         """
         v = self.partial(**values)
         if isinstance(v, LazyValue):
-            raise ValueError(v.keys())
+            # Not a type error: the value is well-typed but still missing
+            # bindings, and ValueError is the documented contract above.
+            raise ValueError(v.keys())  # noqa: TRY004
         return v
 
     @abstractmethod

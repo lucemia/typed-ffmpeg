@@ -113,7 +113,7 @@ class FFMpegAVOption(Serializable):
     @property
     def code_gen_type(self) -> str:
         """
-        Get the code generation type for this option.
+        The code generation type for this option.
 
         Returns:
             The type string for code generation.
@@ -218,7 +218,7 @@ class FFMpegCodec(Serializable):
     @property
     def codec_type(self) -> Literal["video", "audio", "subtitle"]:
         """
-        Get the type of this codec.
+        The type of this codec.
 
         Returns:
             The codec type.

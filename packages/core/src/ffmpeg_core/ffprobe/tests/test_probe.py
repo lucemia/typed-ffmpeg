@@ -66,13 +66,14 @@ def test_probe_default(path: Path, snapshot: SnapshotAssertion) -> None:
         if stream["codec_type"] != "data":
             assert "codec_name" in stream
 
-    snapshot(
-        name="json", extension_class=JSONSnapshotExtension
-    ) == info  # NOTE: the result is not stable so, we just want to record the result
+    # Result is deliberately discarded: ffprobe output is not stable across
+    # versions, so the snapshot is recorded rather than asserted. Binding it
+    # keeps that intent in the code rather than only in a comment (B015).
+    _ = snapshot(name="json", extension_class=JSONSnapshotExtension) == info
 
     obj = probe_obj(path)
     assert obj is not None
-    snapshot(name="obj", extension_class=JSONSnapshotExtension) == asdict(obj)
+    _ = snapshot(name="obj", extension_class=JSONSnapshotExtension) == asdict(obj)
 
 
 @requires_ffprobe
@@ -134,9 +135,10 @@ def test_probe_complete(path: Path, snapshot: SnapshotAssertion) -> None:
                 assert "sample_rate" in stream
                 assert "channels" in stream
 
-    snapshot(
-        name="json", extension_class=JSONSnapshotExtension
-    ) == info  # NOTE: the result is not stable so, we just want to record the result
+    # Result is deliberately discarded: ffprobe output is not stable across
+    # versions, so the snapshot is recorded rather than asserted. Binding it
+    # keeps that intent in the code rather than only in a comment (B015).
+    _ = snapshot(name="json", extension_class=JSONSnapshotExtension) == info
 
     obj = probe_obj(
         path,
@@ -152,7 +154,7 @@ def test_probe_complete(path: Path, snapshot: SnapshotAssertion) -> None:
         show_error=True,
     )
     assert obj is not None
-    snapshot(name="obj", extension_class=JSONSnapshotExtension) == asdict(obj)
+    _ = snapshot(name="obj", extension_class=JSONSnapshotExtension) == asdict(obj)
 
 
 @requires_ffprobe

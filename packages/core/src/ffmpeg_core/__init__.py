@@ -19,8 +19,8 @@ __version__ = "1.0.0"
 from .exceptions import FFMpegExecuteError, FFMpegTypeError, FFMpegValueError
 
 __all__ = [
-    "__version__",
     "FFMpegExecuteError",
     "FFMpegTypeError",
     "FFMpegValueError",
+    "__version__",
 ]

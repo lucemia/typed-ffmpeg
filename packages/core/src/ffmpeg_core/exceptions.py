@@ -15,8 +15,6 @@ class FFMpegError(Exception):
     typed-ffmpeg library. It inherits from the standard Python Exception class.
     """
 
-    ...
-
 
 class FFMpegTypeError(FFMpegError, TypeError):
     """
