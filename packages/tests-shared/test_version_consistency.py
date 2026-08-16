@@ -9,14 +9,15 @@ omits a package other packages depend on.
 This test derives the set of supported majors from the filesystem — the one
 place that cannot drift — and asserts every list that must know about them
 does. It lives under packages/ so it runs whenever a packages/vN directory
-appears.
+appears, and deliberately uses no third-party imports: the test-versions job
+installs only the bindings under test, and a guard that skips itself when a
+dependency is missing is the very failure mode it exists to prevent.
 """
 
 import re
 from pathlib import Path
 
 import pytest
-import yaml
 
 
 def _repo_root() -> Path:
@@ -100,37 +101,39 @@ def test_published_by_release_workflow(major: str) -> None:
 @pytest.mark.parametrize("major", MAJORS)
 def test_covered_by_test_matrices(major: str) -> None:
     """A binding package that no matrix names is never exercised by CI."""
-    monorepo = yaml.safe_load(
-        (ROOT / ".github/workflows/ci-monorepo-test.yml").read_text()
-    )
-    versions = {
-        entry.get("ffmpeg-version")
-        for entry in monorepo["jobs"]["test-versions"]["strategy"]["matrix"]["include"]
-    }
-    assert f"v{major}" in versions, (
+    monorepo = (ROOT / ".github/workflows/ci-monorepo-test.yml").read_text()
+    assert re.search(rf"ffmpeg-version:\s*v{major}\b", monorepo), (
         f"ci-monorepo-test test-versions matrix does not cover v{major}"
     )
 
-    ts = yaml.safe_load((ROOT / ".github/workflows/ci-ts-test.yml").read_text())
-    ts_versions = {
-        str(v)
-        for v in ts["jobs"]["typecheck-ts-versions"]["strategy"]["matrix"]["version"]
-    }
-    assert major in ts_versions, f"ci-ts-test matrix does not cover ts-v{major}"
+    ts = (ROOT / ".github/workflows/ci-ts-test.yml").read_text()
+    listed = re.search(r"version:\s*\[([^\]]*)\]", ts)
+    assert listed, "could not find the ts-test version matrix"
+    assert major in [v.strip() for v in listed.group(1).split(",")], (
+        f"ci-ts-test matrix does not cover ts-v{major}"
+    )
 
 
 @pytest.mark.parametrize("major", MAJORS)
 def test_codegen_can_generate(major: str) -> None:
     """Without a matrix entry the bindings can never be regenerated."""
-    codegen = yaml.safe_load(
-        (ROOT / ".github/workflows/ci-codegen-versions.yml").read_text()
+    codegen = (ROOT / ".github/workflows/ci-codegen-versions.yml").read_text()
+    # The entry spans three lines; capture the block following its version.
+    entry = re.search(
+        rf"- ffmpeg-version:\s*'{major}'\n((?:\s+[a-z-]+:.*\n)+)", codegen
     )
-    include = codegen["jobs"]["generate"]["strategy"]["matrix"]["include"]
-    entry = next((e for e in include if str(e.get("ffmpeg-version")) == major), None)
-    assert entry is not None, f"ci-codegen-versions has no matrix entry for v{major}"
-    assert entry.get("ffmpeg-image"), f"v{major} matrix entry has no ffmpeg-image"
-    assert re.fullmatch(r"\d+_\d+", str(entry.get("ffmpeg-mm", ""))), (
-        f"v{major} matrix entry needs a major_minor ffmpeg-mm, got {entry.get('ffmpeg-mm')!r}"
+    assert entry, f"ci-codegen-versions has no matrix entry for v{major}"
+    block = entry.group(1)
+    assert re.search(r"ffmpeg-image:\s*\S+", block), (
+        f"v{major} matrix entry has no ffmpeg-image"
+    )
+    mm = re.search(r"ffmpeg-mm:\s*'(\d+_\d+)'", block)
+    assert mm, (
+        f"v{major} matrix entry needs a major_minor ffmpeg-mm (e.g. '{major}_0'); "
+        "globbing on the major alone also matches sibling minors"
+    )
+    assert mm.group(1).startswith(f"{major}_"), (
+        f"v{major} ffmpeg-mm is {mm.group(1)!r}, which is not a {major}.x version"
     )
 
 
