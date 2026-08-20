@@ -24,7 +24,7 @@ ffmpeg-core = { workspace = true }
 ffmpeg-data-v5 = { workspace = true }
 
 [project.optional-dependencies]
-dev = ["pytest>=7.0", "pytest-cov>=7.1.0", "syrupy>=5.5.3", "ruff==0.16.2"]
+dev = ["pytest>=7.0", "pytest-cov>=7.1.0", "syrupy>=5.5.3", "ruff==0.16.3"]
 parse = ["ffmpeg-data-v5"]
 
 [build-system]
