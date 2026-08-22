@@ -212,5 +212,8 @@ output.mp4
 /ffmpeg/
 .claude/settings.local.json
 .claude/memory/
-docs/_stubs/
+# docs/_stubs holds the tracked ffmpeg_vN -> packages/vN/src/ffmpeg symlinks
+# that mkdocstrings resolves the per-version API reference through. It must
+# exist before mkdocstrings initialises, so it cannot be generated at build
+# time -- see scripts/gen_ref_pages.py and mkdocs.yml's handler `paths`.
 package-lock.json
