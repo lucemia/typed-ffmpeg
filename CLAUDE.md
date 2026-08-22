@@ -2,7 +2,7 @@
 
 ## Code Generation
 
-Several files in `packages/v5–v8` are **auto-generated** by the codegen system. Do not edit them directly — edit the templates instead.
+Several files in `packages/v5–v9` are **auto-generated** by the codegen system. Do not edit them directly — edit the templates instead.
 
 ### Auto-generated files (do NOT edit in packages/v*)
 
@@ -15,9 +15,13 @@ Any file carrying the header `# NOTE: this file is auto-generated, do not modify
    ```bash
    source .venv/bin/activate
    export PYTHONPATH="$PWD/src:$PYTHONPATH"
-   python -m scripts.code_gen.cli generate --outpath packages/v8/src/ffmpeg --ffmpeg-binary $(which ffmpeg) --rebuild
-   # repeat for v5, v6, v7
+   python -m scripts.code_gen.cli generate --outpath packages/v9/src/ffmpeg --ffmpeg-binary $(which ffmpeg) --rebuild
+   # repeat for every other version package under packages/v*
    ```
+   Each version needs the matching FFmpeg binary on `PATH`;
+   `scripts/regenerate-monorepo.sh` loops over whatever `packages/v*` contains.
+   See `docs/development/codegen.md` for the per-version binaries and the Docker
+   images to use where no local build exists.
 3. Update snapshots if the template change affects `test_render`:
    ```bash
    pytest src/scripts/code_gen/tests/test_gen.py::test_render --snapshot-update

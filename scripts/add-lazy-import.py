@@ -18,7 +18,13 @@ And replaces all `filter_node_factory(` with `_get_filter_factory()(`
 """
 
 import re
+import sys
 from pathlib import Path
+
+# Run either as `python scripts/<name>.py` or from another directory, so put
+# scripts/ on the path explicitly rather than relying on sys.path[0].
+sys.path.insert(0, str(Path(__file__).parent))
+from _versions import version_dirs
 
 
 def add_lazy_import(file_path: Path) -> bool:
@@ -93,7 +99,7 @@ def main():
     """Add lazy imports to all streams files."""
     repo_root = Path(__file__).parent.parent
 
-    for version in ["v5", "v6", "v7", "v8", "v9"]:
+    for version in version_dirs():
         print(f"\n📦 Processing {version}...")
 
         streams_dir = repo_root / "packages" / version / "src" / "ffmpeg" / "streams"
