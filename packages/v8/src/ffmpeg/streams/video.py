@@ -14424,7 +14424,9 @@ class VideoStream(FilterableStream):
             )
 
         filter_node = filter_node_factory(
-            FFMpegFilterDef(name="scale", typings_input=(), typings_output=("video",)),
+            FFMpegFilterDef(
+                name="scale", typings_input=("video",), typings_output=("video",)
+            ),
             self,
             **merge(
                 {

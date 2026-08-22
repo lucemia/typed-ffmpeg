@@ -62080,7 +62080,16 @@
     ],
     "pre": [],
     "ref": "https://ffmpeg.org/ffmpeg-filters.html#scale",
-    "stream_typings_input": [],
+    "stream_typings_input": [
+      {
+        "__class__": "FFMpegIOType",
+        "name": "default",
+        "type": {
+          "__class__": "StreamType",
+          "value": "video"
+        }
+      }
+    ],
     "stream_typings_output": [
       {
         "__class__": "FFMpegIOType",

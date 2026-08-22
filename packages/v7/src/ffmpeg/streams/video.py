@@ -19162,7 +19162,6 @@ References:
 
 
 
-
     *,
     w: String = Default(None),h: String = Default(None),flags: String = Default(''),interl: Boolean = Default('false'),size: String = Default(None),in_color_matrix: Int| Literal["auto","bt601","bt470","smpte170m","bt709","fcc","smpte240m","bt2020"] | Default = Default('auto'),out_color_matrix: Int| Literal["auto","bt601","bt470","smpte170m","bt709","fcc","smpte240m","bt2020"] | Default = Default('2'),in_range: Int| Literal["auto","unknown","full","limited","jpeg","mpeg","tv","pc"] | Default = Default('auto'),out_range: Int| Literal["auto","unknown","full","limited","jpeg","mpeg","tv","pc"] | Default = Default('auto'),in_chroma_loc: Int| Literal["auto","unknown","left","center","topleft","top","bottomleft","bottom"] | Default = Default('auto'),out_chroma_loc: Int| Literal["auto","unknown","left","center","topleft","top","bottomleft","bottom"] | Default = Default('auto'),in_v_chr_pos: Int = Default('-513'),in_h_chr_pos: Int = Default('-513'),out_v_chr_pos: Int = Default('-513'),out_h_chr_pos: Int = Default('-513'),force_original_aspect_ratio: Int| Literal["disable","decrease","increase"] | Default = Default('disable'),force_divisible_by: Int = Default('1'),param0: Double = Default('DBL_MAX'),param1: Double = Default('DBL_MAX'),eval: Int| Literal["init","frame"] | Default = Default('init'),
 
@@ -19224,10 +19223,9 @@ References:
 
 
         filter_node = filter_node_factory(
-            FFMpegFilterDef(name='scale', typings_input=(), typings_output=('video',)),
+            FFMpegFilterDef(name='scale', typings_input=('video',), typings_output=('video',)),
 
             self,
-
 
 
 
