@@ -59,14 +59,28 @@ def process_docs() -> list[FilterDocument]:
 
     """
     # split documents into individual files for easier processing
+    # texinfo now emits the section anchors *inside* the heading:
+    #   <h3 class="section">8.5 acrossfade<span class="pull-right">...</span></h3>
+    # rather than wrapping the whole title in a single <a href="#toc-...">. Match
+    # the heading itself and treat everything up to the next heading as the body,
+    # which works for both the old and the current markup.
     section_pattern = re.compile(
-        r'(?P<body><h[34] class="(?:section|subsection)"><a href="(.*?)">(?P<name>.*?)</a></h[34]>(.*?))<span',
+        r'<h(?P<level>[34]) class="(?:section|subsection)">(?P<name>.*?)</h(?P=level)>',
         re.MULTILINE | re.DOTALL,
     )
 
     def extract_filter(html: str) -> list[tuple[str, str]]:
+        matches = list(section_pattern.finditer(html))
         return [
-            (m.group("name"), m.group("body")) for m in section_pattern.finditer(html)
+            (
+                m.group("name"),
+                html[
+                    m.start() : matches[i + 1].start()
+                    if i + 1 < len(matches)
+                    else len(html)
+                ],
+            )
+            for i, m in enumerate(matches)
         ]
 
     infos: list[FilterDocument] = []

@@ -67,21 +67,41 @@ def parse_filter_document(body: str) -> FilterDocument:
 
     assert isinstance(h3, Tag)
 
-    title = h3.text
+    # The heading carries trailing "#" / "TOC" anchor links in a pull-right span.
+    # That is navigation chrome, not part of the filter title, so drop it before
+    # reading the text. Parse a copy so the caller's soup keeps the anchors.
+    heading = BeautifulSoup(str(h3), "html.parser").find(["h3", "h4"])
+    assert isinstance(heading, Tag)
+    for span in heading.find_all("span", class_="pull-right"):
+        span.decompose()
+
+    title = heading.text.strip()
     index, filter_namestr = title.split(" ", 1)
     filter_names = (i.strip() for i in filter_namestr.split(","))
 
-    assert isinstance(h3.a, Tag)
-    assert isinstance(h3.a["href"], str)
+    # Prefer the "#toc-<name>" anchor; older markup put it on the heading's only
+    # <a>, current markup puts it alongside a plain "#<name>" self-link.
+    toc_anchor = h3.find(
+        "a", href=lambda h: isinstance(h, str) and h.startswith("#toc-")
+    )
+    if isinstance(toc_anchor, Tag):
+        href = toc_anchor["href"]
+    else:
+        assert isinstance(h3.a, Tag)
+        href = h3.a["href"]
+    assert isinstance(href, str)
 
-    ref = h3.a["href"].replace("#toc-", "").replace("-1", "")
+    ref = href.replace("#toc-", "").replace("-1", "")
 
     # check cross reference
     refs: set[str] = set()
     a: Tag
     for a in soup.find_all("a"):
         href = a.get("href")
-        assert isinstance(href, str)
+        # Sections contain name-only anchors (<a name="..."></a>) as link
+        # targets; they carry no href and are not cross-references.
+        if not isinstance(href, str):
+            continue
         if href.startswith("#") and not href.startswith("#toc-"):
             refs.add(href[1:])
 
