@@ -5,6 +5,75 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [4.5] - 2026-08-23
+
+Bug-fix release. Two separate defects made the 4.4 packages unusable for common
+work: `parse()` could not find its cache data at all, and `VideoStream.scale()`
+raised on every call in v7/v8/v9. Both are fixed here, so all thirteen packages
+are republished.
+
+### Fixed
+
+- **`VideoStream.scale()` raised on every call in v7, v8 and v9.** FFmpeg 7
+  started printing scale's input pad and its dynamic-IO marker together, with
+  the marker nested under the pad; the help parser treated them as mutually
+  exclusive and discarded the pad. The generated binding then declared
+  `typings_input=()` while still passing the stream it was called on, so
+  `input(...).video.scale(w=..., h=...)` raised
+  `FFMpegValueError: Expected 0 inputs, got 1`. The same bad typing broke
+  `parse()` for any command line using `scale` and emitted a bogus zero-input
+  `ffmpeg.sources.scale()`. `scale` was the only filter affected; v5 and v6
+  predate the upstream change
+- **`parse()` raised `FileNotFoundError` on every install.**
+  `pip install typed-ffmpeg[parse]` installs `ffmpeg-data-v9`, but `ffmpeg-core`
+  4.4 only looked for `ffmpeg_data_v8` down to `v5`. This reproduced solely on a
+  wheel install — a checkout reads `packages/core`'s `cache/list`, which is not
+  shipped — which is why the test suite never caught it. The lookup now
+  discovers installed `ffmpeg-data-v*` packages by name, so a new FFmpeg major
+  needs no change to it
+- A data package that was installed but did not carry the requested entry
+  shadowed an older one that did; the lookup now walks every installed data
+  package newest-first instead of committing to the newest
+- `scripts/create-stubs.py` listed `base.py`, `utils/snapshot.py` and
+  `utils/view.py` as `ffmpeg_core` re-exports. Neither exists as a usable
+  module, and the script writes unconditionally, so running it replaced working
+  code with broken stubs in every version package
+- Dispatching a single FFmpeg version to `ci-codegen-versions.yml` regenerated
+  all of them: the image map lived in `matrix.include` keyed on `ffmpeg-version`,
+  which is also a matrix key, so the non-matching entries were appended as extra
+  jobs rather than merged
+- `uv.lock` carried two `griffelib` entries after the mkdocstrings-python bump,
+  which `uv` rejects outright; `mkdocs.yml` passed a `mkdocstrings` handler
+  option that never existed and became a hard error in 2.0; the removed
+  `fix-encoding-pragma` hook was still configured, failing every pre-commit run;
+  and the filter-doc HTML fallback stopped matching after ffmpeg.org regenerated
+  its pages with a newer texinfo
+
+### Added
+
+- Regression coverage for the above: the shared suite now asserts that no filter
+  reached by a stream method declares zero inputs. The only previous test
+  touching `.scale()` was skipped unless graphviz was installed, so the most
+  common filter in the library had no effective coverage
+- `docs/version-differences.md` gains an **FFmpeg 8 → 9** section, verified
+  against `allfilters.c` / `allcodecs.c` / `allformats.c` on `release/9.0`.
+  Three entries misattributed to 8.0 in the 7 → 8 section are corrected
+
+### Changed
+
+- The FFmpeg version list is now derived from `packages/v*` rather than
+  enumerated, in the `scripts/` helpers (via the new `scripts/_versions.py`),
+  `.gitattributes`, the ruff configuration and the codegen workflow's apply
+  step. `scripts/regenerate-monorepo.sh` had silently skipped v9 for the whole
+  FFmpeg 9 rollout, and `.gitattributes` left v9's generated bindings counted in
+  the language statistics
+- The TestPyPI smoke test installs the `typed-ffmpeg` meta-package instead of a
+  pinned version package, so it exercises the chain the release actually ships
+- `ci-monorepo-test` covers v9 on Python 3.12, and `ci-monorepo-lint` runs its
+  circular-import check against v9
+- Dependency updates: typer, ty, mypy, ruff, mkdocstrings-python,
+  mkdocs-literate-nav, mkdocs-gen-files, griffe-inherited-docstrings
+
 ## [4.4] - 2026-08-16
 
 ### Added

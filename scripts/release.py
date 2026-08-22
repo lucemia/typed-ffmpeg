@@ -3,7 +3,7 @@
 
 Steps:
   1. Ask for new version
-  2. Bump all 11 package versions
+  2. Bump all 13 package versions
   3. Update CHANGELOG.md (open in $EDITOR)
   4. Commit and tag
   5. Push to remote
@@ -204,7 +204,7 @@ def main() -> None:
 
     if args.dry_run:
         print("\n[DRY RUN] Would perform:")
-        print("  1. Bump all 11 package versions")
+        print("  1. Bump all 13 package versions")
         print("  2. Update CHANGELOG.md")
         print("  3. Commit and tag")
         print("  4. Push to origin")

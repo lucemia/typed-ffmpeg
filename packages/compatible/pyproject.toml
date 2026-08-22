@@ -1,6 +1,6 @@
 [project]
 name = "typed-ffmpeg-compatible"
-version = "4.4"
+version = "4.5"
 description = "typed-ffmpeg under the typed_ffmpeg module name (no conflict with ffmpeg-python)"
 authors = [
     {name = "lucemia", email = "lucemia@gmail.com"}
@@ -34,7 +34,7 @@ classifiers = [
 # as `typed_ffmpeg` so it doesn't conflict with ffmpeg-python's
 # `ffmpeg` module.
 dependencies = [
-    "typed-ffmpeg-v9>=4.4,<5.0",
+    "typed-ffmpeg-v9>=4.5,<5.0",
 ]
 
 [build-system]
