@@ -39,14 +39,14 @@ def _get_data_cache_path() -> Path | None:
     """
     Get the cache path from an installed ffmpeg-data-vN package.
 
-    Tries ffmpeg_data_v8 through ffmpeg_data_v5 (newest first) and returns
+    Tries ffmpeg_data_v9 through ffmpeg_data_v5 (newest first) and returns
     the first one found. Returns None if no data package is installed.
 
     Returns:
         Path to the data cache directory, or None if not installed.
 
     """
-    for version in ("v8", "v7", "v6", "v5"):
+    for version in ("v9", "v8", "v7", "v6", "v5"):
         try:
             mod = __import__(f"ffmpeg_data_{version}")
             return mod.get_cache_path()

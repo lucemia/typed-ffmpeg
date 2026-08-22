@@ -43,7 +43,7 @@ jobs:
           python -m venv .venv
           source .venv/bin/activate
           pip install -e packages/core
-          pip install -e packages/v8
+          pip install -e packages/v9
           python <<EOF
           import sys
           import warnings

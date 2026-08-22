@@ -1,6 +1,6 @@
 # Code Generation
 
-Typed-ffmpeg generates its filter/codec/format bindings by introspecting real FFmpeg binaries. Each version package (`v5`, `v6`, `v7`, `v8`) is generated from the corresponding FFmpeg major version.
+Typed-ffmpeg generates its filter/codec/format bindings by introspecting real FFmpeg binaries. Each version package (`v5`, `v6`, `v7`, `v8`, `v9`) is generated from the corresponding FFmpeg major version.
 
 ## How It Works
 
@@ -52,8 +52,11 @@ For local code generation you need multiple FFmpeg versions installed side by si
 ### macOS (Homebrew)
 
 ```bash
-brew install ffmpeg@5 ffmpeg@6 ffmpeg@7 ffmpeg      # ffmpeg (no suffix) = latest (v8+)
+brew install ffmpeg@5 ffmpeg@6 ffmpeg@7 ffmpeg      # ffmpeg (no suffix) = latest (v9)
 ```
+
+Homebrew has no `ffmpeg@8` formula, so `packages/v8` cannot be generated locally on
+macOS — use the Docker image or `ci-codegen-versions.yml` for that version.
 
 Then invoke the generator by pointing `PATH` at the desired version:
 
@@ -124,3 +127,4 @@ Use `--rebuild` to bypass the cache and regenerate from scratch.
 | `packages/v6` | 6.1 | `ghcr.io/lucemia/typed-ffmpeg/ffmpeg:6.1` |
 | `packages/v7` | 7.1 | `ghcr.io/lucemia/typed-ffmpeg/ffmpeg:7.1` |
 | `packages/v8` | 8.0 | `ghcr.io/lucemia/typed-ffmpeg/ffmpeg:8.0` |
+| `packages/v9` | 9.0 | `ghcr.io/lucemia/typed-ffmpeg/ffmpeg:9.0` |

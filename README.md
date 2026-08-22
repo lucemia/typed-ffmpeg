@@ -67,7 +67,7 @@ pip install typed-ffmpeg-v6      # install the matching package
 | `[graph]` | `pip install 'typed-ffmpeg[graph]'` | Graph visualization via Graphviz |
 | `[parse]` | `pip install 'typed-ffmpeg[parse]'` | CLI parsing and `compile_as_python()` support |
 
-The `[parse]` extra installs version-specific cache data (`ffmpeg-data-v5` through `ffmpeg-data-v8`) needed by `ffmpeg.compile.compile_cli.parse()` to reconstruct filter graphs from FFmpeg command lines. Most users do not need this.
+The `[parse]` extra installs version-specific cache data (`ffmpeg-data-v5` through `ffmpeg-data-v9`) needed by `ffmpeg.compile.compile_cli.parse()` to reconstruct filter graphs from FFmpeg command lines. Most users do not need this.
 
 See the [v4 Package Architecture](https://github.com/lucemia/typed-ffmpeg/blob/main/docs/v4-packages.md) docs for details and the [Migration Guide](https://github.com/lucemia/typed-ffmpeg/blob/main/docs/migration/v3-to-v4.md) if you are upgrading from typed-ffmpeg 3.x.
 
@@ -132,7 +132,7 @@ const cmd = input("input.mp4")
 // => ["-i", "input.mp4", "-filter_complex", "...", "output.mp4"]
 ```
 
-`@typed-ffmpeg/core` ships three builds — CJS (Node.js default), ESM, and a browser-safe ESM bundle — selected automatically via the `exports` field. The TypeScript API mirrors the Python API with idiomatic TypeScript patterns (options objects instead of keyword arguments). Each version package includes JSDoc annotations indicating filter availability across FFmpeg versions. See `packages/ts-core/` and `packages/ts-v5/` through `packages/ts-v8/` for details.
+`@typed-ffmpeg/core` ships three builds — CJS (Node.js default), ESM, and a browser-safe ESM bundle — selected automatically via the `exports` field. The TypeScript API mirrors the Python API with idiomatic TypeScript patterns (options objects instead of keyword arguments). Each version package includes JSDoc annotations indicating filter availability across FFmpeg versions. See `packages/ts-core/` and `packages/ts-v5/` through `packages/ts-v9/` for details.
 
 ---
 

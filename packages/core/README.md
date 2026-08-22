@@ -4,7 +4,7 @@ Core runtime for typed-ffmpeg multi-version packages.
 
 ## Overview
 
-`ffmpeg-core` contains the hand-written runtime code that is shared across all FFmpeg version bindings (v5, v6, v7, v8). This package is automatically installed as a dependency when you install any `typed-ffmpeg-vX` package.
+`ffmpeg-core` contains the hand-written runtime code that is shared across all FFmpeg version bindings (v5, v6, v7, v8, v9). This package is automatically installed as a dependency when you install any `typed-ffmpeg-vX` package.
 
 ## What's Inside
 
@@ -19,7 +19,7 @@ This package is installed automatically:
 
 ```bash
 # Installing any version package will install ffmpeg-core
-pip install typed-ffmpeg-v8
+pip install typed-ffmpeg-v9
 
 # You can also install it directly (advanced)
 pip install ffmpeg-core
