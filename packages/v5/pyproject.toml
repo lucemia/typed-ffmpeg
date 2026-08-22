@@ -1,6 +1,6 @@
 [project]
 name = "typed-ffmpeg-v5"
-version = "4.4"
+version = "4.5"
 description = "Typed FFmpeg bindings for FFmpeg 5.x"
 authors = [
     {name = "lucemia", email = "lucemia@gmail.com"}
@@ -17,7 +17,7 @@ classifiers = [
     "Topic :: Multimedia :: Video",
 ]
 
-dependencies = ["ffmpeg-core>=4.4,<5.0"]
+dependencies = ["ffmpeg-core>=4.5,<5.0"]
 
 [tool.uv.sources]
 ffmpeg-core = { workspace = true }
