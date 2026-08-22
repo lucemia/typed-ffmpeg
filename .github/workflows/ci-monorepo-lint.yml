@@ -7,12 +7,14 @@ on:
       - 'packages/**'
       - 'pyproject.toml'
       - 'pyproject-workspace.toml'
+      - 'uv.lock'
   pull_request:
     branches: [main]
     paths:
       - 'packages/**'
       - 'pyproject.toml'
       - 'pyproject-workspace.toml'
+      - 'uv.lock'
 
 jobs:
   lint:
@@ -28,6 +30,15 @@ jobs:
         uses: actions/setup-python@v7
         with:
           python-version: '3.12'
+
+      # uv.lock pins every workspace package's own version, so a release that
+      # bumps the pyprojects without relocking leaves it inconsistent. Nothing
+      # checked this, which is how a stale `griffe` entry survived the
+      # mkdocstrings-python 2.0.6 bump and how `uv sync` broke on main.
+      - name: Check uv.lock is up to date
+        run: |
+          pip install uv
+          uv lock --check
 
       - name: Check import organization
         run: |
