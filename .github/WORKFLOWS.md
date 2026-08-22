@@ -64,14 +64,15 @@ Integration tests to verify:
 **Features:**
 
 #### Manual Dispatch Options
-- `package`: Choose which package(s) to publish (core, v8, v7, v6, v5, latest, all)
+- `package`: Choose which package(s) to publish (core, data-v5..v9, v5..v9, latest, compatible, all)
 - `test-pypi`: Publish to TestPyPI first for validation
 
 #### Automatic Publishing Order
 Publishes in dependency order:
 1. `core` (no dependencies)
-2. `v5`, `v6`, `v7`, `v8` (depend on core)
-3. `latest` (depends on v8)
+2. `data-v5` … `data-v9` (cache data, no dependencies)
+3. `v5`, `v6`, `v7`, `v8`, `v9` (depend on core)
+4. `latest` and `compatible` (depend on the newest version package)
 
 #### Safety Features
 - TestPyPI testing before production

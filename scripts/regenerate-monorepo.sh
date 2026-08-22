@@ -9,8 +9,9 @@ REPO_ROOT="$(dirname "$SCRIPT_DIR")"
 echo "🔄 Regenerating version bindings for monorepo..."
 echo ""
 
-# Array of versions to regenerate
-VERSIONS=(5 6 7 8)
+# Versions to regenerate, read from packages/vN. This was a literal (5 6 7 8)
+# and silently skipped v9 for the whole FFmpeg 9 rollout (#999).
+read -r -a VERSIONS <<< "$(python3 "${SCRIPT_DIR}/_versions.py")"
 
 for VERSION in "${VERSIONS[@]}"; do
     echo "📦 Generating v${VERSION}..."

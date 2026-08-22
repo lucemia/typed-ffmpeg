@@ -11,7 +11,13 @@ Preserves relative imports within the same package (e.g., from .options.codec im
 """
 
 import re
+import sys
 from pathlib import Path
+
+# Run either as `python scripts/<name>.py` or from another directory, so put
+# scripts/ on the path explicitly rather than relying on sys.path[0].
+sys.path.insert(0, str(Path(__file__).parent))
+from _versions import version_dirs
 
 # Modules that moved to ffmpeg_core package
 CORE_MODULES = {
@@ -78,7 +84,7 @@ def main():
     packages_dir = repo_root / "packages"
 
     # Process each version package
-    for version_dir in ["v5", "v6", "v7", "v8", "v9"]:
+    for version_dir in version_dirs():
         version_path = packages_dir / version_dir / "src" / "ffmpeg"
 
         if not version_path.exists():

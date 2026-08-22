@@ -2,15 +2,21 @@
 
 from __future__ import annotations
 
+import sys
 from pathlib import Path
 
 import mkdocs_gen_files
+
+# mkdocs-gen-files execs this from the repo root, so scripts/ is not on the
+# path by default.
+sys.path.insert(0, str(Path(__file__).parent))
+from _versions import version_dirs
 
 nav = mkdocs_gen_files.Nav()
 
 root = Path(__file__).parent.parent
 
-VERSIONS = ["v5", "v6", "v7", "v8", "v9"]
+VERSIONS = version_dirs()
 core_src = root / "packages" / "core" / "src"
 stubs_dir = root / "docs" / "_stubs"
 

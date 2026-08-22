@@ -6,6 +6,7 @@ typed-ffmpeg provides type-safe FFmpeg bindings for TypeScript, mirroring the Py
 
 | npm Package | FFmpeg Version | Install |
 |---|---|---|
+| `@typed-ffmpeg/v9` | FFmpeg 9.x | `npm install @typed-ffmpeg/core @typed-ffmpeg/v9` |
 | `@typed-ffmpeg/v8` | FFmpeg 8.x | `npm install @typed-ffmpeg/core @typed-ffmpeg/v8` |
 | `@typed-ffmpeg/v7` | FFmpeg 7.x | `npm install @typed-ffmpeg/core @typed-ffmpeg/v7` |
 | `@typed-ffmpeg/v6` | FFmpeg 6.x | `npm install @typed-ffmpeg/core @typed-ffmpeg/v6` |

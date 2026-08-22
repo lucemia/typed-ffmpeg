@@ -436,8 +436,11 @@ keep in sync.
    tag — globbing on the major alone also matches sibling minors.
 4. Dispatch the workflow to generate the bindings and open a PR. Merge it —
    generated bindings only reach users once that PR lands.
-5. Add the new packages to `scripts/bump-version.py`, `scripts/gen_ref_pages.py`,
-   the publish workflow, and the `ci-monorepo-test` / `ci-ts-test` matrices.
+5. Add the new packages to `scripts/bump-version.py`, the publish workflow, and
+   the `ci-monorepo-test` / `ci-ts-test` matrices. The runtime cache lookup in
+   `ffmpeg_core.common.cache`, the helper scripts in `scripts/` (via
+   `scripts/_versions.py`), `.gitattributes` and the ruff config all derive the
+   version list themselves, so they need no change.
 6. Update the `typed-ffmpeg` meta-package dependency to point to the new version.
 7. Bump version and release all packages.
 
