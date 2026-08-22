@@ -136,21 +136,24 @@ def _parse_filter(text: str) -> FFMpegFilter:
         section, subtree = glob(tree, r".*AVOptions")[0]
         options = parse_av_option(section, tree)
 
+    # The dynamic marker and a concrete pad list are not mutually exclusive.
+    # `scale` reports both, with the marker indented under the pad:
+    #
+    #     Inputs:
+    #        #0: default (video)
+    #         dynamic (depending on the options)
+    #
+    # glob() searches the whole subtree, so an `else` here dropped scale's only
+    # input and left it claiming zero -- `parse()` then raised
+    # "Expected 0 inputs, got 1" and the filter leaked into sources.py as a
+    # bogus source. Record the marker and parse the pads independently.
     section, subtree = glob(tree, "Inputs:")[0]
-    is_input_dynamic = False
-    input_types = []
-    if glob(subtree, r"dynamic \(depending on the options\)"):
-        is_input_dynamic = True
-    else:
-        input_types = _parse_filter_io(subtree)
+    is_input_dynamic = bool(glob(subtree, r"dynamic \(depending on the options\)"))
+    input_types = _parse_filter_io(subtree)
 
     section, subtree = glob(tree, "Outputs:")[0]
-    is_output_dynamic = False
-    output_types = []
-    if glob(subtree, r"dynamic \(depending on the options\)"):
-        is_output_dynamic = True
-    else:
-        output_types = _parse_filter_io(subtree)
+    is_output_dynamic = bool(glob(subtree, r"dynamic \(depending on the options\)"))
+    output_types = _parse_filter_io(subtree)
 
     return FFMpegFilter(
         name=name,
