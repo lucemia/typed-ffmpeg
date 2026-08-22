@@ -1,12 +1,17 @@
 """Cache utilities for FFmpeg operations."""
 
+import importlib
+import pkgutil
 import sys
+from functools import lru_cache
 from pathlib import Path
 from typing import TypeVar
 
 from .serialize import dumps, loads
 
 T = TypeVar("T")
+
+_DATA_PACKAGE_PREFIX = "ffmpeg_data_v"
 
 
 def get_cache_path() -> Path:
@@ -35,33 +40,54 @@ def get_cache_path() -> Path:
 cache_path = get_cache_path()
 
 
-def _get_data_cache_path() -> Path | None:
+@lru_cache(maxsize=1)
+def _iter_data_cache_paths() -> tuple[Path, ...]:
     """
-    Get the cache path from an installed ffmpeg-data-vN package.
+    Find the cache directory of every installed ffmpeg-data-vN package.
 
-    Tries ffmpeg_data_v9 through ffmpeg_data_v5 (newest first) and returns
-    the first one found. Returns None if no data package is installed.
+    Data packages are discovered by scanning for importable top-level modules
+    named ``ffmpeg_data_v<N>`` rather than from a hard-coded version list, so a
+    newly released version needs no change here.
 
     Returns:
-        Path to the data cache directory, or None if not installed.
+        Cache directories, newest version first. Empty if none are installed.
 
     """
-    for version in ("v9", "v8", "v7", "v6", "v5"):
+    versions: list[int] = []
+    for module in pkgutil.iter_modules():
+        suffix = module.name.removeprefix(_DATA_PACKAGE_PREFIX)
+        if suffix != module.name and suffix.isdigit():
+            versions.append(int(suffix))
+
+    paths: list[Path] = []
+    for version in sorted(set(versions), reverse=True):
         try:
-            mod = __import__(f"ffmpeg_data_{version}")
-            return mod.get_cache_path()
-        except ImportError:
+            mod = importlib.import_module(f"{_DATA_PACKAGE_PREFIX}{version}")
+            paths.append(Path(mod.get_cache_path()))
+        except (ImportError, AttributeError):  # pragma: no cover - defensive
             continue
-    return None
+    return tuple(paths)
+
+
+def _get_data_cache_path() -> Path | None:
+    """
+    Get the cache path of the newest installed ffmpeg-data-vN package.
+
+    Returns:
+        Path to the data cache directory, or None if none is installed.
+
+    """
+    paths = _iter_data_cache_paths()
+    return paths[0] if paths else None
 
 
 def load(cls: type[T], id: str) -> T:
     """
     Load an object from the cache.
 
-    Tries the local cache first (for development), then falls back to an
-    installed ffmpeg-data-vN package. Raises FileNotFoundError with installation
-    instructions if the data is not available.
+    Tries the local cache first (for development), then every installed
+    ffmpeg-data-vN package newest-first. Raises FileNotFoundError with
+    installation instructions if the data is not available.
 
     Args:
         cls: The class of the object
@@ -77,11 +103,14 @@ def load(cls: type[T], id: str) -> T:
     path = cache_path / f"{cls.__name__}/{id}.json"
 
     if not path.exists():
-        data_cache = _get_data_cache_path()
-        if data_cache is not None:
+        # Walk every installed data package rather than committing to the
+        # newest one: a data package that is installed but does not carry this
+        # entry must not shadow an older one that does.
+        for data_cache in _iter_data_cache_paths():
             data_path = data_cache / f"{cls.__name__}/{id}.json"
             if data_path.exists():
                 path = data_path
+                break
 
     try:
         with path.open() as ifile:
