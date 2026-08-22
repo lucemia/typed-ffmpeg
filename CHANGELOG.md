@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
-## [4.5] - 2026-08-22
+## [4.5] - 2026-08-23
 
 Bug-fix release. Two separate defects made the 4.4 packages unusable for common
 work: `parse()` could not find its cache data at all, and `VideoStream.scale()`
