@@ -88,6 +88,64 @@ def test_parse_filter_options(snapshot: SnapshotAssertion, text: str) -> None:
     assert snapshot(extension_class=JSONSnapshotExtension) == asdict(options)
 
 
+# FFmpeg >= 7 prints scale's static pad and the dynamic marker together, with
+# the marker indented one level deeper:
+#
+#     Inputs:
+#        #0: default (video)
+#         dynamic (depending on the options)
+#
+# The marker used to suppress the pad list entirely, so scale reached the cache
+# claiming zero inputs. `parse()` then raised "Expected 0 inputs, got 1" for any
+# command line using scale, and codegen emitted it into sources.py as a bogus
+# source filter. Only reproduced on FFmpeg >= 7, which is why v5/v6 are correct.
+SCALE_WITH_DYNAMIC_MARKER = """Filter scale
+  Scale the input video size and/or convert the image format.
+    Inputs:
+       #0: default (video)
+        dynamic (depending on the options)
+    Outputs:
+       #0: default (video)
+scale AVOptions:
+   w                 <string>     ..FV.....T. Output video width
+"""
+
+# A genuinely dynamic filter lists the marker alone, with no pads.
+CONCAT_DYNAMIC_ONLY = """Filter concat
+  Concatenate audio and video streams.
+    Inputs:
+        dynamic (depending on the options)
+    Outputs:
+        dynamic (depending on the options)
+concat AVOptions:
+   n                 <int>        ..FVA...... specify the number of segments (from 1 to INT_MAX) (default 2)
+"""
+
+
+def test_dynamic_marker_does_not_discard_static_pads() -> None:
+    """A pad list and the dynamic marker can both be present; keep both."""
+    parsed = _parse_filter(SCALE_WITH_DYNAMIC_MARKER)
+
+    assert parsed.is_dynamic_input is True
+    assert [(i.name, i.type) for i in parsed.stream_typings_input] == [
+        ("default", "video")
+    ]
+    assert [(i.name, i.type) for i in parsed.stream_typings_output] == [
+        ("default", "video")
+    ]
+    assert parsed.is_dynamic_output is False
+
+
+def test_dynamic_marker_alone_yields_no_pads() -> None:
+    """A filter that only reports the marker still has no static pads."""
+    parsed = _parse_filter(CONCAT_DYNAMIC_ONLY)
+
+    assert parsed.is_dynamic_input is True
+    assert parsed.stream_typings_input == ()
+    assert parsed.is_dynamic_output is True
+    assert parsed.stream_typings_output == ()
+
+
 @pytest.mark.parametrize(
     "filter",
     [
