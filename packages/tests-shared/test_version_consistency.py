@@ -186,6 +186,32 @@ def test_no_nested_version_tree(major: str) -> None:
 
 
 @pytest.mark.parametrize("major", MAJORS)
+def test_has_reference_docs_stub(major: str) -> None:
+    """
+    Each version package needs its docs/_stubs alias to be documented.
+
+    Every version package installs its bindings as `ffmpeg`, so documenting
+    five of them needs five distinct importable names; mkdocs.yml lists
+    docs/_stubs in the mkdocstrings handler `paths` for that reason, and
+    gen_ref_pages.py skips any version whose alias is missing. The directory
+    used to be gitignored and created by nothing, so every version was skipped
+    and the published docs carried no v5-v9 API reference at all. It cannot be
+    generated during the build either -- mkdocstrings drops `paths` entries
+    that do not exist when it initialises, before gen-files runs.
+    """
+    stub = ROOT / "docs" / "_stubs" / f"ffmpeg_v{major}"
+    assert stub.is_symlink(), (
+        f"docs/_stubs/ffmpeg_v{major} is missing, so v{major} gets no API "
+        f"reference. Create it with:\n"
+        f"  ln -s ../../packages/v{major}/src/ffmpeg docs/_stubs/ffmpeg_v{major}"
+    )
+    expected = ROOT / "packages" / f"v{major}" / "src" / "ffmpeg"
+    assert stub.resolve() == expected.resolve(), (
+        f"docs/_stubs/ffmpeg_v{major} points at {stub.resolve()}, expected {expected}"
+    )
+
+
+@pytest.mark.parametrize("major", MAJORS)
 def test_documented_and_measured(major: str) -> None:
     """Docs and coverage config both enumerate the binding packages."""
     for rel, needle in (
