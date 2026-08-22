@@ -87,10 +87,9 @@ command line that contains `-dec` is not, and raises a clear error.
 
 ## FFmpeg 7 → 8
 
-### Filters added (6)
+### Filters added (5)
 
-`colordetect`, `coreimage`, `coreimagesrc`, `premultiply_dynamic`, `scale_vt`,
-`transpose_vt`
+`colordetect`, `coreimage`, `coreimagesrc`, `scale_vt`, `transpose_vt`
 
 ### Filters removed (67)
 
@@ -144,9 +143,41 @@ third-party-library filters were removed from the default build:
 `vc1_cuvid`, `vc1_v4l2m2m`, `vp8_cuvid`, `vp8_v4l2m2m`, `vp8_vaapi`,
 `vp9_cuvid`, `vp9_v4l2m2m`, `vp9_vaapi`
 
-### Formats added (5)
+### Formats added (3)
 
-`apv`, `g728`, `hxvs`, `jpegxs_pipe`, `whip`
+`apv`, `g728`, `whip`
+
+---
+
+## FFmpeg 8 → 9
+
+### Filters added (3)
+
+`premultiply_dynamic`, `transpose_cuda`, `v360_vulkan`
+
+### Codecs added (11)
+
+`adpcm_circus`, `adpcm_ima_escape`, `adpcm_ima_hvqm2`, `adpcm_ima_hvqm4`,
+`adpcm_ima_magix`, `adpcm_ima_pda`, `adpcm_n64`, `adpcm_psxc`, `ahx`,
+`prores_ks_vulkan`, `webp_anim`
+
+### Codecs removed (4)
+
+`sonic`, `v308`, `v408`, `v410`
+
+### Formats added (3)
+
+`hxvs`, `jpegxs_pipe`, `webp_anim`
+
+!!! note "Changes outside the default build"
+    These lists come from the bindings, so they only cover what the
+    `ghcr.io/lucemia/typed-ffmpeg/ffmpeg:9.0` build enables. FFmpeg 9.0 also
+    **removes** the CUDA/NPP filters (`scale_npp`, `scale2ref_npp`,
+    `sharpen_npp`, `transpose_npp`), the OMX encoders (`h264_omx`,
+    `mpeg4_omx`) and the CELT decoder (`libcelt`), and **adds** the D3D12
+    filters (`deinterlace_d3d12`, `mestimate_d3d12`, `scale_d3d12`), `frc_amf`,
+    `drawvg` and `ocio`. None of those are built into the Linux image, so they
+    have no bindings in any `typed-ffmpeg` package.
 
 ---
 

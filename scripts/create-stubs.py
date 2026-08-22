@@ -14,7 +14,6 @@ STUB_MODULES = {
     "expressions.py": "expressions",
     "types.py": "types",
     "schema.py": "schema",
-    "base.py": "base",
     "info.py": "info",
     "common/__init__.py": "common",
     "common/schema.py": "common.schema",
@@ -23,10 +22,15 @@ STUB_MODULES = {
     "utils/frozendict.py": "utils.frozendict",
     "utils/typing.py": "utils.typing",
     "utils/escaping.py": "utils.escaping",
-    "utils/snapshot.py": "utils.snapshot",
-    "utils/view.py": "utils.view",
     "utils/lazy_eval/__init__.py": "utils.lazy_eval",
 }
+
+# Deliberately NOT stubbed: base.py, utils/snapshot.py and utils/view.py.
+# ffmpeg_core has no `base` module, and ffmpeg_core.utils.{snapshot,view} are
+# tombstones that raise ImportError because they depend on the DAG layer. Each
+# version package ships its own real implementation of these three, and
+# create_stub() overwrites unconditionally -- listing them here replaced working
+# code with broken re-export stubs in every version package.
 
 
 def create_stub(file_path: Path, module_name: str):
@@ -44,7 +48,7 @@ def main():
     repo_root = Path(__file__).parent.parent
     packages_dir = repo_root / "packages"
 
-    for version_dir in ["v5", "v6", "v7", "v8"]:
+    for version_dir in ["v5", "v6", "v7", "v8", "v9"]:
         version_path = packages_dir / version_dir / "src" / "ffmpeg"
 
         if not version_path.exists():

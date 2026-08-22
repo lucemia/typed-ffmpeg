@@ -1,4 +1,4 @@
-"""Conftest for shared tests across typed-ffmpeg v5-v8.
+"""Conftest for shared tests across typed-ffmpeg v5-v9.
 
 Most snapshots are identical across versions, so a single __snapshots__ dir is used.
 Version-sensitive tests (e.g., CLI parsing that depends on options.json data) use
