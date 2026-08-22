@@ -51,29 +51,35 @@ jobs:
       fail-fast: false
       matrix:
         ffmpeg-version: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.ffmpeg-version != 'all') && fromJSON(format('["{0}"]', github.event.inputs.ffmpeg-version)) || fromJSON('["5", "6", "7", "8", "9"]') }}
-        # ffmpeg-mm is the major_minor suffix codegen writes into cache/list/
-        # (e.g. filters_8_0.json). It must match the image tag: globbing on the
-        # major alone matches sibling minors like *_8_1.json and mixes versions
-        # into one artifact.
-        include:
-          - ffmpeg-version: '5'
-            ffmpeg-image: 'jrottenberg/ffmpeg:5.1-ubuntu'
-            ffmpeg-mm: '5_1'
-          - ffmpeg-version: '6'
-            ffmpeg-image: 'jrottenberg/ffmpeg:6.1-ubuntu'
-            ffmpeg-mm: '6_1'
-          - ffmpeg-version: '7'
-            ffmpeg-image: 'ghcr.io/lucemia/typed-ffmpeg/ffmpeg:7.1'
-            ffmpeg-mm: '7_1'
-          - ffmpeg-version: '8'
-            ffmpeg-image: 'ghcr.io/lucemia/typed-ffmpeg/ffmpeg:8.0'
-            ffmpeg-mm: '8_0'
-          - ffmpeg-version: '9'
-            ffmpeg-image: 'ghcr.io/lucemia/typed-ffmpeg/ffmpeg:9.0'
-            ffmpeg-mm: '9_0'
 
     steps:
       - uses: actions/checkout@v7
+
+      # The image and cache suffix were carried in `matrix.include` keyed on
+      # ffmpeg-version, which is also a matrix key. An include entry that
+      # cannot merge into any combination is appended as an extra one instead,
+      # so narrowing the matrix to a single version still ran all five —
+      # dispatching "9" regenerated v5-v8 as well. Resolving here keeps the
+      # matrix to exactly what was asked for.
+      #
+      # mm is the major_minor suffix codegen writes into cache/list/ (e.g.
+      # filters_8_0.json). It must match the image tag: globbing on the major
+      # alone matches sibling minors like *_8_1.json and mixes versions into
+      # one artifact.
+      - name: Resolve FFmpeg image and cache suffix
+        id: ver
+        run: |
+          case "${{ matrix.ffmpeg-version }}" in
+            5) image='jrottenberg/ffmpeg:5.1-ubuntu'; mm='5_1' ;;
+            6) image='jrottenberg/ffmpeg:6.1-ubuntu'; mm='6_1' ;;
+            7) image='ghcr.io/lucemia/typed-ffmpeg/ffmpeg:7.1'; mm='7_1' ;;
+            8) image='ghcr.io/lucemia/typed-ffmpeg/ffmpeg:8.0'; mm='8_0' ;;
+            9) image='ghcr.io/lucemia/typed-ffmpeg/ffmpeg:9.0'; mm='9_0' ;;
+            *) echo "::error::No image mapped for v${{ matrix.ffmpeg-version }}"; exit 1 ;;
+          esac
+          echo "Using $image (cache suffix _$mm)"
+          echo "image=$image" >> "$GITHUB_OUTPUT"
+          echo "mm=$mm" >> "$GITHUB_OUTPUT"
 
       - name: Set up Python 3.10
         uses: actions/setup-python@v7
@@ -96,8 +102,8 @@ jobs:
 
       - name: Extract FFmpeg ${{ matrix.ffmpeg-version }} from Docker image
         run: |
-          docker pull ${{ matrix.ffmpeg-image }}
-          CONTAINER_ID=$(docker create ${{ matrix.ffmpeg-image }})
+          docker pull ${{ steps.ver.outputs.image }}
+          CONTAINER_ID=$(docker create ${{ steps.ver.outputs.image }})
           sudo docker cp "$CONTAINER_ID:/usr/local/bin/ffmpeg" /usr/local/bin/ffmpeg || \
             sudo docker cp "$CONTAINER_ID:/usr/bin/ffmpeg" /usr/local/bin/ffmpeg
           sudo docker cp "$CONTAINER_ID:/usr/local/bin/ffprobe" /usr/local/bin/ffprobe || \
@@ -146,7 +152,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: ffmpeg-v${{ matrix.ffmpeg-version }}-cache
-          path: packages/core/src/ffmpeg_core/common/cache/list/*_${{ matrix.ffmpeg-mm }}.json
+          path: packages/core/src/ffmpeg_core/common/cache/list/*_${{ steps.ver.outputs.mm }}.json
           retention-days: 30
 
       - name: Verify generated code imports
@@ -226,7 +232,23 @@ jobs:
 
       - name: Apply generated files
         run: |
-          for ver in 5 6 7 8 9; do
+          # Versions come from the artifacts the generate matrix actually
+          # produced, not a literal list, so a single-version dispatch applies
+          # exactly that version and a newly added major needs no edit here.
+          # nullglob so a non-matching pattern expands to nothing instead of
+          # being passed through as a literal.
+          shopt -s nullglob
+          VERSIONS=$(for d in /tmp/artifacts/ffmpeg-v*-bindings /tmp/artifacts/ffmpeg-v*-cache; do
+            v=${d##*/ffmpeg-v}
+            echo "${v%%-*}"
+          done | sort -un | tr '\n' ' ')
+          if [ -z "$VERSIONS" ]; then
+            echo "::error::No generated artifacts were downloaded."
+            exit 1
+          fi
+          echo "Applying versions: $VERSIONS"
+          echo "CODEGEN_VERSIONS=$VERSIONS" >> "$GITHUB_ENV"
+          for ver in $VERSIONS; do
             bindings_dir="/tmp/artifacts/ffmpeg-v${ver}-bindings"
             cache_dir="/tmp/artifacts/ffmpeg-v${ver}-cache"
             if [ -d "$bindings_dir" ]; then
@@ -336,7 +358,14 @@ jobs:
           BRANCH="chore/regen-bindings-$(date +%Y%m%d-%H%M%S)"
           git checkout -b "$BRANCH"
           git add -A
-          git commit -m "chore: regenerate FFmpeg bindings for v5/v6/v7/v8"
+          # CODEGEN_VERSIONS ("5 6 7 8 9") is set by the apply step, so a
+          # single-version dispatch is titled for that version alone.
+          SLASHED=""; COMMA_LIST=""
+          for ver in $CODEGEN_VERSIONS; do
+            SLASHED="${SLASHED:+$SLASHED/}v${ver}"
+            COMMA_LIST="${COMMA_LIST:+$COMMA_LIST, }v${ver}"
+          done
+          git commit -m "chore: regenerate FFmpeg bindings for ${SLASHED}"
           git push origin "$BRANCH"
           gh pr create \
             --base ${{ github.ref_name }} \
@@ -344,6 +373,6 @@ jobs:
             --title "chore: regenerate FFmpeg bindings" \
             --body "Auto-generated by [CI CodeGen workflow](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}).
 
-          Updates FFmpeg bindings for v5, v6, v7, v8 using pre-built Docker images with hardware filter support (VAAPI, OpenCL, etc.)."
+          Updates FFmpeg bindings for ${COMMA_LIST} using pre-built Docker images with hardware filter support (VAAPI, OpenCL, etc.)."
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

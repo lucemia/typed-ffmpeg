@@ -108,9 +108,12 @@ jobs:
       - name: Test installation from TestPyPI
         if: github.event.inputs.test-pypi == 'true'
         run: |
+          # The meta-package, so this exercises the whole chain the release
+          # actually ships (typed-ffmpeg -> typed-ffmpeg-vN -> ffmpeg-core) and
+          # does not need updating when `latest` is retargeted.
           python -m pip install --index-url https://test.pypi.org/simple/ \
             --extra-index-url https://pypi.org/simple/ \
-            typed-ffmpeg-v8 || echo "TestPyPI installation test completed"
+            typed-ffmpeg || echo "TestPyPI installation test completed"
 
       - name: Publish to PyPI
         if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && github.event.inputs.test-pypi == 'false')

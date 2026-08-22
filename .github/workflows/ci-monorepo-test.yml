@@ -102,6 +102,8 @@ jobs:
             ffmpeg-version: v9
           - python-version: '3.12'
             ffmpeg-version: v8
+          - python-version: '3.12'
+            ffmpeg-version: v9
 
     steps:
       - uses: actions/checkout@v7

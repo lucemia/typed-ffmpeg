@@ -116,24 +116,30 @@ def test_covered_by_test_matrices(major: str) -> None:
 
 @pytest.mark.parametrize("major", MAJORS)
 def test_codegen_can_generate(major: str) -> None:
-    """Without a matrix entry the bindings can never be regenerated."""
+    """Without a matrix entry and an image the bindings cannot be regenerated."""
     codegen = (ROOT / ".github/workflows/ci-codegen-versions.yml").read_text()
-    # The entry spans three lines; capture the block following its version.
-    entry = re.search(
-        rf"- ffmpeg-version:\s*'{major}'\n((?:\s+[a-z-]+:.*\n)+)", codegen
+
+    matrix = re.search(r"fromJSON\('\[([^\]]*)\]'\)", codegen)
+    assert matrix, "could not find the codegen version matrix"
+    assert f'"{major}"' in matrix.group(1), (
+        f"ci-codegen-versions generate matrix does not cover v{major}"
     )
-    assert entry, f"ci-codegen-versions has no matrix entry for v{major}"
-    block = entry.group(1)
-    assert re.search(r"ffmpeg-image:\s*\S+", block), (
-        f"v{major} matrix entry has no ffmpeg-image"
-    )
-    mm = re.search(r"ffmpeg-mm:\s*'(\d+_\d+)'", block)
+
+    # The image and cache suffix are resolved by a `case` arm keyed on the
+    # major. They used to live in `matrix.include`, but an include entry keyed
+    # on a matrix key is appended as an extra combination rather than merged,
+    # so dispatching a single version still generated all of them.
+    arm = re.search(rf"^[ \t]*{major}\)(.*)$", codegen, re.MULTILINE)
+    assert arm, f"ci-codegen-versions has no image mapping for v{major}"
+    body = arm.group(1)
+    assert re.search(r"image='\S+'", body), f"v{major} case arm has no image"
+    mm = re.search(r"mm='(\d+_\d+)'", body)
     assert mm, (
-        f"v{major} matrix entry needs a major_minor ffmpeg-mm (e.g. '{major}_0'); "
+        f"v{major} needs a major_minor cache suffix (e.g. '{major}_0'); "
         "globbing on the major alone also matches sibling minors"
     )
     assert mm.group(1).startswith(f"{major}_"), (
-        f"v{major} ffmpeg-mm is {mm.group(1)!r}, which is not a {major}.x version"
+        f"v{major} cache suffix is {mm.group(1)!r}, not a {major}.x version"
     )
 
 
@@ -161,6 +167,38 @@ def test_documented_and_measured(major: str) -> None:
     for rel, needle in (
         ("codecov.yml", f"packages/v{major}/src/ffmpeg"),
         ("mkdocs.yml", f"packages/v{major}/src"),
-        ("scripts/gen_ref_pages.py", f'"v{major}"'),
     ):
         assert needle in (ROOT / rel).read_text(), f"{rel} omits v{major}"
+
+
+def test_helper_scripts_derive_majors() -> None:
+    """
+    The scripts that walk every version package must not enumerate them.
+
+    These used to carry their own literal ["v5", ..., "v8"]. Read the shared
+    helper here rather than importing it, to keep this module free of anything
+    the test-versions job does not install.
+    """
+    helper = (ROOT / "scripts/_versions.py").read_text()
+    assert "def version_dirs" in helper, "scripts/_versions.py lost version_dirs()"
+
+    for rel in (
+        "scripts/create-stubs.py",
+        "scripts/fix-dag-imports.py",
+        "scripts/fix-monorepo-imports.py",
+        "scripts/add-lazy-import.py",
+        "scripts/gen_ref_pages.py",
+    ):
+        text = (ROOT / rel).read_text()
+        assert "version_dirs" in text, f"{rel} does not use scripts/_versions.py"
+        assert not re.search(r'\["v\d+"(?:,\s*"v\d+")+\]', text), (
+            f"{rel} enumerates version packages instead of discovering them"
+        )
+
+    shell = (ROOT / "scripts/regenerate-monorepo.sh").read_text()
+    assert "_versions.py" in shell, (
+        "scripts/regenerate-monorepo.sh does not read scripts/_versions.py"
+    )
+    assert not re.search(r"VERSIONS=\(\s*\d", shell), (
+        "scripts/regenerate-monorepo.sh enumerates versions instead of discovering them"
+    )
