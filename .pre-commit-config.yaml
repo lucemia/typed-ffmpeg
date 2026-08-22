@@ -15,9 +15,6 @@ repos:
       - id: end-of-file-fixer
         files: ^(src/|packages/)
         exclude: '__snapshots__/'
-      - id: fix-encoding-pragma
-        files: ^(src/|packages/)
-        args: [--remove]
       - id: mixed-line-ending
         files: ^(src/|packages/)
       - id: trailing-whitespace
