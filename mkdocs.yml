@@ -114,7 +114,6 @@ plugins:
             signature_crossrefs: true
             summary: true
             docstring_section_style: table
-            order: source
             docstring_style: google
             extensions:
               - griffe_inherited_docstrings
