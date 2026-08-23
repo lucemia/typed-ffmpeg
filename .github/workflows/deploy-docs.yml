@@ -1,10 +1,22 @@
 name: Deploy Documentation
 
 on:
+  # Was `tags: ['[0-9]*']`, which requires a tag starting with a digit. This
+  # project tags releases as v4.5, so nothing ever matched: the last automatic
+  # deploy was 2026-03-26 and v4.1 through v4.5 all shipped without a docs
+  # update. Tracking main keeps the site current by construction, rather than
+  # depending on a filter that matches the tag convention.
   push:
-    tags:
-      - '[0-9]*'
+    branches: [main]
   workflow_dispatch:
+
+# ghp-import force-pushes gh-pages, so two overlapping runs race and the one
+# that finishes last wins -- which need not be the newer commit. Superseded
+# runs are cancelled instead; nothing is published until the final push, so
+# cancelling mid-build leaves the site untouched.
+concurrency:
+  group: deploy-docs
+  cancel-in-progress: true
 
 permissions:
   contents: write
