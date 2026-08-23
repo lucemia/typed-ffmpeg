@@ -383,7 +383,7 @@ The script will:
 5. Create a GitHub Release via `gh` CLI (triggers `monorepo-publish.yml`)
 
 The publish workflow builds all packages and publishes to PyPI in dependency order:
-core → data → bindings → meta. Documentation is deployed automatically via `deploy-docs.yml` on version tags.
+core → data → bindings → meta. Documentation is deployed automatically via `deploy-docs.yml` on every push to `main`.
 
 #### Manual / Partial Publish
 
