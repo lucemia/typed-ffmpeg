@@ -79,7 +79,7 @@ dev = [
     "ty",
     "devtools",
     "black",
-    "ruff==0.16.3",
+    "ruff==0.16.4",
     "prek>=0.4.13",
     "typer",
     "jinja2",
