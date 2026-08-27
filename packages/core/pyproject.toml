@@ -33,7 +33,7 @@ dev = [
     "pytest>=7.0",
     "pytest-cov>=7.1.0",
     "syrupy>=5.5.3",
-    "ruff==0.16.3",
+    "ruff==0.16.4",
     "mypy>=2.3.0",
 ]
 
