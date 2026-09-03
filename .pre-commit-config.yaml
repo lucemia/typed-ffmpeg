@@ -31,7 +31,7 @@ repos:
     # Dependabot's `pre-commit` ecosystem (see .github/dependabot.yml) bumps
     # this; before it was configured, uv bumped pyproject and this pin silently
     # drifted, so formatting ran on a different ruff than the project declared.
-    rev: v0.16.4
+    rev: v0.16.5
     hooks:
       # Run the formatter (includes generated bindings).
       - id: ruff-format
