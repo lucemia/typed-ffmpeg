@@ -93,6 +93,17 @@ beforeAll(() => {
     ]),
     makeFilter("split", ["video"], ["video", "video"]),
     makeFilter("amix", ["audio", "audio"], ["audio"]),
+    makeFilter("pad", ["video"], ["video"], [
+      { name: "width", default: null },
+      { name: "height", default: null },
+      { name: "x", default: null },
+      { name: "y", default: null },
+    ]),
+    makeFilter("subtitles", ["video"], ["video"], [
+      { name: "filename", default: null },
+      { name: "stream_index", default: null },
+      { name: "force_style", default: null },
+    ]),
   ];
   filtersMap = new Map(filters.map(f => [f.name, f]));
   optionsMap = new Map(baseOptions.map(o => [o.name, o]));
@@ -386,5 +397,17 @@ describe("parse()", () => {
     expect(compiled).toContain("scale");
     expect(compiled).toMatch(/1920/);
     expect(compiled).toMatch(/1080/);
+  });
+
+  it("-vf filterchain with single-quoted option value containing commas (issue #593)", () => {
+    // Single-quoted force_style contains commas that must not split the filterchain
+    const cmd =
+      `ffmpeg -i input.mkv -vf "scale=-1:-1:flags=lanczos,pad=1920:1080:-1:-1,subtitles='subtitles.srt':force_style='Fontname=Arial,Fontsize=17'" output.mp4`;
+    // Should not throw; the three filters are scale → pad → subtitles
+    const stream = parse(cmd, filtersMap, optionsMap);
+    const compiled = compile(stream);
+    expect(compiled).toContain("scale");
+    expect(compiled).toContain("pad");
+    expect(compiled).toContain("subtitles");
   });
 });

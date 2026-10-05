@@ -132,3 +132,18 @@ def test_parse_ffmpeg_commands(snapshot: SnapshotAssertion, command: str) -> Non
     assert snapshot(
         name="build-ffmpeg-commands", extension_class=VersionedAmberExtension
     ) == compile(parsed)
+
+
+def test_vf_single_quoted_params_with_commas() -> None:
+    """Single-quoted filter option values containing commas must not split the filterchain (issue #593)."""
+    cmd = (
+        "ffmpeg -i input.mkv"
+        " -vf \"scale=-1:-1,pad=1920:1080:-1:-1,subtitles='subtitles.srt':force_style='Fontname=Arial,Fontsize=17'\""
+        " output.mp4"
+    )
+    compiled = compile(parse(cmd))
+    # All three filters must appear in the output; commas inside the
+    # single-quoted force_style value must not split the filterchain.
+    assert "scale" in compiled
+    assert "pad" in compiled
+    assert "subtitles" in compiled
