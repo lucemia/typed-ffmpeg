@@ -43,7 +43,7 @@ dev = [
     "pytest>=7.0",
     "pytest-cov>=7.1.0",
     "syrupy>=6.0.0",
-    "ruff==0.17.1",
+    "ruff==0.17.2",
 ]
 parse = ["ffmpeg-data-v9"]
 
