@@ -1,0 +1,33 @@
+[project]
+name = "typed-ffmpeg-strict"
+version = "4.6.2"
+description = "Strict typing for typed-ffmpeg: expression options accept numbers and Expression, not plain str"
+authors = [
+    {name = "lucemia", email = "lucemia@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+keywords = ["ffmpeg", "typed", "stubs", "strict"]
+classifiers = [
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Typing :: Stubs Only",
+]
+# Stub-only (PEP 561 partial stub package): it overrides ffmpeg.types for type
+# checkers and changes nothing at runtime.
+dependencies = [
+    "typed-ffmpeg>=4.6.2,<5.0",
+]
+
+[build-system]
+requires = ["setuptools>=84.0.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+packages = ["ffmpeg-stubs"]
+include-package-data = false
+
+[tool.setuptools.package-data]
+"ffmpeg-stubs" = ["py.typed", "*.pyi"]
