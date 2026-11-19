@@ -2167,15 +2167,15 @@ wheels = [
 
 [[package]]
 name = "pytest-recording"
-version = "0.14.1"
+version = "0.15.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pytest" },
     { name = "vcrpy" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b9/1b/12ba1460ae135e4dfcfb27ba23fdfdc8c991b26d4961a7bfaf40ca320d72/pytest_recording-0.14.1.tar.gz", hash = "sha256:904784991ed41b78353f27a91d1a0172e314994d23f088077445cddf4f82879f", size = 29134, upload-time = "2026-11-02T18:12:36.701Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/42/33/d15bcc3da7bd0d0e04122d67204f0fa8d5c8e4167fd86e45645240176a59/pytest_recording-0.15.0.tar.gz", hash = "sha256:af96135d60cad55836192d8e2e4186d00b4712035ead2116790956282c5b0feb", size = 22824, upload-time = "2026-11-15T17:49:38.781Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/bd/6a/48f56112703d3158f67c75a33f081aadfe7c311d9918d89443f4ad0f3527/pytest_recording-0.14.1-py3-none-any.whl", hash = "sha256:da954f116a4232aca5d7d518efab2c0f1b9421778e72913e9ad3e5777322cd62", size = 14307, upload-time = "2026-11-02T18:12:35.485Z" },
+    { url = "https://files.pythonhosted.org/packages/48/ef/edf7f21aae7af4374d95ca158bdc2dff6e6df0670f169821613908807c31/pytest_recording-0.15.0-py3-none-any.whl", hash = "sha256:837de20090e5c043d1377f402eed075ad03d825ffe033f3b5ab95f53b57ece9f", size = 15782, upload-time = "2026-11-15T17:49:37.478Z" },
 ]
 
 [[package]]
